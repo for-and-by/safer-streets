@@ -1,0 +1,14 @@
+name = "safer-streets"
+workers_dev = true
+
+main = "src/server.ts"
+compatibility_date = "2022-08-04"
+
+[build]
+command="yarn build"
+cwd="."
+watch_dir="src"
+
+[site]
+bucket="./dist"
+
