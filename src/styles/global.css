@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @font-face {
   font-family: "Inter";
   font-style: normal;
@@ -6,71 +10,72 @@
     format("woff2");
 }
 
-:root {
-  font-size: 12px;
+@layer base {
+  html,
+  body,
+  #__next {
+    position: relative;
+    height: 100%;
+    width: 100%;
+  }
 
-  --space-1: 0.5rem;
-  --space-2: 1rem;
-  --space-3: 1.5rem;
-  --space-4: 2rem;
-  --space-5: 2.5rem;
-  --space-6: 3rem;
-  --space-7: 3.5rem;
-  --space-8: 4rem;
-
-  --space-base: var(--space-1);
-  --space-divide: var(--space-3);
-  --space-margin: var(--space-4);
-
-  --color-white: #fff;
-  --color-black: #000;
-
-  --color-gray-50: #f8fafc;
-  --color-gray-100: #f1f5f9;
-  --color-gray-200: #e2e8f0;
-  --color-gray-300: #cbd5e1;
-  --color-gray-400: #94a3b8;
-  --color-gray-500: #64748b;
-  --color-gray-600: #475569;
-  --color-gray-700: #334155;
-  --color-gray-800: #1e293b;
-  --color-gray-900: #0f172a;
-
-  --color-main-50: #f0f9ff;
-  --color-main-100: #e0f2fe;
-  --color-main-200: #bae6fd;
-  --color-main-300: #7dd3fc;
-  --color-main-400: #38bdf8;
-  --color-main-500: #0ea5e9;
-  --color-main-600: #0284c7;
-  --color-main-700: #0369a1;
-  --color-main-800: #075985;
-  --color-main-900: #0c4a6e;
-
-  --color-primary: var(--color-main-600);
-  --color-secondary: var(--color-main-50);
-
-  --color-background: var(--color-white);
-  --color-divider: var(--color-gray-100);
-  --color-text: var(--color-black);
+  * {
+    box-sizing: border-box;
+    font-size: 14px;
+  }
 }
 
-html,
-body,
-#next {
-  position: relative;
-  height: 100%;
-  width: 100%;
+@layer components {
+  /* Button Styling */
+  .btn {
+    @apply flex h-12 items-center justify-center space-x-3 whitespace-nowrap rounded-sm px-4 hover:cursor-pointer;
+  }
+
+  .btn-text {
+    @apply flex-grow text-left text-base font-medium;
+  }
+
+  .btn-icon {
+    @apply icon-sm flex-shrink;
+  }
+
+  .btn-primary {
+    @apply bg-brand-600 text-white hover:bg-brand-700;
+  }
+
+  .btn-secondary {
+    @apply bg-base-200 text-brand-600 hover:bg-base-100;
+  }
+
+  .btn-light {
+    @apply bg-base-100 text-base-800 hover:bg-base-200;
+  }
+
+  .btn-white {
+    @apply bg-white text-base-700 hover:bg-base-100;
+  }
+
+  /* Icon Styling */
+  .icon-sm {
+    @apply text-base;
+  }
+
+  .icon-md {
+    @apply text-lg;
+  }
+
+  .icon-lg {
+    @apply text-xl;
+  }
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  border-radius: 0;
+@layer utilities {
+  /* Layer Styling */
+  .layer {
+    @apply absolute inset-0 overflow-hidden;
+  }
 
-  border: none;
-  background: none;
-
-  font-family: "Inter", Helvetica, sans-serif;
+  .clamp {
+    @apply w-full max-w-sm;
+  }
 }
