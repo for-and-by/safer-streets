@@ -12,6 +12,7 @@
     "@cloudflare/kv-asset-handler": "^0.2.0",
     "clsx": "^1.2.1",
     "leaflet": "^1.8.0",
+    "maplibre-gl": "^2.1.9",
     "marked": "^4.0.18",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

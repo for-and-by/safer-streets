@@ -1,21 +1,27 @@
 import React, { useEffect } from "react";
-import Leaflet from "leaflet";
+import maplibregl from "maplibre-gl";
+import config from "~/config";
 
 interface Props extends React.HTMLAttributes<"div"> {
   children?: React.ReactNode;
 }
 
-const MapContext = React.createContext<Leaflet.Map | null>(null);
+const MapContext = React.createContext<any | null>(null);
 
 export const useMapContext = () => React.useContext(MapContext);
 
 export default function Map({ children, className }: Props) {
-  const [instance, setInstance] = React.useState<Leaflet.Map | null>(null);
+  const [instance, setInstance] = React.useState<maplibregl.Map | null>(null);
 
   const ref = React.useCallback((node: HTMLDivElement | null) => {
     if (node !== null && instance === null) {
-      const map = Leaflet.map(node);
-      map.setView([-27.4705, 153.026], 13);
+      const map = new maplibregl.Map({
+        container: node,
+        style: config.map.style,
+        center: config.map.default.center,
+        zoom: config.map.default.zoom,
+      });
+
       setInstance(map);
     }
   }, []);
