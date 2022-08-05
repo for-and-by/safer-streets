@@ -1,39 +1,31 @@
+import type { MapContextValue } from "./types";
+
 import React from "react";
 import maplibregl from "maplibre-gl";
 
 import config from "~/config";
-import { useTypedSelector } from "~/store/hooks";
 
 interface Props extends React.HTMLAttributes<"div"> {
   children?: React.ReactNode;
 }
 
-interface MapContext {
-  instance?: maplibregl.Map | null;
-  ref: (node: HTMLDivElement | null) => void;
-}
-
-const MapContext = React.createContext<MapContext>({
+export const MapContext = React.createContext<MapContextValue>({
   instance: null,
   ref: () => {},
 });
 
-export const useMapContext = () => React.useContext(MapContext);
-
 export default function MapProvider({ children }: Props) {
-  const mapState = useTypedSelector((state) => state.map);
-  const [instance, setInstance] = React.useState<MapContext["instance"]>(null);
+  const [instance, setInstance] =
+    React.useState<MapContextValue["instance"]>(null);
 
-  const ref = React.useCallback<MapContext["ref"]>((node) => {
+  const ref = React.useCallback<MapContextValue["ref"]>((node) => {
     if (node !== null && instance === null) {
-      const map = new maplibregl.Map({
-        container: node,
-        style: `${config.map.style}?key=${config.map.key}`,
-        center: mapState.center,
-        zoom: mapState.zoom,
-      });
-
-      setInstance(map);
+      setInstance(
+        new maplibregl.Map({
+          container: node,
+          style: `${config.map.style}?key=${config.map.key}`,
+        })
+      );
     }
   }, []);
 
@@ -43,7 +35,7 @@ export default function MapProvider({ children }: Props) {
     };
   }, []);
 
-  const value: MapContext = {
+  const value: MapContextValue = {
     instance,
     ref,
   };
