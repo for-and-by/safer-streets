@@ -7,16 +7,22 @@ interface Props extends React.HTMLAttributes<"div"> {
   children?: React.ReactNode;
 }
 
-type MapInstance = maplibregl.Map | null;
+interface MapContext {
+  instance?: maplibregl.Map | null;
+  ref: (node: HTMLDivElement | null) => void;
+}
 
-const MapContext = React.createContext<MapInstance>(null);
+const MapContext = React.createContext<MapContext>({
+  instance: null,
+  ref: () => {},
+});
 
 export const useMapContext = () => React.useContext(MapContext);
 
-export default function Map({ children, className }: Props) {
-  const [instance, setInstance] = React.useState<MapInstance>(null);
+export default function MapProvider({ children }: Props) {
+  const [instance, setInstance] = React.useState<MapContext["instance"]>(null);
 
-  const ref = React.useCallback((node: HTMLDivElement | null) => {
+  const ref = React.useCallback<MapContext["ref"]>((node) => {
     if (node !== null && instance === null) {
       const map = new maplibregl.Map({
         container: node,
@@ -35,11 +41,10 @@ export default function Map({ children, className }: Props) {
     };
   }, []);
 
-  return (
-    <MapContext.Provider value={instance}>
-      <div className={className} ref={ref}>
-        {children}
-      </div>
-    </MapContext.Provider>
-  );
+  const value: MapContext = {
+    instance,
+    ref,
+  };
+
+  return <MapContext.Provider value={value}>{children}</MapContext.Provider>;
 }
