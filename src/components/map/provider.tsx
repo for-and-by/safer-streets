@@ -2,6 +2,7 @@ import React from "react";
 import maplibregl from "maplibre-gl";
 
 import config from "~/config";
+import { useTypedSelector } from "~/store/hooks";
 
 interface Props extends React.HTMLAttributes<"div"> {
   children?: React.ReactNode;
@@ -20,6 +21,7 @@ const MapContext = React.createContext<MapContext>({
 export const useMapContext = () => React.useContext(MapContext);
 
 export default function MapProvider({ children }: Props) {
+  const mapState = useTypedSelector((state) => state.map);
   const [instance, setInstance] = React.useState<MapContext["instance"]>(null);
 
   const ref = React.useCallback<MapContext["ref"]>((node) => {
@@ -27,8 +29,8 @@ export default function MapProvider({ children }: Props) {
       const map = new maplibregl.Map({
         container: node,
         style: `${config.map.style}?key=${config.map.key}`,
-        center: config.map.default.center,
-        zoom: config.map.default.zoom,
+        center: mapState.center,
+        zoom: mapState.zoom,
       });
 
       setInstance(map);
