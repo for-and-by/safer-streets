@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import maplibregl from "maplibre-gl";
 import config from "~/config";
 
@@ -26,7 +26,7 @@ export default function Map({ children, className }: Props) {
     }
   }, []);
 
-  useEffect(() => {
+  React.useEffect(() => {
     return () => {
       instance?.remove();
     };
