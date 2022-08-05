@@ -1,13 +1,11 @@
-import { useState } from "react";
-import MapLayer from "./features/map/layer";
+import Map from "~/features/map/context";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <MapLayer />
-    </>
+    <div className="absolute inset-0">
+      <Map className="layer z-10" />
+      <div className="layer clamp z-20"></div>
+    </div>
   );
 }
 
