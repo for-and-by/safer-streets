@@ -32,8 +32,8 @@ export default {
       "https://api.maptiler.com/maps/7e89c6ff-de99-44b8-a11d-570a695ed2a2/style.json",
     zoom: {
       default: 13,
-      min: 0,
-      max: 20,
+      max: 18,
+      min: 7,
     },
     center: [153.026, -27.4705] as LngLatLike, // Brisbane LngLat
   },

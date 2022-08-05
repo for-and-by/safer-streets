@@ -1,8 +1,10 @@
 import { useTypedDispatch, useTypedSelector } from "../store/hooks";
 
+import { zoomIn, zoomOut } from "~/store/map";
+
 import MapProvider from "~/components/map/provider";
 import Map from "~/components/map/map";
-import { zoomIn, zoomOut } from "~/store/map";
+import Controls from "~/components/map/controls";
 
 interface Props {}
 
@@ -14,9 +16,8 @@ export default function Layout({}: Props) {
       <div className="layer z-10">
         <Map className="absolute inset-0"></Map>
       </div>
-      <div className="layer clamp z-20">
-        <button onClick={() => dispatch(zoomIn())}>Zoom in</button>
-        <button onClick={() => dispatch(zoomOut())}>Zoom out</button>
+      <div className="layer clamp pointer-events-none z-20 mx-auto">
+        <Controls />
       </div>
     </MapProvider>
   );

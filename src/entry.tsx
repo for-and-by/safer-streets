@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from ".";
 
 import "~/styles/global.css";
+import "remixicon/fonts/remixicon.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

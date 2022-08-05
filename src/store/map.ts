@@ -43,7 +43,7 @@ export function addMapListeners(startListening: StoreStartListening) {
       if (zoom > max) {
         dispatch(setZoom(max));
       } else if (zoom < min) {
-        dispatch(setZoom(max));
+        dispatch(setZoom(min));
       }
     },
   });
