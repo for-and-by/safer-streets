@@ -1,8 +1,8 @@
-import types from "prop-types";
+interface Props {
+  className: string;
+}
 
-// Component
-
-const Loader = ({ className = "" }) => {
+export default function Loader({ className = "" }: Props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,21 +10,20 @@ const Loader = ({ className = "" }) => {
       height="100%"
       viewBox="0 0 48 48"
       className={className}
-      fill="none">
+      fill="none"
+    >
       <title>circle-03</title>
       <g
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="4"
-        transform="translate(0.5 0.5)">
+        transform="translate(0.5 0.5)"
+      >
         <g
           className="nc-loop_circle-03-48"
-          transform="rotate(30.59608874089117 24 24)">
-          <circle
-            opacity="0.4"
-            cx="24"
-            cy="24"
-            r="22"></circle>
+          transform="rotate(30.59608874089117 24 24)"
+        >
+          <circle opacity="0.4" cx="24" cy="24" r="22"></circle>
           <path d="M24,2c12.2,0,22,9.8,22,22"></path>
         </g>
         <script>
@@ -35,10 +34,4 @@ const Loader = ({ className = "" }) => {
       </g>
     </svg>
   );
-};
-
-Loader.propTypes = {
-  className: types.string,
-};
-
-export default Loader;
+}

@@ -87,7 +87,7 @@ function Item({
   );
 }
 
-const Panels = ({ children, className = "" }: Props["Panels"]) => {
+function Panels({ children, className = "" }: Props["Panels"]) {
   const { active } = useTabs();
 
   return (
@@ -103,15 +103,11 @@ const Panels = ({ children, className = "" }: Props["Panels"]) => {
       })}
     </div>
   );
-};
+}
 
-const Panel = ({
-  children,
-  className = "",
-  active = false,
-}: Props["Panel"]) => {
+function Panel({ children, className = "", active = false }: Props["Panel"]) {
   return <div className={clsx(className, !active && "hidden")}>{children}</div>;
-};
+}
 
 const Tabs = Object.assign(Root, { Items, Item, Panels, Panel });
 
