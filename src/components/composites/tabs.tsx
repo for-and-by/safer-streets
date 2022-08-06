@@ -1,16 +1,8 @@
-import React, {
-  createContext,
-  useContext,
-  Children,
-  cloneElement,
-  useState,
-  ReactElement,
-} from "react";
-
+import React from "react";
 import { nanoid } from "nanoid";
 import clsx from "clsx";
-import { createContextHook } from "~/lib/helpers";
 
+import { createContextHook } from "~/lib/helpers";
 interface Props {
   Root: {
     children?: React.ReactNode;
@@ -49,7 +41,7 @@ const TabsContext = React.createContext<TabsContextValue>({
 const useTabs = createContextHook<TabsContextValue>({ TabsContext });
 
 function Root({ children }: Props["Root"]) {
-  const [active, setActive] = useState<number>(0);
+  const [active, setActive] = React.useState<number>(0);
 
   const value: TabsContextValue = {
     active,
