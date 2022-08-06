@@ -1,4 +1,4 @@
-import React, { useState, useContext, createContext } from "react";
+import React from "react";
 import clsx from "clsx";
 
 import { createContextHook } from "~/lib/helpers";
@@ -35,7 +35,7 @@ interface ModalContextValue {
   showModal: () => void;
 }
 
-const ModalContext = createContext<ModalContextValue>({
+const ModalContext = React.createContext<ModalContextValue>({
   show: false,
   hideModal: () => null,
   showModal: () => null,
@@ -44,7 +44,7 @@ const ModalContext = createContext<ModalContextValue>({
 const useModal = createContextHook<ModalContextValue>({ ModalContext });
 
 function Root({ children }: Props["Root"]) {
-  const [show, setShow] = useState<ModalContextValue["show"]>(false);
+  const [show, setShow] = React.useState<ModalContextValue["show"]>(false);
 
   const value: ModalContextValue = {
     show,
