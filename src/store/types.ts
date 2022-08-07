@@ -23,3 +23,7 @@ export interface MapState {
   zoom: number;
   center: LngLatLike;
 }
+
+export interface ToastState {
+  content?: string;
+}
