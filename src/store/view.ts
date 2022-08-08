@@ -7,7 +7,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { useTypedDispatch, useTypedSelector } from "~/store/hooks";
 
 const initialState: ViewState = {
-  list: new Set(["default"]),
+  list: ["default"],
   active: "default",
 };
 
@@ -16,27 +16,36 @@ export const viewSlice = createSlice({
   initialState,
   reducers: {
     addView: (state, action: PayloadAction<string>) => {
-      state.list.add(action.payload);
+      if (!state.list.includes(action.payload)) {
+        state.list.push(action.payload);
+      }
     },
     removeView: (state, action: PayloadAction<string>) => {
-      state.list.delete(action.payload);
+      if (state.list.includes(action.payload)) {
+        state.list.splice(state.list.indexOf(action.payload), 1);
+      }
     },
     clearViews: (state) => {
-      state.list.clear();
+      state.list = initialState.list;
     },
-    setFocus: (state, action: PayloadAction<string>) => {
-      state.active = state.list.has(action.payload)
+    setActiveView: (state, action: PayloadAction<string>) => {
+      state.active = state.list.includes(action.payload)
         ? action.payload
         : state.active;
     },
-    resetFocus: (state) => {
+    resetActiveView: (state) => {
       state.active = initialState.active;
     },
   },
 });
 
-export const { addView, removeView, clearViews, setFocus, resetFocus } =
-  viewSlice.actions;
+export const {
+  addView,
+  removeView,
+  clearViews,
+  setActiveView,
+  resetActiveView,
+} = viewSlice.actions;
 
 export function useView(handle: string) {
   const dispatch = useTypedDispatch();
@@ -53,7 +62,7 @@ export function useView(handle: string) {
     isActive: handle === activeView,
     isDefaultActive: "default" === activeView,
     setActiveView: (viewHandle: string) => {
-      dispatch(setFocus(viewHandle ?? handle));
+      dispatch(setActiveView(viewHandle ?? handle));
     },
   };
 }

@@ -30,6 +30,6 @@ export interface ToastState {
 }
 
 export interface ViewState {
-  list: Set<string>;
+  list: string[];
   active: string;
 }

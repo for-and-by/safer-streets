@@ -3,15 +3,15 @@ import clsx from "clsx";
 
 interface Props {
   Root: {
-    className: string;
+    className?: string;
     show: boolean;
     position: "top" | "center" | "bottom";
     scrollable?: boolean;
     children?: React.ReactNode;
   };
   Row: {
-    sticky: boolean;
-    className: string;
+    sticky?: boolean;
+    className?: string;
     children?: React.ReactNode;
   };
 }
