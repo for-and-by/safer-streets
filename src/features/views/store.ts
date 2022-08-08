@@ -1,10 +1,7 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { ViewState } from "~/features/store/types";
 
-import React from "react";
 import { createSlice } from "@reduxjs/toolkit";
-
-import { useTypedDispatch, useTypedSelector } from "~/features/store/hooks";
 
 const initialState: ViewState = {
   list: ["default"],
@@ -46,26 +43,6 @@ export const {
   setActiveView,
   resetActiveView,
 } = viewSlice.actions;
-
-export function useView(handle: string) {
-  const dispatch = useTypedDispatch();
-  const activeView = useTypedSelector((state) => state.view.active);
-
-  React.useEffect(() => {
-    dispatch(addView(handle));
-    return () => {
-      dispatch(removeView(handle));
-    };
-  }, [dispatch, handle]);
-
-  return {
-    isActive: handle === activeView,
-    isDefaultActive: "default" === activeView,
-    setActiveView: (viewHandle: string) => {
-      dispatch(setActiveView(viewHandle ?? handle));
-    },
-  };
-}
 
 const viewReducer = viewSlice.reducer;
 export default viewReducer;

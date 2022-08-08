@@ -1,4 +1,4 @@
-import { useView } from "~/features/views/view";
+import { useView } from "~/features/views/hooks";
 
 import Logo from "~/features/app/logo";
 import Drawer from "~/features/ui/drawer";

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 import { useTypedDispatch, useTypedSelector } from "~/features/store/hooks";
-import { hideToast } from "~/features/store/store";
+import { hideToast } from "~/features/toast/store";
 
 import Loader from "~/features/ui/loader";
 
