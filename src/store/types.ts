@@ -28,3 +28,8 @@ export interface ToastState {
   content?: string;
   show: boolean;
 }
+
+export interface ViewState {
+  list: Set<string>;
+  active: string;
+}

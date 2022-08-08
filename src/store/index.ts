@@ -4,6 +4,7 @@ import { createListenerMiddleware, configureStore } from "@reduxjs/toolkit";
 
 import mapReducer, { addMapListeners } from "~/store/map";
 import toastReducer, { addToastListeners } from "~/store/toast";
+import viewReducer from "~/store/view";
 
 // Middleware setup
 
@@ -18,6 +19,7 @@ const store = configureStore({
   reducer: {
     map: mapReducer,
     toast: toastReducer,
+    view: viewReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(listener.middleware),
