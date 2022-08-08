@@ -16,16 +16,16 @@ interface Props {
   Tint: {};
   Panel: {
     children?: React.ReactNode;
-    className: string;
+    className?: string;
   };
   Trigger: {
     children?: React.ReactNode;
-    className: string;
+    className?: string;
   };
   Close: {
     children?: React.ReactNode;
-    className: string;
-    onClick: () => void;
+    className?: string;
+    onClick?: () => void;
   };
 }
 

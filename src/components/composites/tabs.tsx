@@ -9,22 +9,22 @@ interface Props {
   };
   Items: {
     children?: React.ReactNode;
-    className: string;
+    className?: string;
   };
   Item: {
     children?: React.ReactNode;
-    className: string;
-    active: boolean;
-    onClick: () => void;
+    className?: string;
+    active?: boolean;
+    onClick?: () => void;
   };
   Panels: {
     children?: React.ReactNode;
-    className: string;
+    className?: string;
   };
   Panel: {
     children?: React.ReactNode;
-    className: string;
-    active: boolean;
+    className?: string;
+    active?: boolean;
   };
 }
 

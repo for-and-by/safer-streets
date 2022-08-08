@@ -3,6 +3,7 @@ import Map from "~/features/map/map";
 import Controls from "~/features/map/controls";
 import HomeHeader from "~/features/home/header";
 import HomeFooter from "~/features/home/footer";
+import AppHeader from "~/features/app/header";
 
 interface Props {}
 
@@ -15,7 +16,8 @@ export default function Layout({}: Props) {
         </MapProvider>
       </div>
       <div className="layer pointer-events-none z-20">
-        <div className="clamp mx-auto p-4">
+        <div className="clamp mx-auto flex h-full flex-col">
+          <AppHeader />
           <HomeHeader />
           <Controls />
           <HomeFooter />
