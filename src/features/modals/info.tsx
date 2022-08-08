@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 
 import Logo from "~/components/elements/logo";
 
-import Modal from "~/components/composites/modal";
+import Modal from "~/features/modals/modal";
 import Drawer from "~/components/composites/drawer";
 import Tabs from "~/components/composites/tabs";
 
@@ -18,7 +18,7 @@ interface Props {
   className?: string;
 }
 
-const content: {[key: string]: string} = {
+const content: { [key: string]: string } = {
   about: "", //marked(about),
   help: "", //marked(help),
   contact: "", //marked(contact),
