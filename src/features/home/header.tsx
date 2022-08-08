@@ -1,7 +1,7 @@
-import { useView } from "~/store/view";
+import { useView } from "~/features/views/view";
 
-import Logo from "~/components/elements/logo";
-import Drawer from "~/components/composites/drawer";
+import Logo from "~/features/app/logo";
+import Drawer from "~/features/ui/drawer";
 
 export default function HomeHeader() {
   const { isActive, setActiveView } = useView("default");

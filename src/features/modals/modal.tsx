@@ -1,10 +1,10 @@
 import React from "react";
 import clsx from "clsx";
 
-import { createContextHook } from "~/lib/helpers";
+import { createContextHook } from "~/features/app/helpers";
 
-import Portal from "~/components/elements/portal";
-import Drawer from "~/components/composites/drawer";
+import Portal from "~/features/ui/portal";
+import Drawer from "~/features/ui/drawer";
 
 interface Props {
   Root: {

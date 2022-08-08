@@ -2,9 +2,9 @@ import type { StoreStartListening } from "./types";
 
 import { createListenerMiddleware, configureStore } from "@reduxjs/toolkit";
 
-import mapReducer, { addMapListeners } from "~/store/map";
-import toastReducer, { addToastListeners } from "~/store/toast";
-import viewReducer from "~/store/view";
+import mapReducer, { addMapListeners } from "~/features/map/store";
+import toastReducer, { addToastListeners } from "~/features/store/store";
+import viewReducer from "~/features/views/view";
 
 // Middleware setup
 

@@ -1,9 +1,9 @@
 import clsx from "clsx";
 
-import { useTypedDispatch, useTypedSelector } from "~/store/hooks";
-import { hideToast } from "~/store/toast";
+import { useTypedDispatch, useTypedSelector } from "~/features/store/hooks";
+import { hideToast } from "~/features/store/store";
 
-import Loader from "./loader";
+import Loader from "~/features/ui/loader";
 
 export default function Toast() {
   const dispatch = useTypedDispatch();

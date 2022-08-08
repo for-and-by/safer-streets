@@ -1,10 +1,10 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { ViewState } from "~/store/types";
+import { ViewState } from "~/features/store/types";
 
 import React from "react";
 import { createSlice } from "@reduxjs/toolkit";
 
-import { useTypedDispatch, useTypedSelector } from "~/store/hooks";
+import { useTypedDispatch, useTypedSelector } from "~/features/store/hooks";
 
 const initialState: ViewState = {
   list: ["default"],

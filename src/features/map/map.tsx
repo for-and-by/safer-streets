@@ -1,7 +1,7 @@
 import React from "react";
 
-import { useTypedDispatch, useTypedSelector } from "~/store/hooks";
-import { setCenter, setZoom } from "~/store/map";
+import { useTypedDispatch, useTypedSelector } from "~/features/store/hooks";
+import { setCenter, setZoom } from "~/features/map/store";
 import { useMapContext, useMapEvents } from "./hooks";
 
 interface Props extends React.ComponentProps<"div"> {}

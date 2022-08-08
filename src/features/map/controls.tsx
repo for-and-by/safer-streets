@@ -1,5 +1,5 @@
-import { useTypedDispatch } from "~/store/hooks";
-import { zoomIn, zoomOut } from "~/store/map";
+import { useTypedDispatch } from "~/features/store/hooks";
+import { zoomIn, zoomOut } from "~/features/map/store";
 
 // import Toast from "~/components/elements/toast";
 

@@ -1,6 +1,6 @@
-import { useView } from "~/store/view";
+import { useView } from "~/features/views/view";
 
-import Drawer from "~/components/composites/drawer";
+import Drawer from "~/features/ui/drawer";
 
 export default function HomeFooter() {
   const { isActive, setActiveView } = useView("default");

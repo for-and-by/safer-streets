@@ -1,6 +1,6 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { LngLatLike } from "maplibre-gl";
-import { MapState, StoreStartListening } from "./types";
+import { MapState, StoreStartListening } from "~/features/store/types";
 
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
 
