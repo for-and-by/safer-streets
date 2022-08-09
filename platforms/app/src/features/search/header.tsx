@@ -18,7 +18,7 @@ export default function SearchHeader() {
     setContent(
       results?.length
         ? {
-            heading: "{results.length} results found",
+            heading: `${results.length} results found`,
             subheading: "Select a location to jump to.",
           }
         : {

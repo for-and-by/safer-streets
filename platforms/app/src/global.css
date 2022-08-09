@@ -3,11 +3,10 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Inter";
+  font-family: "Firava";
   font-style: normal;
   font-weight: 100 900;
-  src: url("https://fonts.gstatic.com/s/inter/v11/UcC73FwrK3iLTeHuS_fvQtMwCp50KnMa1ZL7W0Q5nw.woff2")
-    format("woff2");
+  src: url("/fonts/Firava.woff2") format("woff2");
 }
 
 @layer base {

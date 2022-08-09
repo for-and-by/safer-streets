@@ -14,7 +14,7 @@ module.exports = {
         brand: colors.sky,
       },
       fontFamily: {
-        sans: ["Inter", "Helvetica", "system-ui"],
+        sans: ["Firava", "Helvetica", "system-ui"],
       },
     },
   },
