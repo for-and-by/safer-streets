@@ -1,26 +1,33 @@
+import type { LngLatLike } from "maplibre-gl";
+
 import { nanoid } from "nanoid";
-import { useDispatch, useSelector } from "react-redux";
 
-import { useView, resetFocus } from "~/store/view";
-import { setCenter } from "~/store/map";
+import { useTypedDispatch, useTypedSelector } from "~/features/store/hooks";
+import { useView } from "~/features/views/hooks";
 
-import Drawer from "~/components/composites/drawer";
+import Drawer from "~/features/ui/drawer";
+import { setCenter } from "~/features/map/store";
+import { resetActiveView } from "~/features/views/store";
 
 const SearchFooter = () => {
-  const { isFocused } = useView("search");
-  const dispatch = useDispatch();
-  const { results } = useSelector((state) => state.search);
+  const dispatch = useTypedDispatch();
+  const results = useTypedSelector((state) => state.search.results);
 
-  const handleSetCenter = (center) => {
-    dispatch(setCenter(center));
-    dispatch(resetFocus());
+  const { isActive } = useView("search");
+
+  const handleSetCenter = (center?: LngLatLike) => {
+    if (center) {
+      dispatch(setCenter(center));
+      dispatch(resetActiveView());
+    }
   };
+
+  console.log(results);
 
   return (
     <Drawer
-      show={isFocused}
+      show={isActive}
       position="bottom"
-      transition="slide"
       className="divide-y divide-base-100"
     >
       {results?.length ? (
@@ -30,10 +37,10 @@ const SearchFooter = () => {
               <div
                 key={nanoid()}
                 className="flex flex-col p-3 hover:cursor-pointer hover:bg-white"
-                onClick={() => handleSetCenter(feature.center)}
+                onClick={() => handleSetCenter(feature?.center)}
               >
-                <p className="text-base text-base-700">{feature.heading}</p>
-                <p className="text-sm text-base-400">{feature.subheading}</p>
+                <p className="text-base text-base-700">{feature?.heading}</p>
+                <p className="text-sm text-base-400">{feature?.subheading}</p>
               </div>
             ))}
           </div>

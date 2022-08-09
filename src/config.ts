@@ -35,6 +35,7 @@ export default {
       max: 18,
       min: 7,
     },
+    bbox: [72.24619313, -55.32281756, 168.22612585, -9.08801251], // Australia Bounding Box,
     center: [153.026, -27.4705] as LngLatLike, // Brisbane LngLat
   },
 };

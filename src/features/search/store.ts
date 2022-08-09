@@ -1,15 +1,16 @@
+import { SearchState } from "~/features/search/types";
+
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { geocode } from "~/features/search/helpers";
 
-// import { forwardGeocode, parseFeatures } from "~/lib/mapbox";
+export const runSearch = createAsyncThunk(
+  "search/runStatus",
+  async (address: string) => {
+    return await geocode(address);
+  }
+);
 
-// export const searchAddress = createAsyncThunk(
-//   "search/searchAddressStatus",
-//   async (address) => {
-//     return await forwardGeocode({ address: address });
-//   }
-// );
-
-const initialState = {
+const initialState: SearchState = {
   loading: false,
   results: [],
 };
@@ -22,14 +23,15 @@ export const searchSlice = createSlice({
       state.results = [];
     },
   },
-  extraReducers: {
-    // [searchAddress.pending]: (state) => {
-    //   state.loading = true;
-    // },
-    // [searchAddress.fulfilled]: (state, action) => {
-    //   state.loading = false;
-    //   state.results = parseFeatures(action?.payload?.features ?? []);
-    // },
+  extraReducers: (builder) => {
+    builder.addCase(runSearch.pending, (state) => {
+      state.loading = true;
+    });
+
+    builder.addCase(runSearch.fulfilled, (state, action) => {
+      state.loading = false;
+      state.results = action.payload;
+    });
   },
 });
 

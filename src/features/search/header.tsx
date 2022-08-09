@@ -1,10 +1,18 @@
 import React from "react";
 
+import { setCenter } from "~/features/map/store";
+import { resetSearch, runSearch } from "~/features/search/store";
+import { hideToast, setToastContent } from "~/features/toast/store";
+import { resetActiveView } from "~/features/views/store";
+
 import { useTypedDispatch } from "~/features/store/hooks";
 import { useView } from "~/features/views/hooks";
 
+import Drawer from "~/features/ui/drawer";
+import TextInput from "~/features/form/text-input";
+
 export default function SearchHeader() {
-  const { isActive, setActiveView } = useView("search");
+  const { isActive } = useView("search");
   const inputRef = React.useRef<HTMLInputElement>(null);
   const dispatch = useTypedDispatch();
 
@@ -27,9 +35,9 @@ export default function SearchHeader() {
   React.useEffect(() => {
     const timeout = setTimeout(() => {
       if (address !== "") {
-        dispatch(set("Finding results..."));
-        dispatch(searchAddress(address)).then(() => {
-          dispatch(clearToast());
+        dispatch(setToastContent("Finding results..."));
+        dispatch(runSearch(address)).then(() => {
+          dispatch(hideToast());
         });
       } else {
         dispatch(resetSearch());
@@ -40,29 +48,24 @@ export default function SearchHeader() {
   }, [address]);
 
   // Handlers
-  const handleUpdateSearch = (event) => {
+  const handleUpdateSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAddress(event.target.value);
   };
 
   const handleFindSelf = () => {
-    dispatch(setToast("Finding your location..."));
+    dispatch(setToastContent("Finding your location..."));
     if (navigator && "geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(({ coords }) => {
         dispatch(setCenter([coords.longitude, coords.latitude]));
-        dispatch(clearToast());
+        dispatch(hideToast());
         dispatch(resetSearch());
-        dispatch(resetFocus());
+        dispatch(resetActiveView());
       });
     }
   };
 
   return (
-    <Drawer
-      show={isFocused}
-      position="top"
-      transition="slide"
-      className="divide-y divide-base-200"
-    >
+    <Drawer show={isActive} position="top" className="divide-y divide-base-200">
       <Drawer.Row className="p-2">
         <TextInput
           icon="ri-search-line"

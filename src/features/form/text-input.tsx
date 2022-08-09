@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 interface Props extends React.ComponentPropsWithRef<"input"> {
   icon?: string;
-  loading: boolean;
+  loading?: boolean;
 }
 
 // eslint-disable-next-line react/display-name
