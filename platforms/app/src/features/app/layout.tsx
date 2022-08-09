@@ -18,7 +18,7 @@ export default function Layout({}: Props) {
         </MapProvider>
       </div>
       <div className="layer pointer-events-none z-20">
-        <div className="clamp mx-auto flex h-full flex-col">
+        <div className="clamp mx-auto flex h-full flex-col drop-shadow-lg">
           <AppHeader />
           <HomeWrapper>
             <SearchWrapper>
