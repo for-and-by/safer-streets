@@ -1,9 +1,11 @@
 import MapProvider from "~/features/map/provider";
 import Map from "~/features/map/map";
 import Controls from "~/features/map/controls";
-import AppHeader from "~/features/app/header";
 import HomeWrapper from "~/features/home/wrapper";
 import SearchWrapper from "~/features/search/wrapper";
+
+import AppHeader from "~/features/app/header";
+import AppFooter from "~/features/app/footer";
 
 interface Props {}
 
@@ -23,6 +25,7 @@ export default function Layout({}: Props) {
               <Controls />
             </SearchWrapper>
           </HomeWrapper>
+          <AppFooter />
         </div>
       </div>
     </>

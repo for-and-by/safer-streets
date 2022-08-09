@@ -1,13 +1,32 @@
-import { useTypedDispatch, useTypedSelector } from "~/features/store/hooks";
+import React from "react";
+
+import { useTypedSelector } from "~/features/store/hooks";
 import { useView } from "~/features/views/hooks";
 
 import Drawer from "~/features/ui/drawer";
 
 export default function SearchHeader() {
-  const dispatch = useTypedDispatch();
   const results = useTypedSelector((state) => state.search.results);
-
   const { isActive, setActiveView } = useView("search");
+
+  const [content, setContent] = React.useState({
+    heading: "",
+    subheading: "",
+  });
+
+  React.useEffect(() => {
+    setContent(
+      results?.length
+        ? {
+            heading: "{results.length} results found",
+            subheading: "Select a location to jump to.",
+          }
+        : {
+            heading: "No results found.",
+            subheading: "Start by typing in an address.",
+          }
+    );
+  }, [results]);
 
   const handleExitSearch = () => {
     setActiveView("default");
@@ -19,23 +38,10 @@ export default function SearchHeader() {
         <button className="btn btn-light" onClick={handleExitSearch}>
           <i className="btn-icon ri-arrow-left-line" />
         </button>
-        {results?.length ? (
-          <div className="flex flex-col p-3">
-            <h3 className="text-base text-base-700">
-              {results.length} results found
-            </h3>
-            <p className="text-sm text-base-400">
-              Select a location to jump to.
-            </p>
-          </div>
-        ) : (
-          <div className="flex flex-col p-3">
-            <h3 className="text-base text-base-700">No results found.</h3>
-            <p className="text-sm text-base-400">
-              Start by typing in an address.
-            </p>
-          </div>
-        )}
+        <div className="flex flex-col px-3">
+          <h3 className="text-base text-base-700">{content.heading}</h3>
+          <p className="text-sm text-base-400">{content.subheading}</p>
+        </div>
       </Drawer.Row>
     </Drawer>
   );

@@ -26,7 +26,7 @@ function Root({
   return (
     <div
       className={clsx(
-        "clamp transition-full z-10 flex flex-col overflow-hidden bg-white shadow-md duration-500",
+        "clamp transition-full z-10 flex flex-col overflow-hidden bg-white duration-500",
         position === "bottom" && "rounded-t",
         position === "top" && "rounded-b",
         position === "center" && "rounded",
