@@ -1,11 +1,9 @@
 import MapProvider from "~/features/map/provider";
 import Map from "~/features/map/map";
 import Controls from "~/features/map/controls";
-import HomeHeader from "~/features/home/header";
-import HomeFooter from "~/features/home/footer";
 import AppHeader from "~/features/app/header";
-import SearchHeader from "~/features/search/header";
-import SearchFooter from "~/features/search/footer";
+import HomeWrapper from "~/features/home/wrapper";
+import SearchWrapper from "~/features/search/wrapper";
 
 interface Props {}
 
@@ -20,11 +18,11 @@ export default function Layout({}: Props) {
       <div className="layer pointer-events-none z-20">
         <div className="clamp mx-auto flex h-full flex-col">
           <AppHeader />
-          <SearchHeader />
-          <HomeHeader />
-          <Controls />
-          <SearchFooter />
-          <HomeFooter />
+          <HomeWrapper>
+            <SearchWrapper>
+              <Controls />
+            </SearchWrapper>
+          </HomeWrapper>
         </div>
       </div>
     </>

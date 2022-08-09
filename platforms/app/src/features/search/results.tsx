@@ -9,7 +9,7 @@ import Drawer from "~/features/ui/drawer";
 import { setCenter } from "~/features/map/store";
 import { resetActiveView } from "~/features/views/store";
 
-export default function SearchHeader() {
+export default function SearchResults() {
   const dispatch = useTypedDispatch();
   const results = useTypedSelector((state) => state.search.results);
 
@@ -23,7 +23,11 @@ export default function SearchHeader() {
   };
 
   return (
-    <Drawer show={isActive} position="top" className="divide-y divide-base-100">
+    <Drawer
+      show={results?.length}
+      position="center"
+      className="mb-8 divide-y divide-base-100"
+    >
       {results?.length ? (
         <Drawer.Row className="bg-base-50">
           <div className="flex max-h-48 w-full flex-col divide-y divide-base-100 overflow-y-scroll">
@@ -40,25 +44,6 @@ export default function SearchHeader() {
           </div>
         </Drawer.Row>
       ) : null}
-      <Drawer.Row className="shadow-lg">
-        {results?.length ? (
-          <div className="flex flex-col p-3">
-            <h3 className="text-base text-base-700">
-              {results.length} results found
-            </h3>
-            <p className="text-sm text-base-400">
-              Select a location to jump to.
-            </p>
-          </div>
-        ) : (
-          <div className="flex flex-col p-3">
-            <h3 className="text-base text-base-700">No results found.</h3>
-            <p className="text-sm text-base-400">
-              Start by typing in an address.
-            </p>
-          </div>
-        )}
-      </Drawer.Row>
     </Drawer>
   );
 }

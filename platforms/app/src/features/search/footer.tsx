@@ -1,74 +1,87 @@
-import type { LngLatLike } from "maplibre-gl";
+import React from "react";
 
-import { nanoid } from "nanoid";
+import { setCenter } from "~/features/map/store";
+import { resetSearch, runSearch } from "~/features/search/store";
+import { hideToast, setToastContent } from "~/features/toast/store";
+import { resetActiveView } from "~/features/views/store";
 
-import { useTypedDispatch, useTypedSelector } from "~/features/store/hooks";
+import { useTypedDispatch } from "~/features/store/hooks";
 import { useView } from "~/features/views/hooks";
 
 import Drawer from "~/features/ui/drawer";
-import { setCenter } from "~/features/map/store";
-import { resetActiveView } from "~/features/views/store";
+import TextInput from "~/features/form/text-input";
 
-const SearchFooter = () => {
-  const dispatch = useTypedDispatch();
-  const results = useTypedSelector((state) => state.search.results);
-
+export default function SearchFooter() {
   const { isActive } = useView("search");
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const dispatch = useTypedDispatch();
 
-  const handleSetCenter = (center?: LngLatLike) => {
-    if (center) {
-      dispatch(setCenter(center));
-      dispatch(resetActiveView());
+  const [address, setAddress] = React.useState("");
+
+  React.useEffect(() => {
+    if (isActive && inputRef?.current) {
+      inputRef.current.focus();
+    } else {
+      const timeout = setTimeout(() => {
+        setAddress("");
+        dispatch(resetSearch());
+      }, 1000);
+
+      return () => clearTimeout(timeout);
     }
+  }, [isActive]);
+
+  // Debounce search input
+  React.useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (address !== "") {
+        dispatch(setToastContent("Finding results..."));
+        dispatch(runSearch(address)).then(() => {
+          dispatch(hideToast());
+        });
+      } else {
+        dispatch(resetSearch());
+      }
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [address]);
+
+  // Handlers
+  const handleUpdateSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAddress(event.target.value);
   };
 
-  console.log(results);
+  const handleFindSelf = () => {
+    dispatch(setToastContent("Finding your location..."));
+    if (navigator && "geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(({ coords }) => {
+        dispatch(setCenter([coords.longitude, coords.latitude]));
+        dispatch(hideToast());
+        dispatch(resetSearch());
+        dispatch(resetActiveView());
+      });
+    }
+  };
 
   return (
     <Drawer
       show={isActive}
       position="bottom"
-      className="divide-y divide-base-100"
+      className="divide-y divide-base-200"
     >
-      {results?.length ? (
-        <Drawer.Row className="bg-base-50">
-          <div className="flex max-h-48 w-full flex-col divide-y divide-base-100 overflow-y-scroll">
-            {results?.map((feature) => (
-              <div
-                key={nanoid()}
-                className="flex flex-col p-3 hover:cursor-pointer hover:bg-white"
-                onClick={() => handleSetCenter(feature?.center)}
-              >
-                <p className="text-base text-base-700">{feature?.heading}</p>
-                <p className="text-sm text-base-400">{feature?.subheading}</p>
-              </div>
-            ))}
-          </div>
-        </Drawer.Row>
-      ) : null}
-      <Drawer.Row className="shadow-lg">
-        {results?.length ? (
-          <div className="flex flex-col p-3">
-            <h3 className="text-base text-base-700">
-              {results.length} results found
-            </h3>
-            <p className="text-sm text-base-400">
-              Select a location to jump to.
-            </p>
-          </div>
-        ) : (
-          <div className="flex flex-col p-3">
-            <h3 className="text-base text-base-700">No results found.</h3>
-            <p className="text-sm text-base-400">
-              Start by typing in an address.
-            </p>
-          </div>
-        )}
+      <Drawer.Row className="p-2">
+        <TextInput
+          icon="ri-search-line"
+          onChange={handleUpdateSearch}
+          value={address}
+          ref={inputRef}
+          placeholder="Search for an address..."
+        />
+        <button className="btn btn-primary" onClick={handleFindSelf}>
+          <i className="ri-map-pin-user-fill btn-icon" />
+        </button>
       </Drawer.Row>
     </Drawer>
   );
-};
-
-SearchFooter.propTypes = {};
-
-export default SearchFooter;
+}
