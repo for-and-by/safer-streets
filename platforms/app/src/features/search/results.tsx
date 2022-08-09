@@ -23,11 +23,7 @@ export default function SearchResults() {
   };
 
   return (
-    <Drawer
-      show={results?.length}
-      position="center"
-      className="mb-8 divide-y divide-base-100"
-    >
+    <Drawer show={!!results?.length} position="center" className="mb-2">
       {results?.length ? (
         <Drawer.Row className="bg-base-50">
           <div className="flex max-h-48 w-full flex-col divide-y divide-base-100 overflow-y-scroll">

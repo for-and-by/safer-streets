@@ -1,7 +1,7 @@
 import React from "react";
 
-import SearchFooter from "./header";
-import SearchHeader from "./footer";
+import SearchFooter from "./footer";
+import SearchHeader from "./header";
 import SearchResults from "./results";
 
 interface Props {
