@@ -52,7 +52,7 @@ export function addSearchListeners(startListening: StoreStartListening) {
         console.log(state);
         setTimeout(() => {
           dispatch(clearResults());
-        }, 1000);
+        }, 600);
       }
     },
   });

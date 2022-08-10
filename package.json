@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "platforms/*"
   ],
   "scripts": {
     "build": "turbo run build",
@@ -13,7 +13,8 @@
   },
   "devDependencies": {
     "prettier": "latest",
-    "turbo": "latest"
+    "turbo": "latest",
+    "vite": "latest"
   },
   "engines": {
     "npm": ">=7.0.0",

@@ -23,31 +23,30 @@ function Root({
   scrollable = false,
   children,
 }: Props["Root"]) {
-  const [style, setStyle] = React.useState<React.CSSProperties>({
-    "--hght": "100%",
-  } as React.CSSProperties);
+  const [height, setHeight] = React.useState<number>(0);
 
   const rootRef = React.useRef<HTMLDivElement | null>(null);
 
   React.useEffect(() => {
     if (rootRef?.current) {
-      const height = rootRef.current.scrollHeight;
-      setStyle({ ...style, "--hght": `${height}px` } as React.CSSProperties);
+      setHeight(rootRef.current.clientHeight);
     }
-  }, []);
+  }, [show]);
+
+  const style = {
+    "--height": `${height}px`,
+  } as React.CSSProperties;
 
   return (
     <div
       style={style}
       className={clsx(
-        "transition-full duration-300",
+        "transition-all duration-300",
         position === "bottom" && "rounded-t",
         position === "top" && "rounded-b",
         position === "center" && "rounded",
-        show && "pointer-events-auto delay-300 ease-in-out",
-        !show && "pointer-events-none max-h-0 ease-in",
-        scrollable && show && "max-h-80",
-        !scrollable && show && "max-h-[var(--hght)]",
+        show && "pointer-events-auto h-[var(--height)] delay-300 ease-in-out",
+        !show && "pointer-events-none h-0 ease-in",
         scrollable && "overflow-y-scroll",
         !scrollable && "overflow-hidden",
         className

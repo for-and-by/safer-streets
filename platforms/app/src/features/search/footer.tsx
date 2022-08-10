@@ -22,12 +22,7 @@ export default function SearchFooter() {
     if (isActive && inputRef?.current) {
       inputRef.current.focus();
     } else {
-      const timeout = setTimeout(() => {
-        setAddress("");
-        dispatch(resetSearch());
-      }, 1000);
-
-      return () => clearTimeout(timeout);
+      setAddress("");
     }
   }, [isActive]);
 
@@ -39,12 +34,16 @@ export default function SearchFooter() {
         dispatch(runSearch(address)).then(() => {
           dispatch(hideToast());
         });
-      } else {
-        dispatch(resetSearch());
       }
     }, 500);
 
     return () => clearTimeout(timeout);
+  }, [address]);
+
+  React.useEffect(() => {
+    if (address === "") {
+      dispatch(resetSearch());
+    }
   }, [address]);
 
   // Handlers
