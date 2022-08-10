@@ -1,5 +1,3 @@
-import InfoModal from "~/features/modals/info";
-
 export default function AppFooter() {
   return (
     <div className="pointer-events-auto flex w-full flex-row bg-base-100">

@@ -12,8 +12,7 @@ import { resetActiveView } from "~/features/views/store";
 export default function SearchResults() {
   const dispatch = useTypedDispatch();
   const results = useTypedSelector((state) => state.search.results);
-
-  const { isActive } = useView("search");
+  const show = useTypedSelector((state) => state.search.show);
 
   const handleSetCenter = (center?: LngLatLike) => {
     if (center) {
@@ -23,8 +22,8 @@ export default function SearchResults() {
   };
 
   return (
-    <Drawer show={!!results?.length} position="center" className="mb-2">
-      {results?.length ? (
+    <Drawer show={show} position="center" className="mb-2">
+      {show ? (
         <Drawer.Row className="bg-base-50">
           <div className="flex max-h-48 w-full flex-col divide-y divide-base-100 overflow-y-scroll">
             {results?.map((feature) => (

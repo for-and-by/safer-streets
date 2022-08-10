@@ -2,6 +2,7 @@ import type { GeoJSONFeature, LngLatLike } from "maplibre-gl";
 
 export interface SearchState {
   loading: boolean;
+  show: boolean;
   results: SearchFeature[];
 }
 

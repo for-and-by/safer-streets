@@ -5,7 +5,7 @@ import { createListenerMiddleware, configureStore } from "@reduxjs/toolkit";
 import mapReducer, { addMapListeners } from "~/features/map/store";
 import toastReducer, { addToastListeners } from "~/features/toast/store";
 import viewReducer from "~/features/views/store";
-import searchReducer from "~/features/search/store";
+import searchReducer, { addSearchListeners } from "~/features/search/store";
 
 // Middleware setup
 
@@ -14,6 +14,7 @@ const startListening = listener.startListening as StoreStartListening;
 
 addMapListeners(startListening);
 addToastListeners(startListening);
+addSearchListeners(startListening);
 
 // Store Creator
 const store = configureStore({
