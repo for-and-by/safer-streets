@@ -4,8 +4,6 @@ import type { ToastState } from "~/features/toast/types";
 
 import { createSlice } from "@reduxjs/toolkit";
 
-const ERRORS = {};
-
 const initialState: ToastState = {
   content: undefined,
   show: false,

@@ -2,7 +2,6 @@ import type {
   ListenerMiddlewareInstance,
   TypedStartListening,
 } from "@reduxjs/toolkit";
-import type { LngLatLike } from "maplibre-gl";
 
 import store from ".";
 

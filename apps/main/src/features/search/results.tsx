@@ -3,7 +3,6 @@ import type { LngLatLike } from "maplibre-gl";
 import { nanoid } from "nanoid";
 
 import { useTypedDispatch, useTypedSelector } from "~/features/store/hooks";
-import { useView } from "~/features/views/hooks";
 
 import Drawer from "~/features/ui/drawer";
 import { setCenter } from "~/features/map/store";
