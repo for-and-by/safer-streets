@@ -1,6 +1,6 @@
 import React from "react";
 
-export function createContextHook<ContextValue>(contextObj: {
+export default function createContextHook<ContextValue>(contextObj: {
   [key: string]: React.Context<ContextValue>;
 }) {
   return function () {

@@ -1,7 +1,7 @@
 import React from "react";
 
-import { useTypedSelector } from "~/features/store/hooks";
-import { useView } from "~/features/views/hooks";
+import useTypedSelector from "~/hooks/use-typed-selector";
+import useView from "~/hooks/use-view";
 
 import Drawer from "~/features/ui/drawer";
 

@@ -1,12 +1,12 @@
 import React from "react";
 
-import { setCenter } from "~/features/map/store";
-import { resetSearch, runSearch } from "~/features/search/store";
-import { hideToast, setToastContent } from "~/features/toast/store";
-import { resetActiveView } from "~/features/views/store";
+import toast from "~/store/toast/actions";
+import search from "~/store/search/actions";
+import map from "~/store/map/actions";
+import view from "~/store/view/actions";
 
-import { useTypedDispatch } from "~/features/store/hooks";
-import { useView } from "~/features/views/hooks";
+import useView from "~/hooks/use-view";
+import useTypedDispatch from "~/hooks/use-typed-dispatch";
 
 import Drawer from "~/features/ui/drawer";
 import TextInput from "~/features/form/text-input";
@@ -30,9 +30,9 @@ export default function SearchFooter() {
   React.useEffect(() => {
     const timeout = setTimeout(() => {
       if (address !== "") {
-        dispatch(setToastContent("Finding results..."));
-        dispatch(runSearch(address)).then(() => {
-          dispatch(hideToast());
+        dispatch(toast.content.set("Finding results..."));
+        dispatch(search.results.fetch(address)).then(() => {
+          dispatch(toast.hide());
         });
       }
     }, 500);
@@ -42,7 +42,7 @@ export default function SearchFooter() {
 
   React.useEffect(() => {
     if (address === "") {
-      dispatch(resetSearch());
+      dispatch(search.results.hide());
     }
   }, [address]);
 
@@ -52,13 +52,13 @@ export default function SearchFooter() {
   };
 
   const handleFindSelf = () => {
-    dispatch(setToastContent("Finding your location..."));
+    dispatch(toast.content.set("Finding your location..."));
     if (navigator && "geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(({ coords }) => {
-        dispatch(setCenter([coords.longitude, coords.latitude]));
-        dispatch(hideToast());
-        dispatch(resetSearch());
-        dispatch(resetActiveView());
+        dispatch(map.center.set([coords.longitude, coords.latitude]));
+        dispatch(toast.hide());
+        dispatch(search.results.hide());
+        dispatch(view.active.reset());
       });
     }
   };

@@ -1,7 +1,9 @@
-import type { MapContextValue } from "./types";
+import type { MapContextValue } from "~/types/map";
 
 import React from "react";
 import maplibregl from "maplibre-gl";
+
+import createContextHook from "~/lib/create-context-hook";
 
 import config from "~/config";
 
@@ -13,6 +15,8 @@ export const MapContext = React.createContext<MapContextValue>({
   instance: null,
   ref: () => {},
 });
+
+export const useMapContext = createContextHook<MapContextValue>({ MapContext });
 
 export default function MapProvider({ children }: Props) {
   const [instance, setInstance] =

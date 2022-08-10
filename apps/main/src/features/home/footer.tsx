@@ -1,11 +1,15 @@
-import { useView } from "~/features/views/hooks";
+import view from "~/store/view/actions";
+
+import useView from "~/hooks/use-view";
+import useTypedDispatch from "~/hooks/use-typed-dispatch";
 
 import Drawer from "~/features/ui/drawer";
 
 export default function HomeFooter() {
-  const { isActive, setActiveView } = useView("default");
+  const dispatch = useTypedDispatch();
+  const { isActive } = useView("default");
 
-  const handleShowCreate = () => setActiveView("create");
+  const handleShowCreate = () => dispatch(view.active.set("create"));
 
   return (
     <Drawer

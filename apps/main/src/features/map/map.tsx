@@ -1,8 +1,12 @@
 import React from "react";
 
-import { useTypedDispatch, useTypedSelector } from "~/features/store/hooks";
-import { setCenter, setZoom } from "~/features/map/store";
-import { useMapContext, useMapEvents } from "./hooks";
+import map from "~/store/map/actions";
+
+import useTypedDispatch from "~/hooks/use-typed-dispatch";
+import useTypedSelector from "~/hooks/use-typed-selector";
+import useMapEvents from "~/hooks/use-map-events";
+
+import { useMapContext } from "~/features/map/provider";
 
 interface Props extends React.ComponentProps<"div"> {}
 
@@ -16,13 +20,11 @@ export default function Map(props: Props) {
   useMapEvents({
     dragend: (event) => {
       const { lng, lat } = event.target.getCenter();
-      console.log(lng, lat);
-      dispatch(setCenter([lng, lat]));
+      dispatch(map.center.set([lng, lat]));
     },
     zoomend: (event) => {
       const zoom = event.target.getZoom();
-      console.log(zoom);
-      dispatch(setZoom(zoom));
+      dispatch(map.zoom.set(zoom));
     },
   });
 

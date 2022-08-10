@@ -4,12 +4,12 @@ import Controls from "~/features/map/controls";
 import HomeWrapper from "~/features/home/wrapper";
 import SearchWrapper from "~/features/search/wrapper";
 
-import AppHeader from "~/features/app/header";
-import AppFooter from "~/features/app/footer";
+import AppHeader from "~/features/layout/header";
+import AppFooter from "~/features/layout/footer";
 
 interface Props {}
 
-export default function Layout({}: Props) {
+export default function Index({}: Props) {
   return (
     <>
       <div className="layer z-10">

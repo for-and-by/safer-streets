@@ -2,7 +2,8 @@ import React from "react";
 import { nanoid } from "nanoid";
 import clsx from "clsx";
 
-import { createContextHook } from "~/features/app/helpers";
+import createContextHook from "~/lib/create-context-hook";
+
 interface Props {
   Root: {
     children?: React.ReactNode;

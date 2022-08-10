@@ -1,12 +1,12 @@
 import { Provider } from "react-redux";
-import store from "~/features/store";
+import store from "~/store";
 
-import Layout from "~/features/app/layout";
+import Index from "~/features/layout";
 
 function App() {
   return (
     <Provider store={store}>
-      <Layout />
+      <Index />
     </Provider>
   );
 }

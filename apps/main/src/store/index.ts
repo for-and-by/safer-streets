@@ -1,11 +1,14 @@
-import type { StoreStartListening } from "./types";
-
+import type { StoreStartListening } from "~/types/store";
 import { createListenerMiddleware, configureStore } from "@reduxjs/toolkit";
 
-import mapReducer, { addMapListeners } from "~/features/map/store";
-import toastReducer, { addToastListeners } from "~/features/toast/store";
-import viewReducer from "~/features/views/store";
-import searchReducer, { addSearchListeners } from "~/features/search/store";
+import viewReducer from "~/store/view/reducer";
+import toastReducer from "~/store/toast/reducer";
+import mapReducer from "~/store/map/reducer";
+import searchReducer from "~/store/search/reducer";
+
+import addToastListeners from "~/store/toast/listeners";
+import addMapListeners from "~/store/map/listeners";
+import addSearchListeners from "~/store/search/listeners";
 
 // Middleware setup
 

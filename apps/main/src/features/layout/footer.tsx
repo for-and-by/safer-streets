@@ -4,7 +4,7 @@ export default function AppFooter() {
       <div className="flex w-full flex-row justify-between text-base-700">
         <a
           className="px-2 py-1 text-sm"
-          href="https://www.maptiler.com/copyright/"
+          href="~/features/layout/footer"
           target="_blank"
         >
           &copy; MapTiler

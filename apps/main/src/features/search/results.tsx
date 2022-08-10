@@ -2,11 +2,13 @@ import type { LngLatLike } from "maplibre-gl";
 
 import { nanoid } from "nanoid";
 
-import { useTypedDispatch, useTypedSelector } from "~/features/store/hooks";
+import useTypedDispatch from "~/hooks/use-typed-dispatch";
+import useTypedSelector from "~/hooks/use-typed-selector";
+
+import map from "~/store/map/actions";
+import view from "~/store/view/actions";
 
 import Drawer from "~/features/ui/drawer";
-import { setCenter } from "~/features/map/store";
-import { resetActiveView } from "~/features/views/store";
 
 export default function SearchResults() {
   const dispatch = useTypedDispatch();
@@ -15,8 +17,8 @@ export default function SearchResults() {
 
   const handleSetCenter = (center?: LngLatLike) => {
     if (center) {
-      dispatch(setCenter(center));
-      dispatch(resetActiveView());
+      dispatch(map.center.set(center));
+      dispatch(view.active.reset());
     }
   };
 

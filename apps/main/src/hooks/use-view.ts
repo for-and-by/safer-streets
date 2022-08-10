@@ -1,15 +1,17 @@
 import React from "react";
-import { useTypedDispatch, useTypedSelector } from "~/features/store/hooks";
-import { addView, removeView, setActiveView } from "~/features/views/store";
 
-export function useView(handle: string) {
+import view from "~/store/view/actions";
+import useTypedDispatch from "~/hooks/use-typed-dispatch";
+import useTypedSelector from "~/hooks/use-typed-selector";
+
+export default function useView(handle: string) {
   const dispatch = useTypedDispatch();
   const activeView = useTypedSelector((state) => state.view.active);
 
   React.useEffect(() => {
-    dispatch(addView(handle));
+    dispatch(view.add(handle));
     return () => {
-      dispatch(removeView(handle));
+      dispatch(view.remove(handle));
     };
   }, [dispatch, handle]);
 
@@ -17,7 +19,7 @@ export function useView(handle: string) {
     isActive: handle === activeView,
     isDefaultActive: "default" === activeView,
     setActiveView: (viewHandle: string) => {
-      dispatch(setActiveView(viewHandle ?? handle));
+      dispatch(view.active.set(viewHandle ?? handle));
     },
   };
 }

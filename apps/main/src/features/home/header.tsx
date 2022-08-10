@@ -1,11 +1,15 @@
-import { useView } from "~/features/views/hooks";
+import view from "~/store/view/actions";
+
+import useView from "~/hooks/use-view";
+import useTypedDispatch from "~/hooks/use-typed-dispatch";
 
 import Logo from "~/features/app/logo";
 import Drawer from "~/features/ui/drawer";
 
 export default function HomeHeader() {
-  const { isActive, setActiveView } = useView("default");
-  const handleShowSearch = () => setActiveView("search");
+  const dispatch = useTypedDispatch();
+  const { isActive } = useView("default");
+  const handleShowSearch = () => dispatch(view.active.set("search"));
 
   return (
     <Drawer position="top" show={isActive}>

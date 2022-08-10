@@ -1,18 +1,18 @@
-import { useTypedDispatch } from "~/features/store/hooks";
-import { zoomIn, zoomOut } from "~/features/map/store";
-import Toast from "~/features/toast/toast";
+import map from "~/store/map/actions";
 
-// import Toast from "~/components/elements/toast";
+import useTypedDispatch from "~/hooks/use-typed-dispatch";
+
+import Toast from "~/features/layout/toast";
 
 export default function Controls() {
   const dispatch = useTypedDispatch();
 
   const handleZoomIn = () => {
-    dispatch(zoomIn());
+    dispatch(map.zoom.in());
   };
 
   const handleZoomOut = () => {
-    dispatch(zoomOut());
+    dispatch(map.zoom.out());
   };
 
   return (
