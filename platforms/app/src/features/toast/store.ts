@@ -1,5 +1,6 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { StoreStartListening, ToastState } from "~/features/store/types";
+import type { StoreStartListening } from "~/features/store/types";
+import type { ToastState } from "~/features/toast/types";
 
 import { createSlice } from "@reduxjs/toolkit";
 

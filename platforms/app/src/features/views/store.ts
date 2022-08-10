@@ -1,5 +1,5 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { ViewState } from "~/features/store/types";
+import type { ViewState } from "~/features/views/types";
 
 import { createSlice } from "@reduxjs/toolkit";
 

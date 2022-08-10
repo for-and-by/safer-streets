@@ -1,8 +1,8 @@
-import { SearchState } from "~/features/search/types";
+import type { StoreStartListening } from "~/features/store/types";
+import type { SearchState } from "~/features/search/types";
 
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { geocode } from "~/features/search/helpers";
-import { StoreStartListening } from "~/features/store/types";
 
 export const runSearch = createAsyncThunk(
   "search/runStatus",

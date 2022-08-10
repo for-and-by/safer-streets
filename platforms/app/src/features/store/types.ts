@@ -18,18 +18,3 @@ export type StoreStartListening = TypedStartListening<
   StoreState,
   StoreDispatch
 >;
-
-export interface MapState {
-  zoom: number;
-  center: LngLatLike;
-}
-
-export interface ToastState {
-  content?: string;
-  show: boolean;
-}
-
-export interface ViewState {
-  list: string[];
-  active: string;
-}
