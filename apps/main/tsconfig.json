@@ -1,12 +1,26 @@
 {
-  "extends": "config/ts-base.json",
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Default",
   "compilerOptions": {
-    "jsx": "react-jsx",
+    "target": "es6",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "skipLibCheck": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "es2022",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
     "types": ["vite/client"],
     "paths": {
-      "~/*": ["./src/*"]
-    },
+      "~/*": ["./src/*"],
+    }
   },
   "include": ["src"]
 }
