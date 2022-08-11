@@ -7,22 +7,12 @@ import Modal from "~/components/modals/modal";
 import Drawer from "~/components/elements/drawer";
 import Tabs from "~/components/elements/tabs";
 
-// import about from "~/content/about.md";
-// import contact from "~/content/contact.md";
-// import help from "~/content/help.md";
-
-// Component
+import content from "~/content";
 
 interface Props {
   children?: React.ReactNode;
   className?: string;
 }
-
-const content: { [key: string]: string } = {
-  about: "", //marked(about),
-  help: "", //marked(help),
-  contact: "", //marked(contact),
-};
 
 export default function InfoModal({ children, className = "" }: Props) {
   return (
@@ -55,14 +45,16 @@ export default function InfoModal({ children, className = "" }: Props) {
             </Drawer.Row>
             <Drawer.Row className="p-4">
               <Tabs.Panels>
-                {Object.keys(content).map((key) => (
-                  <Tabs.Panel key={nanoid()}>
-                    <div
-                      className="prose flex flex-col space-y-4 child:m-0"
-                      dangerouslySetInnerHTML={{ __html: content[key] }}
-                    />
-                  </Tabs.Panel>
-                ))}
+                {Object.keys(content).map((key) => {
+                  return !!content[key] ? (
+                    <Tabs.Panel key={nanoid()}>
+                      <div
+                        className="prose max-w-none flex flex-col space-y-4 child:m-0"
+                        dangerouslySetInnerHTML={{ __html: content[key] }}
+                      />
+                    </Tabs.Panel>
+                  ) : null;
+                })}
               </Tabs.Panels>
             </Drawer.Row>
           </Tabs>

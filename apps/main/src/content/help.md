@@ -1,0 +1,18 @@
+## Welcome to Floodwatch!
+
+**Looking at Events**
+
+If you're looking to see what other people have
+submitted, drag around the map and click on the icons
+scattered across the map. This will let you know more
+about what you're looking at, and clicking 'More
+Details' will show you all the data provided by the
+user who submitted the event.
+
+**Reporting New Events**
+
+If you're looking to submit your own event, click on
+the map the nearest you can to the location that the
+event is happening. Then, click 'Report Event
+Here.' You'll be prompted to provide an image of
+the issue, a brief description and a severity rating.

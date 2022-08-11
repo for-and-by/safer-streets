@@ -47,7 +47,7 @@ function Root({
         position === "center" && "rounded",
         show && "pointer-events-auto h-[var(--height)] ease-in-out",
         !show && "pointer-events-none h-0 ease-in",
-        scrollable && "overflow-y-scroll",
+        scrollable && "overflow-y-scroll max-h-96",
         !scrollable && "overflow-hidden",
         className
       )}
