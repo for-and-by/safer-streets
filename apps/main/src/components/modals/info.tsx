@@ -3,9 +3,9 @@ import { nanoid } from "nanoid";
 
 import Logo from "~/components/elements/logo";
 
-import Modal from "~/components/modals/modal";
-import Drawer from "~/components/elements/drawer";
-import Tabs from "~/components/elements/tabs";
+import Modal from "~/components/composites/modal";
+import Drawer from "~/components/composites/drawer";
+import Tabs from "~/components/composites/tabs";
 
 import content from "~/content";
 
@@ -49,7 +49,7 @@ export default function InfoModal({ children, className = "" }: Props) {
                   return !!content[key] ? (
                     <Tabs.Panel key={nanoid()}>
                       <div
-                        className="prose max-w-none flex flex-col space-y-4 child:m-0"
+                        className="prose flex max-w-none flex-col space-y-4 child:m-0"
                         dangerouslySetInnerHTML={{ __html: content[key] }}
                       />
                     </Tabs.Panel>

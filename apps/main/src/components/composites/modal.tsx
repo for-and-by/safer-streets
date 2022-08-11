@@ -4,7 +4,7 @@ import clsx from "clsx";
 import createContextHook from "~/lib/create-context-hook";
 
 import Portal from "~/components/elements/portal";
-import Drawer from "~/components/elements/drawer";
+import Drawer from "~/components/composites/drawer";
 
 interface Props {
   Root: {
@@ -93,8 +93,13 @@ function Tint({}: Props["Tint"]) {
 function Panel({ className = "", children }: Props["Panel"]) {
   const { show } = useModal();
   return (
-    <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 clamp">
-      <Drawer show={show} className={className} position="center" scrollable={true}>
+    <div className="clamp absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+      <Drawer
+        show={show}
+        className={className}
+        position="center"
+        scrollable={true}
+      >
         {children}
       </Drawer>
     </div>

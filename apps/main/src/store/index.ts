@@ -5,6 +5,7 @@ import viewReducer from "~/store/view/reducer";
 import toastReducer from "~/store/toast/reducer";
 import mapReducer from "~/store/map/reducer";
 import searchReducer from "~/store/search/reducer";
+import createReducer from "~/store/create/reducer";
 
 import addToastListeners from "~/store/toast/listeners";
 import addMapListeners from "~/store/map/listeners";
@@ -26,6 +27,7 @@ const store = configureStore({
     toast: toastReducer,
     view: viewReducer,
     search: searchReducer,
+    create: createReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(listener.middleware),

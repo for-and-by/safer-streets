@@ -5,7 +5,7 @@ import React from "react";
 import useTypedSelector from "~/hooks/use-typed-selector";
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
 
-import Drawer from "~/components/elements/drawer";
+import Drawer from "~/components/composites/drawer";
 import view from "~/store/view/actions";
 
 export default function SearchHeader() {

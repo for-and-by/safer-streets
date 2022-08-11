@@ -7,7 +7,7 @@ import view from "~/store/view/actions";
 
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
 
-import Drawer from "~/components/elements/drawer";
+import Drawer from "~/components/composites/drawer";
 import TextInput from "~/components/form/text-input";
 import useTypedSelector from "~/hooks/use-typed-selector";
 import { VIEWS } from "~/types/view";

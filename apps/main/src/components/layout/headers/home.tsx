@@ -3,7 +3,7 @@ import view from "~/store/view/actions";
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
 
 import Logo from "~/components/elements/logo";
-import Drawer from "~/components/elements/drawer";
+import Drawer from "~/components/composites/drawer";
 import { VIEWS } from "~/types/view";
 
 export default function HomeHeader() {

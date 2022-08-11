@@ -4,7 +4,7 @@ import view from "~/store/view/actions";
 
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
 
-import Drawer from "~/components/elements/drawer";
+import Drawer from "~/components/composites/drawer";
 
 export default function HomeFooter() {
   const dispatch = useTypedDispatch();

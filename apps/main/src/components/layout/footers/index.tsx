@@ -4,14 +4,16 @@ import React from "react";
 
 import useViewTransition from "~/hooks/use-view-transition";
 
-import Drawer from "~/components/elements/drawer";
+import Drawer from "~/components/composites/drawer";
 
 import HomeFooter from "./home";
 import SearchFooter from "./search";
+import CreateFooter from "./create";
 
 const footers: { [key: string]: () => React.ReactElement } = {
   [VIEWS.HOME]: HomeFooter,
   [VIEWS.SEARCH]: SearchFooter,
+  [VIEWS.CREATE]: CreateFooter,
 };
 
 export default function Header() {

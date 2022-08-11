@@ -4,14 +4,16 @@ import React from "react";
 
 import useViewTransition from "~/hooks/use-view-transition";
 
-import Drawer from "~/components/elements/drawer";
+import Drawer from "~/components/composites/drawer";
 
 import HomeHeader from "./home";
 import SearchHeader from "./search";
+import CreateHeader from "./create";
 
 const headers: { [key: string]: () => React.ReactElement } = {
   [VIEWS.HOME]: HomeHeader,
   [VIEWS.SEARCH]: SearchHeader,
+  [VIEWS.CREATE]: CreateHeader,
 };
 
 export default function Header() {
