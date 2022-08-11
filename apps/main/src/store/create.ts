@@ -1,10 +1,10 @@
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { LngLatLike } from "maplibre-gl";
-import type { CreateState, Details } from "~/features/create/types";
+import type { CreateState, Details } from "~/components/create/types";
 
 import { createSlice as reduxCreateSlice } from "@reduxjs/toolkit";
 
-import stages from "../features/create/stages";
+import stages from "../components/create/stages";
 
 const initialState: CreateState = {
   submitting: false,

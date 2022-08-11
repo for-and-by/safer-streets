@@ -1,7 +1,7 @@
 import React from "react";
 
-import Modal from "~/features/modals/modal";
-import Drawer from "~/features/ui/drawer";
+import Modal from "~/components/modals/modal";
+import Drawer from "~/components/elements/drawer";
 
 interface Props {
   children?: React.ReactNode;

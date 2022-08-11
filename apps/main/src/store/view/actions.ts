@@ -1,11 +1,9 @@
 import * as Redux from "@reduxjs/toolkit";
+import { VIEWS } from "~/types/view";
 
 const view = {
-  add: Redux.createAction<string>("view/add"),
-  remove: Redux.createAction<string>("view/remove"),
-  clear: Redux.createAction("view/clear"),
   active: {
-    set: Redux.createAction<string>("view/active/set"),
+    set: Redux.createAction<VIEWS>("view/active/set"),
     reset: Redux.createAction("view/active/reset"),
   },
 };

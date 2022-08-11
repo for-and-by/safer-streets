@@ -5,26 +5,28 @@ import search from "~/store/search/actions";
 import map from "~/store/map/actions";
 import view from "~/store/view/actions";
 
-import useView from "~/hooks/use-view";
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
 
-import Drawer from "~/features/ui/drawer";
-import TextInput from "~/features/form/text-input";
+import Drawer from "~/components/elements/drawer";
+import TextInput from "~/components/form/text-input";
+import useTypedSelector from "~/hooks/use-typed-selector";
+import { VIEWS } from "~/types/view";
 
 export default function SearchFooter() {
-  const { isActive } = useView("search");
-  const inputRef = React.useRef<HTMLInputElement>(null);
   const dispatch = useTypedDispatch();
+  const activeView = useTypedSelector((state) => state.view.active);
+
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const [address, setAddress] = React.useState("");
 
   React.useEffect(() => {
-    if (isActive && inputRef?.current) {
+    if (activeView === VIEWS.SEARCH && inputRef?.current) {
       inputRef.current.focus();
     } else {
       setAddress("");
     }
-  }, [isActive]);
+  }, [activeView]);
 
   // Debounce search input
   React.useEffect(() => {
@@ -64,23 +66,17 @@ export default function SearchFooter() {
   };
 
   return (
-    <Drawer
-      show={isActive}
-      position="bottom"
-      className="divide-y divide-base-200"
-    >
-      <Drawer.Row className="p-2">
-        <TextInput
-          icon="ri-search-line"
-          onChange={handleUpdateSearch}
-          value={address}
-          ref={inputRef}
-          placeholder="Search for an address..."
-        />
-        <button className="btn btn-primary" onClick={handleFindSelf}>
-          <i className="ri-map-pin-user-fill btn-icon" />
-        </button>
-      </Drawer.Row>
-    </Drawer>
+    <Drawer.Row className="p-2">
+      <TextInput
+        icon="ri-search-line"
+        onChange={handleUpdateSearch}
+        value={address}
+        ref={inputRef}
+        placeholder="Search for an address..."
+      />
+      <button className="btn btn-primary" onClick={handleFindSelf}>
+        <i className="ri-map-pin-user-fill btn-icon" />
+      </button>
+    </Drawer.Row>
   );
 }

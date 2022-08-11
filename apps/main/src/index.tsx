@@ -1,7 +1,7 @@
 import { Provider } from "react-redux";
 import store from "~/store";
 
-import Index from "~/features/layout";
+import Index from "~/components/layout";
 
 function App() {
   return (

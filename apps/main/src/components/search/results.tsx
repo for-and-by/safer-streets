@@ -8,7 +8,7 @@ import useTypedSelector from "~/hooks/use-typed-selector";
 import map from "~/store/map/actions";
 import view from "~/store/view/actions";
 
-import Drawer from "~/features/ui/drawer";
+import Drawer from "~/components/elements/drawer";
 
 export default function SearchResults() {
   const dispatch = useTypedDispatch();

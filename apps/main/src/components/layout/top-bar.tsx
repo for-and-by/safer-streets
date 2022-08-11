@@ -1,6 +1,6 @@
-import InfoModal from "~/features/modals/info";
+import InfoModal from "~/components/modals/info";
 
-export default function AppHeader() {
+export default function TopBar() {
   return (
     <div className="pointer-events-auto flex w-full flex-row bg-base-100">
       <InfoModal className="flex h-full items-center px-2">

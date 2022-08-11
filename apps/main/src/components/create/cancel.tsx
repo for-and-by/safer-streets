@@ -3,7 +3,7 @@ import view from "~/store/view/actions";
 
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
 
-import WarningModal from "~/features/modals/warning";
+import WarningModal from "~/components/modals/warning";
 
 interface Props {
   children?: React.ReactNode;

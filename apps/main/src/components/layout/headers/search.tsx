@@ -1,13 +1,16 @@
+import { VIEWS } from "~/types/view";
+
 import React from "react";
 
 import useTypedSelector from "~/hooks/use-typed-selector";
-import useView from "~/hooks/use-view";
+import useTypedDispatch from "~/hooks/use-typed-dispatch";
 
-import Drawer from "~/features/ui/drawer";
+import Drawer from "~/components/elements/drawer";
+import view from "~/store/view/actions";
 
 export default function SearchHeader() {
   const results = useTypedSelector((state) => state.search.results);
-  const { isActive, setActiveView } = useView("search");
+  const dispatch = useTypedDispatch();
 
   const [content, setContent] = React.useState({
     heading: "",
@@ -29,20 +32,18 @@ export default function SearchHeader() {
   }, [results]);
 
   const handleExitSearch = () => {
-    setActiveView("default");
+    dispatch(view.active.set(VIEWS.HOME));
   };
 
   return (
-    <Drawer show={isActive} position="top" className="divide-y divide-base-100">
-      <Drawer.Row className="p-2">
-        <button className="btn btn-light" onClick={handleExitSearch}>
-          <i className="btn-icon ri-arrow-left-line" />
-        </button>
-        <div className="flex flex-col px-3">
-          <h3 className="text-base text-base-700">{content.heading}</h3>
-          <p className="text-sm text-base-400">{content.subheading}</p>
-        </div>
-      </Drawer.Row>
-    </Drawer>
+    <Drawer.Row className="p-2">
+      <button className="btn btn-light" onClick={handleExitSearch}>
+        <i className="btn-icon ri-arrow-left-line" />
+      </button>
+      <div className="flex flex-col px-3">
+        <h3 className="text-base text-base-700">{content.heading}</h3>
+        <p className="text-sm text-base-400">{content.subheading}</p>
+      </div>
+    </Drawer.Row>
   );
 }

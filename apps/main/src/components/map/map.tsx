@@ -6,7 +6,7 @@ import useTypedDispatch from "~/hooks/use-typed-dispatch";
 import useTypedSelector from "~/hooks/use-typed-selector";
 import useMapEvents from "~/hooks/use-map-events";
 
-import { useMapContext } from "~/features/map/provider";
+import { useMapContext } from "~/components/map/provider";
 
 interface Props extends React.ComponentProps<"div"> {}
 

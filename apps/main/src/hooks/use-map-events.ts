@@ -1,7 +1,7 @@
 import type { MapEventGroup } from "~/types/map";
 
 import React from "react";
-import { useMapContext } from "~/features/map/provider";
+import { useMapContext } from "~/components/map/provider";
 
 export default function useMapEvents(events: MapEventGroup) {
   const { instance } = useMapContext();

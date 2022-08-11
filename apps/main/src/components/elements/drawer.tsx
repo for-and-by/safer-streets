@@ -45,14 +45,21 @@ function Root({
         position === "bottom" && "rounded-t",
         position === "top" && "rounded-b",
         position === "center" && "rounded",
-        show && "pointer-events-auto h-[var(--height)] delay-300 ease-in-out",
+        show && "pointer-events-auto h-[var(--height)] ease-in-out",
         !show && "pointer-events-none h-0 ease-in",
         scrollable && "overflow-y-scroll",
         !scrollable && "overflow-hidden",
         className
       )}
     >
-      <div ref={rootRef} className="flex flex-col bg-white">
+      <div
+        ref={rootRef}
+        className={clsx(
+          "flex flex-col bg-white",
+          position === "bottom" && "justify-start",
+          position === "top" && "justify-end"
+        )}
+      >
         {children}
       </div>
     </div>

@@ -1,11 +1,11 @@
 import React from "react";
 import { nanoid } from "nanoid";
 
-import Logo from "~/features/app/logo";
+import Logo from "~/../../../../../packages/ui/logo";
 
-import Modal from "~/features/modals/modal";
-import Drawer from "~/features/ui/drawer";
-import Tabs from "~/features/ui/tabs";
+import Modal from "~/components/modals/modal";
+import Drawer from "~/components/elements/drawer";
+import Tabs from "~/../../../../../packages/ui/tabs";
 
 // import about from "~/content/about.md";
 // import contact from "~/content/contact.md";

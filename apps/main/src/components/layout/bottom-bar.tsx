@@ -1,4 +1,4 @@
-export default function AppFooter() {
+export default function BottomBar() {
   return (
     <div className="pointer-events-auto flex w-full flex-row bg-base-100">
       <div className="flex w-full flex-row justify-between text-base-700">

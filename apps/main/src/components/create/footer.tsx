@@ -2,10 +2,10 @@ import React from "react";
 
 import CreateCancel from "./cancel";
 import { nextStage, prevStage, saveCenter, saveDetail } from "~/store/create";
-import Drawer from "~/features/ui/drawer";
-import Select from "~/features/form/select";
+import Drawer from "~/components/elements/drawer";
+import Select from "~/components/form/select";
 import { useSelector } from "react-redux";
-import { geocode } from "~/features/search/helpers";
+import { geocode } from "~/components/search/helpers";
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
 import useTypedSelector from "~/hooks/use-typed-selector";
 

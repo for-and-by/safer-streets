@@ -5,7 +5,7 @@ import toast from "~/store/toast/actions";
 import useTypedSelector from "~/hooks/use-typed-selector";
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
 
-import Loader from "~/features/ui/loader";
+import Loader from "~/components/elements/loader";
 
 export default function Toast() {
   const dispatch = useTypedDispatch();

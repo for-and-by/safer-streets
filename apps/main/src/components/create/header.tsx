@@ -1,7 +1,5 @@
-import { useEffect } from "react";
-
-import ProgressBar from "~/features/ui/progress-bar";
-import Drawer from "~/features/ui/drawer";
+import ProgressBar from "~/components/elements/progress-bar";
+import Drawer from "~/components/elements/drawer";
 
 import CreateCancel from "./cancel";
 
