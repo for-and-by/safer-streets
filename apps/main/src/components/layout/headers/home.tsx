@@ -2,7 +2,7 @@ import view from "~/store/view/actions";
 
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
 
-import Logo from "~/../../../../../../packages/ui/logo";
+import Logo from "~/components/elements/logo";
 import Drawer from "~/components/elements/drawer";
 import { VIEWS } from "~/types/view";
 

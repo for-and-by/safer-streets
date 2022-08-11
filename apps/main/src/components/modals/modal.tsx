@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 import createContextHook from "~/lib/create-context-hook";
 
-import Portal from "~/../../../../../packages/ui/portal";
+import Portal from "~/components/elements/portal";
 import Drawer from "~/components/elements/drawer";
 
 interface Props {
