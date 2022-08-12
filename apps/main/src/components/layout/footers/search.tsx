@@ -68,14 +68,14 @@ export default function SearchFooter() {
   return (
     <Drawer.Row className="p-2">
       <TextInput
-        icon="ri-search-line"
+        icon="icon-search"
         onChange={handleUpdateSearch}
         value={address}
         ref={inputRef}
         placeholder="Search for an address..."
       />
       <button className="btn btn-primary" onClick={handleFindSelf}>
-        <i className="ri-map-pin-user-fill btn-icon" />
+        <i className="btn-icon icon icon-find-self" />
       </button>
     </Drawer.Row>
   );

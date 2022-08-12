@@ -26,7 +26,7 @@ export default function InfoModal({ children, className = "" }: Props) {
               <Logo />
             </div>
             <Modal.Close className="btn btn-light">
-              <i className="ri-close-fill btn-icon" />
+              <i className="icon icon-close" />
             </Modal.Close>
           </Drawer.Row>
           <Tabs>

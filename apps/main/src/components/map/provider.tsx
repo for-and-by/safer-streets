@@ -23,7 +23,7 @@ export default function MapProvider({ children }: Props) {
     React.useState<MapContextValue["instance"]>(null);
 
   const ref = React.useCallback<MapContextValue["ref"]>((node) => {
-    if (node !== null && instance === null) {
+    if (!!node && !instance) {
       setInstance(
         new maplibregl.Map({
           container: node,

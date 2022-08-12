@@ -11,8 +11,8 @@ const TextInput = React.forwardRef<HTMLInputElement, Props>(
   ({ icon = undefined, loading = false, ...props }, ref) => (
     <div className="flex w-full overflow-hidden rounded border-base-200 bg-base-100 focus-within:outline focus-within:outline-brand-600">
       {icon && (
-        <div className="flex h-12 w-12 items-center justify-center">
-          <i className={clsx(icon, "btn-icon")} />
+        <div className="flex h-12 w-12 items-center justify-center text-base-500">
+          <i className={clsx("icon", icon)} />
         </div>
       )}
       <input

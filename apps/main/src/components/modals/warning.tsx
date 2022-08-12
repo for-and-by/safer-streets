@@ -27,7 +27,7 @@ export default function WarningModal({
           <Drawer.Row sticky className="justify-between p-2">
             <p className="ml-2 font-semibold">{heading}</p>
             <Modal.Close className="btn btn-light">
-              <i className="btn-icon ri-close-fill" />
+              <i className="btn-icon icon icon-close" />
             </Modal.Close>
           </Drawer.Row>
           <Drawer.Row className="prose p-4">

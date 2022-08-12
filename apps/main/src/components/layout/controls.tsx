@@ -16,10 +16,10 @@ export default function Controls() {
   return (
     <div className="pointer-events-auto inline-flex flex-col space-y-2 self-end">
       <button className="btn btn-white" onClick={handleZoomIn}>
-        <i className="ri-add-fill btn-icon" />
+        <i className="icon icon-plus btn-icon" />
       </button>
       <button className="btn btn-white" onClick={handleZoomOut}>
-        <i className="ri-subtract-fill btn-icon" />
+        <i className="icon icon-minus btn-icon" />
       </button>
     </div>
   );

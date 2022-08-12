@@ -35,7 +35,7 @@
   }
 
   .btn-icon {
-    @apply icon-sm flex-shrink;
+    @apply before:text-sm flex-shrink before:text-inherit;
   }
 
   .btn-primary {
@@ -52,19 +52,6 @@
 
   .btn-white {
     @apply bg-white text-base-700 hover:bg-base-100;
-  }
-
-  /* Icon Styling */
-  .icon-sm {
-    @apply text-base;
-  }
-
-  .icon-md {
-    @apply text-lg;
-  }
-
-  .icon-lg {
-    @apply text-xl;
   }
 }
 

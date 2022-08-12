@@ -16,7 +16,7 @@ export default function HomeHeader() {
         <Logo />
       </div>
       <button className="btn btn-light" onClick={handleShowSearch}>
-        <i className="ri-search-line btn-icon" />
+        <i className="btn-icon icon icon-search" />
       </button>
     </Drawer.Row>
   );

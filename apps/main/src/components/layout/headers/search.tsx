@@ -38,7 +38,7 @@ export default function SearchHeader() {
   return (
     <Drawer.Row className="p-2">
       <button className="btn btn-light" onClick={handleExitSearch}>
-        <i className="btn-icon ri-arrow-left-line" />
+        <i className="btn-icon icon icon-left" />
       </button>
       <div className="flex flex-col px-3">
         <h3 className="text-base text-base-700">{content.heading}</h3>

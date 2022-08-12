@@ -4,7 +4,7 @@ export default function TopBar() {
   return (
     <div className="pointer-events-auto flex w-full flex-row bg-base-100">
       <InfoModal className="flex h-full items-center px-2">
-        <i className="ri-information-fill text-base text-brand-700" />
+        <i className="icon icon-info icon-sm before:text-brand-700" />
       </InfoModal>
       <div className="flex flex-grow flex-row space-x-4 py-1 px-2">
         <p className="text-sm text-base-900">Endorsed By Jonathon Sri</p>
