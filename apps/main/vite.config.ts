@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   build: {
     rollupOptions: {
-      external: ["icons"],
+      external: ["icons/css/icons.css"],
     },
   },
   resolve: {
