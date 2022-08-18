@@ -31,6 +31,7 @@ export default function BaseMarker({
         element: React.Children.toArray(children).find((child) => !!child)
           ? document.createElement("div")
           : undefined,
+        anchor: "bottom",
       };
 
       setMarker(new maplibregl.Marker(options));

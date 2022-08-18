@@ -24,7 +24,9 @@ export default function Map(props: Props) {
     },
     zoomend: (event) => {
       const zoom = event.target.getZoom();
+      const { lng, lat } = event.target.getCenter();
       dispatch(map.zoom.set(zoom));
+      dispatch(map.center.set([lng, lat]));
     },
   });
 
