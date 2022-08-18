@@ -1,4 +1,4 @@
-import { Stage } from "~/types/create.js";
+import { Stage } from "~/types/create";
 
 const stages: Stage[] = [
   {
