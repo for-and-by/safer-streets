@@ -8,7 +8,7 @@ interface State {
   zoom: number;
   center: LngLatLike;
   controls: {
-    center: boolean;
+    lock: boolean;
   };
 }
 
@@ -16,7 +16,7 @@ const initialState: State = {
   zoom: config.map.zoom.default,
   center: config.map.center,
   controls: {
-    center: false,
+    lock: false,
   },
 };
 
@@ -34,11 +34,11 @@ const reducer = Redux.createReducer(initialState, (builder) => {
     .addCase(map.center.set, (state, action) => {
       state.center = action.payload;
     })
-    .addCase(map.controls.center.show, (state) => {
-      state.controls.center = true;
+    .addCase(map.controls.lock, (state) => {
+      state.controls.lock = true;
     })
-    .addCase(map.controls.center.hide, (state) => {
-      state.controls.center = false;
+    .addCase(map.controls.unlock, (state) => {
+      state.controls.lock = false;
     });
 });
 

@@ -7,13 +7,15 @@ import useTypedSelector from "~/hooks/use-typed-selector";
 import useMapEvents from "~/hooks/use-map-events";
 
 import { useMapContext } from "~/components/map/provider";
+import clsx from "clsx";
 
 interface Props extends React.ComponentProps<"div"> {}
 
-export default function Map(props: Props) {
+export default function Map({ className, ...props }: Props) {
   const dispatch = useTypedDispatch();
   const zoom = useTypedSelector((state) => state.map.zoom);
   const center = useTypedSelector((state) => state.map.center);
+  const lock = useTypedSelector((state) => state.map.controls.lock);
 
   const { ref, instance } = useMapContext();
 
@@ -39,5 +41,14 @@ export default function Map(props: Props) {
     instance?.flyTo({ center, speed: 1 });
   }, [center]);
 
-  return <div ref={ref} {...props} />;
+  return (
+    <div
+      ref={ref}
+      className={clsx(
+        className,
+        lock ? "pointer-events-none" : "pointer-events-auto"
+      )}
+      {...props}
+    />
+  );
 }

@@ -12,10 +12,8 @@ const map = {
     set: Redux.createAction<LngLatLike>("map/center/set"),
   },
   controls: {
-    center: {
-      show: Redux.createAction("map/controls/center/show"),
-      hide: Redux.createAction("map/controls/center/hides"),
-    },
+    lock: Redux.createAction("map/controls/lock"),
+    unlock: Redux.createAction("map/controls/unlock"),
   },
 };
 
