@@ -51,14 +51,14 @@ function Root({
     <div
       style={style}
       className={clsx(
-        "h-[var(--height)] transition-all duration-300 ease-in-out",
+        "bg-white transition-all duration-300 ease-in-out",
         position === "bottom" && "rounded-t",
         position === "top" && "rounded-b",
         position === "center" && "rounded",
         show && "pointer-events-auto",
         !show && "pointer-events-none",
-        scrollable && "max-h-96 overflow-y-scroll",
-        !scrollable && "overflow-hidden",
+        scrollable && "h-96 overflow-y-scroll",
+        !scrollable && "h-[var(--height)] overflow-hidden",
         className
       )}
     >

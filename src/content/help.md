@@ -1,6 +1,4 @@
-## Welcome to Floodwatch!
-
-**Looking at Events**
+### Looking at Events
 
 If you're looking to see what other people have
 submitted, drag around the map and click on the icons
@@ -9,7 +7,7 @@ about what you're looking at, and clicking 'More
 Details' will show you all the data provided by the
 user who submitted the event.
 
-**Reporting New Events**
+### Reporting New Events
 
 If you're looking to submit your own event, click on
 the map the nearest you can to the location that the

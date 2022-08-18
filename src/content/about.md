@@ -1,9 +1,26 @@
-This is an app designed to better facilitate community reporting of flooding incidents around the Brisbane area.
+The Safer Streets app is designed to support community reporting of local hazards and safety issues.
 
-Users are encouraged to provide images, descriptions and severity of incidents, to help inform people who are out of the area as to what is going on.
+### How does it work?
 
-When an event has been made, it'll stick around for 18 hours before it disappears, unless somebody comes along and verifies the event is still ongoing,
+Users are encouraged to provide details around local hazards and safety issues. User submitted data is displayed on a map, and will expire depending on certain conditions (depending on the type of information provided).
+
+The data is not intentionally anonymized, but does not require submission to be tied to a user account or profile.
+
+### Content & Moderation
 
 This content is not moderated in any way and is managed using good faith. Please don't abuse this platform, it's here to try and make everyone's lives easier.
 
-This app was created by Jordan Accinelli, and uses MapBox, Google Analytics, Next.js, Vercel and MongoDB for event storage.
+### Built on Open Source
+
+This app was created by "For & By", a tech community initiative run by Jordan Accinelli, and uses open source libraries to achieve its goals. This project would not be possible without:
+
+* MapLibre GL: For mapping utilities
+* MapTiler: For Vector GL Map Tiles & Geocoding
+* React: For rendering the UI
+* Vite: For asset bundling
+* Redux: For global state management
+* Nucleo: As an icon library
+* Firava: A variable font port of Fira Sans
+
+
+

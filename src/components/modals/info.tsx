@@ -32,15 +32,13 @@ export default function InfoModal({ children, className = "" }: Props) {
           <Tabs>
             <Drawer.Row className="border-b border-base-200" sticky>
               <Tabs.Items className="flex h-16 flex-row space-x-4 px-4">
-                <Tabs.Item className="flex items-center border-b border-white hover:border-gray-200 d-active:border-brand-600">
-                  About
-                </Tabs.Item>
-                <Tabs.Item className="flex items-center border-b border-white hover:border-gray-200 d-active:border-brand-600">
-                  Help
-                </Tabs.Item>
-                <Tabs.Item className="flex items-center border-b border-white hover:border-gray-200 d-active:border-brand-600">
-                  Contact
-                </Tabs.Item>
+                {Object.keys(content).map((key) => {
+                  return (
+                    <Tabs.Item className="flex items-center border-b border-white capitalize hover:border-gray-200 d-active:border-brand-600">
+                      {key}
+                    </Tabs.Item>
+                  );
+                })}
               </Tabs.Items>
             </Drawer.Row>
             <Drawer.Row className="p-4">
