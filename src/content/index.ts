@@ -1,8 +1,8 @@
 import { marked } from "marked";
 
-import about from "~/content/about.md";
-import contact from "~/content/contact.md";
-import help from "~/content/help.md";
+import about from "~/content/about.md?raw";
+import contact from "~/content/contact.md?raw";
+import help from "~/content/help.md?raw";
 
 interface ContentMap {
   [key: string]: string;
