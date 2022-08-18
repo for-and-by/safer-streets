@@ -28,6 +28,8 @@ export default function MapProvider({ children }: Props) {
         new maplibregl.Map({
           container: node,
           style: `${config.map.style}?key=${config.map.key}`,
+          center: config.map.center,
+          zoom: config.map.zoom.default,
         })
       );
     }

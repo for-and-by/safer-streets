@@ -7,11 +7,17 @@ import map from "~/store/map/actions";
 interface State {
   zoom: number;
   center: LngLatLike;
+  controls: {
+    center: boolean;
+  };
 }
 
 const initialState: State = {
   zoom: config.map.zoom.default,
   center: config.map.center,
+  controls: {
+    center: false,
+  },
 };
 
 const reducer = Redux.createReducer(initialState, (builder) => {
@@ -27,6 +33,12 @@ const reducer = Redux.createReducer(initialState, (builder) => {
     })
     .addCase(map.center.set, (state, action) => {
       state.center = action.payload;
+    })
+    .addCase(map.controls.center.show, (state) => {
+      state.controls.center = true;
+    })
+    .addCase(map.controls.center.hide, (state) => {
+      state.controls.center = false;
     });
 });
 

@@ -11,6 +11,12 @@ const map = {
   center: {
     set: Redux.createAction<LngLatLike>("map/center/set"),
   },
+  controls: {
+    center: {
+      show: Redux.createAction("map/controls/center/show"),
+      hide: Redux.createAction("map/controls/center/hides"),
+    },
+  },
 };
 
 export default map;

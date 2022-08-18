@@ -11,8 +11,7 @@ import Header from "~/components/layout/headers";
 import Footer from "~/components/layout/footers";
 
 import SearchResults from "~/components/search/results";
-import Marker from "~/components/map/marker";
-import config from "~/config";
+import CenterMarker from "~/components/map/markers/center";
 
 interface Props {}
 
@@ -22,7 +21,7 @@ export default function Index({}: Props) {
       <div className="layer z-10">
         <MapProvider>
           <Map className="absolute inset-0">
-            <Marker coordinates={config.map.center}>Test</Marker>
+            <CenterMarker />
           </Map>
         </MapProvider>
       </div>
