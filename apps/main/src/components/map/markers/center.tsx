@@ -8,7 +8,6 @@ import useTypedSelector from "~/hooks/use-typed-selector";
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
 
 import BaseMarker from "~/components/map/markers/base";
-import Pin from "~/components/map/pin";
 
 export default function CenterMarker() {
   const dispatch = useTypedDispatch();
@@ -27,16 +26,15 @@ export default function CenterMarker() {
   };
 
   return (
-    <BaseMarker
-      coordinates={center}
-      draggable
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-    >
-      <Pin
-        icon="icon-pin-add"
-        className={clsx(dragging ? "scale-150" : "scale-100", "transition-all")}
-      />
-    </BaseMarker>
+    <>
+      <BaseMarker
+        coordinates={center}
+        anchor="bottom-right"
+        draggable
+        className={clsx("transition-all", dragging ? "scale-125" : "scale-110")}
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+      ></BaseMarker>
+    </>
   );
 }

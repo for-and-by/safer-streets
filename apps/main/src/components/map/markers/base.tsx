@@ -1,22 +1,26 @@
-import type { LngLatLike } from "maplibre-gl";
-
 import React from "react";
 import maplibregl from "maplibre-gl";
 
 import { useMapContext } from "~/components/map/provider";
 import ReactDOM from "react-dom";
+import clsx from "clsx";
 
 interface Props {
-  coordinates: LngLatLike;
+  coordinates: maplibregl.LngLatLike;
   children?: React.ReactNode;
-  draggable: boolean;
+  className?: string;
+  icon?: string;
   onDragEnd: maplibregl.Listener;
   onDragStart: maplibregl.Listener;
+  draggable: boolean;
+  anchor?: maplibregl.PositionAnchor;
 }
 
 export default function BaseMarker({
   coordinates,
   children,
+  className = "",
+  icon = "icon-pin-fill",
   draggable = false,
   onDragEnd = () => {},
   onDragStart = () => {},
@@ -28,10 +32,8 @@ export default function BaseMarker({
     if (!marker) {
       const options: maplibregl.MarkerOptions = {
         draggable,
-        element: React.Children.toArray(children).find((child) => !!child)
-          ? document.createElement("div")
-          : undefined,
-        anchor: "bottom",
+        element: document.createElement("div"),
+        anchor: "bottom-right",
       };
 
       setMarker(new maplibregl.Marker(options));
@@ -55,5 +57,18 @@ export default function BaseMarker({
   }, [marker, coordinates]);
 
   if (!marker) return null;
-  return ReactDOM.createPortal(children, marker.getElement());
+  return ReactDOM.createPortal(
+    <>
+      <div
+        className={clsx(
+          "relative flex h-10 w-10 origin-bottom-right rotate-45 items-center justify-center rounded-full rounded-br-none bg-brand-600",
+          className
+        )}
+      >
+        <i className={clsx(icon, "icon -rotate-45 before:text-white")} />
+      </div>
+      {children}
+    </>,
+    marker.getElement()
+  );
 }

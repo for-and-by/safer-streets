@@ -23,31 +23,41 @@ function Root({
   scrollable = false,
   children,
 }: Props["Root"]) {
-  const [height, setHeight] = React.useState<number>(0);
-
   const rootRef = React.useRef<HTMLDivElement | null>(null);
+  const [height, setHeight] = React.useState<string>("0px");
 
   React.useEffect(() => {
     if (rootRef?.current) {
-      setHeight(rootRef.current.clientHeight);
+      setHeight(`${rootRef.current.clientHeight}px`);
     }
   }, [show]);
 
+  React.useEffect(() => {
+    if (!(height === "auto" || height === "0px")) {
+      setTimeout(
+        () => {
+          setHeight(show ? "auto" : "0px");
+        },
+        show ? 300 : 1
+      );
+    }
+  }, [height]);
+
   const style = {
-    "--height": `${height}px`,
+    "--height": `${height}`,
   } as React.CSSProperties;
 
   return (
     <div
       style={style}
       className={clsx(
-        "transition-all duration-300",
+        "h-[var(--height)] transition-all duration-300 ease-in-out",
         position === "bottom" && "rounded-t",
         position === "top" && "rounded-b",
         position === "center" && "rounded",
-        show && "pointer-events-auto h-[var(--height)] ease-in-out",
-        !show && "pointer-events-none h-0 ease-in",
-        scrollable && "overflow-y-scroll max-h-96",
+        show && "pointer-events-auto",
+        !show && "pointer-events-none",
+        scrollable && "max-h-96 overflow-y-scroll",
         !scrollable && "overflow-hidden",
         className
       )}

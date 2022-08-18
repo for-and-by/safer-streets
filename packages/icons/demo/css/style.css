@@ -235,3 +235,7 @@ icons
   content: "\ea13";
 }
 
+.icon-pin-fill::before {
+  content: "\ea14";
+}
+

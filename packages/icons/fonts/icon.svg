@@ -49,6 +49,9 @@
     <glyph glyph-name="down"
       unicode="&#xEA13;"
       horiz-adv-x="256" d="M128 80A16 16 0 0 0 116.688 84.688L52.688 148.688A16 16 0 0 0 75.312 171.312L128 118.624L180.688 171.312A16 16 0 1 0 203.312 148.688L139.312 84.688A16 16 0 0 0 128 80z" />
+    <glyph glyph-name="pin-fill"
+      unicode="&#xEA14;"
+      horiz-adv-x="256" d="M0 128A128 128 0 0 1 256 128A128 128 0 0 1 0 128" />
   </font>
 </defs>
 </svg>

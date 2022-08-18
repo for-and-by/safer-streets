@@ -114,6 +114,7 @@ $icon-up: unicode(ea10);
 $icon-right: unicode(ea11);
 $icon-left: unicode(ea12);
 $icon-down: unicode(ea13);
+$icon-pin-fill: unicode(ea14);
 
 .icon-close::before {
   content: $icon-close;
@@ -169,5 +170,9 @@ $icon-down: unicode(ea13);
 
 .icon-down::before {
   content: $icon-down;
+}
+
+.icon-pin-fill::before {
+  content: $icon-pin-fill;
 }
 
