@@ -6,7 +6,7 @@ import App from ".";
 
 import "~/global.css";
 
-import "icons/css/icons.css";
+import "~/icons/css/icons.css";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
