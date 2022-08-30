@@ -20,7 +20,7 @@ export default function Header() {
   const { view, show } = useViewTransition();
 
   return (
-    <Drawer show={show} position="bottom" className="divide-y divide-base-100">
+    <Drawer show={show} position="bottom" className="divide-y divide-gray-100">
       {React.createElement(footers[view])}
     </Drawer>
   );

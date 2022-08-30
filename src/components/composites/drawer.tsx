@@ -24,14 +24,28 @@ function Root({
   children,
 }: Props["Root"]) {
   const rootRef = React.useRef<HTMLDivElement | null>(null);
-  const [height, setHeight] = React.useState<string | null>("0px");
+
+  const [height, setHeight] = React.useState<string>("0px");
 
   React.useEffect(() => {
-    setHeight(`${show ? rootRef?.current?.clientHeight ?? 0 : 0}px`);
+    setHeight(`${rootRef?.current?.clientHeight ?? 0}px`);
   }, [show]);
 
+  React.useEffect(() => {
+    // TODO: Figure out why this needs a timeout to be handled correctly
+    setTimeout(() => {
+      if (show) {
+        setTimeout(() => {
+          setHeight("auto");
+        }, 300);
+      } else {
+        setHeight("0px");
+      }
+    }, 0);
+  }, [height]);
+
   const style = {
-    "--height": height ?? "auto",
+    "--height": height,
   } as React.CSSProperties;
 
   return (

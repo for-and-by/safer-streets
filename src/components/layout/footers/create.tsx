@@ -40,9 +40,21 @@ export default function CreateFooter() {
       }, [center]);
 
       return (
-        <Drawer.Row className="p-2">
-          {loading ? "Searching for address" : address}
-        </Drawer.Row>
+        <>
+          <Drawer.Row className="p-2">
+            <div className="w-full bg-gray-100 p-2">
+              {loading ? "Searching for address" : address}
+            </div>
+          </Drawer.Row>
+          <Drawer.Row className="justify-between p-2">
+            <button className="btn btn-light" onClick={handleShowPrev}>
+              <p className="btn-text">Cancel Submit</p>
+            </button>
+            <button className="btn btn-primary" onClick={handleShowNext}>
+              <p className="btn-text">Next: Provide Details</p>
+            </button>
+          </Drawer.Row>
+        </>
       );
     },
     details() {
@@ -75,18 +87,10 @@ export default function CreateFooter() {
 
   return (
     <>
-      <Drawer.Row className="border-b border-gray-100 p-3">
+      <Drawer.Row className="p-3">
         <p className="text-base text-gray-500">{stage.description}</p>
       </Drawer.Row>
       <Stage />
-      <Drawer.Row className="justify-between p-2">
-        <button className="btn btn-light" onClick={handleShowPrev}>
-          <p className="btn-text">Cancel Submit</p>
-        </button>
-        <button className="btn btn-primary" onClick={handleShowNext}>
-          <p className="btn-text">Next: Provide Details</p>
-        </button>
-      </Drawer.Row>
     </>
   );
 }
