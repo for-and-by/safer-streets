@@ -42,16 +42,26 @@ export default function CreateFooter() {
       return (
         <>
           <Drawer.Row className="p-2">
-            <div className="w-full bg-gray-100 p-2">
-              {loading ? "Searching for address" : address}
+            <div className="flex w-full flex-row items-center space-x-2 bg-gray-100 p-2">
+              {loading ? (
+                <>
+                  <i className="icon icon-circle-anim icon-is-spinning before:text-gray-500" />
+                  <p>Searching for address...</p>
+                </>
+              ) : (
+                <div className="space-y flex flex-col">
+                  <p className="text-gray-400">Approximate Address</p>
+                  <p>{address}</p>
+                </div>
+              )}
             </div>
           </Drawer.Row>
           <Drawer.Row className="justify-between p-2">
             <button className="btn btn-light" onClick={handleShowPrev}>
-              <p className="btn-text">Cancel Submit</p>
+              <p className="btn-text">Cancel</p>
             </button>
             <button className="btn btn-primary" onClick={handleShowNext}>
-              <p className="btn-text">Next: Provide Details</p>
+              <p className="btn-text">Provide Details</p>
             </button>
           </Drawer.Row>
         </>
@@ -61,25 +71,73 @@ export default function CreateFooter() {
       useEffect(() => {
         dispatch(map.controls.lock());
       }, []);
-      return <Drawer.Row className="p-2"></Drawer.Row>;
+      return (
+        <>
+          <Drawer.Row className="p-2">Provide Details</Drawer.Row>
+          <Drawer.Row className="justify-between p-2">
+            <button className="btn btn-light" onClick={handleShowPrev}>
+              <p className="btn-text">Go Back</p>
+            </button>
+            <button className="btn btn-primary" onClick={handleShowNext}>
+              <p className="btn-text">Upload Images</p>
+            </button>
+          </Drawer.Row>
+        </>
+      );
     },
     image() {
       useEffect(() => {
         dispatch(map.controls.lock());
       }, []);
-      return <Drawer.Row className="p-2">Image Test test test</Drawer.Row>;
+      return (
+        <>
+          <Drawer.Row className="p-2">Upload Image</Drawer.Row>
+          <Drawer.Row className="justify-between p-2">
+            <button className="btn btn-light" onClick={handleShowPrev}>
+              <p className="btn-text">Go Back</p>
+            </button>
+            <button className="btn btn-primary" onClick={handleShowNext}>
+              <p className="btn-text">Confirm Details</p>
+            </button>
+          </Drawer.Row>
+        </>
+      );
     },
     confirm() {
       useEffect(() => {
         dispatch(map.controls.lock());
       }, []);
-      return <Drawer.Row className="p-2">Confirm</Drawer.Row>;
+      return (
+        <>
+          <Drawer.Row className="p-2">Confirm Details</Drawer.Row>
+          <Drawer.Row className="justify-between p-2">
+            <button className="btn btn-light" onClick={handleShowPrev}>
+              <p className="btn-text">Go Back</p>
+            </button>
+            <button className="btn btn-primary" onClick={handleShowNext}>
+              <p className="btn-text">Submit Report</p>
+            </button>
+          </Drawer.Row>
+        </>
+      );
     },
     submit() {
       useEffect(() => {
         dispatch(map.controls.lock());
       }, []);
-      return <Drawer.Row className="p-2">Submit</Drawer.Row>;
+      return (
+        <>
+          <Drawer.Row className="p-2">Submit Details</Drawer.Row>
+          <Drawer.Row className="justify-between p-2">
+            <button className="btn btn-light" onClick={handleShowPrev}>
+              <p className="btn-text">Cancel Report</p>
+            </button>
+            <button className="btn btn-primary" onClick={handleShowNext}>
+              <p className="btn-text">Provide Details</p>
+            </button>
+          </Drawer.Row>
+        </>
+      );
     },
   };
 
