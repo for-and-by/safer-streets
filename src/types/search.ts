@@ -22,6 +22,8 @@ export interface SearchResult extends GeoJSONFeature {
   place_name?: string;
   center?: LngLatLike;
   context?: ContextItem[];
+  text?: string;
+  address?: string;
 }
 
 export interface SearchFeature {

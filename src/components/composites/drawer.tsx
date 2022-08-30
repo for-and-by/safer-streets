@@ -24,27 +24,14 @@ function Root({
   children,
 }: Props["Root"]) {
   const rootRef = React.useRef<HTMLDivElement | null>(null);
-  const [height, setHeight] = React.useState<string>("0px");
+  const [height, setHeight] = React.useState<string | null>("0px");
 
   React.useEffect(() => {
-    if (rootRef?.current) {
-      setHeight(`${rootRef.current.clientHeight}px`);
-    }
+    setHeight(`${show ? rootRef?.current?.clientHeight ?? 0 : 0}px`);
   }, [show]);
 
-  React.useEffect(() => {
-    if (!(height === "auto" || height === "0px")) {
-      setTimeout(
-        () => {
-          setHeight(show ? "auto" : "0px");
-        },
-        show ? 300 : 1
-      );
-    }
-  }, [height]);
-
   const style = {
-    "--height": `${height}`,
+    "--height": height ?? "auto",
   } as React.CSSProperties;
 
   return (

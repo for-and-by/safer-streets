@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import create from "~/store/create/actions";
 
@@ -6,26 +6,8 @@ import useTypedDispatch from "~/hooks/use-typed-dispatch";
 import useTypedSelector from "~/hooks/use-typed-selector";
 
 import Drawer from "~/components/composites/drawer";
-
-const stages: {
-  [key: string]: () => JSX.Element;
-} = {
-  location() {
-    return <Drawer.Row>Location</Drawer.Row>;
-  },
-  details() {
-    return <Drawer.Row>Details</Drawer.Row>;
-  },
-  image() {
-    return <Drawer.Row>Image Test test test</Drawer.Row>;
-  },
-  confirm() {
-    return <Drawer.Row>Confirm</Drawer.Row>;
-  },
-  submit() {
-    return <Drawer.Row>Submit</Drawer.Row>;
-  },
-};
+import map from "~/store/map/actions";
+import geocode from "~/lib/geocode";
 
 export default function CreateFooter() {
   const dispatch = useTypedDispatch();
@@ -33,6 +15,61 @@ export default function CreateFooter() {
 
   const handleShowNext = () => dispatch(create.stage.next());
   const handleShowPrev = () => dispatch(create.stage.prev());
+
+  const stages: {
+    [key: string]: () => JSX.Element;
+  } = {
+    location() {
+      const center = useTypedSelector((state) => state.map.center);
+      const [address, setAddress] = React.useState<string>("");
+      const [loading, setLoading] = React.useState<boolean>(false);
+
+      useEffect(() => {
+        dispatch(map.controls.unlock());
+      }, []);
+
+      useEffect(() => {
+        setLoading(true);
+        geocode(center as [number, number])
+          .then((result) => {
+            setAddress(result?.[0]?.heading ?? "");
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      }, [center]);
+
+      return (
+        <Drawer.Row className="p-2">
+          {loading ? "Searching for address" : address}
+        </Drawer.Row>
+      );
+    },
+    details() {
+      useEffect(() => {
+        dispatch(map.controls.lock());
+      }, []);
+      return <Drawer.Row className="p-2"></Drawer.Row>;
+    },
+    image() {
+      useEffect(() => {
+        dispatch(map.controls.lock());
+      }, []);
+      return <Drawer.Row className="p-2">Image Test test test</Drawer.Row>;
+    },
+    confirm() {
+      useEffect(() => {
+        dispatch(map.controls.lock());
+      }, []);
+      return <Drawer.Row className="p-2">Confirm</Drawer.Row>;
+    },
+    submit() {
+      useEffect(() => {
+        dispatch(map.controls.lock());
+      }, []);
+      return <Drawer.Row className="p-2">Submit</Drawer.Row>;
+    },
+  };
 
   const Stage = stages[stage.handle];
 
