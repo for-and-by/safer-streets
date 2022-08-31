@@ -10,6 +10,7 @@ import view from "~/store/view/actions";
 
 import Drawer from "~/components/composites/drawer";
 import useDebounce from "~/hooks/use-debounce";
+import search from "~/store/search/actions";
 
 export default function SearchResults() {
   const dispatch = useTypedDispatch();
@@ -22,6 +23,7 @@ export default function SearchResults() {
     if (center) {
       dispatch(map.center.set(center));
       dispatch(view.active.reset());
+      dispatch(search.results.clear());
     }
   };
 
