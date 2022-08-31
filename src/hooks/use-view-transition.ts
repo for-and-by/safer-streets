@@ -1,5 +1,6 @@
 import React from "react";
 import useTypedSelector from "~/hooks/use-typed-selector";
+import useTimeout from "~/hooks/use-timeout";
 
 export default function useViewTransition() {
   const activeView = useTypedSelector((state) => state.view.active);
@@ -9,16 +10,16 @@ export default function useViewTransition() {
 
   React.useEffect(() => {
     setShow(false);
+  }, [activeView]);
 
-    const timeout = setTimeout(() => {
+  useTimeout(
+    () => {
       setShow(true);
       setRenderedView(activeView);
-    }, 300);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [activeView]);
+    },
+    300,
+    [activeView]
+  );
 
   return {
     view: renderedView,

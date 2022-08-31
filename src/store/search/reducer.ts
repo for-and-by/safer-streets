@@ -17,12 +17,6 @@ const initialState: State = {
 
 const reducer = Redux.createReducer(initialState, (builder) => {
   builder
-    .addCase(search.results.show, (state) => {
-      state.show = true;
-    })
-    .addCase(search.results.hide, (state) => {
-      state.show = false;
-    })
     .addCase(search.results.clear, (state) => {
       state.results = initialState.results;
     })

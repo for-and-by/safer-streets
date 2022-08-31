@@ -7,6 +7,7 @@ import useTypedDispatch from "~/hooks/use-typed-dispatch";
 
 import Drawer from "~/components/composites/drawer";
 import view from "~/store/view/actions";
+import search from "~/store/search/actions";
 
 export default function SearchHeader() {
   const results = useTypedSelector((state) => state.search.results);
@@ -33,6 +34,7 @@ export default function SearchHeader() {
 
   const handleExitSearch = () => {
     dispatch(view.active.set(VIEWS.HOME));
+    dispatch(search.results.clear());
   };
 
   return (

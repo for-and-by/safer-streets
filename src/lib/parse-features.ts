@@ -6,7 +6,6 @@ export default function parseFeatures(
   features: SearchResult[]
 ): SearchFeature[] {
   return features.map((feature) => {
-    console.log(feature);
     return {
       center: feature?.center,
       type: feature?.place_type?.[0],

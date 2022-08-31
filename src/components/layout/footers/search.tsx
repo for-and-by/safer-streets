@@ -1,3 +1,5 @@
+import { VIEWS } from "~/types/view";
+
 import React from "react";
 
 import toast from "~/store/toast/actions";
@@ -6,11 +8,11 @@ import map from "~/store/map/actions";
 import view from "~/store/view/actions";
 
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
+import useTypedSelector from "~/hooks/use-typed-selector";
+import useDebounce from "~/hooks/use-debounce";
 
 import Drawer from "~/components/composites/drawer";
 import TextInput from "~/components/form/text-input";
-import useTypedSelector from "~/hooks/use-typed-selector";
-import { VIEWS } from "~/types/view";
 
 export default function SearchFooter() {
   const dispatch = useTypedDispatch();
@@ -19,6 +21,7 @@ export default function SearchFooter() {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const [address, setAddress] = React.useState("");
+  const debouncedAddress = useDebounce(address);
 
   React.useEffect(() => {
     if (activeView === VIEWS.SEARCH && inputRef?.current) {
@@ -28,25 +31,16 @@ export default function SearchFooter() {
     }
   }, [activeView]);
 
-  // Debounce search input
   React.useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (address !== "") {
-        dispatch(toast.content.set("Finding results..."));
-        dispatch(search.results.fetch(address)).then(() => {
-          dispatch(toast.hide());
-        });
-      }
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, [address]);
-
-  React.useEffect(() => {
-    if (address === "") {
-      dispatch(search.results.hide());
+    if (debouncedAddress === "") {
+      dispatch(search.results.clear());
+    } else {
+      dispatch(toast.content.set("Finding results..."));
+      dispatch(search.results.fetch(debouncedAddress)).then(() => {
+        dispatch(toast.content.clear());
+      });
     }
-  }, [address]);
+  }, [debouncedAddress]);
 
   // Handlers
   const handleUpdateSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,8 +52,8 @@ export default function SearchFooter() {
     if (navigator && "geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(({ coords }) => {
         dispatch(map.center.set([coords.longitude, coords.latitude]));
-        dispatch(toast.hide());
-        dispatch(search.results.hide());
+        dispatch(toast.content.clear());
+        dispatch(search.results.clear());
         dispatch(view.active.reset());
       });
     }

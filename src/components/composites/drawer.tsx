@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import useTimeout from "~/hooks/use-timeout";
 
 interface Props {
   Root: {
@@ -31,9 +32,8 @@ function Root({
     setHeight(`${rootRef?.current?.clientHeight ?? 0}px`);
   }, [show]);
 
-  React.useEffect(() => {
-    // TODO: Figure out why this needs a timeout to be handled correctly
-    setTimeout(() => {
+  useTimeout(
+    () => {
       if (show) {
         setTimeout(() => {
           setHeight("auto");
@@ -41,8 +41,10 @@ function Root({
       } else {
         setHeight("0px");
       }
-    }, 0);
-  }, [height]);
+    },
+    10,
+    [height]
+  );
 
   const style = {
     "--height": height,

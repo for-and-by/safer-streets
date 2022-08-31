@@ -16,15 +16,11 @@ const footers: { [key: string]: () => React.ReactElement } = {
   [VIEWS.CREATE]: CreateFooter,
 };
 
-export default function Header() {
+export default function Footer() {
   const { view, show } = useViewTransition();
 
   return (
-    <Drawer
-      show={show}
-      position="bottom"
-      className="divide-y divide-gray-100 bg-red-500"
-    >
+    <Drawer show={show} position="bottom" className="divide-y divide-base-100 ">
       {React.createElement(footers[view])}
     </Drawer>
   );

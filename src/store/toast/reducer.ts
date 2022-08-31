@@ -13,12 +13,6 @@ const initialState: State = {
 
 const reducer = Redux.createReducer(initialState, (builder) => {
   builder
-    .addCase(toast.show, (state) => {
-      state.show = true;
-    })
-    .addCase(toast.hide, (state) => {
-      state.show = false;
-    })
     .addCase(toast.content.set, (state, action) => {
       state.content = action.payload;
     })
