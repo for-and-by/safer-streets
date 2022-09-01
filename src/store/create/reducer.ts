@@ -31,6 +31,9 @@ const reducer = Redux.createReducer(initialState, (builder) => {
       if (prev) {
         state.stage = prev;
       }
+    })
+    .addCase(create.stage.reset, (state) => {
+      state.stage = stages[0];
     });
 });
 

@@ -9,6 +9,7 @@ import Drawer from "~/components/composites/drawer";
 import view from "~/store/view/actions";
 import stages from "~/data/stages";
 import ProgressBar from "~/components/elements/progress-bar";
+import create from "~/store/create/actions";
 
 export default function CreateHeader() {
   const stage = useTypedSelector((state) => state.create.stage);

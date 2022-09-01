@@ -1,11 +1,22 @@
-import config from "~/config";
-import parseFeatures from "~/lib/parse-features";
+import { LngLatLike } from "maplibre-gl";
 
-export default async function geocode(query: [number, number] | string) {
+import config from "~/config";
+import parseLngLat from "~/lib/parse-lng-lat";
+import parseFeatureAsAddress from "~/lib/parse-feature-as-address";
+import parseContextAsString from "~/lib/parse-content-as-string";
+import { SearchResult } from "~/types/search";
+
+export default async function geocode(query: LngLatLike | string) {
+  const parsedQuery =
+    typeof query !== "string"
+      ? parseLngLat(query)?.join(",") ?? undefined
+      : query;
+
+  if (!parsedQuery)
+    throw new Error("Provided query was not useable for search");
+
   const url = new URL(
-    `https://api.maptiler.com/geocoding/${encodeURIComponent(
-      typeof query === "string" ? query : `${query[0]},${query[1]}`
-    )}.json`
+    `https://api.maptiler.com/geocoding/${encodeURIComponent(parsedQuery)}.json`
   );
 
   url.search = new URLSearchParams({
@@ -15,5 +26,14 @@ export default async function geocode(query: [number, number] | string) {
 
   const response = await fetch(url.toString());
   const json = await response.json();
-  return parseFeatures(json.features);
+  return (
+    json?.features?.map((feature: SearchResult) => {
+      return {
+        center: feature?.center,
+        type: feature?.place_type?.[0],
+        heading: parseFeatureAsAddress(feature),
+        subheading: parseContextAsString(feature?.context ?? []),
+      };
+    }) ?? []
+  );
 }

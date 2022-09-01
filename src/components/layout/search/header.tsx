@@ -2,15 +2,15 @@ import { VIEWS } from "~/types/view";
 
 import React from "react";
 
-import useTypedSelector from "~/hooks/use-typed-selector";
+import view from "~/store/view/actions";
+
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
+import { useSearch } from "~/components/layout/search/provider";
 
 import Drawer from "~/components/composites/drawer";
-import view from "~/store/view/actions";
-import search from "~/store/search/actions";
 
 export default function SearchHeader() {
-  const results = useTypedSelector((state) => state.search.results);
+  const search = useSearch();
   const dispatch = useTypedDispatch();
 
   const [content, setContent] = React.useState({
@@ -20,9 +20,9 @@ export default function SearchHeader() {
 
   React.useEffect(() => {
     setContent(
-      results?.length
+      search?.results?.length
         ? {
-            heading: `${results.length} results found`,
+            heading: `${search?.results?.length ?? 0} results found`,
             subheading: "Select a location to jump to.",
           }
         : {
@@ -30,11 +30,11 @@ export default function SearchHeader() {
             subheading: "Start by typing in an address.",
           }
     );
-  }, [results]);
+  }, [search.results]);
 
   const handleExitSearch = () => {
     dispatch(view.active.set(VIEWS.HOME));
-    dispatch(search.results.clear());
+    search.query.set("");
   };
 
   return (

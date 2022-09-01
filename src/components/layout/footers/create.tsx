@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import create from "~/store/create/actions";
 
@@ -8,6 +8,8 @@ import useTypedSelector from "~/hooks/use-typed-selector";
 import Drawer from "~/components/composites/drawer";
 import map from "~/store/map/actions";
 import geocode from "~/lib/geocode";
+import useAsync from "~/hooks/use-async";
+import useGeocoder from "~/hooks/use-geocoder";
 
 export default function CreateFooter() {
   const dispatch = useTypedDispatch();
@@ -21,29 +23,18 @@ export default function CreateFooter() {
   } = {
     location() {
       const center = useTypedSelector((state) => state.map.center);
-      const [address, setAddress] = React.useState<string>("");
-      const [loading, setLoading] = React.useState<boolean>(false);
 
-      useEffect(() => {
+      React.useEffect(() => {
         dispatch(map.controls.unlock());
       }, []);
 
-      useEffect(() => {
-        setLoading(true);
-        geocode(center as [number, number])
-          .then((result) => {
-            setAddress(result?.[0]?.heading ?? "");
-          })
-          .finally(() => {
-            setLoading(false);
-          });
-      }, [center]);
+      const { results } = useGeocoder(center);
 
       return (
         <>
           <Drawer.Row className="p-2">
             <div className="flex w-full flex-row items-center space-x-2 bg-gray-100 p-2">
-              {loading ? (
+              {!(results?.length > 0) ? (
                 <>
                   <i className="icon icon-circle-anim icon-is-spinning before:text-gray-500" />
                   <p>Searching for address...</p>
@@ -51,7 +42,7 @@ export default function CreateFooter() {
               ) : (
                 <div className="space-y flex flex-col">
                   <p className="text-gray-400">Approximate Address</p>
-                  <p>{address}</p>
+                  <p>{results?.[0]?.heading}</p>
                 </div>
               )}
             </div>
@@ -68,7 +59,7 @@ export default function CreateFooter() {
       );
     },
     details() {
-      useEffect(() => {
+      React.useEffect(() => {
         dispatch(map.controls.lock());
       }, []);
       return (
@@ -86,7 +77,7 @@ export default function CreateFooter() {
       );
     },
     image() {
-      useEffect(() => {
+      React.useEffect(() => {
         dispatch(map.controls.lock());
       }, []);
       return (
@@ -104,7 +95,7 @@ export default function CreateFooter() {
       );
     },
     confirm() {
-      useEffect(() => {
+      React.useEffect(() => {
         dispatch(map.controls.lock());
       }, []);
       return (
@@ -122,7 +113,7 @@ export default function CreateFooter() {
       );
     },
     submit() {
-      useEffect(() => {
+      React.useEffect(() => {
         dispatch(map.controls.lock());
       }, []);
       return (

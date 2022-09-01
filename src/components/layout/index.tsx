@@ -10,8 +10,9 @@ import BottomBar from "~/components/layout/bottom-bar";
 import Header from "~/components/layout/headers";
 import Footer from "~/components/layout/footers";
 
-import SearchResults from "~/components/search/results";
+import SearchResults from "~/components/layout/search/results";
 import CenterMarker from "~/components/map/markers/center";
+import { SearchProvider } from "~/components/layout/search/provider";
 
 interface Props {}
 
@@ -28,15 +29,17 @@ export default function Index({}: Props) {
       <div className="layer pointer-events-none z-20">
         <div className="clamp mx-auto flex h-full flex-col drop-shadow-lg">
           <TopBar />
-          <Header />
-          <div className="flex flex-grow justify-between overflow-hidden py-4 transition-all">
-            <div className="inline-flex flex-col justify-end">
-              <Toast />
+          <SearchProvider>
+            <Header />
+            <div className="flex flex-grow justify-between overflow-hidden py-4 transition-all">
+              <div className="inline-flex flex-col justify-end">
+                <Toast />
+              </div>
+              <Controls />
             </div>
-            <Controls />
-          </div>
-          <SearchResults />
-          <Footer />
+            <SearchResults />
+            <Footer />
+          </SearchProvider>
           <BottomBar />
         </div>
       </div>

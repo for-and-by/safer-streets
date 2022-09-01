@@ -33,16 +33,18 @@ function Root({
   }, [show]);
 
   useTimeout(
-    () => {
-      if (show) {
-        setTimeout(() => {
-          setHeight("auto");
-        }, 300);
-      } else {
-        setHeight("0px");
-      }
+    {
+      onEnd: () => {
+        if (show) {
+          setTimeout(() => {
+            setHeight("auto");
+          }, 300);
+        } else {
+          setHeight("0px");
+        }
+      },
+      duration: 10,
     },
-    10,
     [height]
   );
 

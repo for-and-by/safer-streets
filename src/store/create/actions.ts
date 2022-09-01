@@ -4,6 +4,7 @@ const create = {
   stage: {
     next: Redux.createAction("create/stage/next"),
     prev: Redux.createAction("create/stage/prev"),
+    reset: Redux.createAction("create/stage/reset"),
   },
   details: {
     set: Redux.createAction("create/details/set"),

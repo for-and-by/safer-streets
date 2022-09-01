@@ -7,7 +7,7 @@ import useViewTransition from "~/hooks/use-view-transition";
 import Drawer from "~/components/composites/drawer";
 
 import HomeFooter from "./home";
-import SearchFooter from "./search";
+import SearchFooter from "../search/footer";
 import CreateFooter from "./create";
 
 const footers: { [key: string]: () => React.ReactElement } = {
