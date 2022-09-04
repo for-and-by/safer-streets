@@ -2,7 +2,6 @@ import { LngLatLike } from "maplibre-gl";
 
 export interface Stage {
   step: number;
-  handle: string;
   heading: string;
   description: string;
   progress: number;

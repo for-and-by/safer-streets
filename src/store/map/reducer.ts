@@ -3,6 +3,7 @@ import type { LngLatLike } from "maplibre-gl";
 import * as Redux from "@reduxjs/toolkit";
 import config from "~/config";
 import map from "~/store/map/actions";
+import parseLngLat from "~/lib/parse-lng-lat";
 
 interface State {
   zoom: number;
@@ -32,7 +33,9 @@ const reducer = Redux.createReducer(initialState, (builder) => {
       state.zoom = action.payload;
     })
     .addCase(map.center.set, (state, action) => {
-      state.center = action.payload;
+      const center = parseLngLat(action.payload);
+      if (!center) throw new Error("Center was not a valid coordinate");
+      state.center = center;
     })
     .addCase(map.controls.lock, (state) => {
       state.controls.lock = true;

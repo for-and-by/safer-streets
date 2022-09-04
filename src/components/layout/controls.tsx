@@ -1,16 +1,14 @@
-import map from "~/store/map/actions";
-
-import useTypedDispatch from "~/hooks/use-typed-dispatch";
+import useMapDispatch from "~/hooks/use-map-dispatch";
 
 export default function Controls() {
-  const dispatch = useTypedDispatch();
+  const map = useMapDispatch();
 
   const handleZoomIn = () => {
-    dispatch(map.zoom.in());
+    map.zoom.in();
   };
 
   const handleZoomOut = () => {
-    dispatch(map.zoom.out());
+    map.zoom.out();
   };
 
   return (

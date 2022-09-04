@@ -1,18 +1,16 @@
 import React from "react";
+import clsx from "clsx";
 
-import map from "~/store/map/actions";
-
-import useTypedDispatch from "~/hooks/use-typed-dispatch";
 import useTypedSelector from "~/hooks/use-typed-selector";
 import useMapEvents from "~/hooks/use-map-events";
-
 import { useMapContext } from "~/components/map/provider";
-import clsx from "clsx";
+import useMapDispatch from "~/hooks/use-map-dispatch";
 
 interface Props extends React.ComponentProps<"div"> {}
 
 export default function Map({ className, ...props }: Props) {
-  const dispatch = useTypedDispatch();
+  const map = useMapDispatch();
+
   const zoom = useTypedSelector((state) => state.map.zoom);
   const center = useTypedSelector((state) => state.map.center);
   const lock = useTypedSelector((state) => state.map.controls.lock);
@@ -21,14 +19,11 @@ export default function Map({ className, ...props }: Props) {
 
   useMapEvents({
     dragend: (event) => {
-      const { lng, lat } = event.target.getCenter();
-      dispatch(map.center.set([lng, lat]));
+      map.center.set(event.target.getCenter());
     },
     zoomend: (event) => {
-      const zoom = event.target.getZoom();
-      const { lng, lat } = event.target.getCenter();
-      dispatch(map.zoom.set(zoom));
-      dispatch(map.center.set([lng, lat]));
+      map.center.set(event.target.getCenter());
+      map.zoom.set(event.target.getZoom());
     },
   });
 

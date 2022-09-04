@@ -1,7 +1,8 @@
 import React from "react";
-import createContextHook from "~/lib/create-context-hook";
-import useGeocoder from "~/hooks/use-geocoder";
 import { SearchFeature } from "~/types/search";
+import createContextHook from "~/lib/create-context-hook";
+
+import useGeocoder from "~/hooks/use-geocoder";
 import useDebounce from "~/hooks/use-debounce";
 
 interface ContextValue {

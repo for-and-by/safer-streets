@@ -34,7 +34,10 @@ export default function InfoModal({ children, className = "" }: Props) {
               <Tabs.Items className="flex h-16 flex-row space-x-4 px-4">
                 {Object.keys(content).map((key) => {
                   return (
-                    <Tabs.Item className="flex items-center border-b border-white capitalize hover:border-gray-200 d-active:border-brand-600">
+                    <Tabs.Item
+                      key={key}
+                      className="flex items-center border-b border-white capitalize hover:border-gray-200 d-active:border-brand-600"
+                    >
                       {key}
                     </Tabs.Item>
                   );

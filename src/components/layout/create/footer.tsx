@@ -1,22 +1,16 @@
 import React from "react";
 
-import create from "~/store/create/actions";
-
-import useTypedDispatch from "~/hooks/use-typed-dispatch";
 import useTypedSelector from "~/hooks/use-typed-selector";
+import useGeocoder from "~/hooks/use-geocoder";
+import { useCreateForm } from "~/components/layout/create/provider";
 
 import Drawer from "~/components/composites/drawer";
-import map from "~/store/map/actions";
-import geocode from "~/lib/geocode";
-import useAsync from "~/hooks/use-async";
-import useGeocoder from "~/hooks/use-geocoder";
+import Toast from "~/components/composites/toast";
+import useMapDispatch from "~/hooks/use-map-dispatch";
 
 export default function CreateFooter() {
-  const dispatch = useTypedDispatch();
-  const stage = useTypedSelector((state) => state.create.stage);
-
-  const handleShowNext = () => dispatch(create.stage.next());
-  const handleShowPrev = () => dispatch(create.stage.prev());
+  const map = useMapDispatch();
+  const form = useCreateForm();
 
   const stages: {
     [key: string]: () => JSX.Element;
@@ -25,13 +19,14 @@ export default function CreateFooter() {
       const center = useTypedSelector((state) => state.map.center);
 
       React.useEffect(() => {
-        dispatch(map.controls.unlock());
+        map.controls.unlock();
       }, []);
 
-      const { results } = useGeocoder(center);
+      const { results, loading } = useGeocoder(center);
 
       return (
         <>
+          <Toast show={loading} content={"Searching for address..."} />
           <Drawer.Row className="p-2">
             <div className="flex w-full flex-row items-center space-x-2 bg-gray-100 p-2">
               {!(results?.length > 0) ? (
@@ -48,10 +43,13 @@ export default function CreateFooter() {
             </div>
           </Drawer.Row>
           <Drawer.Row className="justify-between p-2">
-            <button className="btn btn-light" onClick={handleShowPrev}>
+            <button className="btn btn-light" onClick={() => form.stage.prev()}>
               <p className="btn-text">Cancel</p>
             </button>
-            <button className="btn btn-primary" onClick={handleShowNext}>
+            <button
+              className="btn btn-primary"
+              onClick={() => form.stage.next()}
+            >
               <p className="btn-text">Provide Details</p>
             </button>
           </Drawer.Row>
@@ -60,16 +58,19 @@ export default function CreateFooter() {
     },
     details() {
       React.useEffect(() => {
-        dispatch(map.controls.lock());
+        map.controls.lock();
       }, []);
       return (
         <>
           <Drawer.Row className="p-2">Provide Details</Drawer.Row>
           <Drawer.Row className="justify-between p-2">
-            <button className="btn btn-light" onClick={handleShowPrev}>
+            <button className="btn btn-light" onClick={() => form.stage.prev()}>
               <p className="btn-text">Go Back</p>
             </button>
-            <button className="btn btn-primary" onClick={handleShowNext}>
+            <button
+              className="btn btn-primary"
+              onClick={() => form.stage.next()}
+            >
               <p className="btn-text">Upload Images</p>
             </button>
           </Drawer.Row>
@@ -78,16 +79,19 @@ export default function CreateFooter() {
     },
     image() {
       React.useEffect(() => {
-        dispatch(map.controls.lock());
+        map.controls.lock();
       }, []);
       return (
         <>
           <Drawer.Row className="p-2">Upload Image</Drawer.Row>
           <Drawer.Row className="justify-between p-2">
-            <button className="btn btn-light" onClick={handleShowPrev}>
+            <button className="btn btn-light" onClick={() => form.stage.prev()}>
               <p className="btn-text">Go Back</p>
             </button>
-            <button className="btn btn-primary" onClick={handleShowNext}>
+            <button
+              className="btn btn-primary"
+              onClick={() => form.stage.next()}
+            >
               <p className="btn-text">Confirm Details</p>
             </button>
           </Drawer.Row>
@@ -96,16 +100,19 @@ export default function CreateFooter() {
     },
     confirm() {
       React.useEffect(() => {
-        dispatch(map.controls.lock());
+        map.controls.lock();
       }, []);
       return (
         <>
           <Drawer.Row className="p-2">Confirm Details</Drawer.Row>
           <Drawer.Row className="justify-between p-2">
-            <button className="btn btn-light" onClick={handleShowPrev}>
+            <button className="btn btn-light" onClick={() => form.stage.prev()}>
               <p className="btn-text">Go Back</p>
             </button>
-            <button className="btn btn-primary" onClick={handleShowNext}>
+            <button
+              className="btn btn-primary"
+              onClick={() => form.stage.next()}
+            >
               <p className="btn-text">Submit Report</p>
             </button>
           </Drawer.Row>
@@ -114,16 +121,19 @@ export default function CreateFooter() {
     },
     submit() {
       React.useEffect(() => {
-        dispatch(map.controls.lock());
+        map.controls.lock();
       }, []);
       return (
         <>
           <Drawer.Row className="p-2">Submit Details</Drawer.Row>
           <Drawer.Row className="justify-between p-2">
-            <button className="btn btn-light" onClick={handleShowPrev}>
+            <button className="btn btn-light" onClick={() => form.stage.prev()}>
               <p className="btn-text">Cancel Report</p>
             </button>
-            <button className="btn btn-primary" onClick={handleShowNext}>
+            <button
+              className="btn btn-primary"
+              onClick={() => form.stage.next()}
+            >
               <p className="btn-text">Provide Details</p>
             </button>
           </Drawer.Row>
@@ -132,12 +142,14 @@ export default function CreateFooter() {
     },
   };
 
-  const Stage = stages[stage.handle];
+  const Stage = stages[form.stage.handle];
 
   return (
     <>
       <Drawer.Row className="p-3">
-        <p className="text-base text-gray-500">{stage.description}</p>
+        <p className="text-base text-gray-500">
+          {form.stage.value.description}
+        </p>
       </Drawer.Row>
       <Stage />
     </>
