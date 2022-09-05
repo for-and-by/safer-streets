@@ -239,3 +239,7 @@ icons
   content: "\ea14";
 }
 
+.icon-image-location::before {
+  content: "\ea15";
+}
+

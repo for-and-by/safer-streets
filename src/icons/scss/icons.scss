@@ -96,83 +96,31 @@ $icon-font-path: "../fonts" !default;
 /*------------------------
 	icons
 -------------------------*/
+$icons: (
+  close: 'ea02',
+  pin-add: 'ea07',
+  logo: 'ea08',
+  plus: 'ea09',
+  minus: 'ea0a',
+  info: 'ea0b',
+  map-target: 'ea0c',
+  search: 'ea0d',
+  circle-anim: 'ea0e',
+  find-self: 'ea0f',
+  up: 'ea10',
+  right: 'ea11',
+  left: 'ea12',
+  down: 'ea13',
+  pin-fill: 'ea14',
+  image-location: 'ea15',
+);
+
 @function unicode($str) {
   @return unquote("\"\\#{$str}\"");
 }
 
-$icon-close: unicode(ea02);
-$icon-pin-add: unicode(ea07);
-$icon-logo: unicode(ea08);
-$icon-plus: unicode(ea09);
-$icon-minus: unicode(ea0a);
-$icon-info: unicode(ea0b);
-$icon-map-target: unicode(ea0c);
-$icon-search: unicode(ea0d);
-$icon-circle-anim: unicode(ea0e);
-$icon-find-self: unicode(ea0f);
-$icon-up: unicode(ea10);
-$icon-right: unicode(ea11);
-$icon-left: unicode(ea12);
-$icon-down: unicode(ea13);
-$icon-pin-fill: unicode(ea14);
-
-.icon-close::before {
-  content: $icon-close;
+@each $name, $code in $icons {
+  .icon-#{"" +$name}::before {
+    content: unicode($code);
+  }
 }
-
-.icon-pin-add::before {
-  content: $icon-pin-add;
-}
-
-.icon-logo::before {
-  content: $icon-logo;
-}
-
-.icon-plus::before {
-  content: $icon-plus;
-}
-
-.icon-minus::before {
-  content: $icon-minus;
-}
-
-.icon-info::before {
-  content: $icon-info;
-}
-
-.icon-map-target::before {
-  content: $icon-map-target;
-}
-
-.icon-search::before {
-  content: $icon-search;
-}
-
-.icon-circle-anim::before {
-  content: $icon-circle-anim;
-}
-
-.icon-find-self::before {
-  content: $icon-find-self;
-}
-
-.icon-up::before {
-  content: $icon-up;
-}
-
-.icon-right::before {
-  content: $icon-right;
-}
-
-.icon-left::before {
-  content: $icon-left;
-}
-
-.icon-down::before {
-  content: $icon-down;
-}
-
-.icon-pin-fill::before {
-  content: $icon-pin-fill;
-}
-

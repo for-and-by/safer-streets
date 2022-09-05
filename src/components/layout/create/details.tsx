@@ -24,10 +24,15 @@ export default function DetailsStage() {
             label="Severity"
             options={[{ value: "high", label: "High" }]}
             onChange={form.change}
-            value={form?.values?.type ?? ""}
-            name="type"
+            value={form?.values?.severity ?? ""}
+            name="severity"
           />
-          <Textarea label="Details" />
+          <Textarea
+            label="Details"
+            onChange={form.change}
+            value={form?.values?.description ?? ""}
+            name="description"
+          />
         </div>
       </Drawer.Row>
       <Drawer.Row className="justify-between p-2">

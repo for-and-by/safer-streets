@@ -16,6 +16,7 @@ const TextInput = React.forwardRef<HTMLTextAreaElement, Props>(
       <textarea
         className="flex-grow bg-transparent focus:outline-none"
         ref={ref}
+        name={name}
         {...props}
       />
     </InputWrapper>

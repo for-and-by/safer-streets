@@ -29,7 +29,7 @@ interface ContextValue {
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => void;
-  update: (value: { [key: string]: string | number }) => void;
+  update: (value: { [key: string]: string | number | undefined }) => void;
   reset: () => void;
 }
 
