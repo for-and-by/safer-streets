@@ -1,23 +1,38 @@
 import React from "react";
-import { useCreateForm } from "~/components/layout/create/provider";
-import InputWrapper from "~/components/elements/input-wrapper";
+
 import getBase64File from "~/lib/get-base-64-file";
+
 import useAsync from "~/hooks/use-async";
+
+import InputWrapper from "~/components/elements/input-wrapper";
 import WarningModal from "~/components/modals/warning";
 
-export default function ImageSelect() {
+interface Props {
+  onUpload?: (image: string) => void;
+  onRemove?: () => void;
+  value?: string;
+}
+
+export default function ImageSelect({
+  onUpload = () => {},
+  onRemove = () => {},
+  value,
+}: Props) {
   const [file, setFile] = React.useState<File | undefined>(undefined);
-  const [value, setValue] = React.useState<string | undefined>(undefined);
+  const [image, setImage] = React.useState<string | undefined>(value);
 
   const inputRef = React.useRef<HTMLInputElement | null>(null);
-  const form = useCreateForm();
 
-  const { loading, data } = useAsync(async () => {
+  const { loading } = useAsync(async () => {
     if (!file) return;
     const image = await getBase64File(file);
-    setValue(image);
-    form.update({ image });
+    setImage(image);
+    onUpload(image);
   }, [file]);
+
+  React.useEffect(() => {
+    setImage(value);
+  }, [value]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event?.target?.files?.[0]) return false;
@@ -31,12 +46,13 @@ export default function ImageSelect() {
   };
 
   const handleRemove = () => {
-    form.update({ image: undefined });
+    setImage(undefined);
+    onRemove();
   };
 
   return (
     <InputWrapper>
-      {!form.values.image ? (
+      {!image ? (
         <div
           className="flex flex-grow flex-col items-center justify-center space-y-4 rounded-sm border border-dashed border-gray-300 p-4 hover:cursor-pointer"
           onClick={handleUpload}
@@ -59,7 +75,8 @@ export default function ImageSelect() {
             height={120}
             width={120}
             className="h-28 w-28 object-cover"
-            src={form?.values?.image ?? ""}
+            alt={file?.name ?? ""}
+            src={image ?? ""}
           />
           <div className="flex flex-grow flex-col justify-center space-y-1 bg-white p-4">
             <p className="text-gray-400">{file?.name}</p>
