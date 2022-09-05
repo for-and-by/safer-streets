@@ -1,15 +1,12 @@
-import useMapDispatch from "~/hooks/use-map-dispatch";
-import { useCreateForm } from "~/components/layout/create/provider";
 import React from "react";
+
+import { useCreateForm } from "~/components/layout/create/provider";
+
 import Drawer from "~/components/composites/drawer";
 
 export default function ImageStage() {
-  const map = useMapDispatch();
   const form = useCreateForm();
 
-  React.useEffect(() => {
-    map.controls.lock();
-  }, []);
   return (
     <>
       <Drawer.Row className="p-2">Upload Image</Drawer.Row>

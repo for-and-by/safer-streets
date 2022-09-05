@@ -1,15 +1,11 @@
 import React from "react";
-import Drawer from "~/components/composites/drawer";
-import useMapDispatch from "~/hooks/use-map-dispatch";
+
 import { useCreateForm } from "~/components/layout/create/provider";
 
-export default function DetailsStage() {
-  const map = useMapDispatch();
-  const form = useCreateForm();
+import Drawer from "~/components/composites/drawer";
 
-  React.useEffect(() => {
-    map.controls.lock();
-  }, []);
+export default function DetailsStage() {
+  const form = useCreateForm();
 
   return (
     <>

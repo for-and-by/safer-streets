@@ -7,6 +7,7 @@ import { useCreateForm } from "~/components/layout/create/provider";
 
 import Toast from "~/components/composites/toast";
 import Drawer from "~/components/composites/drawer";
+import CancelModal from "~/components/layout/create/cancel";
 
 export default function LocationStage() {
   const center = useTypedSelector((state) => state.map.center);
@@ -23,6 +24,11 @@ export default function LocationStage() {
     const [lng, lat] = center;
     form.update({ lng, lat });
   }, [center]);
+
+  function handleNextStage() {
+    map.controls.lock();
+    form.stage.next();
+  }
 
   return (
     <>
@@ -43,10 +49,12 @@ export default function LocationStage() {
         </div>
       </Drawer.Row>
       <Drawer.Row className="justify-between p-2">
-        <button className="btn btn-light" onClick={() => form.stage.prev()}>
-          <p className="btn-text">Cancel</p>
-        </button>
-        <button className="btn btn-primary" onClick={() => form.stage.next()}>
+        <CancelModal>
+          <button className="btn btn-light">
+            <p className="btn-text">Cancel</p>
+          </button>
+        </CancelModal>
+        <button className="btn btn-primary" onClick={handleNextStage}>
           <p className="btn-text">Provide Details</p>
         </button>
       </Drawer.Row>

@@ -17,6 +17,7 @@ interface Props {
   Panel: {
     children?: React.ReactNode;
     className?: string;
+    scrollable?: boolean;
   };
   Trigger: {
     children?: React.ReactNode;
@@ -90,7 +91,11 @@ function Tint({}: Props["Tint"]) {
   return <div onClick={hideModal} className="absolute inset-0 bg-black/50" />;
 }
 
-function Panel({ className = "", children }: Props["Panel"]) {
+function Panel({
+  className = "",
+  children,
+  scrollable = false,
+}: Props["Panel"]) {
   const { show } = useModal();
   return (
     <div className="clamp absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
@@ -98,7 +103,7 @@ function Panel({ className = "", children }: Props["Panel"]) {
         show={show}
         className={className}
         position="center"
-        scrollable={true}
+        scrollable={scrollable}
       >
         {children}
       </Drawer>

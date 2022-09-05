@@ -8,7 +8,7 @@ import useMapDispatch from "~/hooks/use-map-dispatch";
 
 interface Props extends React.ComponentProps<"div"> {}
 
-export default function Map({ className, ...props }: Props) {
+export default function Map(props: Props) {
   const map = useMapDispatch();
 
   const zoom = useTypedSelector((state) => state.map.zoom);
@@ -37,13 +37,11 @@ export default function Map({ className, ...props }: Props) {
   }, [center]);
 
   return (
-    <div
-      ref={ref}
-      className={clsx(
-        className,
-        lock ? "pointer-events-none" : "pointer-events-auto"
-      )}
-      {...props}
-    />
+    <>
+      <div
+        className={clsx("absolute inset-0 z-10", lock ? "block" : "hidden")}
+      />
+      <div ref={ref} {...props} />
+    </>
   );
 }
