@@ -54,8 +54,14 @@ export default function ImageSelect() {
           )}
         </div>
       ) : (
-        <div className="flex flex-col space-y-2">
-          <div className="space-y-1 bg-white p-4">
+        <div className="flex flex-grow flex-row space-x-2">
+          <img
+            height={120}
+            width={120}
+            className="h-28 w-28 object-cover"
+            src={form?.values?.image ?? ""}
+          />
+          <div className="flex flex-grow flex-col justify-center space-y-1 bg-white p-4">
             <p className="text-gray-400">{file?.name}</p>
             <div className="flex justify-between">
               <p
@@ -75,7 +81,6 @@ export default function ImageSelect() {
               </WarningModal>
             </div>
           </div>
-          <img src={form?.values?.image ?? ""} />
         </div>
       )}
       <input
