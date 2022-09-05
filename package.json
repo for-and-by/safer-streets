@@ -11,6 +11,7 @@
   "dependencies": {
     "@cloudflare/kv-asset-handler": "^0.2.0",
     "@reduxjs/toolkit": "^1.8.3",
+    "@supabase/supabase-js": "^1.35.6",
     "clsx": "^1.2.1",
     "config": "*",
     "maplibre-gl": "^2.1.9",

@@ -1,5 +1,3 @@
-import type { LngLatLike } from "maplibre-gl";
-
 export default {
   seo: {
     default: {
@@ -7,15 +5,7 @@ export default {
       icon: "/favicon.png",
     },
   },
-  views: {
-    main: "MAIN",
-    map: "MAP",
-    info: "INFO",
-    create: "CREATE",
-    search: "SEARCH",
-    filter: "FILTER",
-    hazard: "HAZARD",
-  },
+
   pwa: {
     name: "Safer Streets",
     description: "Crowd Sourced Hazard Reporting & Information",
@@ -36,6 +26,10 @@ export default {
       min: 7,
     },
     bbox: [72.24619313, -55.32281756, 168.22612585, -9.08801251], // Australia Bounding Box,
-    center: [153.026, -27.4705] as LngLatLike, // Brisbane LngLat
+    center: [153.026, -27.4705] as [number, number], // Brisbane LngLat
+  },
+  supabase: {
+    url: "https://ostfogwbvvrspkozoelv.supabase.co",
+    key: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9zdGZvZ3didnZyc3Brb3pvZWx2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjE4NjMyMTUsImV4cCI6MTk3NzQzOTIxNX0.DgZPshgpnXgtOLqPyXYM2nmEse1S0ibfg5TI_uFs0sI",
   },
 };

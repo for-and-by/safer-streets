@@ -5,6 +5,7 @@ import viewReducer from "~/store/view/reducer";
 import mapReducer from "~/store/map/reducer";
 
 import addMapListeners from "~/store/map/listeners";
+import map from "~/store/map/actions";
 
 // Middleware setup
 
@@ -20,7 +21,11 @@ const store = configureStore({
     view: viewReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().prepend(listener.middleware),
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [map.center.set.type],
+      },
+    }).prepend(listener.middleware),
 });
 
 export default store;

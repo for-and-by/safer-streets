@@ -1,5 +1,3 @@
-import type { LngLatLike } from "maplibre-gl";
-
 import * as Redux from "@reduxjs/toolkit";
 import config from "~/config";
 import map from "~/store/map/actions";
@@ -7,7 +5,7 @@ import parseLngLat from "~/lib/parse-lng-lat";
 
 interface State {
   zoom: number;
-  center: LngLatLike;
+  center: [number, number];
   controls: {
     lock: boolean;
   };

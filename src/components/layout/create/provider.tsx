@@ -16,10 +16,12 @@ interface ContextValue {
   stages: {
     count: number;
   };
-  // form: {
-  //   values: {};
-  //   update: () => void;
-  // };
+  values: {
+    lng?: number;
+    lat?: number;
+  };
+  change: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  update: (value: { [key: string]: string | number }) => void;
 }
 
 interface Props {
@@ -36,10 +38,9 @@ const initialValue: ContextValue = {
   stages: {
     count: Object.keys(stages).length,
   },
-  // form: {
-  //   values: {},
-  //   update: () => {},
-  // },
+  values: {},
+  update: () => {},
+  change: () => {},
 };
 
 const CreateFormContext = React.createContext(initialValue);
@@ -48,6 +49,7 @@ export const useCreateForm = createContextHook({ CreateFormContext });
 
 export function CreateFormProvider({ children }: Props) {
   const [stage, setStage] = React.useState<string>(Object.keys(stages)[0]);
+  const [values, setValues] = React.useState<ContextValue["values"]>({});
 
   function handleNextStage() {
     const nextStage = stages[stage].next;
@@ -61,6 +63,20 @@ export function CreateFormProvider({ children }: Props) {
     setStage(prevStage);
   }
 
+  const handleUpdateValue: ContextValue["update"] = (value) => {
+    setValues({
+      ...values,
+      ...value,
+    });
+  };
+
+  const handleChangeValue: ContextValue["change"] = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
+  };
+
   const value: ContextValue = {
     stage: {
       value: stages[stage],
@@ -71,6 +87,9 @@ export function CreateFormProvider({ children }: Props) {
     stages: {
       count: Object.keys(stages).length,
     },
+    values: values,
+    update: handleUpdateValue,
+    change: handleChangeValue,
   };
   return (
     <CreateFormContext.Provider value={value}>
