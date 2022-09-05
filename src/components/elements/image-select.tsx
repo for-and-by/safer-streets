@@ -6,6 +6,7 @@ import useAsync from "~/hooks/use-async";
 
 import InputWrapper from "~/components/elements/input-wrapper";
 import WarningModal from "~/components/modals/warning";
+import Toast from "~/components/composites/toast";
 
 interface Props {
   onUpload?: (image: string) => void;
@@ -52,22 +53,14 @@ export default function ImageSelect({
 
   return (
     <InputWrapper>
+      <Toast content="Processing Image..." show={loading} />
       {!image ? (
         <div
           className="flex flex-grow flex-col items-center justify-center space-y-4 rounded-sm border border-dashed border-gray-300 p-4 hover:cursor-pointer"
           onClick={handleUpload}
         >
-          {!loading ? (
-            <>
-              <i className="icon icon-image-location before:text-5xl before:text-gray-400" />
-              <p className="text-gray-400">Upload a photo</p>
-            </>
-          ) : (
-            <>
-              <i className="icon icon-is-spinning icon-circle-anim before:text-5xl before:text-gray-800" />
-              <p className="text-gray-400">Uploading photo...</p>
-            </>
-          )}
+          <i className="icon icon-image-location before:text-5xl before:text-gray-400" />
+          <p className="text-gray-400">Upload a photo</p>
         </div>
       ) : (
         <div className="flex flex-grow flex-row space-x-2">
