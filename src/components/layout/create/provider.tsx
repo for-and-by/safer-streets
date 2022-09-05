@@ -19,8 +19,16 @@ interface ContextValue {
   values: {
     lng?: number;
     lat?: number;
+    type?: string;
+    severity?: string;
+    image?: string;
+    description?: string;
   };
-  change: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  change: (
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => void;
   update: (value: { [key: string]: string | number }) => void;
   reset: () => void;
 }
