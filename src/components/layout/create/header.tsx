@@ -22,7 +22,7 @@ export default function CreateHeader() {
         <div className="flex flex-col px-3">
           <h3 className="font-medium">{stage.heading}</h3>
           <p className="text-sm text-base-400">
-            Step {stage.step} of {form.stages.count}
+            Step {stage.step} of {form.stage.count}
           </p>
         </div>
       </Drawer.Row>

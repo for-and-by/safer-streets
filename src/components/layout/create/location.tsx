@@ -22,12 +22,12 @@ export default function LocationStage() {
   }, []);
 
   React.useEffect(() => {
-    const [lng, lat] = center;
-    form.update({ lng, lat });
+    const [lng, lat] = center.map((i) => i.toString());
+    form?.inputs?.update({ lng, lat });
   }, [center]);
 
   React.useEffect(() => {
-    form.update({ address: results?.[0]?.heading });
+    form?.inputs?.update({ address: results?.[0]?.heading });
   }, [results]);
 
   function handleNextStage() {
@@ -40,7 +40,7 @@ export default function LocationStage() {
       <Toast show={loading} content={"Searching for address..."} />
       <Drawer.Row className="p-2">
         <div className="flex w-full flex-row items-center space-x-2 rounded bg-gray-100 p-3">
-          {!form.values.address ? (
+          {!form.inputs.values.address ? (
             <>
               <i className="icon icon-circle-anim icon-is-spinning before:text-gray-500" />
               <p>Searching for address...</p>
@@ -49,7 +49,7 @@ export default function LocationStage() {
             <>
               <div className="space-y flex flex-grow flex-col">
                 <p className="text-gray-400">Approximate Address</p>
-                <p className="font-medium">{form.values.address}</p>
+                <p className="font-medium">{form.inputs.values.address}</p>
               </div>
               {/*TODO: Sometimes the Find Self button bugs out*/}
               <FindSelfButton />

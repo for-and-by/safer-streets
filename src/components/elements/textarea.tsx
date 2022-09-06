@@ -6,12 +6,16 @@ interface Props extends React.ComponentPropsWithRef<"textarea"> {
   icon?: string;
   loading?: boolean;
   label?: string;
+  error?: string | boolean;
 }
 
 // eslint-disable-next-line react/display-name
-const TextInput = React.forwardRef<HTMLTextAreaElement, Props>(
-  ({ icon = undefined, loading = false, label, name, ...props }, ref) => (
-    <InputWrapper label={label} name={name ?? ""} align="top">
+const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
+  (
+    { icon = undefined, loading = false, label, name, error, ...props },
+    ref
+  ) => (
+    <InputWrapper label={label} name={name ?? ""} align="top" error={error}>
       {icon && <i className={clsx("icon", icon)} />}
       <textarea
         className="flex-grow bg-transparent focus:outline-none"
@@ -23,4 +27,4 @@ const TextInput = React.forwardRef<HTMLTextAreaElement, Props>(
   )
 );
 
-export default TextInput;
+export default Textarea;

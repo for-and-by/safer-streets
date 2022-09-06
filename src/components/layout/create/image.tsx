@@ -9,11 +9,11 @@ export default function ImageStage() {
   const form = useCreateForm();
 
   const handleUpload = (image: string) => {
-    form.update({ image });
+    form?.inputs?.update({ image });
   };
 
   const handleRemove = () => {
-    form.update({ image: undefined });
+    form?.inputs?.update({ image: undefined });
   };
 
   return (
@@ -22,7 +22,7 @@ export default function ImageStage() {
         <ImageSelect
           onUpload={handleUpload}
           onRemove={handleRemove}
-          value={form.values.image}
+          value={form.inputs.values.image}
         />
       </Drawer.Row>
       <Drawer.Row className="justify-between p-2">

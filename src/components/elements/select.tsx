@@ -10,6 +10,7 @@ interface Props {
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
   value: string;
   name: string;
+  error?: string | boolean;
 }
 
 export default function Select({
@@ -18,9 +19,10 @@ export default function Select({
   onChange,
   value,
   name,
+  error,
 }: Props) {
   return (
-    <InputWrapper label={label} name={name}>
+    <InputWrapper label={label} name={name} error={error}>
       <select
         className="flex-grow appearance-none bg-transparent focus:outline-none"
         onChange={onChange}

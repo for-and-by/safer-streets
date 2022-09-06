@@ -11,12 +11,12 @@ export default function ConfirmStage() {
     <>
       <Drawer.Row className="p-2">
         <div className="flex flex-grow flex-col space-y-2 bg-gray-100 p-3">
-          {Object.keys(form.values).map((key) =>
+          {Object.keys(form.inputs.values).map((key) =>
             !(key === "lng" || key === "lat") ? (
               <div className="flex space-x-4">
                 <p className="w-24 capitalize text-gray-400">{key}</p>
                 <p className="capitalize">
-                  {form.values[key as keyof typeof form.values]}
+                  {form.inputs.values[key as keyof typeof form.inputs.values]}
                 </p>
               </div>
             ) : null
