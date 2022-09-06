@@ -10,10 +10,10 @@ export default function ConfirmStage() {
   return (
     <>
       <Drawer.Row className="p-2">
-        <div className="flex flex-grow flex-col space-y-2 bg-gray-100 p-3">
+        <div className="flex flex-grow flex-col divide-y-2 divide-white bg-gray-100">
           {Object.keys(form.inputs.values).map((key) =>
-            !(key === "lng" || key === "lat") ? (
-              <div className="flex space-x-4">
+            !(key === "lng" || key === "lat" || key === "image") ? (
+              <div className="flex space-x-4 p-2">
                 <p className="w-24 capitalize text-gray-400">{key}</p>
                 <p className="capitalize">
                   {form.inputs.values[key as keyof typeof form.inputs.values]}
@@ -21,6 +21,16 @@ export default function ConfirmStage() {
               </div>
             ) : null
           )}
+          {form?.inputs?.values?.image ? (
+            <div className="flex space-x-4 p-2">
+              <p className="w-24 capitalize text-gray-400">Thumbnail</p>
+              <img
+                className="h-16 w-32 object-cover"
+                alt="Preview thumbnail"
+                src={form.inputs.values.image ?? ""}
+              />
+            </div>
+          ) : null}
         </div>
       </Drawer.Row>
       <Drawer.Row className="justify-between p-2">
