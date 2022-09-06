@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Type } from "~/types/db";
+import { Severity, Type } from "~/types/db";
 
 import createContextHook from "~/lib/create-context-hook";
 import supabase from "~/lib/supabase-client";
@@ -46,8 +46,10 @@ interface ContextValue {
     update: (value: Inputs) => void;
     clear: () => void;
   };
-  type?: Type;
   reset: () => void;
+  type?: Type;
+  types: Type[];
+  severities: Severity[];
 }
 
 interface Props {
@@ -75,6 +77,8 @@ const initialValue: ContextValue = {
   },
   reset: () => {},
   type: undefined,
+  types: [],
+  severities: [],
 };
 
 const CreateFormContext = React.createContext(initialValue);
@@ -82,28 +86,43 @@ const CreateFormContext = React.createContext(initialValue);
 export const useCreateForm = createContextHook({ CreateFormContext });
 
 export function CreateFormProvider({ children }: Props) {
-  const { stage: _stage, inputs: _inputs, errors: _errors } = initialValue;
+  const {
+    stage: _stage,
+    inputs: _inputs,
+    errors: _errors,
+    type: _type,
+  } = initialValue;
+
   const [stage, setStage] = React.useState<string>(_stage.handle);
   const [inputs, setInputs] = React.useState<Inputs>(_inputs.values);
   const [errors, setErrors] = React.useState<Inputs>(_errors.values);
+  const [type, setType] = React.useState<Type | undefined>(_type);
 
-  const { loading, data: type } = useAsync(async () => {
-    if (inputs.type) {
-      const { data, error } = await supabase
-        .from<Type>("types")
-        .select("*")
-        .match({ handle: inputs.type })
-        .limit(1)
-        .single();
+  const types = useAsync(async () => {
+    const { data, error } = await supabase.from<Type>("types").select("*");
 
-      if (error) throw error;
-      return data;
-    }
-  }, [inputs.type]);
+    if (error) throw error;
+    return data;
+  }, []);
+
+  const severities = useAsync(async () => {
+    const { data, error } = await supabase
+      .from<Severity>("severities")
+      .select("*");
+
+    if (error) throw error;
+    return data;
+  }, []);
 
   React.useEffect(() => {
     setErrors(_errors.values);
   }, [inputs]);
+
+  React.useEffect(() => {
+    if (inputs?.type && types?.data) {
+      setType(types.data.find((type) => type.handle === inputs.type));
+    }
+  }, [inputs.type, types.data]);
 
   const value: ContextValue = {
     stage: {
@@ -156,12 +175,17 @@ export function CreateFormProvider({ children }: Props) {
       setErrors(_errors.values);
       setInputs(_inputs.values);
     },
-    type,
+    type: type ?? undefined,
+    types: types?.data ?? [],
+    severities: severities?.data ?? [],
   };
 
   return (
     <>
-      <Toast content={"Fetching type data..."} show={loading} />
+      <Toast
+        content={"Fetching form data..."}
+        show={types.loading || severities.loading}
+      />
       <CreateFormContext.Provider value={value}>
         {children}
       </CreateFormContext.Provider>

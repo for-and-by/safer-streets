@@ -1,8 +1,6 @@
 import React from "react";
 
-import { SEVERITIES, TYPES } from "~/types/db";
 import capitaliseString from "~/lib/capitalise-string";
-
 import { useCreateForm } from "~/components/layout/create/provider";
 
 import Drawer from "~/components/composites/drawer";
@@ -31,32 +29,38 @@ export default function DetailsStage() {
     }
   };
 
+  console.log(form.type);
+
   return (
     <>
       <Drawer.Row className="p-2">
         <div className="flex flex-grow flex-col space-y-2">
-          <Select
-            label="Type"
-            options={Object.keys(TYPES).map((key) => ({
-              value: TYPES[key as keyof typeof TYPES],
-              label: capitaliseString(key),
-            }))}
-            onChange={form.inputs.bind}
-            value={form.inputs.values.type ?? ""}
-            name="type"
-            error={form.errors.values.type}
-          />
-          <Select
-            label="Severity"
-            options={Object.keys(SEVERITIES).map((key) => ({
-              value: SEVERITIES[key as keyof typeof SEVERITIES].toString(),
-              label: capitaliseString(key),
-            }))}
-            value={form.inputs.values.severity ?? ""}
-            onChange={form.inputs.bind}
-            name="severity"
-            error={form.errors.values.severity}
-          />
+          {form?.types?.length > 0 ? (
+            <Select
+              label="Type"
+              options={form.types.map((type) => ({
+                value: type.handle,
+                label: type.title,
+              }))}
+              onChange={form.inputs.bind}
+              value={form.inputs.values.type ?? ""}
+              name="type"
+              error={form.errors.values.type}
+            />
+          ) : null}
+          {form?.severities?.length > 0 ? (
+            <Select
+              label="Severity"
+              options={form.severities.map((severity) => ({
+                value: severity.id,
+                label: severity.title,
+              }))}
+              value={form.inputs.values.severity ?? ""}
+              onChange={form.inputs.bind}
+              name="severity"
+              error={form.errors.values.severity}
+            />
+          ) : null}
           {form?.type?.custom_fields
             ? Object.keys(form?.type?.custom_fields).map((key) => {
                 console.log(key, form.inputs.values);
