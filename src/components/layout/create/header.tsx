@@ -20,7 +20,7 @@ export default function CreateHeader() {
         </CancelModal>
 
         <div className="flex flex-col px-3">
-          <h3 className="text-base text-base-700">{stage.heading}</h3>
+          <h3 className="font-medium">{stage.heading}</h3>
           <p className="text-sm text-base-400">
             Step {stage.step} of {form.stages.count}
           </p>

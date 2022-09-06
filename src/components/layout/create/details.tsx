@@ -1,5 +1,8 @@
 import React from "react";
 
+import { SEVERITIES, TYPES } from "~/types/db";
+import capitaliseString from "~/lib/capitalise-string";
+
 import { useCreateForm } from "~/components/layout/create/provider";
 
 import Drawer from "~/components/composites/drawer";
@@ -15,16 +18,22 @@ export default function DetailsStage() {
         <div className="flex flex-grow flex-col space-y-2">
           <Select
             label="Type"
-            options={[{ value: "type-1", label: "Type 1" }]}
+            options={Object.keys(TYPES).map((key) => ({
+              value: TYPES[key as keyof typeof TYPES],
+              label: capitaliseString(key),
+            }))}
             onChange={form.change}
-            value={form?.values?.type ?? ""}
+            value={form?.values?.type?.toString() ?? ""}
             name="type"
           />
           <Select
             label="Severity"
-            options={[{ value: "high", label: "High" }]}
+            options={Object.keys(SEVERITIES).map((key) => ({
+              value: SEVERITIES[key as keyof typeof SEVERITIES].toString(),
+              label: capitaliseString(key),
+            }))}
+            value={form?.values?.severity?.toString() ?? ""}
             onChange={form.change}
-            value={form?.values?.severity ?? ""}
             name="severity"
           />
           <Textarea

@@ -70,7 +70,7 @@ function Root({
       <div
         ref={rootRef}
         className={clsx(
-          "flex flex-col bg-white",
+          "flex flex-col divide-y divide-base-100 bg-white",
           position === "bottom" && "justify-start",
           position === "top" && "justify-end"
         )}

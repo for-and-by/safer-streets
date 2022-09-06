@@ -25,7 +25,7 @@ export default function WarningModal({
         <Modal.Tint />
         <Modal.Panel className="divide-y divide-base-200">
           <Drawer.Row sticky className="justify-between p-2">
-            <p className="ml-2 font-semibold">{heading}</p>
+            <p className="ml-2 font-medium">{heading}</p>
             <Modal.Close className="btn btn-light">
               <i className="btn-icon icon icon-close" />
             </Modal.Close>

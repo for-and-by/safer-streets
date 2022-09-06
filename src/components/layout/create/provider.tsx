@@ -1,10 +1,8 @@
 import React from "react";
-
-import { Stage } from "~/types/create";
-
-import stages from "~/data/stages";
+import stages, { Stage } from "~/data/stages";
 
 import createContextHook from "~/lib/create-context-hook";
+import { Report, SEVERITIES, TYPES } from "~/types/db";
 
 interface ContextValue {
   stage: {
@@ -17,12 +15,13 @@ interface ContextValue {
     count: number;
   };
   values: {
-    lng?: number;
-    lat?: number;
-    type?: string;
-    severity?: string;
-    image?: string;
+    lng?: Report["lng"];
+    lat?: Report["lat"];
+    type?: TYPES;
+    severity?: SEVERITIES;
     description?: string;
+    address?: string;
+    image?: string;
   };
   change: (
     event: React.ChangeEvent<

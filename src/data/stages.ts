@@ -1,4 +1,10 @@
-import { Stage } from "~/types/create";
+export interface Stage {
+  step: number;
+  heading: string;
+  description: string;
+  progress: number;
+  next: string;
+}
 
 const stages: { [key: string]: Stage } = {
   location: {

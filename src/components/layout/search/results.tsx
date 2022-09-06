@@ -35,12 +35,12 @@ export default function SearchResults() {
         position="center"
         className="mb-2"
       >
-        <Drawer.Row className="bg-base-50">
+        <Drawer.Row className="bg-white">
           <div className="flex max-h-48 w-full flex-col divide-y divide-base-100 overflow-y-scroll">
             {transitionedResults?.map((feature) => (
               <div
                 key={nanoid()}
-                className="flex flex-col p-3 hover:cursor-pointer hover:bg-white"
+                className="flex flex-col bg-white p-3 transition-all hover:cursor-pointer hover:bg-gray-100"
                 onClick={() => handleSetCenter(feature?.center)}
               >
                 <p className="text-base text-base-700">{feature?.heading}</p>

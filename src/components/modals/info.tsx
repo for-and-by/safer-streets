@@ -21,7 +21,7 @@ export default function InfoModal({ children, className = "" }: Props) {
       <Modal.Body>
         <Modal.Tint />
         <Modal.Panel scrollable>
-          <Drawer.Row sticky className="p-2 pb-0">
+          <Drawer.Row sticky className="p-2">
             <div className="ml-3 flex-grow">
               <Logo />
             </div>

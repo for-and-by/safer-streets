@@ -7,6 +7,7 @@ import useAsync from "~/hooks/use-async";
 import InputWrapper from "~/components/elements/input-wrapper";
 import WarningModal from "~/components/modals/warning";
 import Toast from "~/components/composites/toast";
+import truncateString from "~/lib/truncate-string";
 
 interface Props {
   onUpload?: (image: string) => void;
@@ -72,7 +73,7 @@ export default function ImageSelect({
             src={image ?? ""}
           />
           <div className="flex flex-grow flex-col justify-center space-y-1 bg-white p-4">
-            <p className="text-gray-400">{file?.name}</p>
+            <p className="text-gray-400">{truncateString(file?.name)}</p>
             <div className="flex justify-between">
               <p
                 className="underline underline-offset-8 hover:cursor-pointer"

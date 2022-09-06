@@ -8,13 +8,14 @@ import { useCreateForm } from "~/components/layout/create/provider";
 import Toast from "~/components/composites/toast";
 import Drawer from "~/components/composites/drawer";
 import CancelModal from "~/components/layout/create/cancel";
+import FindSelfButton from "~/components/elements/find-self-button";
 
 export default function LocationStage() {
-  const center = useTypedSelector((state) => state.map.center);
-  const { results, loading } = useGeocoder(center);
-
   const map = useMapDispatch();
   const form = useCreateForm();
+
+  const center = useTypedSelector((state) => state.map.center);
+  const { results, loading } = useGeocoder(center);
 
   React.useEffect(() => {
     map.controls.unlock();
@@ -25,6 +26,10 @@ export default function LocationStage() {
     form.update({ lng, lat });
   }, [center]);
 
+  React.useEffect(() => {
+    form.update({ address: results?.[0]?.heading });
+  }, [results]);
+
   function handleNextStage() {
     map.controls.lock();
     form.stage.next();
@@ -34,17 +39,21 @@ export default function LocationStage() {
     <>
       <Toast show={loading} content={"Searching for address..."} />
       <Drawer.Row className="p-2">
-        <div className="flex w-full flex-row items-center space-x-2 bg-gray-100 p-2">
-          {!(results?.length > 0) ? (
+        <div className="flex w-full flex-row items-center space-x-2 rounded bg-gray-100 p-3">
+          {!form.values.address ? (
             <>
               <i className="icon icon-circle-anim icon-is-spinning before:text-gray-500" />
               <p>Searching for address...</p>
             </>
           ) : (
-            <div className="space-y flex flex-col">
-              <p className="text-gray-400">Approximate Address</p>
-              <p>{results?.[0]?.heading}</p>
-            </div>
+            <>
+              <div className="space-y flex flex-grow flex-col">
+                <p className="text-gray-400">Approximate Address</p>
+                <p className="font-medium">{form.values.address}</p>
+              </div>
+              {/*TODO: Sometimes the Find Self button bugs out*/}
+              <FindSelfButton />
+            </>
           )}
         </div>
       </Drawer.Row>

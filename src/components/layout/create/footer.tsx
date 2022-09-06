@@ -28,9 +28,7 @@ export default function CreateFooter() {
   return (
     <>
       <Drawer.Row className="p-3">
-        <p className="text-base text-gray-500">
-          {form.stage.value.description}
-        </p>
+        <p className="text-base">{form.stage.value.description}</p>
       </Drawer.Row>
       <Stage />
     </>
