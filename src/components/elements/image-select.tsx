@@ -13,12 +13,14 @@ interface Props {
   onUpload?: (image: string) => void;
   onRemove?: () => void;
   value?: string;
+  error?: string | boolean;
 }
 
 export default function ImageSelect({
   onUpload = () => {},
   onRemove = () => {},
   value,
+  error,
 }: Props) {
   const [file, setFile] = React.useState<File | undefined>(undefined);
   const [image, setImage] = React.useState<string | undefined>(value);
@@ -53,7 +55,7 @@ export default function ImageSelect({
   };
 
   return (
-    <InputWrapper>
+    <InputWrapper error={error}>
       <Toast content="Processing Image..." show={loading} />
       {!image ? (
         <div
