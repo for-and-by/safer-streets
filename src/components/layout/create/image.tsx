@@ -20,7 +20,7 @@ export default function ImageStage() {
   const handleNextStage = () => {
     if (form.type?.image_required && !form.image.value)
       form.errors.update({
-        image: "We need an image for this type of reports",
+        thumbnail: "We need an image for this type of reports",
       });
     else form.stage.next();
   };
@@ -34,7 +34,7 @@ export default function ImageStage() {
             onRemove={handleRemove}
             thumb={form.inputs.values.thumbnail}
             value={form.image.value}
-            error={form.errors.values.image}
+            error={form.errors.values.thumbnail}
             placeholder={
               form.type?.image_required
                 ? "Upload a photo (required)"
