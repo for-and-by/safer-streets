@@ -1,6 +1,5 @@
 import { Report, ReportContent } from "~/types/db";
 import supabase from "~/lib/supabase-client";
-import uploadFile from "~/lib/upload-file";
 
 interface Data {
   lng: Report["lng"];
@@ -15,8 +14,6 @@ interface Data {
 }
 
 export default async function uploadReport(data: Data) {
-  const imageUrl = data?.image_url ?? (await uploadFile(data.image));
-
   const report = await supabase.from<Report>("reports").insert({
     lng: data.lng,
     lat: data.lat,
@@ -32,7 +29,7 @@ export default async function uploadReport(data: Data) {
     description: data.description,
     severity_handle: data.severity_handle,
     data: data.data,
-    image_url: imageUrl,
+    image_url: data.image_url,
   });
 
   if (content.error) throw content.error;

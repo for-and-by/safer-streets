@@ -18,23 +18,33 @@ export default function ConfirmStage() {
   const uploading = useTypedSelector((state) => state.reports.pending.upload);
 
   const handleSubmit = () => {
-    reports
-      .upload({ inputs: form.inputs.values, image: form.image.value })
-      .then(() => {
-        view.active.reset();
-        map.controls.unlock();
-        form.reset();
-        reports.sync();
-      });
+    reports.upload(form.inputs.values).then(() => {
+      view.active.reset();
+      map.controls.unlock();
+      form.reset();
+      reports.sync();
+    });
   };
 
   return (
     <>
       <Toast content="Uploading report..." show={uploading} />
-      <Drawer.Row className="p-2">
-        <div className="flex flex-grow flex-col divide-y-2 divide-white bg-gray-100">
+      <Drawer.Row>
+        <div className="flex max-h-64 flex-grow flex-col divide-y-2 divide-white overflow-scroll bg-gray-100 p-2">
+          {form?.inputs?.values?.image ? (
+            <img
+              className="h-32 w-full object-cover"
+              alt="Preview thumbnail"
+              src={form.inputs.values.image ?? ""}
+            />
+          ) : null}
           {Object.keys(form.inputs.values).map((key) =>
-            !(key === "lng" || key === "lat" || key === "thumbnail") ? (
+            !(
+              key === "lng" ||
+              key === "lat" ||
+              key === "image" ||
+              key === "description"
+            ) ? (
               <div className="flex space-x-4 p-2">
                 <p className="w-24 capitalize text-gray-400">{key}</p>
                 <p className="capitalize">
@@ -43,16 +53,10 @@ export default function ConfirmStage() {
               </div>
             ) : null
           )}
-          {form?.inputs?.values?.thumbnail ? (
-            <div className="flex space-x-4 p-2">
-              <p className="w-24 capitalize text-gray-400">Thumbnail</p>
-              <img
-                className="h-16 w-32 object-cover"
-                alt="Preview thumbnail"
-                src={form.inputs.values.thumbnail ?? ""}
-              />
-            </div>
-          ) : null}
+          <div className="flex space-x-4 p-2">
+            <p className="w-24 capitalize text-gray-400">Description</p>
+            <p>{form.inputs.values.description}</p>
+          </div>
         </div>
       </Drawer.Row>
       <Drawer.Row className="justify-between p-2">

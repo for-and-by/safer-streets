@@ -6,7 +6,6 @@ export default function useReportsDispatch() {
   const dispatch = useTypedDispatch();
   return {
     sync: () => dispatch(reports.sync()),
-    upload: (data: { inputs: Inputs; image?: File }) =>
-      dispatch(reports.upload(data)),
+    upload: (inputs: Inputs) => dispatch(reports.upload(inputs)),
   };
 }

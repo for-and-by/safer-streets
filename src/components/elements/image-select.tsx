@@ -1,6 +1,6 @@
 import React from "react";
 
-import getBase64File from "~/lib/get-base-64-file";
+import parseFileAsBase64 from "~/lib/parse-file-as-base64";
 
 import useAsync from "~/hooks/use-async";
 
@@ -9,12 +9,11 @@ import WarningModal from "~/components/modals/warning";
 import Toast from "~/components/composites/toast";
 
 interface Props {
-  onUpload?: (data: { file: File; image: string }) => void;
+  onUpload?: (image: string) => void;
   onRemove?: () => void;
 
   error?: string | boolean;
-  value?: File;
-  thumb?: string;
+  value?: string;
   placeholder?: string;
 }
 
@@ -23,27 +22,21 @@ export default function ImageSelect({
   onRemove = () => {},
   value,
   error,
-  thumb,
   placeholder,
 }: Props) {
-  const [file, setFile] = React.useState<File | undefined>(value);
-  const [image, setImage] = React.useState<string | undefined>(thumb);
-
+  const [image, setImage] = React.useState<string | undefined>(value);
+  const [file, setFile] = React.useState<File | undefined>(undefined);
   const inputRef = React.useRef<HTMLInputElement | null>(null);
 
   const { loading } = useAsync(async () => {
     if (!file) return;
-    const image = await getBase64File(file);
+    const image = await parseFileAsBase64(file);
     setImage(image);
-    onUpload({ image, file });
+    onUpload(image);
   }, [file]);
 
   React.useEffect(() => {
-    setImage(thumb);
-  }, [thumb]);
-
-  React.useEffect(() => {
-    setFile(value);
+    setImage(value);
   }, [value]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,40 +60,34 @@ export default function ImageSelect({
       <Toast content="Processing Image..." show={loading} />
       {!image ? (
         <div
-          className="flex flex-grow flex-col items-center justify-center space-y-4 p-4 hover:cursor-pointer"
+          className="flex h-40 flex-grow flex-col items-center justify-center space-y-4 hover:cursor-pointer"
           onClick={handleUpload}
         >
           <i className="icon icon-image-location before:text-5xl before:text-gray-400" />
           <p className="text-gray-400">{placeholder}</p>
         </div>
       ) : (
-        <div className="flex flex-grow flex-row space-x-4">
-          <img
-            height={120}
-            width={120}
-            className="h-28 w-28 object-cover"
-            alt={file?.name ?? ""}
-            src={image ?? ""}
-          />
-          <div className="flex flex-grow flex-col justify-center space-y-1 bg-white p-4">
-            <p className="w-44 overflow-hidden overflow-ellipsis text-gray-400">
-              {file?.name}
-            </p>
-            <div className="flex justify-between">
-              <p
-                className="underline underline-offset-8 hover:cursor-pointer"
-                onClick={handleUpload}
-              >
-                Reupload
-              </p>
+        <div className="relative h-40 w-full">
+          <div className="absolute -inset-2 overflow-hidden rounded-sm">
+            <img
+              className="h-full w-full object-cover"
+              alt={file?.name ?? ""}
+              src={image ?? ""}
+            />
+          </div>
+          <div className="absolute inset-0">
+            <div className="absolute right-0 top-0 flex space-x-2">
+              <button className="btn btn-light" onClick={handleUpload}>
+                <i className="btn-icon icon icon-upload" />
+              </button>
               <WarningModal
                 heading="Remove Image"
                 body="Are you sure you want to remove this image?"
                 onConfirm={handleRemove}
               >
-                <p className="text-red-600 underline underline-offset-8 hover:cursor-pointer">
-                  Remove
-                </p>
+                <button className="btn btn-light">
+                  <i className="btn-icon icon icon-remove before:text-red-600" />
+                </button>
               </WarningModal>
             </div>
           </div>

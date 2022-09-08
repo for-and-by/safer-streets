@@ -243,3 +243,39 @@ icons
   content: "\ea15";
 }
 
+.icon-upload::before {
+  content: "\ea16";
+}
+
+.icon-remove::before {
+  content: "\ea17";
+}
+
+.icon-flood::before {
+  content: "\ea18";
+}
+
+.icon-fire::before {
+  content: "\ea19";
+}
+
+.icon-infrastructure::before {
+  content: "\ea1a";
+}
+
+.icon-pedestrian::before {
+  content: "\ea1b";
+}
+
+.icon-cyclist::before {
+  content: "\ea1c";
+}
+
+.icon-motorist::before {
+  content: "\ea1d";
+}
+
+.icon-wildlife::before {
+  content: "\ea1e";
+}
+

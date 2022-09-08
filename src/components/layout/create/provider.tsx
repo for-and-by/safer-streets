@@ -21,6 +21,7 @@ export interface Inputs {
   thumbnail?: string;
   severity?: string;
   type?: string;
+  image?: string;
   [key: string]: string | number | undefined;
 }
 
@@ -45,11 +46,6 @@ interface ContextValue {
   errors: {
     values: Inputs;
     update: (value: Inputs) => void;
-    clear: () => void;
-  };
-  image: {
-    value?: File;
-    update: (file: File) => void;
     clear: () => void;
   };
   reset: () => void;
@@ -81,11 +77,6 @@ const initialValue: ContextValue = {
     update: () => {},
     clear: () => {},
   },
-  image: {
-    value: undefined,
-    update: () => {},
-    clear: () => {},
-  },
   reset: () => {},
   type: undefined,
   types: [],
@@ -102,14 +93,12 @@ export function CreateFormProvider({ children }: Props) {
     inputs: _inputs,
     errors: _errors,
     type: _type,
-    image: _image,
   } = initialValue;
 
   const [stage, setStage] = React.useState<string>(_stage.handle);
   const [inputs, setInputs] = React.useState<Inputs>(_inputs.values);
   const [errors, setErrors] = React.useState<Inputs>(_errors.values);
   const [type, setType] = React.useState<Type | undefined>(_type);
-  const [file, setFile] = React.useState<File | undefined>(_image.value);
 
   const types = useAsync(async () => {
     return await fetchTypes();
@@ -128,15 +117,6 @@ export function CreateFormProvider({ children }: Props) {
       setType(types.data.find((type) => type.handle === inputs.type));
     }
   }, [inputs.type, types.data]);
-
-  React.useEffect(() => {
-    if (!file && inputs.thumbnail) {
-      setInputs((prevState) => ({
-        ...prevState,
-        thumbnail: undefined,
-      }));
-    }
-  }, [file]);
 
   const value: ContextValue = {
     stage: {
@@ -192,17 +172,7 @@ export function CreateFormProvider({ children }: Props) {
       setStage(_stage.handle);
       setErrors(_errors.values);
       setInputs(_inputs.values);
-      setFile(_image.value);
       setType(_type);
-    },
-    image: {
-      value: file,
-      update: (file) => {
-        setFile(file);
-      },
-      clear: () => {
-        setFile(_image.value);
-      },
     },
     type: type ?? undefined,
     types: types?.data ?? [],

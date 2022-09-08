@@ -5,11 +5,12 @@ import { Inputs } from "~/components/layout/create/provider";
 import fetchReports from "~/lib/fetch-reports";
 import uploadReport from "~/lib/upload-report";
 import fetchTypes from "~/lib/fetch-types";
+import uploadFile from "~/lib/upload-file";
 
 const reports = {
-  upload: Redux.createAsyncThunk<void, { inputs: Inputs; image?: File }>(
+  upload: Redux.createAsyncThunk<void, Inputs>(
     "reports/upload",
-    async ({ inputs, image }) => {
+    async (inputs) => {
       const [type] = await fetchTypes(inputs.type);
       const fields = Object.keys(type.custom_fields);
 
@@ -24,6 +25,8 @@ const reports = {
       if (!(inputs.lng && inputs.lat))
         throw "No valid coordinates provided for reports";
 
+      const imageUrl = await uploadFile(inputs.image);
+
       const results = await uploadReport({
         lng: inputs?.lng,
         lat: inputs?.lat,
@@ -32,7 +35,7 @@ const reports = {
         description: inputs?.description ?? "",
         severity_handle: inputs?.severity as SEVERITIES,
         data: additionalData,
-        image: image,
+        image_url: imageUrl,
       });
 
       if (results.report.error) throw results.report.error;
