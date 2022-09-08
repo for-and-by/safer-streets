@@ -25,7 +25,7 @@ export default async function uploadReport(data: Data) {
   });
 
   if (report.error) throw report.error;
-  if (!report.data) throw "No data was returned from report upload.";
+  if (!report.data) throw "No data was returned from reports upload.";
 
   const content = await supabase.from<ReportContent>("reports_content").insert({
     report_id: report.data[0].id,
@@ -36,7 +36,7 @@ export default async function uploadReport(data: Data) {
   });
 
   if (content.error) throw content.error;
-  if (!content.data) throw "No data was returned from report content upload";
+  if (!content.data) throw "No data was returned from reports content upload";
 
   return { content, report };
 }

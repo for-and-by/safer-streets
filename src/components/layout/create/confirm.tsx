@@ -9,6 +9,7 @@ import useAsync from "~/hooks/use-async";
 import { useCreateForm } from "~/components/layout/create/provider";
 import useViewDispatch from "~/hooks/use-view-dispatch";
 import useMapDispatch from "~/hooks/use-map-dispatch";
+import useReportsDispatch from "~/hooks/use-reports-dispatch";
 
 import Drawer from "~/components/composites/drawer";
 import Toast from "~/components/composites/toast";
@@ -19,11 +20,13 @@ export default function ConfirmStage() {
   const form = useCreateForm();
   const view = useViewDispatch();
   const map = useMapDispatch();
+  const reports = useReportsDispatch();
 
   const handleExitView = () => {
     view.active.reset();
     map.controls.unlock();
     form.reset();
+    reports.list.sync();
   };
 
   const upload = useAsync(async () => {
@@ -43,7 +46,7 @@ export default function ConfirmStage() {
     }, {});
 
     if (!(inputs.lng && inputs.lat))
-      throw "No valid coordinates provided for report";
+      throw "No valid coordinates provided for reports";
 
     const results = await uploadReport({
       lng: inputs?.lng,

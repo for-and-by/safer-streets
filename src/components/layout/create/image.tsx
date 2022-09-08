@@ -20,7 +20,7 @@ export default function ImageStage() {
   const handleNextStage = () => {
     if (form.type?.image_required && !form.image.value)
       form.errors.update({
-        image: "We need an image for this type of report",
+        image: "We need an image for this type of reports",
       });
     else form.stage.next();
   };

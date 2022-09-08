@@ -10,9 +10,9 @@ interface Props {
   children?: React.ReactNode;
   className?: string;
   icon?: string;
-  onDragEnd: maplibregl.Listener;
-  onDragStart: maplibregl.Listener;
-  draggable: boolean;
+  onDragEnd?: maplibregl.Listener;
+  onDragStart?: maplibregl.Listener;
+  draggable?: boolean;
   anchor?: maplibregl.PositionAnchor;
 }
 

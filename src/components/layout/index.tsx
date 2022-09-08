@@ -14,6 +14,7 @@ import SearchResults from "~/components/layout/search/results";
 import CenterMarker from "~/components/map/markers/center";
 import { SearchProvider } from "~/components/layout/search/provider";
 import { CreateFormProvider } from "~/components/layout/create/provider";
+import Reports from "~/components/layout/reports";
 
 interface Props {}
 
@@ -24,6 +25,7 @@ export default function Index({}: Props) {
         <MapProvider>
           <Map className="absolute inset-0">
             <CenterMarker />
+            <Reports />
           </Map>
         </MapProvider>
       </div>

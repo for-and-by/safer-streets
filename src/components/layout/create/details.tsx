@@ -18,7 +18,7 @@ export default function DetailsStage() {
       args.every((arg) => arg && arg !== "");
 
     if (!isValid(type))
-      form.errors.update({ type: "A report type needs to be selected" });
+      form.errors.update({ type: "A reports type needs to be selected" });
     if (!isValid(severity))
       form.errors.update({ severity: "A severity needs to be selected" });
     if (!isValid(description))

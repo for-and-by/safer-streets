@@ -31,8 +31,6 @@ export default function LocationStage() {
     form.stage.next();
   }
 
-  console.log(form.inputs.values);
-
   return (
     <>
       <Toast show={loading} content={"Searching for address..."} />
