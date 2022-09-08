@@ -8,18 +8,18 @@ import BaseMarker from "~/components/map/markers/base";
 export default function Reports() {
   const reports = useReportsDispatch();
 
-  const syncing = useTypedSelector((state) => state.reports.syncing);
+  const syncing = useTypedSelector((state) => state.reports.pending.sync);
   const list = useTypedSelector((state) => state.reports.list);
 
   React.useEffect(() => {
-    reports.list.sync();
+    reports.sync();
   }, []);
 
   return (
     <>
       <Toast content={"Syncing Reports..."} show={syncing} />
       {list.map((report) => (
-        <BaseMarker coordinates={report} />
+        <BaseMarker key={report.id} coordinates={report} />
       ))}
     </>
   );

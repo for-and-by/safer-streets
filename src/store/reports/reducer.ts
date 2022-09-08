@@ -7,26 +7,39 @@ import getIsoNow from "~/lib/get-iso-now";
 import reports from "~/store/reports/actions";
 
 interface State {
-  syncing: boolean;
+  pending: {
+    sync: boolean;
+    upload: boolean;
+  };
   lastSynced?: string;
   list: Report[];
 }
 
 const initialState: State = {
-  syncing: false,
+  pending: {
+    sync: false,
+    upload: false,
+  },
   lastSynced: undefined,
   list: [],
 };
 
 const reducer = Redux.createReducer(initialState, (builder) => {
   builder
-    .addCase(reports.list.sync.pending, (state) => {
-      state.syncing = true;
+    .addCase(reports.sync.pending, (state) => {
+      state.pending.sync = true;
     })
-    .addCase(reports.list.sync.fulfilled, (state, action) => {
+    .addCase(reports.sync.fulfilled, (state, action) => {
+      state.pending.sync = false;
+
       state.lastSynced = getIsoNow();
-      state.syncing = false;
       state.list = [...state.list, ...action.payload];
+    })
+    .addCase(reports.upload.pending, (state) => {
+      state.pending.upload = true;
+    })
+    .addCase(reports.upload.fulfilled, (state, _) => {
+      state.pending.upload = false;
     });
 });
 

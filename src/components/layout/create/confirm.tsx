@@ -1,11 +1,5 @@
 import React from "react";
 
-import { SEVERITIES, TYPES } from "~/types/db";
-
-import uploadReport from "~/lib/upload-report";
-import fetchTypes from "~/lib/fetch-types";
-
-import useAsync from "~/hooks/use-async";
 import { useCreateForm } from "~/components/layout/create/provider";
 import useViewDispatch from "~/hooks/use-view-dispatch";
 import useMapDispatch from "~/hooks/use-map-dispatch";
@@ -13,73 +7,30 @@ import useReportsDispatch from "~/hooks/use-reports-dispatch";
 
 import Drawer from "~/components/composites/drawer";
 import Toast from "~/components/composites/toast";
+import useTypedSelector from "~/hooks/use-typed-selector";
 
 export default function ConfirmStage() {
-  const [uploading, setUploading] = React.useState<boolean>(false);
-
   const form = useCreateForm();
   const view = useViewDispatch();
   const map = useMapDispatch();
   const reports = useReportsDispatch();
 
-  const handleExitView = () => {
-    view.active.reset();
-    map.controls.unlock();
-    form.reset();
-    reports.list.sync();
-  };
-
-  const upload = useAsync(async () => {
-    if (!uploading) return;
-
-    const inputs = form.inputs.values;
-
-    const [type] = await fetchTypes(inputs.type);
-    const fields = Object.keys(type.custom_fields);
-
-    const additionalData = fields.reduce((obj, field) => {
-      const value = inputs[field as keyof typeof inputs];
-      if (!value) return obj;
-      return Object.assign(obj, {
-        [field]: value,
-      });
-    }, {});
-
-    if (!(inputs.lng && inputs.lat))
-      throw "No valid coordinates provided for reports";
-
-    const results = await uploadReport({
-      lng: inputs?.lng,
-      lat: inputs?.lat,
-      type_handle: inputs?.type as TYPES,
-      is_deleted: false,
-      description: inputs?.description ?? "",
-      severity_handle: inputs?.severity as SEVERITIES,
-      data: additionalData,
-      image: form.image.value,
-    });
-
-    if (results.report.error) throw results.report.error;
-    if (results.content.error) throw results.content.error;
-
-    handleExitView();
-  }, [uploading]);
-
-  React.useEffect(() => {
-    if (!upload.loading) {
-      setUploading(false);
-    }
-  }, [upload.loading]);
+  const uploading = useTypedSelector((state) => state.reports.pending.upload);
 
   const handleSubmit = () => {
-    if (!uploading) {
-      setUploading(true);
-    }
+    reports
+      .upload({ inputs: form.inputs.values, image: form.image.value })
+      .then(() => {
+        view.active.reset();
+        map.controls.unlock();
+        form.reset();
+        reports.sync();
+      });
   };
 
   return (
     <>
-      <Toast content="Uploading report..." show={upload.loading} />
+      <Toast content="Uploading report..." show={uploading} />
       <Drawer.Row className="p-2">
         <div className="flex flex-grow flex-col divide-y-2 divide-white bg-gray-100">
           {Object.keys(form.inputs.values).map((key) =>
