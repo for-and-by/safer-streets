@@ -193,6 +193,7 @@ export function CreateFormProvider({ children }: Props) {
       setErrors(_errors.values);
       setInputs(_inputs.values);
       setFile(_image.value);
+      setType(_type);
     },
     image: {
       value: file,

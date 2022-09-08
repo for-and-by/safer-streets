@@ -7,6 +7,8 @@ import fetchTypes from "~/lib/fetch-types";
 
 import useAsync from "~/hooks/use-async";
 import { useCreateForm } from "~/components/layout/create/provider";
+import useViewDispatch from "~/hooks/use-view-dispatch";
+import useMapDispatch from "~/hooks/use-map-dispatch";
 
 import Drawer from "~/components/composites/drawer";
 import Toast from "~/components/composites/toast";
@@ -15,6 +17,14 @@ export default function ConfirmStage() {
   const [uploading, setUploading] = React.useState<boolean>(false);
 
   const form = useCreateForm();
+  const view = useViewDispatch();
+  const map = useMapDispatch();
+
+  const handleExitView = () => {
+    view.active.reset();
+    map.controls.unlock();
+    form.reset();
+  };
 
   const upload = useAsync(async () => {
     if (!uploading) return;
@@ -46,7 +56,10 @@ export default function ConfirmStage() {
       image: form.image.value,
     });
 
-    console.log(results);
+    if (results.report.error) throw results.report.error;
+    if (results.content.error) throw results.content.error;
+
+    handleExitView();
   }, [uploading]);
 
   React.useEffect(() => {
@@ -63,7 +76,7 @@ export default function ConfirmStage() {
 
   return (
     <>
-      <Toast content="Uploading image..." show={upload.loading} />
+      <Toast content="Uploading report..." show={upload.loading} />
       <Drawer.Row className="p-2">
         <div className="flex flex-grow flex-col divide-y-2 divide-white bg-gray-100">
           {Object.keys(form.inputs.values).map((key) =>
