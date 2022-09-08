@@ -33,7 +33,24 @@ const reducer = Redux.createReducer(initialState, (builder) => {
       state.pending.sync = false;
 
       state.lastSynced = getIsoNow();
-      state.list = [...state.list, ...action.payload];
+
+      const list = [...state.list, ...action.payload];
+
+      const reportIdMap = list
+        .sort((a, b) => {
+          if (!(a.updated_at && b.updated_at)) return 0;
+          if (new Date(a.updated_at) > new Date(b.updated_at)) {
+            return 1;
+          } else {
+            return -1;
+          }
+        })
+        .reduce((obj, report) => {
+          if (!report.id) return obj;
+          return Object.assign(obj, { [report.id.toString()]: report });
+        }, {});
+
+      state.list = Object.values(reportIdMap);
     })
     .addCase(reports.upload.pending, (state) => {
       state.pending.upload = true;
