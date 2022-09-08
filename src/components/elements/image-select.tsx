@@ -7,13 +7,15 @@ import useAsync from "~/hooks/use-async";
 import InputWrapper from "~/components/elements/input-wrapper";
 import WarningModal from "~/components/modals/warning";
 import Toast from "~/components/composites/toast";
-import truncateString from "~/lib/truncate-string";
 
 interface Props {
-  onUpload?: (image: string) => void;
+  onUpload?: (data: { file: File; image: string }) => void;
   onRemove?: () => void;
-  value?: string;
+
   error?: string | boolean;
+  value?: File;
+  thumb?: string;
+  placeholder?: string;
 }
 
 export default function ImageSelect({
@@ -21,9 +23,11 @@ export default function ImageSelect({
   onRemove = () => {},
   value,
   error,
+  thumb,
+  placeholder,
 }: Props) {
-  const [file, setFile] = React.useState<File | undefined>(undefined);
-  const [image, setImage] = React.useState<string | undefined>(value);
+  const [file, setFile] = React.useState<File | undefined>(value);
+  const [image, setImage] = React.useState<string | undefined>(thumb);
 
   const inputRef = React.useRef<HTMLInputElement | null>(null);
 
@@ -31,11 +35,15 @@ export default function ImageSelect({
     if (!file) return;
     const image = await getBase64File(file);
     setImage(image);
-    onUpload(image);
+    onUpload({ image, file });
   }, [file]);
 
   React.useEffect(() => {
-    setImage(value);
+    setImage(thumb);
+  }, [thumb]);
+
+  React.useEffect(() => {
+    setFile(value);
   }, [value]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,14 +67,14 @@ export default function ImageSelect({
       <Toast content="Processing Image..." show={loading} />
       {!image ? (
         <div
-          className="flex flex-grow flex-col items-center justify-center space-y-4 rounded-sm border border-dashed border-gray-300 p-4 hover:cursor-pointer"
+          className="flex flex-grow flex-col items-center justify-center space-y-4 p-4 hover:cursor-pointer"
           onClick={handleUpload}
         >
           <i className="icon icon-image-location before:text-5xl before:text-gray-400" />
-          <p className="text-gray-400">Upload a photo</p>
+          <p className="text-gray-400">{placeholder}</p>
         </div>
       ) : (
-        <div className="flex flex-grow flex-row space-x-2">
+        <div className="flex flex-grow flex-row space-x-4">
           <img
             height={120}
             width={120}
@@ -75,7 +83,9 @@ export default function ImageSelect({
             src={image ?? ""}
           />
           <div className="flex flex-grow flex-col justify-center space-y-1 bg-white p-4">
-            <p className="text-gray-400">{truncateString(file?.name)}</p>
+            <p className="w-44 overflow-hidden overflow-ellipsis text-gray-400">
+              {file?.name}
+            </p>
             <div className="flex justify-between">
               <p
                 className="underline underline-offset-8 hover:cursor-pointer"

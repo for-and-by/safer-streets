@@ -2,10 +2,11 @@ import React from "react";
 
 import { Severity, Type } from "~/types/db";
 
-import createContextHook from "~/lib/create-context-hook";
-import supabase from "~/lib/supabase-client";
-
 import stages, { Stage } from "~/data/stages";
+
+import createContextHook from "~/lib/create-context-hook";
+import fetchTypes from "~/lib/fetch-types";
+import fetchSeverities from "~/lib/fetch-severities";
 
 import useAsync from "~/hooks/use-async";
 
@@ -13,14 +14,14 @@ import Toast from "~/components/composites/toast";
 
 export interface Inputs {
   id?: string;
-  lng?: string;
-  lat?: string;
+  lng?: number;
+  lat?: number;
   address?: string;
   description?: string;
-  image?: string;
+  thumbnail?: string;
   severity?: string;
   type?: string;
-  [key: string]: string | undefined;
+  [key: string]: string | number | undefined;
 }
 
 interface ContextValue {
@@ -44,6 +45,11 @@ interface ContextValue {
   errors: {
     values: Inputs;
     update: (value: Inputs) => void;
+    clear: () => void;
+  };
+  image: {
+    value?: File;
+    update: (file: File) => void;
     clear: () => void;
   };
   reset: () => void;
@@ -75,6 +81,11 @@ const initialValue: ContextValue = {
     update: () => {},
     clear: () => {},
   },
+  image: {
+    value: undefined,
+    update: () => {},
+    clear: () => {},
+  },
   reset: () => {},
   type: undefined,
   types: [],
@@ -91,27 +102,21 @@ export function CreateFormProvider({ children }: Props) {
     inputs: _inputs,
     errors: _errors,
     type: _type,
+    image: _image,
   } = initialValue;
 
   const [stage, setStage] = React.useState<string>(_stage.handle);
   const [inputs, setInputs] = React.useState<Inputs>(_inputs.values);
   const [errors, setErrors] = React.useState<Inputs>(_errors.values);
   const [type, setType] = React.useState<Type | undefined>(_type);
+  const [file, setFile] = React.useState<File | undefined>(_image.value);
 
   const types = useAsync(async () => {
-    const { data, error } = await supabase.from<Type>("types").select("*");
-
-    if (error) throw error;
-    return data;
+    return await fetchTypes();
   }, []);
 
   const severities = useAsync(async () => {
-    const { data, error } = await supabase
-      .from<Severity>("severities")
-      .select("*");
-
-    if (error) throw error;
-    return data;
+    return await fetchSeverities();
   }, []);
 
   React.useEffect(() => {
@@ -124,19 +129,32 @@ export function CreateFormProvider({ children }: Props) {
     }
   }, [inputs.type, types.data]);
 
+  React.useEffect(() => {
+    if (!file && inputs.thumbnail) {
+      setInputs((prevState) => ({
+        ...prevState,
+        thumbnail: undefined,
+      }));
+    }
+  }, [file]);
+
   const value: ContextValue = {
     stage: {
       value: stages[stage],
       handle: stage,
       next: () => {
         const nextStage = stages[stage].next;
-        setStage(nextStage);
+        if (nextStage) {
+          setStage(nextStage);
+        }
       },
       prev: () => {
         const prevStage =
           Object.keys(stages).find((handle) => stage === stages[handle].next) ??
           stage;
-        setStage(prevStage);
+        if (prevStage) {
+          setStage(prevStage);
+        }
       },
       count: Object.keys(stages).length,
     },
@@ -174,6 +192,16 @@ export function CreateFormProvider({ children }: Props) {
       setStage(_stage.handle);
       setErrors(_errors.values);
       setInputs(_inputs.values);
+      setFile(_image.value);
+    },
+    image: {
+      value: file,
+      update: (file) => {
+        setFile(file);
+      },
+      clear: () => {
+        setFile(_image.value);
+      },
     },
     type: type ?? undefined,
     types: types?.data ?? [],

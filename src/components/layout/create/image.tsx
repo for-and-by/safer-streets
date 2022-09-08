@@ -8,17 +8,20 @@ import ImageSelect from "~/components/elements/image-select";
 export default function ImageStage() {
   const form = useCreateForm();
 
-  const handleUpload = (image: string) => {
-    form?.inputs?.update({ image });
+  const handleUpload = ({ image, file }: { image: string; file: File }) => {
+    form?.inputs?.update({ thumbnail: image });
+    form?.image?.update(file);
   };
 
   const handleRemove = () => {
-    form?.inputs?.update({ image: undefined });
+    form?.image?.clear();
   };
 
   const handleNextStage = () => {
-    if (form.type?.image_required && !form.inputs.values.image)
-      form.errors.update({ image: "We need an image for this type of report" });
+    if (form.type?.image_required && !form.image.value)
+      form.errors.update({
+        image: "We need an image for this type of report",
+      });
     else form.stage.next();
   };
 
@@ -29,8 +32,14 @@ export default function ImageStage() {
           <ImageSelect
             onUpload={handleUpload}
             onRemove={handleRemove}
-            value={form.inputs.values.image}
+            thumb={form.inputs.values.thumbnail}
+            value={form.image.value}
             error={form.errors.values.image}
+            placeholder={
+              form.type?.image_required
+                ? "Upload a photo (required)"
+                : "Upload a photo (optional)"
+            }
           />
         </div>
       </Drawer.Row>

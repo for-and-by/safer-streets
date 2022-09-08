@@ -22,18 +22,16 @@ export default function LocationStage() {
   }, []);
 
   React.useEffect(() => {
-    const [lng, lat] = center.map((i) => i.toString());
-    form?.inputs?.update({ lng, lat });
-  }, [center]);
-
-  React.useEffect(() => {
-    form?.inputs?.update({ address: results?.[0]?.heading });
+    const [lng, lat] = center;
+    form?.inputs?.update({ lng, lat, address: results?.[0]?.heading });
   }, [results]);
 
   function handleNextStage() {
     map.controls.lock();
     form.stage.next();
   }
+
+  console.log(form.inputs.values);
 
   return (
     <>

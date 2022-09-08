@@ -29,8 +29,6 @@ export default function DetailsStage() {
     }
   };
 
-  console.log(form.type);
-
   return (
     <>
       <Drawer.Row className="p-2">
@@ -52,7 +50,7 @@ export default function DetailsStage() {
             <Select
               label="Severity"
               options={form.severities.map((severity) => ({
-                value: severity.id,
+                value: severity.handle,
                 label: severity.title,
               }))}
               value={form.inputs.values.severity ?? ""}
@@ -63,7 +61,6 @@ export default function DetailsStage() {
           ) : null}
           {form?.type?.custom_fields
             ? Object.keys(form?.type?.custom_fields).map((key) => {
-                console.log(key, form.inputs.values);
                 return (
                   <TextInput
                     key={key}

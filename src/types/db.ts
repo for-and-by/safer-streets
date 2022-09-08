@@ -37,24 +37,36 @@ export interface Type {
 }
 
 export interface Severity {
-  id: SEVERITIES;
+  handle: SEVERITIES;
   title: string;
 }
 
 export interface Report {
-  id?: string;
-  lng?: number;
-  lat?: number;
-  description?: string;
-  data?: {
-    [key: string]: string;
-  };
+  id?: number;
+  lng: number;
+  lat: number;
+  type_handle: TYPES;
   is_deleted?: boolean;
-  is_expired?: boolean;
-  image_id?: string;
-  type_handle?: TYPES;
-  severity_id?: SEVERITIES;
   created_at?: string;
   updated_at?: string;
   verified_at?: string;
+}
+
+export interface ReportContent {
+  id?: number;
+  report_id: number;
+  description: string;
+  data: {
+    [key: string]: string | number | undefined;
+  };
+  image_url?: string;
+  severity_handle: SEVERITIES;
+  created_at?: string;
+}
+
+export interface ReportVotes {
+  id?: number;
+  report_id: number;
+  upvotes: number;
+  downvotes: number;
 }

@@ -8,7 +8,6 @@ import LocationStage from "~/components/layout/create/location";
 import DetailsStage from "~/components/layout/create/details";
 import ImageStage from "~/components/layout/create/image";
 import ConfirmStage from "~/components/layout/create/confirm";
-import SubmitStage from "~/components/layout/create/submit";
 
 export default function CreateFooter() {
   const form = useCreateForm();
@@ -20,7 +19,6 @@ export default function CreateFooter() {
     details: DetailsStage,
     image: ImageStage,
     confirm: ConfirmStage,
-    submit: SubmitStage,
   };
 
   const Stage = stages[form.stage.handle];
