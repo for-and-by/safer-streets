@@ -50,6 +50,8 @@ const reducer = Redux.createReducer(initialState, (builder) => {
           return Object.assign(obj, { [report.id.toString()]: report });
         }, {});
 
+      // TODO: Handle when reports should expire
+
       state.list = Object.values(reportIdMap);
     })
     .addCase(reports.upload.pending, (state) => {

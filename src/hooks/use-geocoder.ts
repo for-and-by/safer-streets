@@ -9,8 +9,7 @@ export default function useGeocoder(query: string | LngLatLike) {
     try {
       return await geocode(query);
     } catch (error) {
-      console.error(error);
-      return [];
+      throw error;
     }
   }, [query]);
 

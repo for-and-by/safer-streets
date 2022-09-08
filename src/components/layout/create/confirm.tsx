@@ -29,8 +29,8 @@ export default function ConfirmStage() {
   return (
     <>
       <Toast content="Uploading report..." show={uploading} />
-      <Drawer.Row>
-        <div className="flex max-h-64 flex-grow flex-col divide-y-2 divide-white overflow-scroll bg-gray-100 p-2">
+      <Drawer.Row className="p-2">
+        <div className="flex max-h-64 flex-grow flex-col divide-y-2 divide-white overflow-scroll">
           {form?.inputs?.values?.image ? (
             <img
               className="h-32 w-full object-cover"
@@ -45,7 +45,7 @@ export default function ConfirmStage() {
               key === "image" ||
               key === "description"
             ) ? (
-              <div className="flex space-x-4 p-2">
+              <div className="flex space-x-4 bg-gray-100 p-3">
                 <p className="w-24 capitalize text-gray-400">{key}</p>
                 <p className="capitalize">
                   {form.inputs.values[key as keyof typeof form.inputs.values]}
@@ -53,7 +53,7 @@ export default function ConfirmStage() {
               </div>
             ) : null
           )}
-          <div className="flex space-x-4 p-2">
+          <div className="flex space-x-4 bg-gray-100 p-3">
             <p className="w-24 capitalize text-gray-400">Description</p>
             <p>{form.inputs.values.description}</p>
           </div>

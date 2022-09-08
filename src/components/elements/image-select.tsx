@@ -68,14 +68,14 @@ export default function ImageSelect({
         </div>
       ) : (
         <div className="relative h-40 w-full">
-          <div className="absolute -inset-2 overflow-hidden rounded-sm">
+          <div className="absolute -inset-3 overflow-hidden rounded-sm">
             <img
               className="h-full w-full object-cover"
               alt={file?.name ?? ""}
               src={image ?? ""}
             />
           </div>
-          <div className="absolute inset-0">
+          <div className="absolute -inset-1">
             <div className="absolute right-0 top-0 flex space-x-2">
               <button className="btn btn-light" onClick={handleUpload}>
                 <i className="btn-icon icon icon-upload" />

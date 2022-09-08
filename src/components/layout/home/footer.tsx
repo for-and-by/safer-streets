@@ -15,7 +15,7 @@ export default function HomeFooter() {
     <Drawer.Row className="p-2">
       <button className="btn btn-primary w-full" onClick={handleShowCreate}>
         <i className="btn-icon icon icon-pin-add" />
-        <p className="btn-text">Report a Hazard</p>
+        <p className="btn-text">Create a Report</p>
       </button>
     </Drawer.Row>
   );
