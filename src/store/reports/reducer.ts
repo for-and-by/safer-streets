@@ -1,6 +1,7 @@
 import * as Redux from "@reduxjs/toolkit";
 
 import { Report } from "~/types/db";
+import { FeatureCollection, Feature, Point } from "geojson";
 
 import getIsoNow from "~/lib/get-iso-now";
 
@@ -13,6 +14,7 @@ interface State {
   };
   lastSynced?: string;
   list: Report[];
+  features: FeatureCollection;
 }
 
 const initialState: State = {
@@ -22,6 +24,10 @@ const initialState: State = {
   },
   lastSynced: undefined,
   list: [],
+  features: {
+    type: "FeatureCollection",
+    features: [],
+  },
 };
 
 const reducer = Redux.createReducer(initialState, (builder) => {
@@ -51,8 +57,26 @@ const reducer = Redux.createReducer(initialState, (builder) => {
         }, {});
 
       // TODO: Handle when reports should expire
+      const reportArray: Report[] = Object.values(reportIdMap);
 
-      state.list = Object.values(reportIdMap);
+      state.list = reportArray;
+
+      const features: Feature<Point>[] = reportArray.map((report) => ({
+        type: "Feature",
+        properties: {
+          id: report.id,
+          type_handle: report.type_handle.toString(),
+        },
+        geometry: {
+          type: "Point",
+          coordinates: [report.lng, report.lat],
+        },
+      }));
+
+      state.features = {
+        type: "FeatureCollection",
+        features,
+      };
     })
     .addCase(reports.upload.pending, (state) => {
       state.pending.upload = true;
