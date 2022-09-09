@@ -24,8 +24,8 @@ export default function Index({}: Props) {
       <div className="layer z-10">
         <MapProvider>
           <Map className="absolute inset-0">
-            <CenterMarker />
             <Reports />
+            <CenterMarker />
           </Map>
         </MapProvider>
       </div>

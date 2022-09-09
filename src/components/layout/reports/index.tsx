@@ -1,9 +1,10 @@
 import React from "react";
 
 import useReportsDispatch from "~/hooks/use-reports-dispatch";
-import Toast from "~/components/composites/toast";
 import useTypedSelector from "~/hooks/use-typed-selector";
-import BaseMarker from "~/components/map/markers/base";
+
+import Toast from "~/components/composites/toast";
+import ReportMarker from "~/components/map/markers/report";
 
 export default function Reports() {
   const reports = useReportsDispatch();
@@ -19,7 +20,7 @@ export default function Reports() {
     <>
       <Toast content={"Syncing Reports..."} show={syncing} />
       {list.map((report) => (
-        <BaseMarker key={report.id} coordinates={report} />
+        <ReportMarker key={report.id} report={report} />
       ))}
     </>
   );
