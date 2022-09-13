@@ -1,29 +1,24 @@
-import React from "react";
-import { ContextValue } from "~/types/smart-context";
+import { Provider, ProviderProps, useRef, useEffect } from "react";
+
+import { ContextValue, Listener } from "~/types/smart-context";
 
 export default function createSmartProvider<V>(
-  Provider: React.Provider<ContextValue<V>>
-): React.Provider<V> {
-  function SmartProvider({ value, children }: React.ProviderProps<V>) {
-    type Value = ContextValue<V>["value"]["current"];
-    type Listeners = ContextValue<V>["listeners"]["list"];
-
-    const valueRef = React.useRef<Value>(value);
-    const listenersRef = React.useRef<Listeners>(new Set());
-    const contextValueRef = React.useRef<ContextValue<V>>({
-      value: valueRef,
-      listeners: {
-        list: listenersRef.current,
-        register: (listener) => {
-          listenersRef.current.add(listener);
-          return () => listenersRef.current.delete(listener);
-        },
+  Provider: Provider<ContextValue<V>>
+): Provider<V> {
+  function SmartProvider({ value, children }: ProviderProps<V>) {
+    const valueRef = useRef<V>(value);
+    const listenersRef = useRef<Set<Listener<V>>>(new Set());
+    const contextValueRef = useRef<ContextValue<V>>({
+      value: valueRef.current,
+      registerListener: (listener) => {
+        listenersRef.current.add(listener);
+        return () => listenersRef.current.delete(listener);
       },
     });
 
-    React.useEffect(() => {
+    useEffect(() => {
       valueRef.current = value;
-      listenersRef.current.forEach((listener) => {
+      listenersRef.current.forEach((listener: Listener<V>) => {
         listener(value);
       });
     }, [value]);
@@ -31,5 +26,5 @@ export default function createSmartProvider<V>(
     return <Provider value={contextValueRef.current}>{children}</Provider>;
   }
 
-  return SmartProvider as React.Provider<V>;
+  return SmartProvider as Provider<V>;
 }

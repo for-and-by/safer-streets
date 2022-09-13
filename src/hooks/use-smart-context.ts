@@ -1,27 +1,33 @@
-import React from "react";
+import { Context, useContext, useRef, useState, useEffect } from "react";
 import { ContextSelector, ContextValue, Listener } from "~/types/smart-context";
 
 export default function useSmartContext<V, S>(
-  context: React.Context<ContextValue<V>>,
+  context: Context<ContextValue<V>>,
   selector: ContextSelector<V, S>
 ) {
-  const { value, listeners } = React.useContext<ContextValue<V>>(context);
-  const selectorRef = React.useRef<ContextSelector<V, S>>(selector);
-  const [selectedValue, setSelectedValue] = React.useState<S>(() =>
-    selector(value.current)
-  );
+  const { value, registerListener } = useContext<ContextValue<V>>(context);
 
-  React.useEffect(() => {
+  const selectorRef = useRef<ContextSelector<V, S>>(selector);
+  const [selectedValue, setSelectedValue] = useState<S>(() => selector(value));
+
+  if (!context) {
+    throw new Error(
+      `This hook or component needs to be used within its context`
+    );
+  }
+
+  useEffect(() => {
     selectorRef.current = selector;
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const listener: Listener<V> = (newValue) => {
       const newSelectedValue: S = selectorRef.current(newValue);
       setSelectedValue(newSelectedValue);
     };
 
-    const { unregister } = listeners.register(listener);
+    const unregister = registerListener(listener);
+
     return unregister;
   }, [selector, selectedValue, value]);
 

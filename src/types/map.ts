@@ -7,7 +7,7 @@ export interface MapState {
 }
 
 export interface MapContextValue {
-  instance?: maplibregl.Map | null;
+  map?: maplibregl.Map | null;
   ref: (node: HTMLDivElement | null) => void;
 }
 
