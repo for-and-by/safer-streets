@@ -1,55 +1,53 @@
-import React from "react";
+import { ComponentProps, useEffect } from "react";
 import clsx from "clsx";
 
 import { GeoJSONSource } from "maplibre-gl";
 
 import useTypedSelector from "~/hooks/use-typed-selector";
-import useMapEvents from "~/hooks/use-map-events";
-import useMapDispatch from "~/hooks/use-map-dispatch";
-import { useMapContext } from "~/components/map/provider";
 
-interface Props extends React.ComponentProps<"div"> {}
+import useMap from "~/hooks/map/use-map";
+import useMapCenter from "~/hooks/map/use-map-center";
+import useMapEvents from "~/hooks/map/use-map-events";
+import useMapLock from "~/hooks/map/use-map-lock";
+import useMapZoom from "~/hooks/map/use-map-zoom";
 
-export default function Map(props: Props) {
-  const map = useMapDispatch();
-
-  const zoom = useTypedSelector((state) => state.map.zoom);
-  const center = useTypedSelector((state) => state.map.center);
-  const lock = useTypedSelector((state) => state.map.controls.lock);
+export default function Map(props: ComponentProps<"div">) {
+  const { ref, map } = useMap();
+  const zoom = useMapZoom();
+  const center = useMapCenter();
+  const isLocked = useMapLock();
 
   const reports = useTypedSelector((state) => state.reports.features);
 
-  const { ref, instance } = useMapContext();
-
   useMapEvents({
     load: () => {
-      if (!!instance)
-        instance.addSource("reports", {
+      if (!!map)
+        map.addSource("reports", {
           type: "geojson",
           data: reports,
         });
     },
     dragend: (event) => {
-      map.center.set(event.target.getCenter());
+      center.set(event.target.getCenter());
     },
     zoomend: (event) => {
-      map.center.set(event.target.getCenter());
-      map.zoom.set(event.target.getZoom());
+      center.set(event.target.getCenter());
+      zoom.set(event.target.getZoom());
     },
   });
 
   // Update map with redux state options
-  React.useEffect(() => {
-    instance?.flyTo({ zoom, speed: 1 });
-  }, [zoom]);
+  useEffect(() => {
+    map?.flyTo({ zoom: zoom.value, speed: 1 });
+  }, [zoom.value]);
 
-  React.useEffect(() => {
-    instance?.flyTo({ center, speed: 1 });
-  }, [center]);
+  useEffect(() => {
+    map?.flyTo({ center: center.value, speed: 1 });
+  }, [center.value]);
 
-  React.useEffect(() => {
-    if (!!instance) {
-      const source = instance.getSource("reports") as GeoJSONSource;
+  useEffect(() => {
+    if (!!map) {
+      const source = map.getSource("reports") as GeoJSONSource;
       if (source) source.setData(reports);
     }
   }, [reports]);
@@ -57,7 +55,10 @@ export default function Map(props: Props) {
   return (
     <>
       <div
-        className={clsx("absolute inset-0 z-10", lock ? "block" : "hidden")}
+        className={clsx(
+          "absolute inset-0 z-10",
+          isLocked.value ? "block" : "hidden"
+        )}
       />
       <div ref={ref} {...props} />
     </>

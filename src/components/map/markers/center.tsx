@@ -1,34 +1,32 @@
-import React from "react";
-import maplibregl from "maplibre-gl";
+import { useState } from "react";
+import { Listener } from "maplibre-gl";
 import clsx from "clsx";
 
-import map from "~/store/map/actions";
-
-import useTypedSelector from "~/hooks/use-typed-selector";
-import useTypedDispatch from "~/hooks/use-typed-dispatch";
+import useMapCenter from "~/hooks/map/use-map-center";
 
 import BaseMarker from "~/components/map/markers/base";
 
 export default function CenterMarker() {
-  const dispatch = useTypedDispatch();
-  const center = useTypedSelector((state) => state.map.center);
+  const center = useMapCenter();
 
-  const [dragging, setDragging] = React.useState(false);
+  const [dragging, setDragging] = useState(false);
 
-  const handleDragStart: maplibregl.Listener = () => {
+  const handleDragStart: Listener = () => {
     setDragging(true);
   };
 
-  const handleDragEnd: maplibregl.Listener = (event) => {
+  const handleDragEnd: Listener = (event) => {
     const { lng, lat } = event.target.getLngLat();
-    dispatch(map.center.set([lng, lat]));
+    center.set([lng, lat]);
     setDragging(false);
   };
+
+  if (!center?.value) return null;
 
   return (
     <>
       <BaseMarker
-        coordinates={center}
+        coordinates={center.value}
         anchor="bottom-right"
         draggable
         className={clsx("transition-all", dragging ? "scale-125" : "scale-110")}

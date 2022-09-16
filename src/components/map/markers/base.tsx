@@ -1,7 +1,7 @@
 import React from "react";
 import maplibregl from "maplibre-gl";
 
-import { useMapContext } from "~/components/map/provider";
+import { useMapSelector } from "~/components/map/provider";
 import ReactDOM from "react-dom";
 import clsx from "clsx";
 
@@ -25,8 +25,8 @@ export default function BaseMarker({
   onDragEnd = () => {},
   onDragStart = () => {},
 }: Props) {
-  const { instance } = useMapContext();
   const [marker, setMarker] = React.useState<maplibregl.Marker | null>(null);
+  const map = useMapSelector((value) => value.map);
 
   React.useEffect(() => {
     if (!marker) {
@@ -38,17 +38,17 @@ export default function BaseMarker({
 
       setMarker(new maplibregl.Marker(options));
     }
-  }, [instance]);
+  }, [marker]);
 
   React.useEffect(() => {
-    if (!!marker && !!instance) {
+    if (!!marker && !!map) {
       marker
         .setLngLat(coordinates)
-        .addTo(instance)
+        .addTo(map)
         .on("dragstart", onDragStart)
         .on("dragend", onDragEnd);
     }
-  }, [marker, instance]);
+  }, [marker, map]);
 
   React.useEffect(() => {
     if (!!marker) {

@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Report, TYPES } from "~/types/db";
 
 import BaseMarker from "~/components/map/markers/base";

@@ -2,17 +2,17 @@ import React from "react";
 
 import { useCreateForm } from "~/components/layout/create/provider";
 import useViewDispatch from "~/hooks/use-view-dispatch";
-import useMapDispatch from "~/hooks/use-map-dispatch";
 import useReportsDispatch from "~/hooks/use-reports-dispatch";
+import useTypedSelector from "~/hooks/use-typed-selector";
+import useMapLock from "~/hooks/map/use-map-lock";
 
 import Drawer from "~/components/composites/drawer";
 import Toast from "~/components/composites/toast";
-import useTypedSelector from "~/hooks/use-typed-selector";
 
 export default function ConfirmStage() {
   const form = useCreateForm();
   const view = useViewDispatch();
-  const map = useMapDispatch();
+  const map = useMapLock();
   const reports = useReportsDispatch();
 
   const uploading = useTypedSelector((state) => state.reports.pending.upload);
@@ -20,7 +20,7 @@ export default function ConfirmStage() {
   const handleSubmit = () => {
     reports.upload(form.inputs.values).then(() => {
       view.active.reset();
-      map.controls.unlock();
+      map.unlock();
       form.reset();
       reports.sync();
     });

@@ -1,7 +1,7 @@
 import React from "react";
 import useFindSelf from "~/hooks/use-find-self";
 import Toast from "~/components/composites/toast";
-import useMapDispatch from "~/hooks/use-map-dispatch";
+import useMapCenter from "~/hooks/map/use-map-center";
 
 interface Props {
   onFound?: () => void;
@@ -9,11 +9,11 @@ interface Props {
 
 export default function FindSelfButton({ onFound = () => {} }: Props) {
   const findSelf = useFindSelf();
-  const map = useMapDispatch();
+  const center = useMapCenter();
 
   React.useEffect(() => {
     if (findSelf.coords) {
-      map.center.set(findSelf.coords);
+      center.set(findSelf.coords);
       onFound();
     }
   }, [findSelf.loading]);

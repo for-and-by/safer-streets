@@ -1,33 +1,35 @@
 import React from "react";
 
-import useTypedSelector from "~/hooks/use-typed-selector";
 import useGeocoder from "~/hooks/use-geocoder";
-import useMapDispatch from "~/hooks/use-map-dispatch";
+import useMapLock from "~/hooks/map/use-map-lock";
 import { useCreateForm } from "~/components/layout/create/provider";
 
 import Toast from "~/components/composites/toast";
 import Drawer from "~/components/composites/drawer";
 import CancelModal from "~/components/layout/create/cancel";
 import FindSelfButton from "~/components/elements/find-self-button";
+import useMapCenter from "~/hooks/map/use-map-center";
 
 export default function LocationStage() {
-  const map = useMapDispatch();
+  const map = useMapLock();
+  const center = useMapCenter();
   const form = useCreateForm();
 
-  const center = useTypedSelector((state) => state.map.center);
-  const { results, loading } = useGeocoder(center);
+  const { results, loading } = useGeocoder(center.value);
 
   React.useEffect(() => {
-    map.controls.unlock();
+    map.unlock();
   }, []);
 
   React.useEffect(() => {
-    const [lng, lat] = center;
-    form?.inputs?.update({ lng, lat, address: results?.[0]?.heading });
+    if (center.value) {
+      const [lng, lat] = center.value;
+      form?.inputs?.update({ lng, lat, address: results?.[0]?.heading });
+    }
   }, [results]);
 
   function handleNextStage() {
-    map.controls.lock();
+    map.lock();
     form.stage.next();
   }
 

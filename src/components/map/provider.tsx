@@ -1,26 +1,24 @@
-import React, {
+import {
   HTMLAttributes,
   ReactNode,
-  useState,
-  useRef,
   useCallback,
   useEffect,
+  useState,
 } from "react";
 
+import { createContext, useContextSelector } from "use-context-selector";
 import { LngLatLike, Map } from "maplibre-gl";
 
-import config from "~/config";
-import createSmartContext from "~/lib/create-smart-context";
+import { UseStateHook } from "~/types/common";
 
-interface ContextValue {
+import config from "~/config";
+
+export interface ContextValue {
   map?: Map | null;
   ref: (node: HTMLDivElement | null) => void;
-  zoom: number;
-  setZoom: (value: number) => void;
-  zoomIn: () => void;
-  zoomOut: () => void;
-  center: LngLatLike;
-  setCenter: (value: LngLatLike) => void;
+  useZoom: UseStateHook<number>;
+  useCenter: UseStateHook<LngLatLike>;
+  useIsLocked: UseStateHook<boolean>;
 }
 
 interface Props extends HTMLAttributes<"div"> {
@@ -30,52 +28,57 @@ interface Props extends HTMLAttributes<"div"> {
 const initialValue: ContextValue = {
   map: null,
   ref: () => {},
-  zoom: config.map.zoom.default,
-  setZoom: () => {},
-  zoomIn: () => {},
-  zoomOut: () => {},
-  center: config.map.center,
-  setCenter: () => {},
+  useZoom: [config.map.zoom.default, () => {}],
+  useCenter: [config.map.center, () => {}],
+  useIsLocked: [false, () => {}],
 };
 
-export const MapContext = createSmartContext(initialValue);
+export const MapContext = createContext(initialValue);
+
+export function useMapSelector<S>(selector: (value: ContextValue) => S) {
+  return useContextSelector<ContextValue, S>(MapContext, selector);
+}
 
 export default function MapProvider({ children }: Props) {
-  const { zoom: _zoom, center: _center, map: _map } = initialValue;
+  const {
+    map: _map,
+    useZoom: _useZoom,
+    useCenter: _useCenter,
+    useIsLocked: _useIsLocked,
+  } = initialValue;
 
-  const map = useRef<ContextValue["map"]>(_map);
-  const [zoom, setZoom] = useState<ContextValue["zoom"]>(_zoom);
-  const [center, setCenter] = useState<ContextValue["center"]>(_center);
+  const [map, setMap] = useState<ContextValue["map"]>(_map);
+
+  const useZoom = useState<ContextValue["useZoom"][0]>(_useZoom[0]);
+  const useCenter = useState<ContextValue["useCenter"][0]>(_useCenter[0]);
+  const useIsLocked = useState<ContextValue["useIsLocked"][0]>(_useIsLocked[0]);
 
   const ref = useCallback<ContextValue["ref"]>((node) => {
-    if (!!node && !map.current) {
-      map.current = new Map({
-        container: node,
-        style: `${config.map.style}?key=${config.map.key}`,
-        center: _center,
-        zoom: _zoom,
-      });
+    if (!!node && !map) {
+      setMap(
+        new Map({
+          container: node,
+          style: `${config.map.style}?key=${config.map.key}`,
+          center: _useCenter[0],
+          zoom: _useZoom[0],
+        })
+      );
     }
   }, []);
 
   useEffect(() => {
     return () => {
-      map?.current?.remove();
+      map?.remove();
     };
   }, []);
 
   const value: ContextValue = {
     ref: ref,
-    map: map.current,
-    zoom: zoom,
-    setZoom: (value) => setZoom(value),
-    zoomIn: () => setZoom((state) => state + 0.5),
-    zoomOut: () => setZoom((state) => state - 0.5),
-    center: center,
-    setCenter: (value) => setCenter(value),
+    map: map,
+    useZoom,
+    useCenter,
+    useIsLocked,
   };
 
-  return (
-    <MapContext.Provider value={value as any}>{children}</MapContext.Provider>
-  );
+  return <MapContext.Provider value={value}>{children}</MapContext.Provider>;
 }

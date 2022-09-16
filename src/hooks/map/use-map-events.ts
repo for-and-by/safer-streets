@@ -1,20 +1,20 @@
 import type { MapEventGroup } from "~/types/map";
 
 import React from "react";
-import { useMapContext } from "~/components/map/provider";
+import { useMapSelector } from "~/components/map/provider";
 
 export default function useMapEvents(events: MapEventGroup) {
-  const { instance } = useMapContext();
+  const map = useMapSelector((state) => state.map);
 
   React.useEffect(() => {
     Object.keys(events).map((key) => {
-      instance?.on(key, events[key]);
+      map?.on(key, events[key]);
     });
 
     return () => {
       Object.keys(events).map((key) => {
-        instance?.off(key, events[key]);
+        map?.off(key, events[key]);
       });
     };
-  }, [instance]);
+  }, [map]);
 }

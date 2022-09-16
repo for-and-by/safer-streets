@@ -1,12 +1,11 @@
 import type { LngLatLike } from "maplibre-gl";
-
 import { nanoid } from "nanoid";
 
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
 import useTransitionValue from "~/hooks/use-transition-value";
+import useMapCenter from "~/hooks/map/use-map-center";
 import { useSearch } from "~/components/layout/search/provider";
 
-import map from "~/store/map/actions";
 import view from "~/store/view/actions";
 
 import Drawer from "~/components/composites/drawer";
@@ -15,13 +14,14 @@ import React from "react";
 
 export default function SearchResults() {
   const dispatch = useTypedDispatch();
+  const center = useMapCenter();
 
   const search = useSearch();
   const transitionedResults = useTransitionValue(search.results, 500);
 
-  const handleSetCenter = (center?: LngLatLike) => {
-    if (center) {
-      dispatch(map.center.set(center));
+  const handleSetCenter = (coordinates?: LngLatLike) => {
+    if (coordinates) {
+      center.set(coordinates);
       dispatch(view.active.reset());
       search.query.set("");
     }
