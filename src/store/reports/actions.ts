@@ -1,6 +1,6 @@
 import * as Redux from "@reduxjs/toolkit";
 import { Report, SEVERITIES, TYPES } from "~/types/db";
-import { Inputs } from "~/components/layout/create/provider";
+import { Inputs } from "~/contexts/create";
 
 import fetchReports from "~/lib/fetch-reports";
 import uploadReport from "~/lib/upload-report";

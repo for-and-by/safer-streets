@@ -1,10 +1,10 @@
 import React from "react";
-import useTypedSelector from "~/hooks/use-typed-selector";
 import useTimeout from "~/hooks/use-timeout";
 import useDebounce from "~/hooks/use-debounce";
+import { useViewContext } from "~/contexts/view";
 
 export default function useViewTransition() {
-  const activeView = useTypedSelector((state) => state.view.active);
+  const { activeView } = useViewContext();
   const debouncedView = useDebounce(activeView, 300);
   const [show, setShow] = React.useState(true);
 

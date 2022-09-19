@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Listener } from "maplibre-gl";
 import clsx from "clsx";
 
-import useMapCenter from "~/hooks/map/use-map-center";
+import useMapCenter from "~/hooks/use-map-center";
 
 import BaseMarker from "~/components/map/markers/base";
 

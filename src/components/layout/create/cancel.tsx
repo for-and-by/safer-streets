@@ -1,8 +1,8 @@
 import React from "react";
 import WarningModal from "~/components/modals/warning";
-import { useCreateForm } from "~/components/layout/create/provider";
-import useViewDispatch from "~/hooks/use-view-dispatch";
-import { useMapSelector } from "~/components/map/provider";
+import { useCreateForm } from "~/contexts/create";
+import useMapLock from "~/hooks/use-map-lock";
+import { useViewContext } from "~/contexts/view";
 
 interface Props {
   children?: React.ReactNode;
@@ -10,13 +10,13 @@ interface Props {
 
 export default function CancelModal({ children }: Props) {
   const form = useCreateForm();
-  const view = useViewDispatch();
+  const view = useViewContext();
 
-  const unlockMap = useMapSelector((state) => state.unlockMap);
+  const map = useMapLock();
 
   const handleExitSearch = () => {
-    view.active.reset();
-    unlockMap();
+    view.resetView();
+    map.unlock();
     form.reset();
   };
 

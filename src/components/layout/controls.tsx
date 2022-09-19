@@ -1,4 +1,4 @@
-import useMapZoom from "~/hooks/map/use-map-zoom";
+import useMapZoom from "~/hooks/use-map-zoom";
 
 export default function Controls() {
   const zoom = useMapZoom();

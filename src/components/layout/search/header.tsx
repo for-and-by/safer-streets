@@ -5,7 +5,7 @@ import React from "react";
 import view from "~/store/view/actions";
 
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
-import { useSearch } from "~/components/layout/search/provider";
+import { useSearch } from "~/contexts/search";
 
 import Drawer from "~/components/composites/drawer";
 

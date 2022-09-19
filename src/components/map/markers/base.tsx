@@ -1,9 +1,8 @@
 import React from "react";
 import maplibregl from "maplibre-gl";
-
-import { useMapSelector } from "~/components/map/provider";
 import ReactDOM from "react-dom";
 import clsx from "clsx";
+import { useMapContext } from "~/contexts/map";
 
 interface Props {
   coordinates: maplibregl.LngLatLike;
@@ -26,7 +25,7 @@ export default function BaseMarker({
   onDragStart = () => {},
 }: Props) {
   const [marker, setMarker] = React.useState<maplibregl.Marker | null>(null);
-  const map = useMapSelector((value) => value.map);
+  const { map } = useMapContext();
 
   React.useEffect(() => {
     if (!marker) {

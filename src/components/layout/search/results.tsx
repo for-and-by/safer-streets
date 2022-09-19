@@ -3,8 +3,8 @@ import { nanoid } from "nanoid";
 
 import useTypedDispatch from "~/hooks/use-typed-dispatch";
 import useTransitionValue from "~/hooks/use-transition-value";
-import useMapCenter from "~/hooks/map/use-map-center";
-import { useSearch } from "~/components/layout/search/provider";
+import useMapCenter from "~/hooks/use-map-center";
+import { useSearch } from "~/contexts/search";
 
 import view from "~/store/view/actions";
 

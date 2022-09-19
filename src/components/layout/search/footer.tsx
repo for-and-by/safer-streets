@@ -3,22 +3,22 @@ import { VIEWS } from "~/types/view";
 import React from "react";
 
 import useTypedSelector from "~/hooks/use-typed-selector";
-import useViewDispatch from "~/hooks/use-view-dispatch";
-import { useSearch } from "~/components/layout/search/provider";
+import { useSearch } from "~/contexts/search";
 
 import Drawer from "~/components/composites/drawer";
 import TextInput from "~/components/elements/text-input";
 import FindSelfButton from "~/components/elements/find-self-button";
+import { useViewContext } from "~/contexts/view";
 
 export default function SearchFooter() {
   const activeView = useTypedSelector((state) => state.view.active);
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const search = useSearch();
-  const view = useViewDispatch();
+  const view = useViewContext();
 
   React.useEffect(() => {
-    if (activeView === VIEWS.SEARCH && inputRef?.current) {
+    if (view.activeView === VIEWS.SEARCH && inputRef?.current) {
       inputRef.current.focus();
     } else {
       search.query.set("");
@@ -31,7 +31,7 @@ export default function SearchFooter() {
   };
 
   const handleFound = () => {
-    view.active.reset();
+    view.resetView();
   };
 
   return (

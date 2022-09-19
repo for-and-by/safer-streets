@@ -1,7 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 
-import createContextHook from "~/lib/create-context-hook";
+import createContextHook from "~/hooks/create-context-hook";
 
 import Portal from "~/components/elements/portal";
 import Drawer from "~/components/composites/drawer";

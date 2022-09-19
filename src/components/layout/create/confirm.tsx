@@ -1,17 +1,17 @@
 import React from "react";
 
-import { useCreateForm } from "~/components/layout/create/provider";
-import useViewDispatch from "~/hooks/use-view-dispatch";
+import { useCreateForm } from "~/contexts/create";
 import useReportsDispatch from "~/hooks/use-reports-dispatch";
 import useTypedSelector from "~/hooks/use-typed-selector";
-import useMapLock from "~/hooks/map/use-map-lock";
+import useMapLock from "~/hooks/use-map-lock";
 
 import Drawer from "~/components/composites/drawer";
 import Toast from "~/components/composites/toast";
+import { useViewContext } from "~/contexts/view";
 
 export default function ConfirmStage() {
   const form = useCreateForm();
-  const view = useViewDispatch();
+  const view = useViewContext();
   const map = useMapLock();
   const reports = useReportsDispatch();
 
@@ -19,7 +19,7 @@ export default function ConfirmStage() {
 
   const handleSubmit = () => {
     reports.upload(form.inputs.values).then(() => {
-      view.active.reset();
+      view.resetView();
       map.unlock();
       form.reset();
       reports.sync();

@@ -1,4 +1,4 @@
-import MapProvider from "~/components/map/provider";
+import MapProvider from "~/contexts/map";
 import Map from "~/components/map/map";
 import Controls from "~/components/layout/controls";
 
@@ -12,8 +12,8 @@ import Footer from "~/components/layout/footer";
 
 import SearchResults from "~/components/layout/search/results";
 import CenterMarker from "~/components/map/markers/center";
-import { SearchProvider } from "~/components/layout/search/provider";
-import { CreateFormProvider } from "~/components/layout/create/provider";
+import { SearchProvider } from "~/contexts/search";
+import { CreateFormProvider } from "~/contexts/create";
 import Reports from "~/components/layout/reports";
 
 interface Props {}

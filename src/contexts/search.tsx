@@ -1,6 +1,6 @@
 import React from "react";
 import { SearchFeature } from "~/types/search";
-import createContextHook from "~/lib/create-context-hook";
+import createContextHook from "~/hooks/create-context-hook";
 
 import useGeocoder from "~/hooks/use-geocoder";
 import useDebounce from "~/hooks/use-debounce";
