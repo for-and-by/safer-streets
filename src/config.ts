@@ -18,15 +18,18 @@ export default {
   },
   map: {
     key: "0wluNT640zwZaj5fBCGp",
+    bbox: [72.24619313, -55.32281756, 168.22612585, -9.08801251], // Australia Bounding Box,
     style:
       "https://api.maptiler.com/maps/7e89c6ff-de99-44b8-a11d-570a695ed2a2/style.json",
     zoom: {
       default: 13,
       max: 18,
       min: 7,
+      increment: 0.5,
     },
-    bbox: [72.24619313, -55.32281756, 168.22612585, -9.08801251], // Australia Bounding Box,
-    center: [153.026, -27.4705] as [number, number], // Brisbane LngLat
+    center: {
+      default: [153.026, -27.4705] as [number, number], // Brisbane LngLat
+    },
   },
   supabase: {
     url: "https://ostfogwbvvrspkozoelv.supabase.co",

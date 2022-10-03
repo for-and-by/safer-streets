@@ -1,20 +1,17 @@
-import React from "react";
+import {
+  ComponentProps,
+  CSSProperties,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import clsx from "clsx";
 import useTimeout from "~/hooks/use-timeout";
 
-interface Props {
-  Root: {
-    className?: string;
-    show: boolean;
-    position: "top" | "center" | "bottom";
-    scrollable?: boolean;
-    children?: React.ReactNode;
-  };
-  Row: {
-    sticky?: boolean;
-    className?: string;
-    children?: React.ReactNode;
-  };
+interface PropsRoot extends ComponentProps<"div"> {
+  show: boolean;
+  position: "top" | "center" | "bottom";
+  scrollable?: boolean;
 }
 
 function Root({
@@ -23,12 +20,11 @@ function Root({
   position = "bottom",
   scrollable = false,
   children,
-}: Props["Root"]) {
-  const rootRef = React.useRef<HTMLDivElement | null>(null);
+}: PropsRoot) {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const [height, setHeight] = useState<string>("0px");
 
-  const [height, setHeight] = React.useState<string>("0px");
-
-  React.useEffect(() => {
+  useEffect(() => {
     setHeight(`${rootRef?.current?.clientHeight ?? 0}px`);
   }, [show]);
 
@@ -50,7 +46,7 @@ function Root({
 
   const style = {
     "--height": height,
-  } as React.CSSProperties;
+  } as CSSProperties;
 
   return (
     <div
@@ -81,7 +77,11 @@ function Root({
   );
 }
 
-function Row({ sticky = false, className = "", children }: Props["Row"]) {
+interface PropsRow extends ComponentProps<"div"> {
+  sticky?: boolean;
+}
+
+function Row({ sticky = false, className = "", children }: PropsRow) {
   return (
     <div
       className={clsx(

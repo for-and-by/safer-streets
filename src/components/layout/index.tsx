@@ -20,12 +20,14 @@ interface Props {}
 
 export default function Index({}: Props) {
   return (
-    <MapProvider>
+    <>
       <div className="layer z-10">
-        <Map className="absolute inset-0">
-          <Reports />
-          <CenterMarker />
-        </Map>
+        <MapProvider>
+          <Map className="absolute inset-0">
+            <Reports />
+            <CenterMarker />
+          </Map>
+        </MapProvider>
       </div>
       <div className="layer pointer-events-none z-20">
         <div className="clamp mx-auto flex h-full flex-col drop-shadow-lg">
@@ -44,6 +46,6 @@ export default function Index({}: Props) {
           <BottomBar />
         </div>
       </div>
-    </MapProvider>
+    </>
   );
 }

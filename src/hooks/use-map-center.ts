@@ -1,21 +1,8 @@
-import { useCallback } from "react";
-import { useMapContext } from "~/contexts/map";
+import { useMapStore } from "~/stores/map";
 
 export default function useMapCenter() {
-  const { state, dispatch } = useMapContext();
+  const center = useMapStore((state) => state.center);
+  const setCenter = useMapStore((state) => state.setCenter);
 
-  const setCenter = useCallback(
-    (value: typeof state.center) => {
-      dispatch({
-        type: "setCenter",
-        payload: value,
-      });
-    },
-    [dispatch]
-  );
-
-  return {
-    value: state.center,
-    set: setCenter,
-  };
+  return [center, setCenter] as [typeof center, typeof setCenter];
 }

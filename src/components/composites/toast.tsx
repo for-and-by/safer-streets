@@ -1,26 +1,21 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import clsx from "clsx";
 
 import useDebounce from "~/hooks/use-debounce";
 
 const TOAST_ID = "toasts";
 
-interface Props {
-  Root: {
-    show?: boolean;
-    content: string;
-  };
-  Container: {
-    children?: React.ReactNode;
-  };
+interface PropsRoot {
+  show?: boolean;
+  content: string;
 }
 
-function Root({ show = false, content }: Props["Root"]) {
-  const containerRef = React.useRef<HTMLElement | null>(null);
+function Root({ show = false, content }: PropsRoot) {
+  const containerRef = useRef<HTMLElement | null>(null);
   const debouncedShow = useDebounce(show, 150);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!containerRef?.current) {
       containerRef.current = document.querySelector(`#${TOAST_ID}`);
     }
@@ -28,7 +23,7 @@ function Root({ show = false, content }: Props["Root"]) {
 
   if (!debouncedShow || !containerRef?.current) return null;
 
-  return ReactDOM.createPortal(
+  return createPortal(
     <div
       className={clsx(
         "flex items-center space-x-4 rounded bg-base-900 p-4 text-base-50 transition-all",
@@ -41,6 +36,7 @@ function Root({ show = false, content }: Props["Root"]) {
     containerRef.current
   );
 }
+
 function Container() {
   return (
     <div id={TOAST_ID} className="inline-flex flex-col justify-end space-y-2" />

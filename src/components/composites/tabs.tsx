@@ -1,74 +1,68 @@
-import React from "react";
+import {
+  Children,
+  cloneElement,
+  ComponentProps,
+  createContext,
+  Dispatch,
+  isValidElement,
+  SetStateAction,
+  useState,
+} from "react";
 import { nanoid } from "nanoid";
 import clsx from "clsx";
 
 import createContextHook from "~/hooks/create-context-hook";
 
-interface Props {
-  Root: {
-    children?: React.ReactNode;
-  };
-  Items: {
-    children?: React.ReactNode;
-    className?: string;
-  };
-  Item: {
-    children?: React.ReactNode;
-    className?: string;
-    active?: boolean;
-    onClick?: () => void;
-  };
-  Panels: {
-    children?: React.ReactNode;
-    className?: string;
-  };
-  Panel: {
-    children?: React.ReactNode;
-    className?: string;
-    active?: boolean;
-  };
+interface ContextValue {
+  activeTab: number;
+  setActiveTab: Dispatch<SetStateAction<number>>;
 }
 
-interface TabsContextValue {
-  active: number;
-  setActive: React.Dispatch<React.SetStateAction<number>>;
-}
+const initialValue: ContextValue = {
+  activeTab: 0,
+  setActiveTab: () => null,
+};
 
-const TabsContext = React.createContext<TabsContextValue>({
-  active: 0,
-  setActive: () => null,
-});
+const TabsContext = createContext(initialValue);
+const useTabs = createContextHook({ TabsContext });
 
-const useTabs = createContextHook<TabsContextValue>({ TabsContext });
+interface PropsRoot extends ComponentProps<"div"> {}
 
-function Root({ children }: Props["Root"]) {
-  const [active, setActive] = React.useState<number>(0);
+function Root({ children }: PropsRoot) {
+  const { activeTab: _activeTab } = initialValue;
+  const [activeTab, setActiveTab] = useState(_activeTab);
 
-  const value: TabsContextValue = {
-    active,
-    setActive,
+  const value: ContextValue = {
+    activeTab,
+    setActiveTab,
   };
 
   return <TabsContext.Provider value={value}>{children}</TabsContext.Provider>;
 }
 
-function Items({ children, className = "" }: Props["Items"]) {
-  const { active, setActive } = useTabs();
+interface PropsItems extends ComponentProps<"div"> {}
+
+function Items({ children, className = "" }: PropsItems) {
+  const { activeTab, setActiveTab } = useTabs();
 
   return (
     <div className={className}>
-      {React.Children.map(children, (child, index) => {
-        if (React.isValidElement(child)) {
-          return React.cloneElement(child, {
+      {Children.map(children, (child, index) => {
+        if (isValidElement(child)) {
+          return cloneElement(child, {
             key: nanoid(),
-            active: index === active,
-            onClick: () => setActive(index),
+            active: index === activeTab,
+            onClick: () => setActiveTab(index),
             ...child.props,
           });
         }
       })}
     </div>
   );
+}
+
+interface PropsItem extends ComponentProps<"button"> {
+  active?: boolean;
 }
 
 function Item({
@@ -76,28 +70,30 @@ function Item({
   className = "",
   active = false,
   onClick = () => {},
-}: Props["Item"]) {
+}: PropsItem) {
   return (
-    <div
+    <button
       className={clsx(className, "hover:cursor-pointer")}
       onClick={onClick}
       data-active={active ? active : undefined}
     >
       {children}
-    </div>
+    </button>
   );
 }
 
-function Panels({ children, className = "" }: Props["Panels"]) {
-  const { active } = useTabs();
+interface PropsPanels extends ComponentProps<"div"> {}
+
+function Panels({ children, className = "" }: PropsPanels) {
+  const { activeTab } = useTabs();
 
   return (
     <div className={className}>
-      {React.Children.map(children, (child, index) => {
-        if (React.isValidElement(child)) {
-          return React.cloneElement(child, {
+      {Children.map(children, (child, index) => {
+        if (isValidElement(child)) {
+          return cloneElement(child, {
             key: nanoid(),
-            active: index === active,
+            active: index === activeTab,
             ...child.props,
           });
         }
@@ -106,7 +102,11 @@ function Panels({ children, className = "" }: Props["Panels"]) {
   );
 }
 
-function Panel({ children, className = "", active = false }: Props["Panel"]) {
+interface PropsPanel extends ComponentProps<"div"> {
+  active?: boolean;
+}
+
+function Panel({ children, className = "", active = false }: PropsPanel) {
   return <div className={clsx(className, !active && "hidden")}>{children}</div>;
 }
 

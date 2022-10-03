@@ -1,23 +1,16 @@
-import { useCallback } from "react";
-import { useMapContext } from "~/contexts/map";
+import { useMapStore } from "~/stores/map";
+import config from "~/config";
 
 export default function useMapZoom() {
-  const { state, dispatch } = useMapContext();
+  const zoom = useMapStore((state) => state.zoom);
+  const setZoom = useMapStore((state) => state.setZoom);
+  const incrementZoom = useMapStore((state) => state.incrementZoom);
 
-  const setZoom = useCallback(
-    (value: typeof state.zoom) => {
-      dispatch({
-        type: "setZoom",
-        payload: value,
-      });
-    },
-    [dispatch]
-  );
-
-  return {
-    value: state.zoom,
-    set: setZoom,
-    in: () => setZoom(state.zoom + 0.5),
-    out: () => setZoom(state.zoom - 0.5),
+  const actions = {
+    setZoom: setZoom,
+    zoomIn: () => incrementZoom(config.map.zoom.increment),
+    zoomOut: () => incrementZoom(config.map.zoom.increment * -1),
   };
+
+  return [zoom, actions] as [typeof zoom, typeof actions];
 }

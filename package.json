@@ -9,19 +9,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@cloudflare/kv-asset-handler": "^0.2.0",
-    "@reduxjs/toolkit": "^1.8.3",
+    "@react-spring/web": "^9.5.5",
     "@supabase/supabase-js": "^1.35.6",
     "base64-arraybuffer": "^1.0.2",
     "clsx": "^1.2.1",
-    "config": "*",
+    "immer": "^9.0.15",
     "maplibre-gl": "^2.1.9",
     "marked": "^4.0.18",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-redux": "^8.0.2",
     "scheduler": "^0.23.0",
-    "use-context-selector": "^1.4.1"
+    "zustand": "^4.1.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.14.1",

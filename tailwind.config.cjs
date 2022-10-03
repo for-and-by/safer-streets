@@ -1,19 +1,16 @@
 /** @type {import('tailwindcss').Config} */
-const plugin = require("tailwindcss/plugin");
-const colors = require("tailwindcss/colors");
-
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        action: colors.blue,
-        warning: colors.amber,
-        danger: colors.red,
-        error: colors.red,
-        gray: colors.stone,
-        base: colors.stone,
-        brand: colors.emerald,
+        action: require("tailwindcss/colors").blue,
+        warning: require("tailwindcss/colors").amber,
+        danger: require("tailwindcss/colors").red,
+        error: require("tailwindcss/colors").red,
+        gray: require("tailwindcss/colors").stone,
+        base: require("tailwindcss/colors").stone,
+        brand: require("tailwindcss/colors").emerald,
       },
       fontFamily: {
         sans: ["Inter", "Helvetica", "system-elements"],
@@ -23,7 +20,7 @@ module.exports = {
   plugins: [
     // Add custom variant classes
     require("@tailwindcss/typography"),
-    plugin(({ addVariant }) => {
+    require("tailwindcss/plugin")(({ addVariant }) => {
       addVariant("child", "& > *");
       addVariant("d-active", "&[data-active]");
     }),

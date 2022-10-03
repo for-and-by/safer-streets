@@ -1,28 +1,27 @@
-import React from "react";
+import { useEffect, useRef } from "react";
 
-export default function useAsync<T, V>(
-  callback: () => Promise<T>,
+export default function useAsync<Data, Error>(
+  callback: () => Promise<Data>,
   deps: any[]
 ) {
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [data, setData] = React.useState<T | undefined>(undefined);
-  const [error, setError] = React.useState<V | undefined>(undefined);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = React.useState<Data | undefined>(undefined);
+  const [error, setError] = React.useState<Error | undefined>(undefined);
 
-  const callbackRef = React.useRef(callback);
+  const callbackRef = useRef<typeof callback>(callback);
 
-  React.useEffect(() => {
+  useEffect(() => {
     callbackRef.current = callback;
   }, [callback]);
 
-  React.useEffect(() => {
+  async function run() {
     setLoading(true);
-
     callbackRef
       .current()
       .then((data) => setData(data))
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
-  }, [...deps]);
+  }
 
-  return { loading, data, error };
+  return { loading, data, error, run };
 }

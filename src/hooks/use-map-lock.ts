@@ -1,23 +1,14 @@
-import { useCallback } from "react";
-import { useMapContext } from "~/contexts/map";
+import { useMapStore } from "~/stores/map";
 
 export default function useMapLock() {
-  const { state, dispatch } = useMapContext();
+  const isLocked = useMapStore((state) => state.isLocked);
+  const setIsLocked = useMapStore((state) => state.setIsLocked);
 
-  const setIsLocked = useCallback(
-    (value: typeof state.isLocked) => {
-      dispatch({
-        type: "setIsLocked",
-        payload: value,
-      });
-    },
-    [dispatch]
-  );
-
-  return {
-    value: state.isLocked,
-    set: setIsLocked,
-    lock: () => setIsLocked(true),
-    unlock: () => setIsLocked(false),
+  const actions = {
+    setIsLocked: setIsLocked,
+    setLock: () => setIsLocked(true),
+    setUnlock: () => setIsLocked(false),
   };
+
+  return [isLocked, actions] as [typeof isLocked, typeof actions];
 }
