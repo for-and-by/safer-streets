@@ -2,11 +2,11 @@ import React from "react";
 import { useSearch } from "~/contexts/search";
 
 import Drawer from "~/components/composites/drawer";
-import useResetView from "~/hooks/view/use-reset-view";
+import useViewReset from "~/hooks/view/use-view-reset";
 
 export default function SearchHeader() {
   const search = useSearch();
-  const resetView = useResetView();
+  const resetView = useViewReset();
 
   const [content, setContent] = React.useState({
     heading: "",

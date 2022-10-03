@@ -5,11 +5,11 @@ import useMapLock from "~/hooks/map/use-map-lock";
 
 import Drawer from "~/components/composites/drawer";
 import Toast from "~/components/composites/toast";
-import useResetView from "~/hooks/view/use-reset-view";
+import useViewReset from "~/hooks/view/use-view-reset";
 
 export default function ConfirmStage() {
   const form = useCreateForm();
-  const resetView = useResetView();
+  const resetView = useViewReset();
   const [, { setUnlock }] = useMapLock();
   // const reports = useReportsDispatch();
 

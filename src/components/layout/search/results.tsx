@@ -8,11 +8,11 @@ import { useSearch } from "~/contexts/search";
 import Drawer from "~/components/composites/drawer";
 import Toast from "~/components/composites/toast";
 import React from "react";
-import useResetView from "~/hooks/view/use-reset-view";
+import useViewReset from "~/hooks/view/use-view-reset";
 
 export default function SearchResults() {
   const [center, setCenter] = useMapCenter();
-  const resetView = useResetView();
+  const resetView = useViewReset();
 
   const search = useSearch();
   const transitionedResults = useTransitionValue(search.results, 500);

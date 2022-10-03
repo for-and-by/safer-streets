@@ -1,5 +1,5 @@
 import { useViewStore } from "~/stores/view";
 
-export default function useResetView() {
+export default function useViewReset() {
   return useViewStore((state) => state.resetView);
 }

@@ -2,7 +2,7 @@ import WarningModal from "~/components/modals/warning";
 import { useCreateForm } from "~/contexts/create";
 
 import useMapLock from "~/hooks/map/use-map-lock";
-import useResetView from "~/hooks/view/use-reset-view";
+import useViewReset from "~/hooks/view/use-view-reset";
 import { ReactNode } from "react";
 
 interface Props {
@@ -12,7 +12,7 @@ interface Props {
 export default function CancelModal({ children }: Props) {
   const form = useCreateForm();
 
-  const resetView = useResetView();
+  const resetView = useViewReset();
   const [, { setUnlock }] = useMapLock();
 
   const handleExitSearch = () => {

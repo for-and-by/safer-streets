@@ -6,14 +6,14 @@ import TextInput from "~/components/elements/text-input";
 import FindSelfButton from "~/components/elements/find-self-button";
 
 import useView from "~/hooks/view/use-view";
-import useResetView from "~/hooks/view/use-reset-view";
+import useViewReset from "~/hooks/view/use-view-reset";
 import { VIEWS } from "~/stores/view";
 
 export default function SearchFooter() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [view, setView] = useView();
-  const resetView = useResetView();
+  const resetView = useViewReset();
 
   const search = useSearch();
 
