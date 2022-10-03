@@ -1,7 +1,7 @@
 import React from "react";
 import useFindSelf from "~/hooks/use-find-self";
 import Toast from "~/components/composites/toast";
-import useMapCenter from "~/hooks/use-map-center";
+import useMapCenter from "~/hooks/map/use-map-center";
 
 interface Props {
   onFound?: () => void;

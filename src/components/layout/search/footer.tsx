@@ -1,37 +1,37 @@
-import { VIEWS } from "~/types/view";
-
-import React from "react";
-
-import useTypedSelector from "~/hooks/use-typed-selector";
+import { ChangeEventHandler, useEffect, useRef } from "react";
 import { useSearch } from "~/contexts/search";
 
 import Drawer from "~/components/composites/drawer";
 import TextInput from "~/components/elements/text-input";
 import FindSelfButton from "~/components/elements/find-self-button";
-import { useViewContext } from "~/contexts/view";
+
+import useView from "~/hooks/view/use-view";
+import useResetView from "~/hooks/view/use-reset-view";
+import { VIEWS } from "~/stores/view";
 
 export default function SearchFooter() {
-  const activeView = useTypedSelector((state) => state.view.active);
-  const inputRef = React.useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const [view, setView] = useView();
+  const resetView = useResetView();
 
   const search = useSearch();
-  const view = useViewContext();
 
-  React.useEffect(() => {
-    if (view.activeView === VIEWS.SEARCH && inputRef?.current) {
+  useEffect(() => {
+    if (view === VIEWS.SEARCH && inputRef?.current) {
       inputRef.current.focus();
     } else {
       search.query.set("");
     }
-  }, [activeView]);
+  }, [view]);
 
   // Handlers
-  const handleUpdateSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpdateSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
     search.query.set(event.target.value);
   };
 
   const handleFound = () => {
-    view.resetView();
+    resetView();
   };
 
   return (

@@ -1,12 +1,12 @@
 import type { MapEventGroup } from "~/types/map";
+import { useEffect } from "react";
 
-import React from "react";
-import { useMapContext } from "~/contexts/map";
+import useMap from "~/hooks/map/use-map";
 
 export default function useMapEvents(events: MapEventGroup) {
-  const { map } = useMapContext();
+  const map = useMap();
 
-  React.useEffect(() => {
+  useEffect(() => {
     Object.keys(events).map((key) => {
       map?.on(key, events[key]);
     });

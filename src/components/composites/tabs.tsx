@@ -11,7 +11,7 @@ import {
 import { nanoid } from "nanoid";
 import clsx from "clsx";
 
-import createContextHook from "~/hooks/create-context-hook";
+import createContextHook from "~/hooks/factories/create-context-hook";
 
 interface ContextValue {
   activeTab: number;

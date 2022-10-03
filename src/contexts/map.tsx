@@ -5,13 +5,11 @@ import {
   useEffect,
   useState,
 } from "react";
+
 import { Map } from "maplibre-gl";
 
 import config from "~/config";
-import useMapEvents from "~/hooks/use-map-events";
-import createContextHook from "~/hooks/create-context-hook";
-import useMapZoom from "~/hooks/use-map-zoom";
-import useMapCenter from "~/hooks/use-map-center";
+import createContextHook from "~/hooks/factories/create-context-hook";
 
 interface ContextValue {
   map?: Map | null;
@@ -32,21 +30,9 @@ export default function MapProvider({ children }: Props) {
   const { map: _map } = initialValue;
   const [map, setMap] = useState(_map);
 
-  const [zoom, { setZoom }] = useMapZoom();
-  const [center, setCenter] = useMapCenter();
   //TODO: Replace with zustand state
   // const reports = useTypedSelector((state) => state.reports.features);
   // useMapSource("reports", reports);
-
-  useMapEvents({
-    dragend: (event) => {
-      setCenter(event.target.getCenter());
-    },
-    zoomend: (event) => {
-      setCenter(event.target.getCenter());
-      setZoom(event.target.getZoom());
-    },
-  });
 
   const ref = useCallback<ContextValue["ref"]>((node) => {
     if (!!node && !map) {
@@ -54,8 +40,8 @@ export default function MapProvider({ children }: Props) {
         new Map({
           container: node,
           style: `${config.map.style}?key=${config.map.key}`,
-          center: center,
-          zoom: zoom,
+          center: config.map.center.default,
+          zoom: config.map.zoom.default,
           minZoom: config.map.zoom.min,
           maxZoom: config.map.zoom.max,
         })
@@ -68,10 +54,6 @@ export default function MapProvider({ children }: Props) {
       map?.remove();
     };
   }, []);
-
-  useEffect(() => {
-    map?.flyTo({ zoom, center, speed: 1 });
-  }, [zoom, center]);
 
   const value: ContextValue = {
     ref: ref,

@@ -1,14 +1,13 @@
-import { VIEWS } from "~/types/view";
-
-import React from "react";
-
-import useViewTransition from "~/hooks/use-view-transition";
+import { createElement } from "react";
 
 import Drawer from "~/components/composites/drawer";
 
 import HomeHeader from "./home/header";
 import SearchHeader from "./search/header";
 import CreateHeader from "./create/header";
+
+import useView from "~/hooks/view/use-view";
+import { VIEWS } from "~/stores/view";
 
 const headers: { [key: string]: () => React.ReactElement } = {
   [VIEWS.HOME]: HomeHeader,
@@ -17,11 +16,11 @@ const headers: { [key: string]: () => React.ReactElement } = {
 };
 
 export default function Header() {
-  const { view, show } = useViewTransition();
+  const [view] = useView();
 
   return (
-    <Drawer show={show} position="top" className="divide-y divide-base-100">
-      {React.createElement(headers[view])}
+    <Drawer show={true} position="top" className="divide-y divide-base-100">
+      {createElement(headers[view])}
     </Drawer>
   );
 }

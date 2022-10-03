@@ -1,14 +1,12 @@
-import view from "~/store/view/actions";
-
-import useTypedDispatch from "~/hooks/use-typed-dispatch";
-
 import Logo from "~/components/elements/logo";
 import Drawer from "~/components/composites/drawer";
-import { VIEWS } from "~/types/view";
+
+import useView from "~/hooks/view/use-view";
+import { VIEWS } from "~/stores/view";
 
 export default function HomeHeader() {
-  const dispatch = useTypedDispatch();
-  const handleShowSearch = () => dispatch(view.active.set(VIEWS.SEARCH));
+  const [view, setView] = useView();
+  const handleShowSearch = () => setView(VIEWS.SEARCH);
 
   return (
     <Drawer.Row className="p-2">

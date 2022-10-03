@@ -1,12 +1,12 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function useAsync<Data, Error>(
   callback: () => Promise<Data>,
   deps: any[]
 ) {
   const [loading, setLoading] = useState<boolean>(false);
-  const [data, setData] = React.useState<Data | undefined>(undefined);
-  const [error, setError] = React.useState<Error | undefined>(undefined);
+  const [data, setData] = useState<Data | undefined>(undefined);
+  const [error, setError] = useState<Error | undefined>(undefined);
 
   const callbackRef = useRef<typeof callback>(callback);
 

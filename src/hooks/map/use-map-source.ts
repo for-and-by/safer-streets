@@ -3,7 +3,7 @@ import React from "react";
 import { FeatureCollection } from "geojson";
 import { GeoJSONSource } from "maplibre-gl";
 
-import useMapEvents from "~/hooks/use-map-events";
+import useMapEvents from "~/hooks/map/use-map-events";
 import { useMapContext } from "~/contexts/map";
 
 export default function useMapSource(id: string, data: FeatureCollection) {

@@ -1,17 +1,12 @@
-import { VIEWS } from "~/types/view";
-
 import React from "react";
-
-import view from "~/store/view/actions";
-
-import useTypedDispatch from "~/hooks/use-typed-dispatch";
 import { useSearch } from "~/contexts/search";
 
 import Drawer from "~/components/composites/drawer";
+import useResetView from "~/hooks/view/use-reset-view";
 
 export default function SearchHeader() {
   const search = useSearch();
-  const dispatch = useTypedDispatch();
+  const resetView = useResetView();
 
   const [content, setContent] = React.useState({
     heading: "",
@@ -33,7 +28,7 @@ export default function SearchHeader() {
   }, [search.results]);
 
   const handleExitSearch = () => {
-    dispatch(view.active.set(VIEWS.HOME));
+    resetView();
     search.query.set("");
   };
 

@@ -1,14 +1,14 @@
 import React from "react";
 
 import useGeocoder from "~/hooks/use-geocoder";
-import useMapLock from "~/hooks/use-map-lock";
+import useMapLock from "~/hooks/map/use-map-lock";
 import { useCreateForm } from "~/contexts/create";
 
 import Toast from "~/components/composites/toast";
 import Drawer from "~/components/composites/drawer";
 import CancelModal from "~/components/layout/create/cancel";
 import FindSelfButton from "~/components/elements/find-self-button";
-import useMapCenter from "~/hooks/use-map-center";
+import useMapCenter from "~/hooks/map/use-map-center";
 
 export default function LocationStage() {
   const map = useMapLock();

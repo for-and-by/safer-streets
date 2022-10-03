@@ -1,18 +1,26 @@
-import React from "react";
-import maplibregl from "maplibre-gl";
-import ReactDOM from "react-dom";
+import { ReactNode, useEffect, useState } from "react";
+
+import {
+  Listener,
+  LngLatLike,
+  Marker,
+  MarkerOptions,
+  PositionAnchor,
+} from "maplibre-gl";
+import { createPortal } from "react-dom";
 import clsx from "clsx";
-import { useMapContext } from "~/contexts/map";
+
+import useMap from "~/hooks/map/use-map";
 
 interface Props {
-  coordinates: maplibregl.LngLatLike;
-  children?: React.ReactNode;
+  coordinates: LngLatLike;
+  children?: ReactNode;
   className?: string;
   icon?: string;
-  onDragEnd?: maplibregl.Listener;
-  onDragStart?: maplibregl.Listener;
+  onDragEnd?: Listener;
+  onDragStart?: Listener;
   draggable?: boolean;
-  anchor?: maplibregl.PositionAnchor;
+  anchor?: PositionAnchor;
 }
 
 export default function BaseMarker({
@@ -24,22 +32,22 @@ export default function BaseMarker({
   onDragEnd = () => {},
   onDragStart = () => {},
 }: Props) {
-  const [marker, setMarker] = React.useState<maplibregl.Marker | null>(null);
-  const { map } = useMapContext();
+  const [marker, setMarker] = useState<Marker | null>(null);
+  const map = useMap();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!marker) {
-      const options: maplibregl.MarkerOptions = {
+      const options: MarkerOptions = {
         draggable,
         element: document.createElement("div"),
         anchor: "bottom-right",
       };
 
-      setMarker(new maplibregl.Marker(options));
+      setMarker(new Marker(options));
     }
   }, [marker]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!!marker && !!map) {
       marker
         .setLngLat(coordinates)
@@ -49,14 +57,15 @@ export default function BaseMarker({
     }
   }, [marker, map]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!!marker) {
       marker.setLngLat(coordinates);
     }
   }, [marker, coordinates]);
 
   if (!marker) return null;
-  return ReactDOM.createPortal(
+
+  return createPortal(
     <>
       <div
         className={clsx(

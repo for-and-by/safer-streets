@@ -1,34 +1,30 @@
 import React from "react";
 
 import { useCreateForm } from "~/contexts/create";
-import useReportsDispatch from "~/hooks/use-reports-dispatch";
-import useTypedSelector from "~/hooks/use-typed-selector";
-import useMapLock from "~/hooks/use-map-lock";
+import useMapLock from "~/hooks/map/use-map-lock";
 
 import Drawer from "~/components/composites/drawer";
 import Toast from "~/components/composites/toast";
-import { useViewContext } from "~/contexts/view";
+import useResetView from "~/hooks/view/use-reset-view";
 
 export default function ConfirmStage() {
   const form = useCreateForm();
-  const view = useViewContext();
-  const map = useMapLock();
-  const reports = useReportsDispatch();
-
-  const uploading = useTypedSelector((state) => state.reports.pending.upload);
+  const resetView = useResetView();
+  const [, { setUnlock }] = useMapLock();
+  // const reports = useReportsDispatch();
 
   const handleSubmit = () => {
-    reports.upload(form.inputs.values).then(() => {
-      view.resetView();
-      map.unlock();
-      form.reset();
-      reports.sync();
-    });
+    // reports.upload(form.inputs.values).then(() => {
+    //   resetView();
+    //   setUnlock();
+    //   form.reset();
+    //   reports.sync();
+    // });
   };
 
   return (
     <>
-      <Toast content="Uploading report..." show={uploading} />
+      <Toast content="Uploading report..." show={false} />
       <Drawer.Row className="p-2">
         <div className="flex max-h-64 flex-grow flex-col divide-y-2 divide-white overflow-scroll">
           {form?.inputs?.values?.image ? (

@@ -1,15 +1,11 @@
-import { VIEWS } from "~/types/view";
-
-import view from "~/store/view/actions";
-
-import useTypedDispatch from "~/hooks/use-typed-dispatch";
-
 import Drawer from "~/components/composites/drawer";
+import useView from "~/hooks/view/use-view";
+import { VIEWS } from "~/stores/view";
 
 export default function HomeFooter() {
-  const dispatch = useTypedDispatch();
+  const [view, setView] = useView();
 
-  const handleShowCreate = () => dispatch(view.active.set(VIEWS.CREATE));
+  const handleShowCreate = () => setView(VIEWS.CREATE);
 
   return (
     <Drawer.Row className="p-2">
