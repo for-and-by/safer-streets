@@ -13,7 +13,10 @@ function Root({ children }: PropsRoot) {
 
 function Container() {
   return (
-    <div className="rounde overflow-hidded flex flex-col" id={REGION_ID} />
+    <div
+      className="pointer-events-auto my-2 flex flex-col overflow-hidden rounded"
+      id={REGION_ID}
+    />
   );
 }
 

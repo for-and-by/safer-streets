@@ -12,8 +12,10 @@ import BottomBar from "~/components/layout/bottom-bar";
 import CenterMarker from "~/components/map/markers/center";
 import { CreateFormProvider } from "~/contexts/create";
 import Reports from "~/components/layout/reports";
-import Index from "~/components/views/home";
-import Search from "~/components/views/search/search";
+
+import Home from "~/components/views/home";
+import Search from "~/components/views/search";
+import Body from "~/components/regions/body";
 
 interface Props {}
 
@@ -33,12 +35,13 @@ export default function Index({}: Props) {
           <TopBar />
           <CreateFormProvider>
             <Header.Container />
-            <Index />
+            <Home />
             <Search />
             <div className="flex flex-grow justify-between overflow-hidden py-4 transition-all">
               <Toast.Container />
               <Controls />
             </div>
+            <Body.Container />
             <Footer.Container />
           </CreateFormProvider>
           <BottomBar />

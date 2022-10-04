@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { LngLatLike } from "maplibre-gl";
-import { nanoid } from "nanoid";
 
 import { VIEWS } from "~/hooks/view/use-view-store";
 import useView from "~/hooks/view/use-view";
@@ -12,8 +10,6 @@ import useGeocoderResults from "~/hooks/geocoder/use-geocoder-results";
 import useGeocoderReset from "~/hooks/geocoder/use-geocoder-reset";
 
 import useDebounce from "~/hooks/use-debounce";
-import useTransitionValue from "~/hooks/use-transition-value";
-import useMapCenter from "~/hooks/map/use-map-center";
 
 import Header from "~/components/regions/header";
 import Footer from "~/components/regions/footer";
@@ -23,10 +19,9 @@ import Bumper from "~/components/elements/bumper";
 import TextInput from "~/components/elements/text-input";
 import FindSelfButton from "~/components/elements/find-self-button";
 import Toast from "~/components/regions/toast";
+import SearchResult from "~/components/views/search/result";
 
 export default function Search() {
-  const [center, setCenter] = useMapCenter();
-
   const [view, setView] = useView();
   const isSearchActive = useViewIsActive(VIEWS.SEARCH);
   const resetView = useViewReset();
@@ -34,7 +29,6 @@ export default function Search() {
   const [query, setQuery] = useGeocoderQuery();
   const [{ results, isEmpty, resultsCount, isLoading }, { fetchResults }] =
     useGeocoderResults();
-  const transitionedResults = useTransitionValue(results, 500);
   const resetGeocoder = useGeocoderReset();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -75,13 +69,6 @@ export default function Search() {
     setValue("");
   };
 
-  const handleSetCenter = (coordinates?: LngLatLike) => {
-    if (coordinates) {
-      setCenter(coordinates);
-      handleExitSearch();
-    }
-  };
-
   return (
     <>
       <Toast content="Finding results..." show={isLoading} />
@@ -101,18 +88,11 @@ export default function Search() {
       </Header>
       <Body>
         <Bumper
-          show={isSearchActive && transitionedResults.length > 0}
-          className="flex max-h-48 flex-col items-center divide-y divide-base-100 overflow-y-scroll bg-white p-2"
+          show={isSearchActive && results.length > 0}
+          className="flex max-h-48 flex-col items-center divide-y divide-base-100 overflow-y-scroll bg-white"
         >
-          {transitionedResults?.map((feature) => (
-            <div
-              key={nanoid()}
-              className="flex flex-col bg-white p-3 transition-all hover:cursor-pointer hover:bg-gray-100"
-              onClick={() => handleSetCenter(feature?.center)}
-            >
-              <p className="text-base text-base-700">{feature?.heading}</p>
-              <p className="text-sm text-base-400">{feature?.subheading}</p>
-            </div>
+          {results?.map((feature) => (
+            <SearchResult feature={feature} onClick={handleExitSearch} />
           ))}
         </Bumper>
       </Body>

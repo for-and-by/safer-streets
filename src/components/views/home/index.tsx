@@ -8,7 +8,7 @@ import Footer from "~/components/regions/footer";
 import Logo from "~/components/elements/logo";
 import Bumper from "~/components/elements/bumper";
 
-export default function Index() {
+export default function Home() {
   const [view, setView] = useView();
   const isHomeActive = useViewIsActive(VIEWS.HOME);
 
