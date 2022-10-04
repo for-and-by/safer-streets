@@ -1,46 +1,51 @@
-import { ChangeEventHandler, useEffect, useRef } from "react";
-import { useSearch } from "~/contexts/search";
-
-import Drawer from "~/components/composites/drawer";
-import TextInput from "~/components/elements/text-input";
-import FindSelfButton from "~/components/elements/find-self-button";
+import { useEffect, useRef, useState } from "react";
 
 import useView from "~/hooks/view/use-view";
 import useViewReset from "~/hooks/view/use-view-reset";
 import { VIEWS } from "~/stores/view";
 
+import useGeocoderQuery from "~/hooks/geocoder/use-geocoder-query";
+import useGeocoderReset from "~/hooks/geocoder/use-geocoder-reset";
+
+import Drawer from "~/components/composites/drawer";
+import TextInput from "~/components/elements/text-input";
+import FindSelfButton from "~/components/elements/find-self-button";
+import useDebounce from "~/hooks/use-debounce";
+
 export default function SearchFooter() {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [value, setValue] = useState<string>("");
+  const debouncedValue = useDebounce(value, 500);
 
   const [view, setView] = useView();
   const resetView = useViewReset();
 
-  const search = useSearch();
+  const [query, setQuery] = useGeocoderQuery();
+  const resetGeocoder = useGeocoderReset();
 
   useEffect(() => {
     if (view === VIEWS.SEARCH && inputRef?.current) {
       inputRef.current.focus();
-    } else {
-      search.query.set("");
     }
   }, [view]);
 
-  // Handlers
-  const handleUpdateSearch: ChangeEventHandler<HTMLInputElement> = (event) => {
-    search.query.set(event.target.value);
-  };
+  useEffect(() => {
+    setQuery(debouncedValue);
+  }, [debouncedValue]);
 
   const handleFound = () => {
     resetView();
+    resetGeocoder();
+    setValue("");
   };
 
   return (
     <Drawer.Row className="p-2">
       <TextInput
-        icon="icon-search"
-        onChange={handleUpdateSearch}
-        value={search.query.value}
         ref={inputRef}
+        value={value}
+        onChange={(event) => setValue(event.target.value)}
+        icon="icon-search"
         placeholder="Search for an address..."
       />
       <FindSelfButton onFound={handleFound} />

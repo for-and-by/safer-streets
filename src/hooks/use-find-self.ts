@@ -1,19 +1,19 @@
-import React from "react";
+import { useState } from "react";
 import { LngLatLike } from "maplibre-gl";
 
 export default function useFindSelf() {
-  const [loading, setLoading] = React.useState<boolean>(false);
-  const [coords, setCoords] = React.useState<LngLatLike | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [coords, setCoords] = useState<LngLatLike | undefined>(undefined);
 
   function run() {
-    setLoading(true);
+    setIsLoading(true);
     if (navigator && "geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(({ coords }) => {
-        setLoading(false);
+        setIsLoading(false);
         setCoords([coords.longitude, coords.latitude]);
       });
     }
   }
 
-  return { loading, coords, run };
+  return { isLoading, coords, run };
 }

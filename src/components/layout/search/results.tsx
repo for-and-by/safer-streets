@@ -1,35 +1,51 @@
+import { useEffect } from "react";
 import type { LngLatLike } from "maplibre-gl";
 import { nanoid } from "nanoid";
 
 import useTransitionValue from "~/hooks/use-transition-value";
 import useMapCenter from "~/hooks/map/use-map-center";
-import { useSearch } from "~/contexts/search";
+
+import { VIEWS } from "~/stores/view";
+import useView from "~/hooks/view/use-view";
+import useViewReset from "~/hooks/view/use-view-reset";
+
+import useGeocoderReset from "~/hooks/geocoder/use-geocoder-reset";
+import useGeocoderQuery from "~/hooks/geocoder/use-geocoder-query";
+import useGeocoderResults from "~/hooks/geocoder/use-geocoder-results";
 
 import Drawer from "~/components/composites/drawer";
-import Toast from "~/components/composites/toast";
-import React from "react";
-import useViewReset from "~/hooks/view/use-view-reset";
+import Toast from "~/components/regions/toast";
 
 export default function SearchResults() {
   const [center, setCenter] = useMapCenter();
+
+  const [query] = useGeocoderQuery();
+  const [{ results, isLoading, isEmpty }, { fetchResults }] =
+    useGeocoderResults();
+  const resetGeocoder = useGeocoderReset();
+
+  const [view, setView] = useView();
   const resetView = useViewReset();
 
-  const search = useSearch();
-  const transitionedResults = useTransitionValue(search.results, 500);
+  const transitionedResults = useTransitionValue(results, 500);
+
+  useEffect(() => {
+    fetchResults().finally();
+  }, [query]);
 
   const handleSetCenter = (coordinates?: LngLatLike) => {
     if (coordinates) {
       setCenter(coordinates);
       resetView();
-      search.query.set("");
+      resetGeocoder();
     }
   };
 
   return (
     <>
-      <Toast show={search.loading} content="Finding results..." />
+      <Toast show={isLoading} content="Finding results..." />
       <Drawer
-        show={!!search?.results?.length}
+        show={!isEmpty && view === VIEWS.SEARCH}
         position="center"
         className="mb-2"
       >

@@ -1,5 +1,4 @@
 import create, { StateCreator } from "zustand";
-import { immer } from "zustand/middleware/immer";
 
 export enum VIEWS {
   HOME = "home",
@@ -18,16 +17,17 @@ interface Actions {
 
 interface Store extends Actions, State {}
 
-const store: StateCreator<Store, [["zustand/immer", never]]> = (set) => ({
+const initialState: State = {
   view: VIEWS.HOME,
+};
+
+const store: StateCreator<Store> = (set) => ({
+  ...initialState,
   setView: (value) =>
-    set((state) => {
-      state.view = value;
+    set({
+      view: value,
     }),
-  resetView: () =>
-    set((state) => {
-      state.view = VIEWS.HOME;
-    }),
+  resetView: () => set(initialState),
 });
 
-export const useViewStore = create<Store>()(immer(store));
+export const useViewStore = create<Store>(store);

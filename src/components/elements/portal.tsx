@@ -1,17 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import { ReactNode } from "react";
+import { createPortal } from "react-dom";
+
+import useQuerySelector from "~/hooks/use-query-selector";
 
 interface Props {
-  children?: React.ReactNode;
+  children?: ReactNode;
+  selector?: string;
 }
 
-export default function Portal({ children }: Props) {
-  const ref = React.useRef<Element | null>(null);
+export default function Portal({ children, selector = "#root" }: Props) {
+  const parent = useQuerySelector(selector);
+  if (!parent) return null;
 
-  React.useEffect(() => {
-    ref.current = document.querySelector("#root");
-  }, []);
-
-  if (!ref.current) return null;
-  return ReactDOM.createPortal(children, ref.current);
+  return createPortal(children, parent);
 }

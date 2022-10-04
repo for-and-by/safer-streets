@@ -10,7 +10,7 @@ import fetchSeverities from "~/lib/fetch-severities";
 
 import useAsync from "~/hooks/use-async";
 
-import Toast from "~/components/composites/toast";
+import Toast from "~/components/regions/toast";
 
 export interface Inputs {
   id?: string;

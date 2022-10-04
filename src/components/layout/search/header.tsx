@@ -1,35 +1,33 @@
-import React from "react";
-import { useSearch } from "~/contexts/search";
+import { useEffect, useState } from "react";
 
 import Drawer from "~/components/composites/drawer";
 import useViewReset from "~/hooks/view/use-view-reset";
+import useGeocoderReset from "~/hooks/geocoder/use-geocoder-reset";
+import useGeocoderResults from "~/hooks/geocoder/use-geocoder-results";
 
 export default function SearchHeader() {
-  const search = useSearch();
   const resetView = useViewReset();
 
-  const [content, setContent] = React.useState({
+  const [{ results, isEmpty, resultsCount }] = useGeocoderResults();
+  const resetGeocoder = useGeocoderReset();
+
+  const [content, setContent] = useState({
     heading: "",
     subheading: "",
   });
 
-  React.useEffect(() => {
-    setContent(
-      search?.results?.length
-        ? {
-            heading: `${search?.results?.length ?? 0} results found`,
-            subheading: "Select a location to jump to.",
-          }
-        : {
-            heading: "No results found.",
-            subheading: "Start by typing in an address.",
-          }
-    );
-  }, [search.results]);
+  useEffect(() => {
+    setContent({
+      heading: `${isEmpty ? "No" : resultsCount} results found`,
+      subheading: isEmpty
+        ? "Select a location to jump to."
+        : "Start by typing in an address.",
+    });
+  }, [results]);
 
   const handleExitSearch = () => {
     resetView();
-    search.query.set("");
+    resetGeocoder();
   };
 
   return (

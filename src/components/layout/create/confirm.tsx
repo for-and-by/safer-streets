@@ -4,7 +4,7 @@ import { useCreateForm } from "~/contexts/create";
 import useMapLock from "~/hooks/map/use-map-lock";
 
 import Drawer from "~/components/composites/drawer";
-import Toast from "~/components/composites/toast";
+import Toast from "~/components/regions/toast";
 import useViewReset from "~/hooks/view/use-view-reset";
 
 export default function ConfirmStage() {

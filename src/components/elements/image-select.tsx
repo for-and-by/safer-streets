@@ -6,7 +6,7 @@ import useAsync from "~/hooks/use-async";
 
 import InputWrapper from "~/components/elements/input-wrapper";
 import WarningModal from "~/components/modals/warning";
-import Toast from "~/components/composites/toast";
+import Toast from "~/components/regions/toast";
 
 interface Props {
   onUpload?: (image: string) => void;

@@ -1,7 +1,6 @@
 import { LngLatLike } from "maplibre-gl";
 
 import create, { StateCreator } from "zustand";
-import { immer } from "zustand/middleware/immer";
 
 import config from "~/config";
 
@@ -20,27 +19,26 @@ interface Actions {
 
 interface Store extends Actions, State {}
 
-const store: StateCreator<Store, [["zustand/immer", never]]> = (set) => ({
+const initialState: State = {
   zoom: config.map.zoom.default,
   center: config.map.center.default,
   isLocked: false,
+};
+
+const store: StateCreator<Store> = (set, get) => ({
+  ...initialState,
   incrementZoom: (value) => {
-    set((state) => {
-      state.zoom += value;
+    const { zoom } = get();
+    set({
+      zoom: zoom + value,
     });
   },
-  setZoom: (value) =>
-    set((state) => {
-      state.zoom = value;
-    }),
-  setCenter: (value) =>
-    set((state) => {
-      state.center = value;
-    }),
+  setZoom: (value) => set({ zoom: value }),
+  setCenter: (value) => set({ center: value }),
   setIsLocked: (value) =>
-    set((state) => {
-      state.isLocked = value;
+    set({
+      isLocked: value,
     }),
 });
 
-export const useMapStore = create<Store>()(immer(store));
+export const useMapStore = create<Store>(store);

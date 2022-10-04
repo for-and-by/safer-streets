@@ -1,41 +1,43 @@
-import React from "react";
-
-import useGeocoder from "~/hooks/use-geocoder";
+import { useEffect } from "react";
 import useMapLock from "~/hooks/map/use-map-lock";
 import { useCreateForm } from "~/contexts/create";
 
-import Toast from "~/components/composites/toast";
+import Toast from "~/components/regions/toast";
 import Drawer from "~/components/composites/drawer";
 import CancelModal from "~/components/layout/create/cancel";
 import FindSelfButton from "~/components/elements/find-self-button";
 import useMapCenter from "~/hooks/map/use-map-center";
+import useGeocoderInline from "~/hooks/geocoder/use-geocoder-inline";
+import parseLngLat from "~/lib/parse-lng-lat";
 
 export default function LocationStage() {
-  const map = useMapLock();
-  const center = useMapCenter();
+  const [isLocked, { setLock, setUnlock }] = useMapLock();
+  const [center, setCenter] = useMapCenter();
+
+  const { isLoading, results } = useGeocoderInline(center);
   const form = useCreateForm();
 
-  const { results, loading } = useGeocoder(center.value);
+  console.log(results, form.inputs.values);
 
-  React.useEffect(() => {
-    map.unlock();
+  useEffect(() => {
+    setUnlock();
   }, []);
 
-  React.useEffect(() => {
-    if (center.value) {
-      const [lng, lat] = center.value;
+  useEffect(() => {
+    if (!results?.length && center) {
+      const [lng, lat] = parseLngLat(center);
       form?.inputs?.update({ lng, lat, address: results?.[0]?.heading });
     }
   }, [results]);
 
   function handleNextStage() {
-    map.lock();
+    setLock();
     form.stage.next();
   }
 
   return (
     <>
-      <Toast show={loading} content={"Searching for address..."} />
+      <Toast show={isLoading} content={"Searching for address..."} />
       <Drawer.Row className="p-2">
         <div className="flex w-full flex-row items-center space-x-2 rounded bg-gray-100 p-3">
           {!form.inputs.values.address ? (
