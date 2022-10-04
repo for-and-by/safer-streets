@@ -1,4 +1,4 @@
-import { useMapStore } from "~/stores/map";
+import { useMapStore } from "~/hooks/map/use-map-store";
 import config from "~/config";
 
 export default function useMapZoom() {

@@ -11,7 +11,7 @@ interface State {
 }
 
 interface Actions {
-  setView: (value: State["view"]) => void;
+  setView: (value: State["view"]) => Promise<void>;
   resetView: () => void;
 }
 
@@ -23,7 +23,7 @@ const initialState: State = {
 
 const store: StateCreator<Store> = (set) => ({
   ...initialState,
-  setView: (value) =>
+  setView: async (value) =>
     set({
       view: value,
     }),

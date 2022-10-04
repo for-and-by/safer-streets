@@ -27,7 +27,6 @@ function Root({ show = false, content }: PropsRoot) {
         <i className="icon icon-is-spinning icon-circle-anim z-20 before:text-white" />
         <p className="text-sm">{content}</p>
       </div>
-      ,
     </Portal>
   );
 }

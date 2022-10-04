@@ -1,4 +1,4 @@
-import { useViewStore } from "~/stores/view";
+import { useViewStore } from "~/hooks/view/use-view-store";
 
 export default function useView() {
   const view = useViewStore((state) => state.view);

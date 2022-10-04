@@ -1,4 +1,4 @@
-import { useGeocoderStore } from "~/stores/geocoder";
+import { useGeocoderStore } from "~/hooks/geocoder/use-geocoder-store";
 
 export default function useGeocoderQuery() {
   const query = useGeocoderStore((state) => state.query);

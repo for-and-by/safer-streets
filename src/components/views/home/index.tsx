@@ -1,4 +1,4 @@
-import { VIEWS } from "~/stores/view";
+import { VIEWS } from "~/hooks/view/use-view-store";
 import useView from "~/hooks/view/use-view";
 import useViewIsActive from "~/hooks/view/use-view-is-active";
 
@@ -8,7 +8,7 @@ import Footer from "~/components/regions/footer";
 import Logo from "~/components/elements/logo";
 import Bumper from "~/components/elements/bumper";
 
-export default function Home() {
+export default function Index() {
   const [view, setView] = useView();
   const isHomeActive = useViewIsActive(VIEWS.HOME);
 
@@ -31,7 +31,10 @@ export default function Home() {
         </Bumper>
       </Header>
       <Footer>
-        <Bumper show={isHomeActive} className="p-2">
+        <Bumper
+          show={isHomeActive}
+          className="flex flex-row items-center bg-white p-2"
+        >
           <button className="btn btn-primary w-full" onClick={handleShowCreate}>
             <i className="btn-icon icon icon-pin-add" />
             <p className="btn-text">Create a Report</p>

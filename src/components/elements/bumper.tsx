@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import { animated, useSpring } from "@react-spring/web";
 import useResizeObserver from "~/hooks/use-resize-observer";
 
@@ -17,26 +17,25 @@ export default function Bumper({ show, className, children }: Props) {
 
   useResizeObserver(ref?.current ?? undefined, (height) => {
     if (show) {
-      console.log("blockSize:", height.blockSize);
       api.start({ height: height.blockSize });
     }
   });
 
   useEffect(() => {
-    console.log("offsetHeight:", ref?.current?.offsetHeight, show);
-    api.start({
-      height: show ? ref?.current?.offsetHeight : 0,
-    });
+    if (ref.current) {
+      api.start({
+        height: show ? ref.current.offsetHeight : 0,
+      });
+    }
   }, [show]);
 
-  const style = {
-    "--height": height.to((value) => `${value}px`).get(),
-  } as CSSProperties;
-
-  console.log(height.get());
-
   return (
-    <animated.div style={style} className="h-[var(--height)]">
+    <animated.div
+      style={{
+        height: height.to((value) => `${value}px`),
+      }}
+      className="overflow-hidden"
+    >
       <div ref={ref} className={className}>
         {children}
       </div>

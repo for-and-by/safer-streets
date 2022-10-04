@@ -1,4 +1,4 @@
-import { useMapStore } from "~/stores/map";
+import { useMapStore } from "~/hooks/map/use-map-store";
 
 export default function useMapCenter() {
   const center = useMapStore((state) => state.center);

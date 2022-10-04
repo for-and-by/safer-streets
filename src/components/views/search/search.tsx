@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { LngLatLike } from "maplibre-gl";
 import { nanoid } from "nanoid";
 
-import { VIEWS } from "~/stores/view";
+import { VIEWS } from "~/hooks/view/use-view-store";
 import useView from "~/hooks/view/use-view";
 import useViewIsActive from "~/hooks/view/use-view-is-active";
 import useViewReset from "~/hooks/view/use-view-reset";
@@ -22,6 +22,7 @@ import Body from "~/components/regions/body";
 import Bumper from "~/components/elements/bumper";
 import TextInput from "~/components/elements/text-input";
 import FindSelfButton from "~/components/elements/find-self-button";
+import Toast from "~/components/regions/toast";
 
 export default function Search() {
   const [center, setCenter] = useMapCenter();
@@ -46,7 +47,7 @@ export default function Search() {
   });
 
   useEffect(() => {
-    if (view === VIEWS.SEARCH && inputRef?.current) {
+    if (isSearchActive && inputRef?.current) {
       inputRef.current.focus();
     }
   }, [view]);
@@ -83,6 +84,7 @@ export default function Search() {
 
   return (
     <>
+      <Toast content="Finding results..." show={isLoading} />
       <Header>
         <Bumper
           show={isSearchActive}
@@ -98,23 +100,27 @@ export default function Search() {
         </Bumper>
       </Header>
       <Body>
-        <Bumper show={isSearchActive}>
-          <div className="flex max-h-48 w-full flex-col divide-y divide-base-100 overflow-y-scroll">
-            {transitionedResults?.map((feature) => (
-              <div
-                key={nanoid()}
-                className="flex flex-col bg-white p-3 transition-all hover:cursor-pointer hover:bg-gray-100"
-                onClick={() => handleSetCenter(feature?.center)}
-              >
-                <p className="text-base text-base-700">{feature?.heading}</p>
-                <p className="text-sm text-base-400">{feature?.subheading}</p>
-              </div>
-            ))}
-          </div>
+        <Bumper
+          show={isSearchActive && transitionedResults.length > 0}
+          className="flex max-h-48 flex-col items-center divide-y divide-base-100 overflow-y-scroll bg-white p-2"
+        >
+          {transitionedResults?.map((feature) => (
+            <div
+              key={nanoid()}
+              className="flex flex-col bg-white p-3 transition-all hover:cursor-pointer hover:bg-gray-100"
+              onClick={() => handleSetCenter(feature?.center)}
+            >
+              <p className="text-base text-base-700">{feature?.heading}</p>
+              <p className="text-sm text-base-400">{feature?.subheading}</p>
+            </div>
+          ))}
         </Bumper>
       </Body>
       <Footer>
-        <Bumper show={isSearchActive} className="p-2">
+        <Bumper
+          show={isSearchActive}
+          className="flex flex-row items-center space-x-2 bg-white p-2"
+        >
           <TextInput
             ref={inputRef}
             value={value}
