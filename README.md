@@ -6,9 +6,9 @@ This is the official mono repo for the [Safer Streets](https://saferstreets.info
 This project was built off the back of open source projects, including but not limited to:
 #### Frontend
 - `react`: As our frontend framework
-- `redux`: For our state management
+- `zustand`: For our state management
 - `tailwindcss` and `clsx`: For our CSS & Styling
-- `remixicon`: For our iconography
+- `nucleo`: For our iconography
 - `cloudflare-pages`: For our SPA hosting
 
 #### Mapping
@@ -16,10 +16,9 @@ This project was built off the back of open source projects, including but not l
 - `maptiler`: For vector based tilesets, and geocoding,
 
 #### Backend & Database
-- `mongodb`: As our NoSQL Databse 
-- `prisma`: As our typesafe ORM
+- `supabase`: As application infrastructure 
 - `cloudflare-workers`: For our API hosting
-- 
+
 #### Utilities
 
 - [TypeScript](https://www.typescriptlang.org/) for static type checking
