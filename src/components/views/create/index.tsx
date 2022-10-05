@@ -1,6 +1,10 @@
+import { useEffect } from "react";
+
 import { VIEWS } from "~/hooks/view/use-view-store";
+import { EXIT, STAGE } from "~/hooks/create/use-stages-store";
 import useViewIsActive from "~/hooks/view/use-view-is-active";
 import useStages from "~/hooks/create/use-stages";
+import useMapLock from "~/hooks/map/use-map-lock";
 
 import Header from "~/components/regions/header";
 import Footer from "~/components/regions/footer";
@@ -8,12 +12,19 @@ import Footer from "~/components/regions/footer";
 import CancelModal from "~/components/layout/create/cancel";
 import ProgressBar from "~/components/elements/progress-bar";
 import Bumper from "~/components/elements/bumper";
-import { EXIT } from "~/hooks/create/use-stages-store";
-import React from "react";
 
 export default function Create() {
   const isCreateShow = useViewIsActive(VIEWS.CREATE);
+  const [isLocked, { setLock, setUnlock }] = useMapLock();
   const [stage, { nextStage, prevStage }] = useStages();
+
+  useEffect(() => {
+    if (stage.current === STAGE.LOCATION) {
+      setUnlock();
+    } else {
+      setLock();
+    }
+  }, [stage]);
 
   return (
     <>
