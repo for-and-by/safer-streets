@@ -4,7 +4,6 @@ import { useCreateForm } from "~/contexts/create";
 
 import Toast from "~/components/regions/toast";
 import Drawer from "~/components/composites/drawer";
-import CancelModal from "~/components/layout/create/cancel";
 import FindSelfButton from "~/components/elements/find-self-button";
 import useMapCenter from "~/hooks/map/use-map-center";
 import useGeocoderInline from "~/hooks/geocoder/use-geocoder-inline";
@@ -57,16 +56,7 @@ export default function LocationStage() {
           )}
         </div>
       </Drawer.Row>
-      <Drawer.Row className="justify-between p-2">
-        <CancelModal>
-          <button className="btn btn-light">
-            <p className="btn-text">Cancel</p>
-          </button>
-        </CancelModal>
-        <button className="btn btn-primary" onClick={handleNextStage}>
-          <p className="btn-text">Provide Details</p>
-        </button>
-      </Drawer.Row>
+      <Drawer.Row className="justify-between p-2"></Drawer.Row>
     </>
   );
 }

@@ -28,12 +28,15 @@ export default function ImageSelect({
   const [file, setFile] = React.useState<File | undefined>(undefined);
   const inputRef = React.useRef<HTMLInputElement | null>(null);
 
-  const { loading } = useAsync(async () => {
-    if (!file) return;
-    const image = await parseFileAsBase64(file);
-    setImage(image);
-    onUpload(image);
-  }, [file]);
+  const { isLoading } = useAsync(
+    async () => {
+      if (!file) return;
+      const image = await parseFileAsBase64(file);
+      setImage(image);
+      onUpload(image);
+    },
+    { deps: [file] }
+  );
 
   React.useEffect(() => {
     setImage(value);
@@ -57,7 +60,7 @@ export default function ImageSelect({
 
   return (
     <InputWrapper error={error}>
-      <Toast content="Processing Image..." show={loading} />
+      <Toast content="Processing Image..." show={isLoading} />
       {!image ? (
         <div
           className="flex h-40 flex-grow flex-col items-center justify-center space-y-4 hover:cursor-pointer"

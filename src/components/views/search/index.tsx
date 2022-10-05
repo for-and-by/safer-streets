@@ -1,7 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { VIEWS } from "~/hooks/view/use-view-store";
-import useView from "~/hooks/view/use-view";
 import useViewIsActive from "~/hooks/view/use-view-is-active";
 import useViewReset from "~/hooks/view/use-view-reset";
 
@@ -22,7 +21,6 @@ import Toast from "~/components/regions/toast";
 import SearchResult from "~/components/views/search/result";
 
 export default function Search() {
-  const [view, setView] = useView();
   const isSearchActive = useViewIsActive(VIEWS.SEARCH);
   const resetView = useViewReset();
 
@@ -31,7 +29,6 @@ export default function Search() {
     useGeocoderResults();
   const resetGeocoder = useGeocoderReset();
 
-  const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState<string>("");
   const debouncedValue = useDebounce(value, 500);
 
@@ -39,12 +36,6 @@ export default function Search() {
     heading: "",
     subheading: "",
   });
-
-  useEffect(() => {
-    if (isSearchActive && inputRef?.current) {
-      inputRef.current.focus();
-    }
-  }, [view]);
 
   useEffect(() => {
     fetchResults().finally();
@@ -71,7 +62,7 @@ export default function Search() {
 
   return (
     <>
-      <Toast content="Finding results..." show={isLoading} />
+      <Toast content="Finding results..." show={isSearchActive && isLoading} />
       <Header>
         <Bumper
           show={isSearchActive}
@@ -102,7 +93,6 @@ export default function Search() {
           className="flex flex-row items-center space-x-2 bg-white p-2"
         >
           <TextInput
-            ref={inputRef}
             value={value}
             onChange={(event) => setValue(event.target.value)}
             icon="icon-search"

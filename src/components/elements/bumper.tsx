@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useRef } from "react";
 import { animated, useSpring } from "@react-spring/web";
-import useResizeObserver from "~/hooks/use-resize-observer";
+import useMutationObserver from "~/hooks/use-mutation-observer";
 
 interface Props {
   show: boolean;
@@ -15,11 +15,13 @@ export default function Bumper({ show, className, children }: Props) {
     height: 0,
   }));
 
-  useResizeObserver(ref?.current ?? undefined, (height) => {
-    if (show) {
-      api.start({ height: height.blockSize });
+  useMutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === "childList") {
+        api.start({ height: ref?.current?.offsetHeight ?? 0 });
+      }
     }
-  });
+  }, ref?.current ?? undefined);
 
   useEffect(() => {
     if (ref.current) {
@@ -34,7 +36,7 @@ export default function Bumper({ show, className, children }: Props) {
       style={{
         height: height.to((value) => `${value}px`),
       }}
-      className="overflow-hidden"
+      className="overflow-hidden bg-white"
     >
       <div ref={ref} className={className}>
         {children}

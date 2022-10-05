@@ -83,9 +83,6 @@ export default function DetailsStage() {
         </div>
       </Drawer.Row>
       <Drawer.Row className="justify-between p-2">
-        <button className="btn btn-light" onClick={() => form.stage.prev()}>
-          <p className="btn-text">Go Back</p>
-        </button>
         <button className="btn btn-primary" onClick={handleNextStage}>
           <p className="btn-text">Upload Images</p>
         </button>
