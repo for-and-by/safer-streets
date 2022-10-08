@@ -24,5 +24,5 @@ export default function useMutationObserver(
         observerRef.current?.disconnect();
       };
     }
-  }, []);
+  }, [target]);
 }
