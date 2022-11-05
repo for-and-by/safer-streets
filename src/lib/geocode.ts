@@ -4,9 +4,11 @@ import config from "~/config";
 import parseLngLat from "~/lib/parse-lng-lat";
 import parseFeatureAsAddress from "~/lib/parse-feature-as-address";
 import parseContextAsString from "~/lib/parse-content-as-string";
-import { SearchResult } from "~/types/search";
+import { SearchFeature, SearchResult } from "~/types/search";
 
-export default async function geocode(query: LngLatLike | string) {
+export default async function geocode(
+  query: LngLatLike | string
+): Promise<SearchFeature[]> {
   const parsedQuery =
     typeof query !== "string"
       ? parseLngLat(query)?.join(",") ?? undefined

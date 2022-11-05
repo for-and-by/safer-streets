@@ -3,7 +3,7 @@ import React from "react";
 import { useCreateForm } from "~/contexts/create";
 
 import Drawer from "~/components/composites/drawer";
-import ImageSelect from "~/components/elements/image-select";
+import Image from "~/components/inputs/image";
 
 export default function ImageStage() {
   const form = useCreateForm();
@@ -28,7 +28,7 @@ export default function ImageStage() {
     <>
       <Drawer.Row className="flex-col p-2">
         <div className="flex w-full flex-col space-y-2">
-          <ImageSelect
+          <Image
             onUpload={handleUpload}
             onRemove={handleRemove}
             value={form.inputs.values.image}

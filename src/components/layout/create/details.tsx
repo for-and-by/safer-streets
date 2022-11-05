@@ -5,8 +5,8 @@ import { useCreateForm } from "~/contexts/create";
 
 import Drawer from "~/components/composites/drawer";
 import Select from "~/components/elements/select";
-import Textarea from "~/components/elements/textarea";
-import TextInput from "~/components/elements/text-input";
+import Textarea from "~/components/inputs/textarea";
+import Text from "~/components/inputs/text";
 
 export default function DetailsStage() {
   const form = useCreateForm();
@@ -62,7 +62,7 @@ export default function DetailsStage() {
           {form?.type?.custom_fields
             ? Object.keys(form?.type?.custom_fields).map((key) => {
                 return (
-                  <TextInput
+                  <Text
                     key={key}
                     name={key}
                     label={capitaliseString(key)}

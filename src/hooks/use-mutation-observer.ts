@@ -1,28 +1,22 @@
-import { useEffect, useRef } from "react";
+import { RefObject, useEffect, useRef } from "react";
 
 export default function useMutationObserver(
   callback: MutationCallback,
-  target?: Element
+  target: RefObject<Element>,
+  deps: any[]
 ) {
   const observerRef = useRef<MutationObserver | undefined>(undefined);
-  const callbackRef = useRef<typeof callback>(callback);
 
   useEffect(() => {
-    callbackRef.current = callback;
-  }, [callback]);
-
-  useEffect(() => {
-    observerRef.current = new MutationObserver(callbackRef.current);
-
-    if (target) {
-      observerRef.current?.observe(target, {
+    if (target?.current) {
+      observerRef.current = new MutationObserver(callback);
+      observerRef.current?.observe(target.current, {
         childList: true,
-        attributes: true,
         subtree: true,
       });
       return () => {
         observerRef.current?.disconnect();
       };
     }
-  }, [target]);
+  }, deps);
 }

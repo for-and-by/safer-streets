@@ -1,12 +1,12 @@
-import { useStageStore } from "~/hooks/create/use-stages-store";
+import { useStagesStore } from "~/hooks/create/use-stages-store";
 import { useEffect, useState } from "react";
 
 export default function useStages() {
-  const stage = useStageStore((state) => state.stage);
-  const nextStage = useStageStore((stage) => stage.nextStage);
-  const prevStage = useStageStore((stage) => stage.prevStage);
-  const jumpToStage = useStageStore((stage) => stage.jumpToStage);
-  const getStageContent = useStageStore((stage) => stage.getStageContent);
+  const stage = useStagesStore((state) => state.stage);
+  const nextStage = useStagesStore((stage) => stage.nextStage);
+  const prevStage = useStagesStore((stage) => stage.prevStage);
+  const jumpToStage = useStagesStore((stage) => stage.jumpToStage);
+  const getStageContent = useStagesStore((stage) => stage.getStageContent);
 
   const [content, setContent] = useState(getStageContent());
 

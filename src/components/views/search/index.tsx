@@ -15,7 +15,7 @@ import Footer from "~/components/regions/footer";
 import Body from "~/components/regions/body";
 
 import Bumper from "~/components/elements/bumper";
-import TextInput from "~/components/elements/text-input";
+import Text from "~/components/inputs/text";
 import FindSelfButton from "~/components/elements/find-self-button";
 import Toast from "~/components/regions/toast";
 import SearchResult from "~/components/views/search/result";
@@ -92,7 +92,7 @@ export default function Search() {
           show={isSearchActive}
           className="flex flex-row items-center space-x-2 bg-white p-2"
         >
-          <TextInput
+          <Text
             value={value}
             onChange={(event) => setValue(event.target.value)}
             icon="icon-search"

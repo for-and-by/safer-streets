@@ -15,13 +15,18 @@ export default function Bumper({ show, className, children }: Props) {
     height: 0,
   }));
 
-  useMutationObserver((mutations) => {
-    for (const mutation of mutations) {
-      if (mutation.type === "childList") {
-        api.start({ height: ref?.current?.offsetHeight ?? 0 });
+  useMutationObserver(
+    (mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.type === "childList") {
+          console.log("mutated");
+          api.start({ height: show ? ref?.current?.offsetHeight : 0 });
+        }
       }
-    }
-  }, ref?.current ?? undefined);
+    },
+    ref,
+    [show]
+  );
 
   useEffect(() => {
     if (ref.current) {

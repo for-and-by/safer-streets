@@ -1,5 +1,5 @@
 import React from "react";
-import InputWrapper from "~/components/elements/input-wrapper";
+import Wrapper from "~/components/inputs/wrapper";
 
 interface Props {
   label: string;
@@ -22,7 +22,7 @@ export default function Select({
   error,
 }: Props) {
   return (
-    <InputWrapper label={label} name={name} error={error}>
+    <Wrapper label={label} name={name} error={error}>
       <select
         className="flex-grow appearance-none bg-transparent focus:outline-none"
         onChange={onChange}
@@ -41,6 +41,6 @@ export default function Select({
         })}
       </select>
       <i className="icon icon-down icon-sm absolute right-2 top-1/2 -translate-y-1/2 text-gray-700" />
-    </InputWrapper>
+    </Wrapper>
   );
 }

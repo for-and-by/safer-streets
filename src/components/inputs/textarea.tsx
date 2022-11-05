@@ -1,8 +1,8 @@
 import React from "react";
 import clsx from "clsx";
-import InputWrapper from "~/components/elements/input-wrapper";
+import Wrapper from "~/components/inputs/wrapper";
 
-interface Props extends React.ComponentPropsWithRef<"input"> {
+interface Props extends React.ComponentPropsWithRef<"textarea"> {
   icon?: string;
   loading?: boolean;
   label?: string;
@@ -10,22 +10,21 @@ interface Props extends React.ComponentPropsWithRef<"input"> {
 }
 
 // eslint-disable-next-line react/display-name
-const TextInput = React.forwardRef<HTMLInputElement, Props>(
+const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
   (
     { icon = undefined, loading = false, label, name, error, ...props },
     ref
   ) => (
-    <InputWrapper label={label} name={name} error={error}>
+    <Wrapper label={label} name={name ?? ""} align="top" error={error}>
       {icon && <i className={clsx("icon", icon)} />}
-      <input
-        type="text"
+      <textarea
         className="flex-grow bg-transparent focus:outline-none"
         ref={ref}
         name={name}
         {...props}
       />
-    </InputWrapper>
+    </Wrapper>
   )
 );
 
-export default TextInput;
+export default Textarea;

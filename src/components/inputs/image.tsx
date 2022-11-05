@@ -4,7 +4,7 @@ import parseFileAsBase64 from "~/lib/parse-file-as-base64";
 
 import useAsync from "~/hooks/use-async";
 
-import InputWrapper from "~/components/elements/input-wrapper";
+import Wrapper from "~/components/inputs/wrapper";
 import WarningModal from "~/components/modals/warning";
 import Toast from "~/components/regions/toast";
 
@@ -17,7 +17,7 @@ interface Props {
   placeholder?: string;
 }
 
-export default function ImageSelect({
+export default function Image({
   onUpload = () => {},
   onRemove = () => {},
   value,
@@ -59,7 +59,7 @@ export default function ImageSelect({
   };
 
   return (
-    <InputWrapper error={error}>
+    <Wrapper error={error}>
       <Toast content="Processing Image..." show={isLoading} />
       {!image ? (
         <div
@@ -103,6 +103,6 @@ export default function ImageSelect({
         className="hidden"
         onChange={handleChange}
       />
-    </InputWrapper>
+    </Wrapper>
   );
 }

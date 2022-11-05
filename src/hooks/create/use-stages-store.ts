@@ -108,4 +108,4 @@ const store: StateCreator<Store> = (set, get) => ({
   },
 });
 
-export const useStageStore = create<Store>(store);
+export const useStagesStore = create<Store>(store);

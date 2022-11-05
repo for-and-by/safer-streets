@@ -9,7 +9,7 @@ interface Props {
   error?: boolean | string;
 }
 
-export default function InputWrapper({
+export default function Wrapper({
   label,
   children,
   name,
