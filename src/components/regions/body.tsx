@@ -1,23 +1,23 @@
-import { ReactNode } from "react";
-import Portal from "~/components/elements/portal";
+import React, { ReactNode } from 'react';
+import Portal from '~/components/elements/portal';
 
-const REGION_ID = "body";
+const REGION_ID = 'body';
 
 interface PropsRoot {
   children: ReactNode;
 }
 
 function Root({ children }: PropsRoot) {
-  return <Portal selector={`#${REGION_ID}`}>{children}</Portal>;
+	return <Portal selector={`#${REGION_ID}`}>{children}</Portal>;
 }
 
 function Container() {
-  return (
-    <div
-      className="pointer-events-auto my-2 flex flex-col overflow-hidden rounded"
-      id={REGION_ID}
-    />
-  );
+	return (
+		<div
+			className="pointer-events-auto my-2 flex flex-col overflow-hidden rounded"
+			id={REGION_ID}
+		/>
+	);
 }
 
 const Body = Object.assign(Root, { Container });

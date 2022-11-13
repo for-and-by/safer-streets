@@ -1,5 +1,5 @@
-import React from "react";
-import Wrapper from "~/components/inputs/wrapper";
+import React from 'react';
+import Wrapper from '~/components/inputs/wrapper';
 
 interface Props {
   label: string;
@@ -14,33 +14,33 @@ interface Props {
 }
 
 export default function Select({
-  label,
-  options,
-  onChange,
-  value,
-  name,
-  error,
+	label,
+	options,
+	onChange,
+	value,
+	name,
+	error,
 }: Props) {
-  return (
-    <Wrapper label={label} name={name} error={error}>
-      <select
-        className="flex-grow appearance-none bg-transparent focus:outline-none"
-        onChange={onChange}
-        value={value}
-        name={name}
-      >
-        <option disabled hidden value="">
+	return (
+		<Wrapper label={label} name={name} error={error}>
+			<select
+				className="flex-grow appearance-none bg-transparent focus:outline-none"
+				onChange={onChange}
+				value={value}
+				name={name}
+			>
+				<option disabled hidden value="">
           Please select...
-        </option>
-        {options.map((option) => {
-          return (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          );
-        })}
-      </select>
-      <i className="icon icon-down icon-sm absolute right-2 top-1/2 -translate-y-1/2 text-gray-700" />
-    </Wrapper>
-  );
+				</option>
+				{options.map((option) => {
+					return (
+						<option key={option.value} value={option.value}>
+							{option.label}
+						</option>
+					);
+				})}
+			</select>
+			<i className="icon icon-down icon-sm absolute right-2 top-1/2 -translate-y-1/2 text-gray-700" />
+		</Wrapper>
+	);
 }

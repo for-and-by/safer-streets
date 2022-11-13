@@ -1,16 +1,16 @@
-import { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState } from 'react';
 
 import {
-  Listener,
-  LngLatLike,
-  Marker,
-  MarkerOptions,
-  PositionAnchor,
-} from "maplibre-gl";
-import { createPortal } from "react-dom";
-import clsx from "clsx";
+	Listener,
+	LngLatLike,
+	Marker,
+	MarkerOptions,
+	PositionAnchor,
+} from 'maplibre-gl';
+import { createPortal } from 'react-dom';
+import clsx from 'clsx';
 
-import useMap from "~/hooks/map/use-map";
+import useMap from '~/hooks/map/use-map';
 
 interface Props {
   coordinates: LngLatLike;
@@ -24,61 +24,61 @@ interface Props {
 }
 
 export default function BaseMarker({
-  coordinates,
-  children,
-  className = "",
-  icon = "icon-pin-fill",
-  draggable = false,
-  onDragEnd = () => {},
-  onDragStart = () => {},
+	coordinates,
+	children,
+	className = '',
+	icon = 'icon-pin-fill',
+	draggable = false,
+	onDragEnd = () => {},
+	onDragStart = () => {},
 }: Props) {
-  const [marker, setMarker] = useState<Marker | null>(null);
-  const map = useMap();
+	const [marker, setMarker] = useState<Marker | null>(null);
+	const map = useMap();
 
-  useEffect(() => {
-    if (!marker) {
-      const options: MarkerOptions = {
-        draggable,
-        element: document.createElement("div"),
-        anchor: "bottom-right",
-      };
+	useEffect(() => {
+		if (!marker) {
+			const options: MarkerOptions = {
+				draggable,
+				element: document.createElement('div'),
+				anchor: 'bottom-right',
+			};
 
-      setMarker(new Marker(options));
-    }
-  }, [marker]);
+			setMarker(new Marker(options));
+		}
+	}, [marker]);
 
-  useEffect(() => {
-    if (!!marker && !!map) {
-      marker
-        .setLngLat(coordinates)
-        .addTo(map)
-        .on("dragstart", onDragStart)
-        .on("dragend", onDragEnd);
-    }
-  }, [marker, map]);
+	useEffect(() => {
+		if (!!marker && !!map) {
+			marker
+				.setLngLat(coordinates)
+				.addTo(map)
+				.on('dragstart', onDragStart)
+				.on('dragend', onDragEnd);
+		}
+	}, [marker, map]);
 
-  useEffect(() => {
-    if (!!marker) {
-      marker.setLngLat(coordinates);
-    }
-  }, [marker, coordinates]);
+	useEffect(() => {
+		if (marker) {
+			marker.setLngLat(coordinates);
+		}
+	}, [marker, coordinates]);
 
-  if (!marker) return null;
+	if (!marker) return null;
 
-  return createPortal(
-    <>
-      <div
-        className={clsx(
-          "relative flex h-8 w-8 origin-bottom-right rotate-45 items-center justify-center rounded-full rounded-br-none bg-brand-600",
-          className
-        )}
-      >
-        <i
-          className={clsx(icon, "icon icon-sm -rotate-45 before:text-white")}
-        />
-      </div>
-      {children}
-    </>,
-    marker.getElement()
-  );
+	return createPortal(
+		<>
+			<div
+				className={clsx(
+					'relative flex h-8 w-8 origin-bottom-right rotate-45 items-center justify-center rounded-full rounded-br-none bg-brand-600',
+					className
+				)}
+			>
+				<i
+					className={clsx(icon, 'icon icon-sm -rotate-45 before:text-white')}
+				/>
+			</div>
+			{children}
+		</>,
+		marker.getElement()
+	);
 }

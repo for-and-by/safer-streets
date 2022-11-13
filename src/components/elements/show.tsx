@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import React, { ReactNode } from 'react';
 
 interface Props {
   on: boolean;
@@ -6,6 +6,6 @@ interface Props {
 }
 
 export default function Show({ on, children }: Props) {
-  if (!on) return null;
-  return <>{children}</>;
+	if (!on) return null;
+	return <>{children}</>;
 }
