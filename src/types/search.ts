@@ -1,4 +1,4 @@
-import type { GeoJSONFeature, LngLatLike } from "maplibre-gl";
+import type { GeoJSONFeature, LngLatLike } from 'maplibre-gl';
 
 export interface ContextItem {
   id?: string;

@@ -20,7 +20,7 @@
 @layer components {
   /* Button Styling */
   .btn {
-    @apply flex h-12 items-center justify-center transition-all space-x-3 whitespace-nowrap rounded-sm px-4 hover:cursor-pointer;
+    @apply flex h-12 items-center justify-center space-x-3 whitespace-nowrap rounded-sm px-4 transition-all hover:cursor-pointer;
   }
 
   .btn-text {
@@ -28,7 +28,7 @@
   }
 
   .btn-icon {
-    @apply before:text-sm flex-shrink before:text-inherit;
+    @apply flex-shrink before:text-sm before:text-inherit;
   }
 
   .btn-primary {

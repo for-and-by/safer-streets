@@ -1,7 +1,8 @@
-import Index from "~/components/layout";
+import React from 'react';
+import Index from '~/components/layout';
 
 function App() {
-  return <Index />;
+	return <Index />;
 }
 
 export default App;

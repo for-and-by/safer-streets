@@ -1,6 +1,6 @@
-import { useMapContext } from "~/contexts/map";
+import { useMapContext } from '~/contexts/map';
 
 export default function useMapRef() {
-  const { ref } = useMapContext();
-  return ref;
+	const { ref } = useMapContext();
+	return ref;
 }

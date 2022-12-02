@@ -9,7 +9,7 @@ import useMapLock from '~/hooks/map/use-map-lock';
 import useMapZoom from '~/hooks/map/use-map-zoom';
 import useMapCenter from '~/hooks/map/use-map-center';
 
-type Props = ComponentProps<'div'>
+type Props = ComponentProps<'div'>;
 
 export default function Map(props: Props) {
 	const map = useMap();

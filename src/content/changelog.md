@@ -10,14 +10,14 @@ Here's a list of the things we've changed, added or removed since we started wor
 
 #### Fixes & Updates
 
--   Changed nav to be vertical instead of horizontal.
--   Resolved issue with nav showing up over pop ups, modals and drawers.
--   Updated events query to be handled client side
+- Changed nav to be vertical instead of horizontal.
+- Resolved issue with nav showing up over pop ups, modals and drawers.
+- Updated events query to be handled client side
 
 #### Additions
 
--   Wrapped application in Redux to preserve event state, and allow application to only get most recent events since last load.
--   Added pin clustering, so when zoomed out pins don't look super clutter and difficult to navigate
+- Wrapped application in Redux to preserve event state, and allow application to only get most recent events since last load.
+- Added pin clustering, so when zoomed out pins don't look super clutter and difficult to navigate
 
 ---
 
@@ -27,7 +27,7 @@ Here's a list of the things we've changed, added or removed since we started wor
 
 #### Additions
 
--   Can now click on different parts of the map to drop a pin and create an event
--   Can create a basic event with type, note, image and severity
--   Can view events on a map against their location
--   Can see basic app information with About, Help and Contact sections
+- Can now click on different parts of the map to drop a pin and create an event
+- Can create a basic event with type, note, image and severity
+- Can view events on a map against their location
+- Can see basic app information with About, Help and Contact sections

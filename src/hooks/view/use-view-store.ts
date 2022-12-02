@@ -1,9 +1,9 @@
-import create, { StateCreator } from "zustand";
+import create, { StateCreator } from 'zustand';
 
 export enum VIEWS {
-  HOME = "home",
-  SEARCH = "search",
-  CREATE = "create",
+  HOME = 'home',
+  SEARCH = 'search',
+  CREATE = 'create',
 }
 
 interface State {
@@ -11,23 +11,23 @@ interface State {
 }
 
 interface Actions {
-  setView: (value: State["view"]) => Promise<void>;
+  setView: (value: State['view']) => Promise<void>;
   resetView: () => void;
 }
 
 interface Store extends Actions, State {}
 
 const initialState: State = {
-  view: VIEWS.HOME,
+	view: VIEWS.HOME,
 };
 
 const store: StateCreator<Store> = (set) => ({
-  ...initialState,
-  setView: async (value) =>
-    set({
-      view: value,
-    }),
-  resetView: () => set(initialState),
+	...initialState,
+	setView: async (value) =>
+		set({
+			view: value,
+		}),
+	resetView: () => set(initialState),
 });
 
 export const useViewStore = create<Store>(store);

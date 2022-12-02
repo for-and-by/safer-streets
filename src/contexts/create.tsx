@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
-import { Severity, Type } from "~/types/db";
+import { Severity, Type } from '~/types/db';
 
-import createContextHook from "~/hooks/factories/create-context-hook";
-import { Stage, stages } from "~/hooks/create/use-stages-store";
+import createContextHook from '~/hooks/factories/create-context-hook';
+import { Stage, stages } from '~/hooks/create/use-stages-store';
 
 export interface Inputs {
   id?: string;
@@ -52,28 +52,28 @@ interface Props {
 }
 
 const initialValue: ContextValue = {
-  stage: {
-    value: Object.values(stages)[0],
-    handle: Object.keys(stages)[0],
-    next: () => {},
-    prev: () => {},
-    count: Object.keys(stages).length,
-  },
-  inputs: {
-    values: {},
-    update: () => {},
-    bind: () => {},
-    clear: () => {},
-  },
-  errors: {
-    values: {},
-    update: () => {},
-    clear: () => {},
-  },
-  reset: () => {},
-  type: undefined,
-  types: [],
-  severities: [],
+	stage: {
+		value: Object.values(stages)[0],
+		handle: Object.keys(stages)[0],
+		next: () => {},
+		prev: () => {},
+		count: Object.keys(stages).length,
+	},
+	inputs: {
+		values: {},
+		update: () => {},
+		bind: () => {},
+		clear: () => {},
+	},
+	errors: {
+		values: {},
+		update: () => {},
+		clear: () => {},
+	},
+	reset: () => {},
+	type: undefined,
+	types: [],
+	severities: [],
 };
 
 const CreateFormContext = React.createContext(initialValue);

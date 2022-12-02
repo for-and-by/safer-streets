@@ -14,7 +14,8 @@ export default function BottomBar() {
 				<a
 					className="py-1 text-sm underline underline-offset-4"
 					href="https://www.openstreetmap.org/copyright"
-					target="_blank" rel="noreferrer"
+					target="_blank"
+					rel="noreferrer"
 				>
           Privacy
 				</a>
@@ -22,7 +23,8 @@ export default function BottomBar() {
 			<a
 				className="px-2 py-1 text-sm"
 				href="https://www.openstreetmap.org/copyright"
-				target="_blank" rel="noreferrer"
+				target="_blank"
+				rel="noreferrer"
 			>
         &copy; Attribution
 			</a>

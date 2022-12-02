@@ -1,28 +1,28 @@
-import resizeImage from "~/lib/resize-image";
+import resizeImage from '~/lib/resize-image';
 
 export default function parseFileAsBase64(file: File) {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
+	return new Promise<string>((resolve, reject) => {
+		const reader = new FileReader();
 
-    reader.readAsArrayBuffer(file);
+		reader.readAsArrayBuffer(file);
 
-    reader.onload = (event) => {
-      if (!event?.target?.result) {
-        reject("Target couldn't be processed");
-        return;
-      }
+		reader.onload = (event) => {
+			if (!event?.target?.result) {
+				reject('Target couldn\'t be processed');
+				return;
+			}
 
-      const blob = new Blob([event.target.result]);
-      const url = URL.createObjectURL(blob);
-      const image = new Image();
+			const blob = new Blob([event.target.result]);
+			const url = URL.createObjectURL(blob);
+			const image = new Image();
 
-      image.src = url;
-      image.onload = () => {
-        const resized = resizeImage(image);
-        if (!resized) reject("Image could not be resized");
-        else resolve(resized);
-      };
-    };
-    reader.onerror = (error) => reject(error);
-  });
+			image.src = url;
+			image.onload = () => {
+				const resized = resizeImage(image);
+				if (!resized) reject('Image could not be resized');
+				else resolve(resized);
+			};
+		};
+		reader.onerror = (error) => reject(error);
+	});
 }

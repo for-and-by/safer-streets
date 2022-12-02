@@ -1,7 +1,7 @@
-import type { SearchResult } from "~/types/search";
+import type { SearchResult } from '~/types/search';
 
 export default function parseFeatureAsAddress(feature: SearchResult) {
-  return [feature?.address ?? null, feature?.text ?? null]
-    .filter((i) => !!i)
-    .join(" ");
+	return [feature?.address ?? null, feature?.text ?? null]
+		.filter((i) => !!i)
+		.join(' ');
 }

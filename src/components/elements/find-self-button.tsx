@@ -14,7 +14,7 @@ export default function FindSelfButton({ onFound }: Props) {
 	useEffect(() => {
 		if (coords) {
 			setCenter(coords);
-			if(onFound) onFound();
+			if (onFound) onFound();
 		}
 	}, [isLoading]);
 

@@ -26,7 +26,7 @@ const initialValue: ContextValue = {
 const TabsContext = createContext(initialValue);
 const useTabs = createContextHook({ TabsContext });
 
-type PropsRoot = ComponentProps<'div'>
+type PropsRoot = ComponentProps<'div'>;
 
 function Root({ children }: PropsRoot) {
 	const { activeTab: _activeTab } = initialValue;
@@ -40,7 +40,7 @@ function Root({ children }: PropsRoot) {
 	return <TabsContext.Provider value={value}>{children}</TabsContext.Provider>;
 }
 
-type PropsItems = ComponentProps<'div'>
+type PropsItems = ComponentProps<'div'>;
 
 function Items({ children, className = '' }: PropsItems) {
 	const { activeTab, setActiveTab } = useTabs();
@@ -82,7 +82,7 @@ function Item({
 	);
 }
 
-type PropsPanels = ComponentProps<'div'>
+type PropsPanels = ComponentProps<'div'>;
 
 function Panels({ children, className = '' }: PropsPanels) {
 	const { activeTab } = useTabs();

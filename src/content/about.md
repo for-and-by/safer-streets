@@ -14,13 +14,10 @@ This content is not moderated in any way and is managed using good faith. Please
 
 This app was created by "For & By", a tech community initiative run by Jordan Accinelli, and uses open source libraries to achieve its goals. This project would not be possible without:
 
-* MapLibre GL: For mapping utilities
-* MapTiler: For Vector GL Map Tiles & Geocoding
-* React: For rendering the UI
-* Vite: For asset bundling
-* Redux: For global state management
-* Nucleo: As an icon library
-* Firava: A variable font port of Fira Sans
-
-
-
+- MapLibre GL: For mapping utilities
+- MapTiler: For Vector GL Map Tiles & Geocoding
+- React: For rendering the UI
+- Vite: For asset bundling
+- Redux: For global state management
+- Nucleo: As an icon library
+- Firava: A variable font port of Fira Sans

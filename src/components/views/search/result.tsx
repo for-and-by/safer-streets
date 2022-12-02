@@ -24,7 +24,10 @@ export default function SearchResult({
 	return (
 		<div
 			{...props}
-			className={clsx('flex w-full flex-col bg-white p-3 transition-all hover:cursor-pointer hover:bg-gray-100', className)}
+			className={clsx(
+				'flex w-full flex-col bg-white p-3 transition-all hover:cursor-pointer hover:bg-gray-100',
+				className
+			)}
 			onClick={handleClick}
 		>
 			<p className="text-base text-base-700">{feature?.heading}</p>

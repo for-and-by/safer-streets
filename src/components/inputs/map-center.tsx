@@ -4,7 +4,7 @@ import React, { ComponentProps } from 'react';
 import useGeocoderInline from '~/hooks/geocoder/use-geocoder-inline';
 import Show from '~/components/elements/show';
 
-type Props = ComponentProps<'input'>
+type Props = ComponentProps<'input'>;
 
 export default function MapCenterInput({ ...props }: Props) {
 	const [center] = useMapCenter();

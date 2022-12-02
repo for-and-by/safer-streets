@@ -1,5 +1,5 @@
-import type { LngLatLike, MapLibreEvent } from "maplibre-gl";
-import maplibregl from "maplibre-gl";
+import type { LngLatLike, MapLibreEvent } from 'maplibre-gl';
+import maplibregl from 'maplibre-gl';
 
 export interface MapState {
   zoom: number;

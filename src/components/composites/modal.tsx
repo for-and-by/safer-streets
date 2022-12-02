@@ -26,7 +26,7 @@ const initialValue: ContextValue = {
 const ModalContext = createContext(initialValue);
 const useModal = createContextHook({ ModalContext });
 
-type PropsRoot = ComponentProps<'div'>
+type PropsRoot = ComponentProps<'div'>;
 
 function Root({ children }: PropsRoot) {
 	const { isShow: _isShow } = initialValue;
@@ -43,7 +43,7 @@ function Root({ children }: PropsRoot) {
 	);
 }
 
-type PropsTrigger = ComponentProps<'div'>
+type PropsTrigger = ComponentProps<'div'>;
 
 function Trigger({ className = '', children }: PropsTrigger) {
 	const { showModal } = useModal();
@@ -55,7 +55,7 @@ function Trigger({ className = '', children }: PropsTrigger) {
 	);
 }
 
-type PropsBody = ComponentProps<'div'>
+type PropsBody = ComponentProps<'div'>;
 
 function Body({ children }: PropsBody) {
 	const { isShow } = useModal();
@@ -100,7 +100,7 @@ function Panel({ className = '', children, scrollable = false }: PropsPanel) {
 	);
 }
 
-type PropsClose = ComponentProps<'button'>
+type PropsClose = ComponentProps<'button'>;
 
 function Close({ children, className = '', onClick = () => {} }: PropsClose) {
 	const { hideModal } = useModal();

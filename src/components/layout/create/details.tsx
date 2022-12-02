@@ -4,7 +4,7 @@ import capitaliseString from '~/lib/capitalise-string';
 import { useCreateForm } from '~/contexts/create';
 
 import Drawer from '~/components/composites/drawer';
-import Select from '~/components/elements/select';
+import Select from '~/components/inputs/select';
 import Textarea from '~/components/inputs/textarea';
 import Text from '~/components/inputs/text';
 

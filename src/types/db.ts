@@ -1,22 +1,22 @@
 export enum CATEGORIES {
-  NATURAL = "natural",
-  INFRASTRUCTURE = "infrastructure",
+  NATURAL = 'natural',
+  INFRASTRUCTURE = 'infrastructure',
 }
 
 export enum TYPES {
-  CYCLIST = "cyclist",
-  MOTORIST = "motorist",
-  WILDLIFE = "wildlife",
-  BUSHFIRE = "bushfire",
-  FLOOD = "flood",
-  PEDESTRIAN = "pedestrian",
+  CYCLIST = 'cyclist',
+  MOTORIST = 'motorist',
+  WILDLIFE = 'wildlife',
+  BUSHFIRE = 'bushfire',
+  FLOOD = 'flood',
+  PEDESTRIAN = 'pedestrian',
 }
 
 export enum SEVERITIES {
-  NONE = "none",
-  LOW = "low",
-  MEDIUM = "medium",
-  HIGH = "high",
+  NONE = 'none',
+  LOW = 'low',
+  MEDIUM = 'medium',
+  HIGH = 'high',
 }
 
 export interface Category {
