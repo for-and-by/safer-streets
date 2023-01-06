@@ -13,10 +13,7 @@ interface Props extends ComponentProps<"select"> {
 }
 
 export const Select = forwardRef<HTMLSelectElement, Props>(
-  (
-    { label, options, name, loading, placeholder, error, ...props }: Props,
-    ref
-  ) => {
+  ({ label, options, name, loading, placeholder, error, ...props }, ref) => {
     return (
       <Wrapper label={label} name={name} error={error}>
         <select

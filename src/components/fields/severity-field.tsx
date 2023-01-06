@@ -1,11 +1,19 @@
 import React from "react";
 import { Select } from "~/components/inputs/select";
 import { useFilterSeverities } from "~/hooks/filter/use-filter-severities";
-import { useFormContext } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 
 export function SeverityField() {
-  const { register } = useFormContext();
   const { severities, isLoading } = useFilterSeverities();
+
+  const { control } = useFormContext();
+  const { field, fieldState, formState } = useController({
+    name: "severity",
+    control,
+    rules: {
+      required: true,
+    },
+  });
 
   if ((!severities || severities.length === 0) && !isLoading) return null;
 
@@ -18,7 +26,7 @@ export function SeverityField() {
         value: result.handle,
       }))}
       loading={isLoading}
-      {...register("severity", { required: true })}
+      {...field}
     />
   );
 }
