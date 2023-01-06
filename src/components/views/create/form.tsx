@@ -8,13 +8,18 @@ import { SeverityField } from "~/components/fields/severity-field";
 import { TypeField } from "~/components/fields/type-field";
 import { DetailsField } from "~/components/fields/details-field";
 import { ImageField } from "~/components/fields/image-field";
+import { FormProvider, useForm } from "react-hook-form";
 
 export default function CreateForm() {
   const [stage] = useStages();
   const resetStages = useStagesReset();
 
+  const methods = useForm({});
+
+  console.log(methods.getValues());
+
   return (
-    <>
+    <FormProvider {...methods}>
       <Show on={stage.current === STAGE.LOCATION}>
         <div className="bg-white p-2">
           <MapCenterInput />
@@ -35,6 +40,6 @@ export default function CreateForm() {
       <Show on={stage.current === STAGE.CONFIRM}>
         <div className="bg-white p-2"></div>
       </Show>
-    </>
+    </FormProvider>
   );
 }
