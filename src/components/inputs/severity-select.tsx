@@ -1,25 +1,24 @@
 import React from "react";
-import useAsync from "~/hooks/use-async";
-import fetchSeverities from "~/lib/fetch-severities";
 import Select from "~/components/inputs/select";
+import { useFilterSeverities } from "~/hooks/filter/use-filter-severities";
 
 export function SeveritySelect() {
-  const { data, isLoading } = useAsync(fetchSeverities, { immediate: true });
+  const { severities, isLoading } = useFilterSeverities();
 
-  if (!isLoading && (!data || data.length === 0)) return null;
+  if ((!severities || severities.length === 0) && !isLoading) return null;
 
   return (
     <Select
       label="Severity"
       name="severity"
       placeholder="Loading severities..."
-      options={data?.map((result) => ({
+      options={severities?.map((result) => ({
         label: result.title,
         value: result.handle,
       }))}
       onChange={console.log}
       loading={isLoading}
-      value={data?.[0].handle}
+      value={severities?.[0]?.handle}
     />
   );
 }
