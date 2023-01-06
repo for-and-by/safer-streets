@@ -51,7 +51,7 @@ export default function Select({
         })}
       </select>
       {loading ? (
-        <i className="icon icon-is-spinning icon-circle-anim z-20 before:text-white" />
+        <i className="icon icon-is-spinning icon-circle-anim z-20 text-gray-700" />
       ) : (
         <i className="icon icon-down icon-sm absolute right-2 top-1/2 -translate-y-1/2 text-gray-700" />
       )}
