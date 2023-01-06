@@ -2,7 +2,7 @@ import React from "react";
 import Select from "~/components/inputs/select";
 import { useFilterTypes } from "~/hooks/filter/use-filter-types";
 
-export function TypeSelect() {
+export function TypeField() {
   const { types, isLoading } = useFilterTypes();
 
   if (!isLoading && (!types || types.length === 0)) return null;
