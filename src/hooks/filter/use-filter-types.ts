@@ -2,7 +2,7 @@ import { useFilterStore } from "~/hooks/filter/use-filter-store";
 import { useEffect } from "react";
 
 export function useFilterTypes() {
-  const { types, fetchTypes } = useFilterStore();
+  const { types, fetchTypes, isLoading } = useFilterStore();
 
   useEffect(() => {
     if (!types || types.length === 0) {
@@ -10,5 +10,5 @@ export function useFilterTypes() {
     }
   }, [types]);
 
-  return types;
+  return { types, isLoading: isLoading.types };
 }
