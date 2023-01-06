@@ -1,6 +1,6 @@
-import create, { StateCreator } from 'zustand';
-import { SearchFeature } from '~/types/search';
-import geocode from '~/lib/geocode';
+import create, { StateCreator } from "zustand";
+import { SearchFeature } from "~/types/search";
+import geocode from "~/lib/geocode";
 
 interface State {
   query: string;
@@ -9,7 +9,7 @@ interface State {
 }
 
 interface Actions {
-  setQuery: (value: State['query']) => void;
+  setQuery: (value: State["query"]) => void;
   fetchResults: () => Promise<void>;
   clearResults: () => void;
   resetSearch: () => void;
@@ -18,31 +18,31 @@ interface Actions {
 interface Store extends Actions, State {}
 
 const initialState: State = {
-	query: '',
-	isLoading: false,
-	results: [],
+  query: "",
+  isLoading: false,
+  results: [],
 };
 
 const store: StateCreator<Store> = (set, get) => ({
-	...initialState,
-	setQuery: (value) => {
-		set({ query: value });
-	},
-	fetchResults: async () => {
-		const { query, clearResults } = get();
-		if (query !== '') {
-			set({ isLoading: true });
-			const results = await geocode(query);
-			set({
-				results,
-				isLoading: false,
-			});
-		} else {
-			clearResults();
-		}
-	},
-	clearResults: () => set({ results: initialState.results }),
-	resetSearch: () => set(initialState),
+  ...initialState,
+  setQuery: (value) => {
+    set({ query: value });
+  },
+  fetchResults: async () => {
+    const { query, clearResults } = get();
+    if (query !== "") {
+      set({ isLoading: true });
+      const results = await geocode(query);
+      set({
+        results,
+        isLoading: false,
+      });
+    } else {
+      clearResults();
+    }
+  },
+  clearResults: () => set({ results: initialState.results }),
+  resetSearch: () => set(initialState),
 });
 
 export const useGeocoderStore = create<Store>(store);
