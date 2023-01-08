@@ -11,14 +11,13 @@ import { DetailsField } from "~/components/fields/details-field";
 import { ImageField } from "~/components/fields/image-field";
 
 import LocationField from "~/components/fields/location-field";
+import SummaryField from "~/components/fields/summary-field";
 
 export default function CreateForm() {
   const [stage] = useStages();
   const resetStages = useStagesReset();
 
   const methods = useForm({});
-
-  console.log(methods.getValues());
 
   return (
     <FormProvider {...methods}>
@@ -40,7 +39,9 @@ export default function CreateForm() {
         </div>
       </Show>
       <Show on={stage.current === STAGE.CONFIRM}>
-        <div className="bg-white p-2"></div>
+        <div className="bg-white p-2">
+          <SummaryField />
+        </div>
       </Show>
     </FormProvider>
   );
