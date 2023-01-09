@@ -4,8 +4,8 @@ import { useController, useFormContext } from "react-hook-form";
 
 export function DetailsField() {
   const { control } = useFormContext();
-  const { field, fieldState, formState } = useController({
-    name: "description",
+  const { field } = useController({
+    name: "details",
     control,
     rules: {
       required: true,

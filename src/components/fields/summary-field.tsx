@@ -24,8 +24,8 @@ export default function SummaryField() {
         ) : null
       )}
       <div className="flex space-x-4 bg-gray-100 p-3">
-        <p className="w-24 capitalize text-gray-400">Description</p>
-        <p>{values.description}</p>
+        <p className="w-24 capitalize text-gray-400">Details</p>
+        <p>{values.details}</p>
       </div>
     </div>
   );
