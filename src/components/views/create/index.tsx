@@ -7,6 +7,7 @@ import CreatePagination from "~/components/views/create/pagination";
 
 import { VIEWS } from "~/hooks/view/use-view-store";
 import useViewIsActive from "~/hooks/view/use-view-is-active";
+import useReportUpload from "~/hooks/reports/use-report-upload";
 import useMapLock from "~/hooks/map/use-map-lock";
 
 import Header from "~/components/regions/header";
@@ -15,7 +16,6 @@ import Footer from "~/components/regions/footer";
 import CancelModal from "~/components/views/create/cancel";
 import ProgressBar from "~/components/elements/progress-bar";
 import Bumper from "~/components/elements/bumper";
-import useReportStatus from "~/hooks/reports/use-report-status";
 import Toast from "~/components/regions/toast";
 
 export default function Create() {
@@ -30,7 +30,7 @@ export default function Create() {
 
   const { resetStage, stage } = useCreateContext();
   const [, { setUnlock }] = useMapLock();
-  const { isUploading } = useReportStatus();
+  const { isUploading } = useReportUpload();
 
   useEffect(() => {
     if (!isCreateShow) {

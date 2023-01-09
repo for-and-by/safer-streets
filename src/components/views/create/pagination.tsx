@@ -5,13 +5,11 @@ import CancelModal from "~/components/views/create/cancel";
 import useReportUpload from "~/hooks/reports/use-report-upload";
 import useViewReset from "~/hooks/view/use-view-reset";
 import { FormValues } from "~/types/form";
-import useReportStatus from "~/hooks/reports/use-report-status";
 
 export default function CreatePagination() {
   const { stage, nextStage, prevStage, stages } = useCreateContext();
   const { trigger, handleSubmit } = useFormContext();
-  const uploadReport = useReportUpload();
-  const { isUploading } = useReportStatus();
+  const { uploadReport, isUploading } = useReportUpload();
   const resetView = useViewReset();
 
   const handleNext = () => {
