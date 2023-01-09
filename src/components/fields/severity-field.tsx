@@ -3,7 +3,7 @@ import { Select } from "~/components/inputs/select";
 import { useFilterSeverities } from "~/hooks/filter/use-filter-severities";
 import { useController, useFormContext } from "react-hook-form";
 
-export function SeverityField() {
+export default function SeverityField() {
   const { severities, isLoading } = useFilterSeverities();
 
   const { control } = useFormContext();

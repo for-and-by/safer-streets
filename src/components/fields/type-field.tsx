@@ -3,7 +3,7 @@ import { Select } from "~/components/inputs/select";
 import { useFilterTypes } from "~/hooks/filter/use-filter-types";
 import { useController, useFormContext } from "react-hook-form";
 
-export function TypeField() {
+export default function TypeField() {
   const { types, isLoading } = useFilterTypes();
 
   const { control } = useFormContext();

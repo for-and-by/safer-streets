@@ -3,13 +3,14 @@ import React, { useEffect } from "react";
 import useStages from "~/hooks/create/use-stages";
 import Show from "~/components/elements/show";
 import { STAGE } from "~/hooks/create/use-stages-store";
-import { SeverityField } from "~/components/fields/severity-field";
-import { TypeField } from "~/components/fields/type-field";
-import { DetailsField } from "~/components/fields/details-field";
-import { ImageField } from "~/components/fields/image-field";
 
+import SeverityField from "~/components/fields/severity-field";
+import TypeField from "~/components/fields/type-field";
+import DetailsField from "~/components/fields/details-field";
+import ImageField from "~/components/fields/image-field";
 import LocationField from "~/components/fields/location-field";
 import SummaryField from "~/components/fields/summary-field";
+
 import CancelModal from "~/components/views/create/cancel";
 import useMapLock from "~/hooks/map/use-map-lock";
 

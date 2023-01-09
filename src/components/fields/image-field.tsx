@@ -6,7 +6,7 @@ interface Props {
   required?: boolean;
 }
 
-export function ImageField({ required }: Props) {
+export default function ImageField({ required }: Props) {
   const { control, resetField } = useFormContext();
   const { field } = useController({
     name: "image",
