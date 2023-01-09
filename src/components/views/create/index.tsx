@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
-import CreateProvider, {
-  useCreateContext,
-} from "~/components/views/create/context";
+import { useCreateContext } from "~/components/views/create/context";
 import CreateForm from "~/components/views/create/form";
 import CreatePagination from "~/components/views/create/pagination";
 
@@ -28,7 +26,7 @@ export default function Create() {
     mode: "onBlur",
   });
 
-  const [stage, { resetStage }] = useCreateContext();
+  const { resetStage, stage } = useCreateContext();
   const [, { setUnlock }] = useMapLock();
 
   useEffect(() => {
@@ -40,41 +38,39 @@ export default function Create() {
   }, [isCreateShow]);
 
   return (
-    <CreateProvider>
-      <FormProvider {...methods}>
-        <Header>
-          <Bumper show={isCreateShow} className="flex flex-col bg-white">
-            <div className="flex flex-row p-2">
-              <CancelModal>
-                <button className="btn btn-light">
-                  <i className="btn-icon icon icon-left" />
-                </button>
-              </CancelModal>
-              <div className="flex flex-col px-3">
-                <h3 className="font-medium">{stage.heading}</h3>
-                <p className="text-sm text-base-400">Step {stage.step} of 4</p>
-              </div>
+    <FormProvider {...methods}>
+      <Header>
+        <Bumper show={isCreateShow} className="flex flex-col bg-white">
+          <div className="flex flex-row p-2">
+            <CancelModal>
+              <button className="btn btn-light">
+                <i className="btn-icon icon icon-left" />
+              </button>
+            </CancelModal>
+            <div className="flex flex-col px-3">
+              <h3 className="font-medium">{stage.heading}</h3>
+              <p className="text-sm text-base-400">Step {stage.step} of 4</p>
             </div>
-            <ProgressBar value={stage.progress} />
-          </Bumper>
-        </Header>
-        <Footer>
-          <Bumper
-            show={isCreateShow}
-            className="divider-gray-200 flex flex-col divide-y bg-white"
-          >
-            <div className="p-3">
-              <p className="text-base">{stage.description}</p>
-            </div>
-            <div className="space-y-2 p-2">
-              <CreateForm />
-            </div>
-            <div className="flex flex-row justify-between p-2">
-              <CreatePagination />
-            </div>
-          </Bumper>
-        </Footer>
-      </FormProvider>
-    </CreateProvider>
+          </div>
+          <ProgressBar value={stage.progress} />
+        </Bumper>
+      </Header>
+      <Footer>
+        <Bumper
+          show={isCreateShow}
+          className="divider-gray-200 flex flex-col divide-y bg-white"
+        >
+          <div className="p-3">
+            <p className="text-base">{stage.description}</p>
+          </div>
+          <div className="space-y-2 p-2">
+            <CreateForm />
+          </div>
+          <div className="flex flex-row justify-between p-2">
+            <CreatePagination />
+          </div>
+        </Bumper>
+      </Footer>
+    </FormProvider>
   );
 }

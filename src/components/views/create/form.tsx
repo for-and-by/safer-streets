@@ -15,7 +15,7 @@ import Show from "~/components/elements/show";
 import CustomField from "~/components/fields/custom-field";
 
 export default function CreateForm() {
-  const [stage] = useCreateContext();
+  const { stage } = useCreateContext();
   const [, { setLock, setUnlock }] = useMapLock();
 
   useEffect(() => {

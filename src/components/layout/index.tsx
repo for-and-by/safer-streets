@@ -13,13 +13,16 @@ import MapLayer from "~/components/layout/map/layer";
 import Home from "~/components/views/home";
 import Search from "~/components/views/search";
 import Create from "~/components/views/create";
+import CreateProvider from "~/components/views/create/context";
 
 export default function Index() {
   return (
     <>
       <Home />
       <Search />
-      <Create />
+      <CreateProvider>
+        <Create />
+      </CreateProvider>
       <div className="layer z-10">
         <MapLayer />
       </div>

@@ -63,69 +63,60 @@ export const stages: { [key in STAGE]: Stage } = {
   },
 };
 
-type ContextValue = [
-  Stage,
-  {
-    nextStage: () => void;
-    prevStage: () => void;
-    jumpToStage: (stage: STAGE) => void;
-    resetStage: () => void;
-    stages: typeof stages;
-  }
-];
+interface ContextValue {
+  stage: Stage;
+  nextStage: () => void;
+  prevStage: () => void;
+  jumpToStage: (stage: STAGE) => void;
+  resetStage: () => void;
+  stages: typeof stages;
+}
 
-const initialValue: ContextValue = [
-  stages[STAGE.LOCATION],
-  {
-    nextStage: () => {},
-    prevStage: () => {},
-    jumpToStage: () => {},
-    resetStage: () => {},
-    stages,
-  },
-];
-
+const initialValue: ContextValue = {
+  stage: stages[STAGE.LOCATION],
+  nextStage: () => {},
+  prevStage: () => {},
+  jumpToStage: () => {},
+  resetStage: () => {},
+  stages,
+};
 export const CreateContext = createContext(initialValue);
 export const useCreateContext = createContextHook({ CreateContext });
 
 type Props = ComponentProps<"div">;
 
 export default function CreateProvider({ children }: Props) {
-  const [_stage] = initialValue;
-  const [stage, setStage] = useState(_stage.current);
+  const { stage: _stage } = initialValue;
+  const [stage, setStage] = useState(_stage);
 
   const nextStage = () => {
-    const next = stages[stage].next;
-    if (next in STAGE) {
-      setStage(next as STAGE);
+    if (stage.next in STAGE) {
+      setStage(stages[stage.next as STAGE]);
     }
   };
 
   const prevStage = () => {
-    const prev = stages[stage].prev;
-    if (prev in STAGE) {
-      setStage(prev as STAGE);
+    if (stage.prev in STAGE) {
+      setStage(stages[stage.prev as STAGE]);
     }
   };
 
   const jumpToStage = (stage: STAGE) => {
-    setStage(stage);
+    setStage(stages[stage]);
   };
 
   const resetStage = () => {
-    setStage(_stage.current);
+    setStage(_stage);
   };
 
-  const value: ContextValue = [
-    stages[stage],
-    {
-      nextStage,
-      prevStage,
-      jumpToStage,
-      resetStage,
-      stages,
-    },
-  ];
+  const value: ContextValue = {
+    stage,
+    nextStage,
+    prevStage,
+    jumpToStage,
+    resetStage,
+    stages,
+  };
 
   return (
     <CreateContext.Provider value={value}>{children}</CreateContext.Provider>
