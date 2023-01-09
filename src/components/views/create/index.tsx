@@ -23,7 +23,7 @@ export default function Create() {
       type: "",
       severity: "",
     },
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const { resetStage, stage } = useCreateContext();
