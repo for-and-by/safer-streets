@@ -15,6 +15,8 @@ import Footer from "~/components/regions/footer";
 import CancelModal from "~/components/views/create/cancel";
 import ProgressBar from "~/components/elements/progress-bar";
 import Bumper from "~/components/elements/bumper";
+import useReportStatus from "~/hooks/reports/use-report-status";
+import Toast from "~/components/regions/toast";
 
 export default function Create() {
   const isCreateShow = useViewIsActive(VIEWS.CREATE);
@@ -28,6 +30,7 @@ export default function Create() {
 
   const { resetStage, stage } = useCreateContext();
   const [, { setUnlock }] = useMapLock();
+  const { isUploading } = useReportStatus();
 
   useEffect(() => {
     if (!isCreateShow) {
@@ -71,6 +74,7 @@ export default function Create() {
           </div>
         </Bumper>
       </Footer>
+      <Toast show={isUploading} content="Uploading report..." />
     </FormProvider>
   );
 }

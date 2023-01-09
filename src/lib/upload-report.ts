@@ -24,7 +24,7 @@ export default async function uploadReport(
     report_id: report.data[0].id,
     details: data.details,
     severity_handle: data.severity as SEVERITIES,
-    data: data.custom,
+    data: data.custom ?? {},
     image_url: imageUrl,
   });
 
