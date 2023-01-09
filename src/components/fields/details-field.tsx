@@ -11,7 +11,7 @@ export default function DetailsField() {
     name: "details",
     control,
     rules: {
-      required: true,
+      required: "A brief description of the report is required",
     },
   });
 

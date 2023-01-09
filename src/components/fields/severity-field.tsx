@@ -9,7 +9,10 @@ export default function SeverityField() {
   const { severities, isLoading } = useFilterSeverities();
 
   const { control } = useFormContext();
-  const { field } = useController({
+  const {
+    field,
+    fieldState: { error },
+  } = useController({
     name: "severity",
     control,
     rules: {
@@ -28,6 +31,7 @@ export default function SeverityField() {
         value: result.handle,
       }))}
       loading={isLoading}
+      error={error}
       {...field}
     />
   );

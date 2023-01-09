@@ -25,11 +25,11 @@ const Select = forwardRef<HTMLSelectElement, Props>(
           ref={ref}
         >
           {loading ? (
-            <option disabled hidden>
+            <option disabled hidden value="">
               {placeholder}
             </option>
           ) : (
-            <option disabled hidden>
+            <option disabled hidden value="">
               Please select...
             </option>
           )}

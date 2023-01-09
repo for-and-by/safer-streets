@@ -9,11 +9,14 @@ export default function TypeField() {
   const { types, isLoading } = useFilterTypes();
 
   const { control } = useFormContext();
-  const { field } = useController({
+  const {
+    field,
+    fieldState: { error },
+  } = useController({
     name: "type",
     control,
     rules: {
-      required: true,
+      required: "A report type is required",
     },
   });
 
@@ -28,6 +31,7 @@ export default function TypeField() {
         value: result.handle,
       }))}
       loading={isLoading}
+      error={error}
       {...field}
     />
   );
