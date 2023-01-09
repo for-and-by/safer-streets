@@ -12,6 +12,7 @@ import LocationField from "~/components/fields/location-field";
 import SummaryField from "~/components/fields/summary-field";
 
 import Show from "~/components/elements/show";
+import CustomField from "~/components/fields/custom-field";
 
 export default function CreateForm() {
   const [stage] = useCreateContext();
@@ -44,6 +45,7 @@ export default function CreateForm() {
       <Show on={stage.current === STAGE.DETAILS}>
         <SeverityField />
         <TypeField />
+        <CustomField />
         <DetailsField />
       </Show>
       <Show on={stage.current === STAGE.IMAGE}>
