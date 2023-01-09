@@ -10,7 +10,7 @@ import Toast from "~/components/regions/toast";
 import { FieldError } from "react-hook-form";
 
 interface Props {
-  onUpload?: (image: string) => void;
+  onUpload?: (image: string, file: File) => void;
   onRemove?: () => void;
 
   error?: FieldError;
@@ -33,7 +33,7 @@ export default function ImageInput({
     if (!file) return;
     const image = await parseFileAsBase64(file);
     setImage(image);
-    if (onUpload) onUpload(image);
+    if (onUpload) onUpload(image, file);
   });
 
   React.useEffect(() => {
@@ -46,7 +46,6 @@ export default function ImageInput({
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (!event?.target?.files?.[0]) return false;
-    console.log(event.target.files[0]);
     setFile(event.target.files[0]);
   };
 

@@ -22,8 +22,6 @@ export default function TypeField() {
 
   if (!isLoading && (!types || types.length === 0)) return null;
 
-  console.log(types);
-
   return (
     <Select
       label="Type"

@@ -24,10 +24,11 @@ export default function CustomField() {
         <Controller
           key={key}
           control={control}
-          name={key}
+          name={`custom.${key}`}
           render={({ field, fieldState: { error } }) => (
             <Text {...field} label={capitaliseString(key)} error={error} />
           )}
+          defaultValue=""
         />
       ))}
     </>

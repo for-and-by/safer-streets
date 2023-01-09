@@ -9,7 +9,9 @@ export default function CreatePagination() {
 
   const handleNext = () => {
     trigger().then((result) => {
-      if (result) nextStage();
+      if (result) {
+        nextStage();
+      }
     });
   };
 
