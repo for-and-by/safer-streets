@@ -1,17 +1,37 @@
-import ImageInput from "~/components/inputs/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useController, useFormContext } from "react-hook-form";
 
-interface Props {
-  required?: boolean;
-}
+import { useFilterTypes } from "~/hooks/filter/use-filter-types";
 
-export default function ImageField({ required }: Props) {
-  const { control, resetField } = useFormContext();
-  const { field } = useController({
+import ImageInput from "~/components/inputs/image";
+
+export default function ImageField() {
+  const { control, resetField, getValues } = useFormContext();
+  const { types } = useFilterTypes();
+
+  const [required, setRequired] = useState(() => {
+    return types.find((type) => type.handle === getValues("type"))
+      ?.image_required;
+  });
+
+  useEffect(() => {
+    setRequired(
+      types.find((type) => type.handle === getValues("type"))?.image_required
+    );
+  }, []);
+
+  const {
+    field,
+    fieldState: { error },
+  } = useController({
     name: "image",
     control,
-    rules: { required: true },
+    rules: {
+      required: {
+        value: !!required,
+        message: "An image is required for this type of report",
+      },
+    },
   });
 
   return (
@@ -22,6 +42,7 @@ export default function ImageField({ required }: Props) {
       value={field.value}
       onUpload={field.onChange}
       onRemove={() => resetField("image")}
+      error={error}
     />
   );
 }
