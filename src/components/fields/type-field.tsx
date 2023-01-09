@@ -1,13 +1,15 @@
 import React from "react";
-import { Select } from "~/components/inputs/select";
-import { useFilterTypes } from "~/hooks/filter/use-filter-types";
 import { useController, useFormContext } from "react-hook-form";
+
+import { useFilterTypes } from "~/hooks/filter/use-filter-types";
+
+import Select from "~/components/inputs/select";
 
 export default function TypeField() {
   const { types, isLoading } = useFilterTypes();
 
   const { control } = useFormContext();
-  const { field, fieldState, formState } = useController({
+  const { field } = useController({
     name: "type",
     control,
     rules: {

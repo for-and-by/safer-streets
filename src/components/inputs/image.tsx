@@ -7,12 +7,13 @@ import useAsync from "~/hooks/use-async";
 import Wrapper from "~/components/inputs/wrapper";
 import WarningModal from "~/components/modals/warning";
 import Toast from "~/components/regions/toast";
+import { FieldError } from "react-hook-form";
 
 interface Props {
   onUpload?: (image: string) => void;
   onRemove?: () => void;
 
-  error?: string | boolean;
+  error?: FieldError;
   value?: string;
   placeholder?: string;
 }
@@ -29,10 +30,8 @@ export default function ImageInput({
   const inputRef = React.useRef<HTMLInputElement | null>(null);
 
   const { isLoading, trigger } = useAsync(async () => {
-    console.log("uploading file :>>", file);
     if (!file) return;
     const image = await parseFileAsBase64(file);
-    console.log("image :>>", image);
     setImage(image);
     if (onUpload) onUpload(image);
   });

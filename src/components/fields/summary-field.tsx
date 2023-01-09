@@ -16,7 +16,7 @@ export default function SummaryField() {
         />
       ) : null}
       {Object.keys(values).map((key) =>
-        !["location", "image", "description"].includes(key) && !!values[key] ? (
+        !["location", "image", "details"].includes(key) && !!values[key] ? (
           <div className="flex space-x-4 bg-gray-100 p-3">
             <p className="w-24 capitalize text-gray-400">{key}</p>
             <p className="capitalize">{values[key]}</p>

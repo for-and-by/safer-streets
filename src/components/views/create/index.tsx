@@ -17,7 +17,9 @@ import useMapLock from "~/hooks/map/use-map-lock";
 
 export default function Create() {
   const isCreateShow = useViewIsActive(VIEWS.CREATE);
-  const methods = useForm({});
+  const methods = useForm({
+    mode: "onBlur",
+  });
 
   const [stage] = useStages();
   const resetStages = useStagesReset();

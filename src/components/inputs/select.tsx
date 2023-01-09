@@ -1,5 +1,7 @@
 import React, { ComponentProps, forwardRef } from "react";
+
 import Wrapper from "~/components/inputs/wrapper";
+import { FieldError } from "react-hook-form";
 
 interface Props extends ComponentProps<"select"> {
   label: string;
@@ -9,10 +11,10 @@ interface Props extends ComponentProps<"select"> {
   }[];
   loading?: boolean;
   placeholder?: string;
-  error?: string | boolean;
+  error?: FieldError;
 }
 
-export const Select = forwardRef<HTMLSelectElement, Props>(
+const Select = forwardRef<HTMLSelectElement, Props>(
   ({ label, options, name, loading, placeholder, error, ...props }, ref) => {
     return (
       <Wrapper label={label} name={name} error={error}>
@@ -23,11 +25,11 @@ export const Select = forwardRef<HTMLSelectElement, Props>(
           ref={ref}
         >
           {loading ? (
-            <option disabled hidden value="">
+            <option disabled hidden>
               {placeholder}
             </option>
           ) : (
-            <option disabled hidden value="">
+            <option disabled hidden>
               Please select...
             </option>
           )}
@@ -50,3 +52,5 @@ export const Select = forwardRef<HTMLSelectElement, Props>(
 );
 
 Select.displayName = "Select";
+
+export default Select;

@@ -4,7 +4,10 @@ import { useController, useFormContext } from "react-hook-form";
 
 export default function DetailsField() {
   const { control } = useFormContext();
-  const { field } = useController({
+  const {
+    field,
+    fieldState: { error },
+  } = useController({
     name: "details",
     control,
     rules: {
@@ -12,5 +15,5 @@ export default function DetailsField() {
     },
   });
 
-  return <Textarea label="Details" {...field} />;
+  return <Textarea label="Details" {...field} error={error} />;
 }

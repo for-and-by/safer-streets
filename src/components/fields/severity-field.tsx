@@ -1,7 +1,9 @@
 import React from "react";
-import { Select } from "~/components/inputs/select";
-import { useFilterSeverities } from "~/hooks/filter/use-filter-severities";
 import { useController, useFormContext } from "react-hook-form";
+
+import { useFilterSeverities } from "~/hooks/filter/use-filter-severities";
+
+import Select from "~/components/inputs/select";
 
 export default function SeverityField() {
   const { severities, isLoading } = useFilterSeverities();
@@ -11,7 +13,7 @@ export default function SeverityField() {
     name: "severity",
     control,
     rules: {
-      required: true,
+      required: "A severity is required",
     },
   });
 

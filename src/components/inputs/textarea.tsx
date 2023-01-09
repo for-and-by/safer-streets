@@ -1,11 +1,12 @@
 import React from "react";
 import clsx from "clsx";
 import Wrapper from "~/components/inputs/wrapper";
+import { FieldError } from "react-hook-form";
 
 interface Props extends React.ComponentPropsWithRef<"textarea"> {
   icon?: string;
   label?: string;
-  error?: string | boolean;
+  error?: FieldError;
 }
 
 // eslint-disable-next-line react/display-name
