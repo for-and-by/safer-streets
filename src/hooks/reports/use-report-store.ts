@@ -20,8 +20,7 @@ interface Actions {
   syncReports: () => Promise<void>;
 }
 
-interface Store extends Actions, State {
-}
+interface Store extends Actions, State {}
 
 const initialState: State = {
   reports: [],
@@ -31,23 +30,21 @@ const initialState: State = {
 };
 
 const store: StateCreator<Store, [["zustand/persist", unknown]]> = (
-    set,
-    get
+  set,
+  get
 ) => ({
   ...initialState,
   uploadReport: async (values: FormValues) => {
-    set({isUploading: true});
-    const {syncReports} = get();
+    set({ isUploading: true });
+    const { syncReports } = get();
     const imageUrl = await uploadFile(values.image);
     await uploadReport(values, imageUrl);
-    set({isUploading: false});
+    set({ isUploading: false });
     await syncReports();
   },
   syncReports: async () => {
-    const {reports: currentReports, lastSynced} = get();
-    set({isSyncing: true});
-
-    console.log("lastSynced :>>", lastSynced)
+    const { reports: currentReports, lastSynced } = get();
+    set({ isSyncing: true });
 
     const freshReports = await fetchReports({
       lastSynced: new Date(lastSynced).toISOString(),
@@ -58,11 +55,11 @@ const store: StateCreator<Store, [["zustand/persist", unknown]]> = (
     });
 
     const updatedAtDates = freshReports.map((report) =>
-        report.updated_at ? new Date(report.updated_at).getTime() : 0
+      report.updated_at ? new Date(report.updated_at).getTime() : 0
     );
 
     const updatedLastSynced = new Date(
-        Math.max(...updatedAtDates, 0)
+      Math.max(...updatedAtDates, 0)
     ).toISOString();
 
     set({
@@ -74,7 +71,7 @@ const store: StateCreator<Store, [["zustand/persist", unknown]]> = (
 });
 
 export const useReportStore = create<Store>()(
-    persist(store, {
-      name: "reports",
-    })
+  persist(store, {
+    name: "reports",
+  })
 );

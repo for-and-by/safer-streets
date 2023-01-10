@@ -6,8 +6,6 @@ export default function SummaryField() {
 
   const values = getValues();
 
-  console.log("values :>>", values);
-
   return (
     <div className="flex max-h-64 flex-grow flex-col divide-y-2 divide-white overflow-scroll">
       {values?.image ? (
