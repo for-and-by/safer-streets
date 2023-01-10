@@ -10,7 +10,6 @@ import uploadReport from "~/lib/upload-report";
 
 interface State {
   reports: Report[];
-  lastSynced: number;
   isSyncing: boolean;
   isUploading: boolean;
 }
@@ -24,7 +23,6 @@ interface Store extends Actions, State {}
 
 const initialState: State = {
   reports: [],
-  lastSynced: Date.now(),
   isSyncing: false,
   isUploading: false,
 };
@@ -43,11 +41,27 @@ const store: StateCreator<Store, [["zustand/persist", unknown]]> = (
     await syncReports();
   },
   syncReports: async () => {
+    const { reports: currentReports } = get();
     set({ isSyncing: true });
-    const reports = await fetchReports();
+
+    const updatedAtDates = currentReports.map((report) =>
+      report.updated_at ? new Date(report.updated_at).getTime() : 0
+    );
+
+    const lastSynced = new Date(Math.max(...updatedAtDates, 0)).toISOString();
+
+    const freshReports = await fetchReports({
+      lastSynced,
+    });
+
+    // const unchangedReports = currentReports.filter(current => !newReports.some(new => new.id === current.id)));
+
+    const unchangedReports = currentReports.filter((current) => {
+      return !freshReports.some((fresh) => fresh.id === current.id);
+    });
+
     set({
-      reports,
-      lastSynced: Date.now(),
+      reports: [...unchangedReports, ...freshReports],
       isSyncing: false,
     });
   },
