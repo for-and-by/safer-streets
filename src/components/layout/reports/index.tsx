@@ -3,21 +3,23 @@ import useReports from "~/hooks/reports/use-reports";
 import useReportSync from "~/hooks/reports/use-report-sync";
 
 import Toast from "~/components/regions/toast";
-import useMapSource from "~/hooks/map/use-map-source";
-import useMapLayer from "~/hooks/map/use-map-layer";
 import MarkerFactory from "~/components/map/markers/factory";
 import ReportMarker from "~/components/map/markers/report";
 import { Report } from "~/types/db";
 import ClusterMarker from "~/components/map/markers/cluster";
 import parseLngLat from "~/lib/parse-lng-lat";
+import useMapSource from "~/hooks/map/use-map-source";
+import useMapLayer from "~/hooks/map/use-map-layer";
+import parseReportsAsGeoJSON from "~/lib/parse-reports-as-geojson";
 
 export default function Reports() {
-  const { geojson } = useReports();
+  const reports = useReports();
+  const { syncReports, isSyncing } = useReportSync();
 
   useMapSource({
     id: "reports",
     type: "geojson",
-    data: JSON.parse(geojson),
+    data: parseReportsAsGeoJSON(reports),
     cluster: true,
   });
 
@@ -25,25 +27,11 @@ export default function Reports() {
     id: "reports",
     type: "circle",
     source: "reports",
-    filter: ["!", ["has", "point_count"]],
     paint: {
       "circle-radius": 0,
       "circle-color": "#FFF",
     },
   });
-
-  useMapLayer({
-    id: "clusters",
-    type: "circle",
-    source: "reports",
-    filter: ["has", "point_count"],
-    paint: {
-      "circle-radius": 0,
-      "circle-color": "#FFF",
-    },
-  });
-
-  const { syncReports, isSyncing } = useReportSync();
 
   useEffect(() => {
     syncReports().finally();

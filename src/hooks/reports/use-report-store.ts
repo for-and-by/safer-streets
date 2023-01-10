@@ -7,11 +7,9 @@ import { FormValues } from "~/types/form";
 import fetchReports from "~/lib/fetch-reports";
 import uploadFile from "~/lib/upload-file";
 import uploadReport from "~/lib/upload-report";
-import parseReportsAsGeoJSON from "~/lib/parse-reports-as-geojson";
 
 interface State {
   reports: Report[];
-  geojson: string;
   lastSynced: string;
   isSyncing: boolean;
   isUploading: boolean;
@@ -20,14 +18,12 @@ interface State {
 interface Actions {
   uploadReport: (values: FormValues) => Promise<void>;
   syncReports: () => Promise<void>;
-  parseReports: () => void;
 }
 
 interface Store extends Actions, State {}
 
 const initialState: State = {
   reports: [],
-  geojson: "",
   lastSynced: new Date(0).toISOString(),
   isSyncing: false,
   isUploading: false,
@@ -47,7 +43,7 @@ const store: StateCreator<Store, [["zustand/persist", unknown]]> = (
     await syncReports();
   },
   syncReports: async () => {
-    const { reports: currentReports, lastSynced, parseReports } = get();
+    const { reports: currentReports, lastSynced } = get();
     set({ isSyncing: true });
 
     const freshReports = await fetchReports({
@@ -67,14 +63,6 @@ const store: StateCreator<Store, [["zustand/persist", unknown]]> = (
       reports: [...unchangedReports, ...freshReports],
       isSyncing: false,
       lastSynced: new Date(updatedLastSynced).toISOString(),
-    });
-
-    parseReports();
-  },
-  parseReports: () => {
-    const { reports } = get();
-    set({
-      geojson: parseReportsAsGeoJSON(reports),
     });
   },
 });

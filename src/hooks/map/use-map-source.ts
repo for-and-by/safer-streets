@@ -1,24 +1,39 @@
-import { SourceSpecification } from "maplibre-gl";
+import { GeoJSONSource, GeoJSONSourceSpecification } from "maplibre-gl";
 
 import useMap from "~/hooks/map/use-map";
 import useMapEvents from "~/hooks/map/use-map-events";
+import { useEffect } from "react";
+import { GeoJSON } from "geojson";
 
 export default function useMapSource({
   id,
+  data,
   ...options
-}: SourceSpecification & { id: string }) {
+}: GeoJSONSourceSpecification & { id: string }) {
   const map = useMap();
 
-  const updateSource = () => {
+  const loadSource = () => {
     if (!map) return;
     const source = map.getSource(id);
 
     if (source) return;
-    map.addSource(id, options);
+    else map.addSource(id, { data, ...options });
   };
 
   useMapEvents(map, {
-    load: updateSource,
-    data: updateSource,
+    styledata: loadSource,
+    moveend: loadSource,
+  });
+
+  useEffect(() => {
+    if (map) {
+      const source = map.getSource(id) as GeoJSONSource;
+      const _data = data as GeoJSON;
+      if (source) source.setData(_data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    console.log(map?.getSource(id));
   });
 }
