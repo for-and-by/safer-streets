@@ -5,9 +5,7 @@ export default function parseReportsAsGeoJSON(reports: Report[]) {
     type: "FeatureCollection",
     features: reports.map((report) => ({
       type: "Feature",
-      properties: {
-        type: report.type_handle,
-      },
+      properties: report,
       geometry: {
         type: "point",
         coordinates: [report.lng, report.lat],

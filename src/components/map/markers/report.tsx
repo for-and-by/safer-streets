@@ -2,12 +2,14 @@ import React from "react";
 import { Report, TYPES } from "~/types/db";
 
 import BaseMarker from "~/components/map/markers/base";
+import { LngLatLike } from "maplibre-gl";
 
 interface Props {
+  coordinates: LngLatLike;
   report: Report;
 }
 
-export default function ReportMarker({ report }: Props) {
+export default function ReportMarker({ report, coordinates }: Props) {
   const icons = {
     [TYPES.BUSHFIRE]: "icon-fire",
     [TYPES.FLOOD]: "icon-flood",
@@ -20,7 +22,7 @@ export default function ReportMarker({ report }: Props) {
   return (
     <>
       <BaseMarker
-        coordinates={report}
+        coordinates={coordinates}
         anchor="bottom-right"
         icon={icons[report.type_handle as keyof typeof icons]}
       />
