@@ -12,7 +12,7 @@ import config from "~/config";
 import createContextHook from "~/hooks/factories/create-context-hook";
 
 interface ContextValue {
-  map?: Map | null;
+  map: Map | null;
   ref: (node: HTMLDivElement | null) => void;
 }
 
@@ -31,10 +31,6 @@ type Props = ComponentProps<"div">;
 export default function MapProvider({ children }: Props) {
   const { map: _map } = initialValue;
   const [map, setMap] = useState(_map);
-
-  //TODO: Replace with zustand state
-  // const reports = useTypedSelector((state) => state.reports.features);
-  // useMapSource("reports", reports);
 
   const ref = useCallback<ContextValue["ref"]>((node) => {
     if (!!node && !map) {
