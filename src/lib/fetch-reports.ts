@@ -10,8 +10,6 @@ export default async function fetchReports(filters?: FetchFilters) {
     .from<Report>("reports")
     .select("*, type:type_handle (expire_by) ");
 
-  console.log(filters);
-
   if (filters?.lastSynced) query.gt("updated_at", filters.lastSynced);
 
   const reports = await query;
