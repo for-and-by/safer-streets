@@ -9,8 +9,11 @@ interface Props {
 
 export default function ClusterMarker({ coordinates, count }: Props) {
   return (
-    <BaseMarker coordinates={coordinates} anchor="bottom-right">
-      {count}
-    </BaseMarker>
+    <BaseMarker
+      coordinates={coordinates}
+      anchor="bottom-right"
+      className="bg-sky-700 text-white"
+      text={count?.toString()}
+    />
   );
 }

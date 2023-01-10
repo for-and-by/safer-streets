@@ -25,12 +25,13 @@ export default function MarkerFactory({ source, render, filter }: Props) {
 
   useMapEvents(map, {
     data: updateMarkers,
+    move: updateMarkers,
     moveend: updateMarkers,
   });
 
   if (!markers || markers.length === 0) return null;
 
-  console.log(markers.map((marker) => marker.geometry));
+  console.log(markers.map((marker) => marker));
 
   return <>{markers.map((marker) => render(marker))}</>;
 }

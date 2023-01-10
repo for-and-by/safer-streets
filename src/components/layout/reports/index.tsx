@@ -68,7 +68,7 @@ export default function Reports() {
         render={({ geometry, properties }) => (
           <ClusterMarker
             coordinates={geometry.coordinates}
-            count={properties.cluster_count}
+            count={properties.point_count}
           />
         )}
       />

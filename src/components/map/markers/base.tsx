@@ -17,6 +17,7 @@ interface Props {
   children?: ReactNode;
   className?: string;
   icon?: string;
+  text?: string;
   onDragEnd?: Listener;
   onDragStart?: Listener;
   draggable?: boolean;
@@ -28,6 +29,7 @@ export default function BaseMarker({
   children,
   className = "",
   icon = "icon-pin-fill",
+  text,
   draggable = false,
   onDragEnd = () => {},
   onDragStart = () => {},
@@ -69,13 +71,15 @@ export default function BaseMarker({
     <>
       <div
         className={clsx(
-          "relative flex h-8 w-8 origin-bottom-right rotate-45 items-center justify-center rounded-full rounded-br-none bg-brand-600",
+          "relative flex h-8 w-8 origin-bottom-right rotate-45 items-center justify-center rounded-full rounded-br-none",
           className
         )}
       >
-        <i
-          className={clsx(icon, "icon icon-sm -rotate-45 before:text-white")}
-        />
+        {text ? (
+          <p className="-rotate-45">{text}</p>
+        ) : (
+          <i className={clsx(icon, "icon icon-sm -rotate-45")} />
+        )}
       </div>
       {children}
     </>,

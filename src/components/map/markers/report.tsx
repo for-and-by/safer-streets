@@ -24,6 +24,7 @@ export default function ReportMarker({ report, coordinates }: Props) {
       <BaseMarker
         coordinates={coordinates}
         anchor="bottom-right"
+        className="bg-emerald-600 text-white"
         icon={icons[report.type_handle as keyof typeof icons]}
       />
     </>
