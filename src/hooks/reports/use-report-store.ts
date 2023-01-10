@@ -54,18 +54,15 @@ const store: StateCreator<Store, [["zustand/persist", unknown]]> = (
       return !freshReports.some((fresh) => fresh.id === current.id);
     });
 
-    const updatedAtDates = freshReports.map((report) =>
-      report.updated_at ? new Date(report.updated_at).getTime() : 0
-    );
-
-    const updatedLastSynced = new Date(
-      Math.max(...updatedAtDates, 0)
-    ).toISOString();
+    const updatedLastSynced = freshReports.reduce((date, { updated_at }) => {
+      if (!updated_at) return date;
+      return Math.max(new Date(updated_at).getTime(), date);
+    }, 0);
 
     set({
       reports: [...unchangedReports, ...freshReports],
       isSyncing: false,
-      lastSynced: updatedLastSynced,
+      lastSynced: new Date(updatedLastSynced).toISOString(),
     });
   },
 });
