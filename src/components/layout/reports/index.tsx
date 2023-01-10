@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import useReports from "~/hooks/reports/use-reports";
 import useReportSync from "~/hooks/reports/use-report-sync";
+
 import Toast from "~/components/regions/toast";
-import ReportMarker from "~/components/map/markers/report";
+import Source from "~/components/map/source";
+import Layer from "~/components/map/layer";
 
 export default function Reports() {
-  const reports = useReports();
+  const { geojson } = useReports();
   const { syncReports, isSyncing } = useReportSync();
 
   useEffect(() => {
@@ -15,9 +17,21 @@ export default function Reports() {
   return (
     <>
       <Toast content={"Syncing Reports..."} show={isSyncing} />
-      {reports.map((report) => (
-        <ReportMarker key={report.id} report={report} />
-      ))}
+      <Source id="reports" type="geojson" data={JSON.parse(geojson)} cluster />
+      <Layer
+        id="clusters"
+        type="circle"
+        source="reports"
+        paint={{
+          "circle-color": "#11b4da",
+          "circle-radius": 4,
+          "circle-stroke-width": 1,
+          "circle-stroke-color": "#fff",
+        }}
+      />
+      {/*{reports.map((report) => (*/}
+      {/*  <ReportMarker key={report.id} report={report} />*/}
+      {/*))}*/}
     </>
   );
 }
