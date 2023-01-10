@@ -8,8 +8,8 @@ import useMapLayer from "~/hooks/map/use-map-layer";
 import MarkerFactory from "~/components/map/markers/factory";
 import ReportMarker from "~/components/map/markers/report";
 import { Report } from "~/types/db";
-import { LngLatLike } from "maplibre-gl";
 import ClusterMarker from "~/components/map/markers/cluster";
+import parseLngLat from "~/lib/parse-lng-lat";
 
 export default function Reports() {
   const { geojson } = useReports();
@@ -55,22 +55,26 @@ export default function Reports() {
       <MarkerFactory
         source="reports"
         filter={(marker) => !marker.properties.cluster}
-        render={({ geometry, properties }) => (
-          <ReportMarker
-            coordinates={geometry.coordinates as LngLatLike}
-            report={properties as Report}
-          />
-        )}
+        render={({ geometry, properties }) =>
+          geometry.type === "Point" ? (
+            <ReportMarker
+              coordinates={parseLngLat(geometry.coordinates)}
+              report={properties as Report}
+            />
+          ) : null
+        }
       />
       <MarkerFactory
         source="reports"
         filter={(marker) => marker.properties.cluster}
-        render={({ geometry, properties }) => (
-          <ClusterMarker
-            coordinates={geometry.coordinates}
-            count={properties.point_count}
-          />
-        )}
+        render={({ geometry, properties }) =>
+          geometry.type === "Point" && (
+            <ClusterMarker
+              coordinates={parseLngLat(geometry.coordinates)}
+              count={properties.point_count}
+            />
+          )
+        }
       />
     </>
   );

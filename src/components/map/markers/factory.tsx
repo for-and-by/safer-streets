@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { MapGeoJSONFeature } from "maplibre-gl";
 
 import useMapEvents from "~/hooks/map/use-map-events";
@@ -6,7 +6,7 @@ import useMap from "~/hooks/map/use-map";
 
 interface Props {
   source: string;
-  render: (feature: MapGeoJSONFeature) => JSX.Element;
+  render: (feature: MapGeoJSONFeature) => ReactNode;
   filter: (feature: MapGeoJSONFeature) => boolean;
 }
 
