@@ -30,7 +30,7 @@ export default function Map(props: Props) {
   });
 
   useEffect(() => {
-    map?.flyTo({ zoom, center, speed: 1 });
+    map?.easeTo({ zoom, center });
   }, [zoom, center]);
 
   return (
