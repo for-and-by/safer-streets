@@ -1,12 +1,14 @@
 import React, { useEffect } from "react";
+
+import parseReportsAsGeoJSON from "~/lib/parse-reports-as-geojson";
+
 import useReports from "~/hooks/reports/use-reports";
 import useReportSync from "~/hooks/reports/use-report-sync";
-
-import Toast from "~/components/regions/toast";
 import useMapSource from "~/hooks/map/use-map-source";
 import useMapLayer from "~/hooks/map/use-map-layer";
-import parseReportsAsGeoJSON from "~/lib/parse-reports-as-geojson";
 import useMapImages from "~/hooks/map/use-map-images";
+
+import Toast from "~/components/regions/toast";
 
 export default function Reports() {
   const reports = useReports();
@@ -98,30 +100,6 @@ export default function Reports() {
   return (
     <>
       <Toast content={"Syncing Reports..."} show={isSyncing} />
-      {/*<MarkerFactory*/}
-      {/*  source="reports"*/}
-      {/*  filter={(marker) => !marker.properties.cluster}*/}
-      {/*  render={({ geometry, properties }) =>*/}
-      {/*    geometry.type === "Point" ? (*/}
-      {/*      <ReportMarker*/}
-      {/*        coordinates={parseLngLat(geometry.coordinates)}*/}
-      {/*        report={properties as Report}*/}
-      {/*      />*/}
-      {/*    ) : null*/}
-      {/*  }*/}
-      {/*/>*/}
-      {/*<MarkerFactory*/}
-      {/*  source="reports"*/}
-      {/*  filter={(marker) => marker.properties.cluster}*/}
-      {/*  render={({ geometry, properties }) =>*/}
-      {/*    geometry.type === "Point" && (*/}
-      {/*      <ClusterMarker*/}
-      {/*        coordinates={parseLngLat(geometry.coordinates)}*/}
-      {/*        count={properties.point_count}*/}
-      {/*      />*/}
-      {/*    )*/}
-      {/*  }*/}
-      {/*/>*/}
     </>
   );
 }
