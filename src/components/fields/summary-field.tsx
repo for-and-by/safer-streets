@@ -12,7 +12,7 @@ export default function SummaryField() {
         <img
           className="h-32 w-full object-cover"
           alt="Preview thumbnail"
-          src={values.image.data}
+          src={values.image}
         />
       ) : null}
       {Object.keys(values).map((key) =>
