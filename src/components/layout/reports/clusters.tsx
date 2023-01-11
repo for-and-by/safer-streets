@@ -1,4 +1,5 @@
 import useMapLayer from "~/hooks/map/use-map-layer";
+import colors from "~/lib/colors";
 
 export default function ReportClustersLayer() {
   useMapLayer({
@@ -7,7 +8,7 @@ export default function ReportClustersLayer() {
     source: "reports",
     filter: ["has", "point_count"],
     paint: {
-      "circle-color": "red",
+      "circle-color": colors.brand["800"],
       "circle-radius": 20,
     },
   });
@@ -19,8 +20,11 @@ export default function ReportClustersLayer() {
     filter: ["has", "point_count"],
     layout: {
       "text-field": "{point_count_abbreviated}",
-      "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+      "text-font": ["Inter Bold", "Arial Unicode MS Bold"],
       "text-size": 12,
+    },
+    paint: {
+      "text-color": colors.gray["100"],
     },
   });
 
