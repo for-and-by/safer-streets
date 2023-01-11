@@ -55,7 +55,7 @@ export default function Reports() {
 
   return (
     <>
-      <ReportClustersLayer />
+      <ReportClustersLayer source="reports" />
       <ReportIconsLayer />
       <Toast content={"Syncing Reports..."} show={isSyncing} />
     </>
