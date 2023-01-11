@@ -5,10 +5,11 @@ import parseReportsAsGeoJSON from "~/lib/parse-reports-as-geojson";
 import useReports from "~/hooks/reports/use-reports";
 import useReportSync from "~/hooks/reports/use-report-sync";
 import useMapSource from "~/hooks/map/use-map-source";
-import useMapLayer from "~/hooks/map/use-map-layer";
 import useMapImages from "~/hooks/map/use-map-images";
 
 import Toast from "~/components/regions/toast";
+import ReportClustersLayer from "~/components/layout/reports/clusters";
+import ReportIconsLayer from "~/components/layout/reports/icons";
 
 export default function Reports() {
   const reports = useReports();
@@ -48,57 +49,14 @@ export default function Reports() {
     cluster: true,
   });
 
-  useMapLayer({
-    id: "clusters-bg",
-    type: "circle",
-    source: "reports",
-    filter: ["has", "point_count"],
-    paint: {
-      "circle-color": "red",
-      "circle-radius": 20,
-    },
-  });
-
-  useMapLayer({
-    id: "clusters-icon",
-    type: "symbol",
-    source: "reports",
-    filter: ["has", "point_count"],
-    layout: {
-      "text-field": "{point_count_abbreviated}",
-      "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-      "text-size": 12,
-    },
-  });
-
-  useMapLayer({
-    id: "reports-bg",
-    type: "circle",
-    source: "reports",
-    filter: ["!", ["has", "point_count"]],
-    paint: {
-      "circle-color": "black",
-      "circle-radius": 20,
-    },
-  });
-
-  useMapLayer({
-    id: "reports-icon",
-    type: "symbol",
-    source: "reports",
-    filter: ["!", ["has", "point_count"]],
-    layout: {
-      "icon-image": "{type_handle}",
-      "icon-size": 0.2,
-    },
-  });
-
   useEffect(() => {
     syncReports().finally();
   }, []);
 
   return (
     <>
+      <ReportClustersLayer />
+      <ReportIconsLayer />
       <Toast content={"Syncing Reports..."} show={isSyncing} />
     </>
   );
