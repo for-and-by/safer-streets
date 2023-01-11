@@ -32,8 +32,4 @@ export default function useMapSource({
       if (source) source.setData(_data);
     }
   }, [data]);
-
-  useEffect(() => {
-    console.log(map?.getSource(id));
-  });
 }
