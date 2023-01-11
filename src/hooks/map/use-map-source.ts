@@ -22,7 +22,6 @@ export default function useMapSource({
 
   useMapEvents(map, {
     styledata: loadSource,
-    moveend: loadSource,
   });
 
   useEffect(() => {
