@@ -9,7 +9,7 @@ export default function useMapImages(images: { id: string; url: string }[]) {
     images.map((data) => {
       map.loadImage(data.url, (error, image) => {
         if (error) throw error;
-        if (image) map.addImage(data.id, image);
+        if (image && !map.hasImage(data.id)) map.addImage(data.id, image);
       });
     });
   };
