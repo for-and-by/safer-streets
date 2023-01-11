@@ -4,9 +4,12 @@ import clsx from "clsx";
 
 import useMapCenter from "~/hooks/map/use-map-center";
 import BaseMarker from "~/components/map/markers/base";
+import useViewIsActive from "~/hooks/view/use-view-is-active";
+import { VIEWS } from "~/hooks/view/use-view-store";
 
 export default function CenterMarker() {
   const [center, setCenter] = useMapCenter();
+  const isCreateActive = useViewIsActive(VIEWS.CREATE);
 
   const [dragging, setDragging] = useState(false);
 
@@ -19,7 +22,7 @@ export default function CenterMarker() {
     setDragging(false);
   };
 
-  if (!center) return null;
+  if (!center || !isCreateActive) return null;
 
   return (
     <>
@@ -33,7 +36,7 @@ export default function CenterMarker() {
         )}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
-      ></BaseMarker>
+      />
     </>
   );
 }
