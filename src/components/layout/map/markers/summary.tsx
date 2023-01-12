@@ -29,11 +29,13 @@ export default function SummaryMarker() {
       <BaseMarker coordinates={data.report} anchor="bottom" offset={[0, -4]}>
         <div className="relative flex flex-col bg-white before:absolute before:bottom-0 before:left-1/2 before:h-3 before:w-3 before:-translate-x-1/2 before:translate-y-1 before:rotate-45 before:bg-white">
           <div className="h-16 w-48 overflow-hidden rounded-t bg-gray-100">
-            <img
-              src={data.image_url}
-              alt={`Report ${data.report.id} Thumbnail`}
-              className="object-fit h-full w-full"
-            />
+            {data.image_url ? (
+              <img
+                src={data?.image_url?.replace("/users/users", "/users")}
+                alt={`Report ${data.report.id} Thumbnail`}
+                className="h-full w-full object-cover"
+              />
+            ) : null}
           </div>
           <div className="flex flex-col p-2">
             <p className="text-bold">{data.report.type.title}</p>
