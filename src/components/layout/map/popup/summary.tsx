@@ -9,7 +9,7 @@ import BasePopup from "~/components/layout/map/popup/base";
 import ReportDrawer from "~/components/layout/reports/drawer";
 
 export default function SummaryMarker() {
-  const [activeReportId] = useActiveReport();
+  const [activeReportId, setActiveReportId] = useActiveReport();
 
   const { isLoading, data, trigger } = useAsync(async () =>
     activeReportId ? await fetchReportSummary(activeReportId) : null
@@ -26,7 +26,12 @@ export default function SummaryMarker() {
   return (
     <>
       <Toast content="Fetching summary..." show={isLoading} />
-      <BasePopup coordinates={data} anchor="bottom" offset={[0, -4]}>
+      <BasePopup
+        coordinates={data}
+        anchor="bottom"
+        offset={[0, -4]}
+        onClose={() => setActiveReportId(undefined)}
+      >
         <div className="relative flex flex-col bg-white before:absolute before:bottom-0 before:left-1/2 before:h-3 before:w-3 before:-translate-x-1/2 before:translate-y-1 before:rotate-45 before:bg-white">
           <div className="h-16 w-48 overflow-hidden rounded-t bg-gray-100">
             {data?.content?.image_url ? (

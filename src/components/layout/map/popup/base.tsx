@@ -28,7 +28,9 @@ export default function BasePopup({
 
   useEffect(() => {
     if (!!map && !!popup) {
-      popup.setLngLat(coordinates).setDOMContent(popupRef.current).addTo(map);
+      popup.setLngLat(coordinates).setDOMContent(popupRef.current);
+      if (onClose) popup.on("close", onClose);
+      popup.addTo(map);
     }
   }, [popup, map, coordinates]);
 
