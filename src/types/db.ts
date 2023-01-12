@@ -89,3 +89,7 @@ export interface ReportFull extends Report {
   };
   type: Type;
 }
+
+export interface ReportResult extends Report {
+  content?: Partial<ReportContent>;
+}

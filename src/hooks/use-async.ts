@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 interface Options {
   deps?: any[];
   immediate?: boolean;
+  onComplete?: () => void;
 }
 
 const defaultOptions: Options = {
@@ -13,7 +14,7 @@ export default function useAsync<Data, Error>(
   callback: () => Promise<Data>,
   options: Options = defaultOptions
 ) {
-  const { immediate } = options;
+  const { immediate, onComplete } = options;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [data, setData] = useState<Data | undefined>(undefined);
   const [error, setError] = useState<Error | undefined>(undefined);
@@ -24,7 +25,10 @@ export default function useAsync<Data, Error>(
     setIsLoading(true);
     callbackRef
       .current()
-      .then((data) => setData(data))
+      .then((data) => {
+        if (onComplete) onComplete();
+        setData(data);
+      })
       .catch((error) => setError(error))
       .finally(() => setIsLoading(false));
   }, []);

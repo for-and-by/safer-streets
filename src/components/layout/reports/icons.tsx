@@ -4,6 +4,9 @@ import useMapEvents from "~/hooks/map/use-map-events";
 import useMap from "~/hooks/map/use-map";
 import useMapCenter from "~/hooks/map/use-map-center";
 import useActiveReport from "~/hooks/reports/use-active-report";
+import { FilterSpecification } from "maplibre-gl";
+
+const FILTERS = ["!", ["has", "point_count"]] as FilterSpecification;
 
 export default function ReportIconsLayer() {
   const map = useMap();
@@ -15,7 +18,7 @@ export default function ReportIconsLayer() {
     id: "reports-bg",
     type: "circle",
     source: "reports",
-    filter: ["!", ["has", "point_count"]],
+    filter: FILTERS,
     paint: {
       "circle-color": colors?.brand[600],
       "circle-radius": 20,
@@ -26,7 +29,7 @@ export default function ReportIconsLayer() {
     id: "reports-icon",
     type: "symbol",
     source: "reports",
-    filter: ["!", ["has", "point_count"]],
+    filter: FILTERS,
     layout: {
       "icon-image": "{type_handle}",
       "icon-size": 0.2,

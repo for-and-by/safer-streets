@@ -1,14 +1,14 @@
-import { Report } from "~/types/db";
+import { ReportResult } from "~/types/db";
 import { FeatureCollection } from "geojson";
 
 export default function parseReportsAsGeoJSON(
-  reports: Report[]
+  reports: ReportResult[]
 ): FeatureCollection {
   return {
     type: "FeatureCollection",
     features: reports.map((report) => ({
       type: "Feature",
-      properties: report,
+      properties: { ...report, ...report.content },
       geometry: {
         type: "Point",
         coordinates: [report.lng, report.lat],

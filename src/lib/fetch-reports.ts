@@ -8,7 +8,9 @@ interface FetchFilters {
 export default async function fetchReports(filters?: FetchFilters) {
   const query = supabase
     .from<Report>("reports")
-    .select("*, type:type_handle (expire_by) ");
+    .select(
+      "*, type:type_handle (expire_by), content:content_id (is_deleted) "
+    );
 
   if (filters?.lastSynced) query.gt("updated_at", filters.lastSynced);
 

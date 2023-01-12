@@ -4,7 +4,7 @@ import useActiveReport from "~/hooks/reports/use-active-report";
 import useAsync from "~/hooks/use-async";
 import fetchReportContent from "~/lib/fetch-report-content";
 import clsx from "clsx";
-import WarningModal from "~/components/modals/warning";
+import DeleteReportModal from "~/components/layout/reports/delete";
 
 interface Props {
   children?: ReactNode;
@@ -18,9 +18,10 @@ export default function ReportDrawer({ children, className }: Props) {
     {}
   );
 
-  const { data, trigger } = useAsync(async () =>
-    activeReportId ? await fetchReportContent(activeReportId) : null
-  );
+  const { trigger, data } = useAsync(async () => {
+    if (activeReportId) return await fetchReportContent(activeReportId);
+    else return null;
+  });
 
   useEffect(() => {
     if (activeReportId) {
@@ -101,13 +102,9 @@ export default function ReportDrawer({ children, className }: Props) {
               <button className="btn btn-primary">
                 <p className="btn-text">Edit Report</p>
               </button>
-              <WarningModal
-                heading="Delete Report"
-                body="Are you sure you want to delete this report? You won't be able to recover it without "
-              ></WarningModal>
-              <button className="btn btn-light">
+              <DeleteReportModal>
                 <p className="btn-text">Delete</p>
-              </button>
+              </DeleteReportModal>
             </div>
           </Modal.Panel>
         </Modal.Body>

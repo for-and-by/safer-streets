@@ -48,7 +48,10 @@ export default function Reports() {
     type: "geojson",
     data: parseReportsAsGeoJSON(reports),
     cluster: true,
+    filter: ["!", ["get", "is_deleted"]],
   });
+
+  console.log(parseReportsAsGeoJSON(reports));
 
   useEffect(() => {
     syncReports().finally();
@@ -56,10 +59,10 @@ export default function Reports() {
 
   return (
     <>
+      <Toast content={"Syncing Reports..."} show={isSyncing} />
       <SummaryMarker />
       <ReportClustersLayer source="reports" />
       <ReportIconsLayer />
-      <Toast content={"Syncing Reports..."} show={isSyncing} />
     </>
   );
 }
