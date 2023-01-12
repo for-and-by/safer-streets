@@ -42,6 +42,9 @@ export default function MapProvider({ children }: Props) {
           zoom: config.map.zoom.default,
           minZoom: config.map.zoom.min,
           maxZoom: config.map.zoom.max,
+          dragRotate: false,
+          touchPitch: false,
+          touchZoomRotate: false,
         })
       );
     }
