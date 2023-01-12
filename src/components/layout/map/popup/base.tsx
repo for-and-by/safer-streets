@@ -1,29 +1,22 @@
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Listener, LngLatLike, Popup, PositionAnchor } from "maplibre-gl";
+import { LngLatLike, Popup, PopupOptions } from "maplibre-gl";
 
 import useMap from "~/hooks/map/use-map";
 
-interface Props {
+interface Props extends PopupOptions {
   coordinates: LngLatLike;
   children?: ReactNode;
-  className?: string;
-  icon?: string;
-  text?: string;
-  onDragEnd?: Listener;
-  onDragStart?: Listener;
-  draggable?: boolean;
-  anchor?: PositionAnchor;
 }
 
-export default function BasePopup({ coordinates, children }: Props) {
+export default function BasePopup({ coordinates, children, ...props }: Props) {
   const popupRef = useRef(document.createElement("div"));
   const [popup, setPopup] = useState<Popup | null>(null);
   const map = useMap();
 
   useEffect(() => {
     if (!popup) {
-      setPopup(new Popup());
+      setPopup(new Popup(props));
     }
   }, [popup]);
 
@@ -41,5 +34,5 @@ export default function BasePopup({ coordinates, children }: Props) {
 
   if (!popup) return null;
 
-  return createPortal(<>{children}</>, popupRef.current);
+  return createPortal(children, popupRef.current);
 }

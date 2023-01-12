@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Listener } from "maplibre-gl";
 import clsx from "clsx";
 
 import useMapCenter from "~/hooks/map/use-map-center";
@@ -8,35 +7,34 @@ import useViewIsActive from "~/hooks/view/use-view-is-active";
 import { VIEWS } from "~/hooks/view/use-view-store";
 
 export default function CenterMarker() {
-  const [center, setCenter] = useMapCenter();
-  const isCreateActive = useViewIsActive(VIEWS.CREATE);
-
   const [dragging, setDragging] = useState(false);
 
-  const handleDragStart: Listener = () => {
-    setDragging(true);
-  };
-
-  const handleDragEnd: Listener = (event) => {
-    setCenter(event.target.getLngLat());
-    setDragging(false);
-  };
+  const [center, setCenter] = useMapCenter();
+  const isCreateActive = useViewIsActive(VIEWS.CREATE);
 
   if (!center || !isCreateActive) return null;
 
   return (
-    <>
-      <BaseMarker
-        coordinates={center}
-        anchor="bottom-right"
-        draggable
+    <BaseMarker
+      coordinates={center}
+      anchor="bottom-right"
+      onDragStart={() => {
+        setDragging(true);
+      }}
+      onDragEnd={(event) => {
+        setCenter(event.target.getLngLat());
+        setDragging(false);
+      }}
+      draggable
+    >
+      <div
         className={clsx(
-          "bg-emerald-600 text-white transition-all",
+          "relative flex h-8 w-8 origin-bottom-right rotate-45 items-center justify-center rounded-full rounded-br-none bg-emerald-600 text-white transition-all",
           dragging ? "scale-125" : "scale-110"
         )}
-        onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
-      />
-    </>
+      >
+        <i className="icon icon-sm icon-pin-fill -rotate-45" />
+      </div>
+    </BaseMarker>
   );
 }
