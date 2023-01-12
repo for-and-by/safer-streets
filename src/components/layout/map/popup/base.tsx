@@ -24,13 +24,7 @@ export default function BasePopup({ coordinates, children, ...props }: Props) {
     if (!!map && !!popup) {
       popup.setLngLat(coordinates).setDOMContent(popupRef.current).addTo(map);
     }
-  }, [popup, map]);
-
-  useEffect(() => {
-    if (popup) {
-      popup.setLngLat(coordinates);
-    }
-  }, [popup, coordinates]);
+  }, [popup, map, coordinates]);
 
   if (!popup) return null;
 

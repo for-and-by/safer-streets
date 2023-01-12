@@ -3,10 +3,9 @@ import React, { useEffect } from "react";
 import fetchReportSummary from "~/lib/fetch-report-summary";
 
 import useAsync from "~/hooks/use-async";
-
-import BaseMarker from "~/components/layout/map/markers/base";
 import Toast from "~/components/regions/toast";
 import useActiveReport from "~/hooks/reports/use-active-report";
+import BasePopup from "~/components/layout/map/popup/base";
 
 export default function SummaryMarker() {
   const [activeReportId] = useActiveReport();
@@ -26,7 +25,7 @@ export default function SummaryMarker() {
   return (
     <>
       <Toast content="Fetching summary..." show={isLoading} />
-      <BaseMarker coordinates={data.report} anchor="bottom" offset={[0, -4]}>
+      <BasePopup coordinates={data.report} anchor="bottom" offset={[0, -4]}>
         <div className="relative flex flex-col bg-white before:absolute before:bottom-0 before:left-1/2 before:h-3 before:w-3 before:-translate-x-1/2 before:translate-y-1 before:rotate-45 before:bg-white">
           <div className="h-16 w-48 overflow-hidden rounded-t bg-gray-100">
             {data.image_url ? (
@@ -45,7 +44,7 @@ export default function SummaryMarker() {
             </button>
           </div>
         </div>
-      </BaseMarker>
+      </BasePopup>
     </>
   );
 }
