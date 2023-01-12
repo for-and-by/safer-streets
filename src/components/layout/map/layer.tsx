@@ -1,8 +1,8 @@
-import Map from "~/components/map/map";
+import Map from "~/components/layout/map/index";
 import Reports from "~/components/layout/reports";
 import MapProvider from "~/components/layout/map/context";
 import React from "react";
-import CenterMarker from "~/components/map/markers/center";
+import CenterMarker from "~/components/layout/map/markers/center";
 
 export default function MapLayer() {
   return (

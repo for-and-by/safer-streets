@@ -10,7 +10,7 @@ import useMapImages from "~/hooks/map/use-map-images";
 import Toast from "~/components/regions/toast";
 import ReportClustersLayer from "~/components/layout/reports/clusters";
 import ReportIconsLayer from "~/components/layout/reports/icons";
-import BasePopup from "~/components/map/popup/base";
+import BasePopup from "~/components/layout/map/popup/base";
 import useMapCenter from "~/hooks/map/use-map-center";
 
 export default function Reports() {
