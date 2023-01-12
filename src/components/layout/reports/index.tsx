@@ -10,8 +10,7 @@ import useMapImages from "~/hooks/map/use-map-images";
 import Toast from "~/components/regions/toast";
 import ReportClustersLayer from "~/components/layout/reports/clusters";
 import ReportIconsLayer from "~/components/layout/reports/icons";
-import BasePopup from "~/components/layout/map/popup/base";
-import useMapCenter from "~/hooks/map/use-map-center";
+import SummaryMarker from "~/components/layout/map/markers/summary";
 
 export default function Reports() {
   const reports = useReports();
@@ -55,11 +54,9 @@ export default function Reports() {
     syncReports().finally();
   }, []);
 
-  const [center] = useMapCenter();
-
   return (
     <>
-      <BasePopup coordinates={center}>Test</BasePopup>
+      <SummaryMarker />
       <ReportClustersLayer source="reports" />
       <ReportIconsLayer />
       <Toast content={"Syncing Reports..."} show={isSyncing} />

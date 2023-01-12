@@ -70,3 +70,14 @@ export interface ReportVotes {
   upvotes: number;
   downvotes: number;
 }
+
+export interface ReportSummary {
+  image_url: ReportContent["image_url"];
+  severity: { title: Severity["title"] };
+  report: {
+    id: Report["id"];
+    lng: Report["lng"];
+    lat: Report["lat"];
+    type: { title: Type["handle"] };
+  };
+}

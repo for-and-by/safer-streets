@@ -3,10 +3,13 @@ import colors from "~/lib/colors";
 import useMapEvents from "~/hooks/map/use-map-events";
 import useMap from "~/hooks/map/use-map";
 import useMapCenter from "~/hooks/map/use-map-center";
+import useActiveReport from "~/hooks/reports/use-active-report";
 
 export default function ReportIconsLayer() {
   const map = useMap();
   const [, setCenter] = useMapCenter();
+
+  const [, setActiveReportId] = useActiveReport();
 
   useMapLayer({
     id: "reports-bg",
@@ -32,7 +35,16 @@ export default function ReportIconsLayer() {
 
   useMapEvents(map, "reports-bg", {
     click: (event) => {
+      if (!map) return;
       setCenter(event.lngLat);
+
+      const [feature] = map.queryRenderedFeatures(event.point, {
+        layers: ["reports-bg"],
+      });
+
+      if (feature?.properties?.id) {
+        setActiveReportId(feature.properties.id);
+      }
     },
   });
 

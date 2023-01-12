@@ -45,11 +45,11 @@ export default function ReportClustersLayer({ source }: Props) {
     click: (event) => {
       if (!map) return;
 
-      const features = map.queryRenderedFeatures(event.point, {
+      const [feature] = map.queryRenderedFeatures(event.point, {
         layers: ["clusters-bg"],
       });
 
-      const clusterId = features[0].properties.cluster_id;
+      const clusterId = feature?.properties?.cluster_id;
 
       const geojsonSource = map.getSource(source) as GeoJSONSource;
       geojsonSource.getClusterExpansionZoom(clusterId, (error, zoom) => {
