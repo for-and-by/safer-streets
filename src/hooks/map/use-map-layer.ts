@@ -15,5 +15,6 @@ export default function useMapLayer(options: LayerSpecification) {
   useMapEvents(map, {
     load: updateLayer,
     data: updateLayer,
+    sourcedata: updateLayer,
   });
 }
