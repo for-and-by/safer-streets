@@ -46,7 +46,7 @@ export interface Report {
   lng: number;
   lat: number;
   type_handle: TYPES;
-  is_deleted?: boolean;
+  content_id?: number;
   created_at?: string;
   updated_at?: string;
   verified_at?: string;
@@ -61,6 +61,7 @@ export interface ReportContent {
   };
   image_url?: string;
   severity_handle: SEVERITIES;
+  is_deleted?: boolean;
   created_at?: string;
 }
 
@@ -72,19 +73,19 @@ export interface ReportVotes {
 }
 
 export interface ReportSummary {
-  image_url: ReportContent["image_url"];
-  severity: { title: Severity["title"] };
-  report: {
-    id: Report["id"];
-    lng: Report["lng"];
-    lat: Report["lat"];
-    type: { title: Type["handle"] };
+  id: Report["id"];
+  lng: Report["lng"];
+  lat: Report["lat"];
+  type: { title: Type["handle"] };
+  content: {
+    image_url: ReportContent["image_url"];
+    severity: { title: Severity["title"] };
   };
 }
 
-export interface ReportFull extends ReportContent {
-  severity: Severity;
-  report: Report & {
-    type: Type;
+export interface ReportFull extends Report {
+  content: ReportContent & {
+    severity: Severity;
   };
+  type: Type;
 }

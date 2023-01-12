@@ -4,6 +4,7 @@ import useActiveReport from "~/hooks/reports/use-active-report";
 import useAsync from "~/hooks/use-async";
 import fetchReportContent from "~/lib/fetch-report-content";
 import clsx from "clsx";
+import WarningModal from "~/components/modals/warning";
 
 interface Props {
   children?: ReactNode;
@@ -30,20 +31,18 @@ export default function ReportDrawer({ children, className }: Props) {
   useEffect(() => {
     if (data) {
       setContent({
-        Severity: data.severity.title,
-        Details: data.details,
-        ...data.data,
-        "Created On": data.report.created_at
-          ? new Date(data.report.created_at).toLocaleDateString()
+        Severity: data.content.severity.title,
+        Details: data.content.details,
+        ...data.content.data,
+        "Created On": data.created_at
+          ? new Date(data.created_at).toLocaleDateString()
           : undefined,
-        "Last Updated": data.report.updated_at
-          ? new Date(data.report.updated_at).toLocaleDateString()
+        "Last Updated": data.updated_at
+          ? new Date(data.updated_at).toLocaleDateString()
           : undefined,
       });
     }
   }, [data]);
-
-  console.log(data);
 
   if (!data) return null;
 
@@ -55,12 +54,12 @@ export default function ReportDrawer({ children, className }: Props) {
           <Modal.Tint />
           <Modal.Panel className="h-[50vh] divide-y divide-gray-200 overflow-y-scroll">
             <div className="sticky top-0 z-50 flex items-center justify-between bg-white p-2">
-              <p className="ml-2 font-medium">{data.report.type.title}</p>
+              <p className="ml-2 font-medium">{data.type.title}</p>
               <Modal.Close className="btn btn-light">
                 <i className="icon icon-close" />
               </Modal.Close>
             </div>
-            {data.image_url ? (
+            {data.content.image_url ? (
               <div
                 className={clsx(
                   "relative overflow-hidden transition-all",
@@ -79,8 +78,11 @@ export default function ReportDrawer({ children, className }: Props) {
                   />
                 </button>
                 <img
-                  src={data?.image_url?.replace("/users/users", "/users")}
-                  alt={`Report ${data.report.id} Thumbnail`}
+                  src={data.content.image_url?.replace(
+                    "/users/users",
+                    "/users"
+                  )}
+                  alt={`Report ${data.id} Thumbnail`}
                   className="h-full w-full object-cover"
                 />
               </div>
@@ -99,6 +101,10 @@ export default function ReportDrawer({ children, className }: Props) {
               <button className="btn btn-primary">
                 <p className="btn-text">Edit Report</p>
               </button>
+              <WarningModal
+                heading="Delete Report"
+                body="Are you sure you want to delete this report? You won't be able to recover it without "
+              ></WarningModal>
               <button className="btn btn-light">
                 <p className="btn-text">Delete</p>
               </button>

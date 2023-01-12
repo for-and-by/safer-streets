@@ -31,5 +31,26 @@ export default async function uploadReport(
   if (content.error) throw content.error;
   if (!content.data) throw "No data was returned from reports content upload";
 
+  console.log("content >>:", content.data);
+  console.log("report >>:", report.data);
+
+  const update = await supabase
+    .from<Report>("reports")
+    .update({
+      content_id: content.data[0].id,
+    })
+    .eq("id", report.data[0].id)
+    .select("*");
+
+  const report_test = await supabase
+    .from<Report>("reports")
+    .select("*")
+    .eq("id", report.data[0].id);
+
+  console.log("update >>:", update);
+  console.log("test >>:", report_test);
+
+  if (update.error) throw update.error;
+
   return { content, report };
 }

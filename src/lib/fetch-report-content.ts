@@ -1,13 +1,13 @@
 import supabase from "~/lib/supabase-client";
-import { ReportContent, ReportFull } from "~/types/db";
+import { Report, ReportFull } from "~/types/db";
 
 export default async function fetchReportContent(id: string | number) {
   const query = supabase
-    .from<ReportContent>("reports_content")
+    .from<Report>("reports")
     .select(
-      "*, severity:severity_handle (*), report:report_id (*, type:type_handle (*))"
+      "*, type:type_handle(*), content:content_id(*, severity:severity_handle (*))"
     )
-    .eq("report_id", id)
+    .eq("id", id)
     .limit(1)
     .single();
 
