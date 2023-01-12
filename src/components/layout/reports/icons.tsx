@@ -33,7 +33,6 @@ export default function ReportIconsLayer() {
   useMapEvents(map, "reports-bg", {
     click: (event) => {
       setCenter(event.lngLat);
-      console.log(event);
     },
   });
 
