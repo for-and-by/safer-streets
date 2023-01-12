@@ -48,9 +48,9 @@ function Trigger({ className = "", children }: PropsTrigger) {
   const { showModal } = useModal();
 
   return (
-    <div className={className} onClick={showModal}>
+    <button className={className} onClick={showModal}>
       {children}
-    </div>
+    </button>
   );
 }
 

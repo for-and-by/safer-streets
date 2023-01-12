@@ -81,3 +81,10 @@ export interface ReportSummary {
     type: { title: Type["handle"] };
   };
 }
+
+export interface ReportFull extends ReportContent {
+  severity: Severity;
+  report: Report & {
+    type: Type;
+  };
+}

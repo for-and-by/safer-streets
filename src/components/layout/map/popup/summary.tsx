@@ -6,6 +6,7 @@ import useAsync from "~/hooks/use-async";
 import Toast from "~/components/regions/toast";
 import useActiveReport from "~/hooks/reports/use-active-report";
 import BasePopup from "~/components/layout/map/popup/base";
+import ReportDrawer from "~/components/layout/reports/drawer";
 
 export default function SummaryMarker() {
   const [activeReportId] = useActiveReport();
@@ -39,9 +40,9 @@ export default function SummaryMarker() {
           <div className="flex flex-col p-2">
             <p className="text-bold">{data.report.type.title}</p>
             <p className="text-gray-400">{data.severity.title}</p>
-            <button className="text-brand-600">
+            <ReportDrawer className="text-brand-600">
               <p className="btn-text">See details</p>
-            </button>
+            </ReportDrawer>
           </div>
         </div>
       </BasePopup>
