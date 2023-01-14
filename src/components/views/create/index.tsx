@@ -45,10 +45,8 @@ export default function Create() {
       <Header>
         <Bumper show={isCreateShow} className="flex flex-col bg-white">
           <div className="flex flex-row p-2">
-            <CancelModal>
-              <button className="btn btn-light">
-                <i className="btn-icon icon icon-left" />
-              </button>
+            <CancelModal className="btn btn-light">
+              <i className="btn-icon icon icon-left" />
             </CancelModal>
             <div className="flex flex-col px-3">
               <h3 className="font-medium">{stage.heading}</h3>

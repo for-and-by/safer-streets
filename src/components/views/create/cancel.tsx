@@ -1,13 +1,11 @@
-import React, { ReactNode } from "react";
+import React, { ComponentProps } from "react";
 import useViewReset from "~/hooks/view/use-view-reset";
 
 import WarningModal from "~/components/modals/warning";
 
-interface Props {
-  children?: ReactNode;
-}
+type Props = ComponentProps<typeof WarningModal>;
 
-export default function CancelModal({ children }: Props) {
+export default function CancelModal({ children, ...props }: Props) {
   const resetView = useViewReset();
 
   const handleExitSearch = () => {
@@ -19,6 +17,7 @@ export default function CancelModal({ children }: Props) {
       heading="Cancel Report Submission"
       body="Are you sure you want to cancel this submission? All data submitted up to this point will be lost."
       onConfirm={handleExitSearch}
+      {...props}
     >
       {children}
     </WarningModal>

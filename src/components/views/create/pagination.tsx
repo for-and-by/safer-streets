@@ -23,10 +23,8 @@ export default function CreatePagination() {
   return (
     <>
       {stage.prev === EXIT.CANCEL ? (
-        <CancelModal>
-          <button className="btn btn-light" onClick={prevStage}>
-            <p className="btn-text">Cancel</p>
-          </button>
+        <CancelModal className="btn btn-light">
+          <p className="btn-text">Cancel</p>
         </CancelModal>
       ) : (
         <button className="btn btn-light" onClick={prevStage}>

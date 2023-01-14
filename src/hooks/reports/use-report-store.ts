@@ -41,7 +41,6 @@ const store: StateCreator<Store, [["zustand/persist", unknown]]> = (
     set({ isUploading: true });
     const { syncReports } = get();
     const imageUrl = await uploadFile(values.image);
-    console.log(imageUrl);
     await uploadReport(values, imageUrl);
     set({ isUploading: false });
     await syncReports();

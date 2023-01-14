@@ -33,6 +33,12 @@ export default function useAsync<Data, Error>(
       .finally(() => setIsLoading(false));
   }, []);
 
+  const reset = useCallback(() => {
+    setData(undefined);
+    setError(undefined);
+    setIsLoading(false);
+  }, []);
+
   useEffect(() => {
     callbackRef.current = callback;
   }, [callback]);
@@ -43,5 +49,5 @@ export default function useAsync<Data, Error>(
     }
   }, []);
 
-  return { isLoading, data, error, trigger };
+  return { isLoading, data, error, trigger, reset };
 }

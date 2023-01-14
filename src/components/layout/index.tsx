@@ -14,12 +14,14 @@ import Home from "~/components/views/home";
 import Search from "~/components/views/search";
 import Create from "~/components/views/create";
 import CreateProvider from "~/components/views/create/context";
+import Report from "~/components/views/report";
 
 export default function Index() {
   return (
     <>
       <Home />
       <Search />
+      <Report />
       <CreateProvider>
         <Create />
       </CreateProvider>

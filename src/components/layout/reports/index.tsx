@@ -51,8 +51,6 @@ export default function Reports() {
     filter: ["!", ["get", "is_deleted"]],
   });
 
-  console.log(parseReportsAsGeoJSON(reports));
-
   useEffect(() => {
     syncReports().finally();
   }, []);

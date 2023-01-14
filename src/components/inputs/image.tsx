@@ -86,13 +86,12 @@ export default function ImageInput({
                 <i className="btn-icon icon icon-upload" />
               </button>
               <WarningModal
+                className="btn btn-light"
                 heading="Remove Image"
                 body="Are you sure you want to remove this image?"
                 onConfirm={handleRemove}
               >
-                <button className="btn btn-light">
-                  <i className="btn-icon icon icon-remove before:text-red-600" />
-                </button>
+                <i className="btn-icon icon icon-remove before:text-red-600" />
               </WarningModal>
             </div>
           </div>
