@@ -14,8 +14,12 @@ export default function ReportMarker({ coordinates }: Props) {
   if (!coordinates || !isReportActive) return null;
 
   return (
-    <BaseMarker coordinates={coordinates} anchor="bottom-right">
-      <div className="relative flex h-8 w-8 origin-bottom-right rotate-45 items-center justify-center rounded-full rounded-br-none bg-emerald-600 text-white transition-all">
+    <BaseMarker
+      coordinates={coordinates}
+      anchor="bottom-right"
+      offset={[0, -16]}
+    >
+      <div className="relative flex h-8 w-8 origin-bottom-right rotate-45 items-center justify-center rounded-full rounded-br-none bg-emerald-900 text-white transition-all">
         <i className="icon icon-sm icon-pin-fill -rotate-45" />
       </div>
     </BaseMarker>

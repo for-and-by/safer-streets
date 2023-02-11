@@ -17,6 +17,7 @@ import CancelModal from "~/components/views/create/cancel";
 import ProgressBar from "~/components/elements/progress-bar";
 import Bumper from "~/components/elements/bumper";
 import Toast from "~/components/regions/toast";
+import CenterMarker from "~/components/layout/map/markers/center";
 
 export default function Create() {
   const isCreateShow = useViewIsActive(VIEWS.CREATE);
@@ -42,6 +43,7 @@ export default function Create() {
 
   return (
     <FormProvider {...methods}>
+      <CenterMarker />
       <Header>
         <Bumper show={isCreateShow} className="flex flex-col bg-white">
           <div className="flex flex-row p-2">

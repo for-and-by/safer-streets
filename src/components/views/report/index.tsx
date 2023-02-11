@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import useViewIsActive from "~/hooks/view/use-view-is-active";
 import { VIEWS } from "~/hooks/view/use-view-store";
 import Bumper from "~/components/elements/bumper";
@@ -6,20 +6,19 @@ import Header from "~/components/regions/header";
 import Footer from "~/components/regions/footer";
 import useActiveReport from "~/hooks/reports/use-active-report";
 import useViewReset from "~/hooks/view/use-view-reset";
-import clsx from "clsx";
 import DeleteReportModal from "~/components/views/report/delete";
 import useAsync from "~/hooks/use-async";
 import fetchReportContent from "~/lib/fetch-report-content";
+import ReportInfo from "~/components/views/report/info";
+import ReportMarker from "~/components/layout/map/markers/report";
+import useMapLock from "~/hooks/map/use-map-lock";
 
 export default function Report() {
   const resetView = useViewReset();
   const isReportActive = useViewIsActive(VIEWS.REPORT);
 
   const [activeReportId, setActiveReportId] = useActiveReport();
-  const [fullImage, setFullImage] = useState(false);
-  const [content, setContent] = useState<{ [key: string]: string | undefined }>(
-    {}
-  );
+  const [, { setLock, setUnlock }] = useMapLock();
 
   const { trigger, data } = useAsync(async () => {
     if (activeReportId) return await fetchReportContent(activeReportId);
@@ -33,29 +32,19 @@ export default function Report() {
   }, [activeReportId]);
 
   useEffect(() => {
-    if (data) {
-      setContent({
-        Severity: data.content.severity.title,
-        Details: data.content.details,
-        ...data.content.data,
-        "Created On": data.created_at
-          ? new Date(data.created_at).toLocaleDateString()
-          : undefined,
-        "Last Updated": data.updated_at
-          ? new Date(data.updated_at).toLocaleDateString()
-          : undefined,
-      });
-    }
-  }, [data]);
-
-  useEffect(() => {
     if (!activeReportId) resetView();
   }, [activeReportId]);
+
+  useEffect(() => {
+    if (isReportActive) setLock();
+    else setUnlock();
+  }, [isReportActive]);
 
   if (!data) return null;
 
   return (
     <>
+      <ReportMarker coordinates={data} />
       <Header>
         <Bumper
           show={isReportActive}
@@ -77,39 +66,7 @@ export default function Report() {
           show={isReportActive}
           className="max-h-[50vh] divide-y divide-gray-200 overflow-y-scroll"
         >
-          {data.content.image_url ? (
-            <div
-              className={clsx(
-                "relative overflow-hidden transition-all",
-                !fullImage ? "h-36" : "h-96"
-              )}
-            >
-              <button
-                className="btn btn-white absolute bottom-2 right-2 z-20"
-                onClick={() => setFullImage((state) => !state)}
-              >
-                <i
-                  className={clsx(
-                    "btn-icon icon",
-                    !fullImage ? "icon-plus" : "icon-minus"
-                  )}
-                />
-              </button>
-              <img
-                src={data.content.image_url?.replace("/users/users", "/users")}
-                alt={`Report ${data.id} Thumbnail`}
-                className="h-full w-full object-cover"
-              />
-            </div>
-          ) : null}
-          <div className="flex flex-col space-y-2 p-2">
-            {Object.keys(content).map((key) => (
-              <div key={key} className="flex bg-gray-100 p-3">
-                <p className="min-w-[112px] capitalize text-gray-400">{key}</p>
-                <p>{content[key]}</p>
-              </div>
-            ))}
-          </div>
+          <ReportInfo data={data} />
           <div className="sticky bottom-0 flex justify-between bg-white p-2 shadow-md">
             <button className="btn btn-primary">
               <p className="btn-text">Edit Report</p>

@@ -8,6 +8,7 @@ import useActiveReport from "~/hooks/reports/use-active-report";
 import useView from "~/hooks/view/use-view";
 import { VIEWS } from "~/hooks/view/use-view-store";
 import BaseMarker from "~/components/layout/map/markers/base";
+import useViewIsActive from "~/hooks/view/use-view-is-active";
 
 export default function SummaryMarker() {
   const [show, setShow] = useState(false);
@@ -15,6 +16,7 @@ export default function SummaryMarker() {
   const [, setView] = useView();
 
   const [activeReportId, setActiveReportId] = useActiveReport();
+  const isReportActive = useViewIsActive(VIEWS.REPORT);
 
   const { isLoading, data, trigger, reset } = useAsync(async () =>
     activeReportId ? await fetchReportSummary(activeReportId) : null
@@ -39,6 +41,10 @@ export default function SummaryMarker() {
     if (activeReportId) handleLoad();
     else handleClose();
   }, [activeReportId]);
+
+  useEffect(() => {
+    if (isReportActive) setShow(false);
+  }, [isReportActive]);
 
   if (!data || !data.content || !show) return null;
 

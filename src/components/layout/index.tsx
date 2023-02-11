@@ -16,7 +16,6 @@ import CreateProvider from "~/components/views/create/context";
 import Report from "~/components/views/report";
 import MapProvider from "~/components/layout/map/context";
 import Reports from "~/components/layout/reports";
-import CenterMarker from "~/components/layout/map/markers/center";
 import Map from "~/components/layout/map";
 
 export default function Index() {
@@ -31,7 +30,6 @@ export default function Index() {
       <div className="layer z-10">
         <Map className="absolute inset-0">
           <Reports />
-          <CenterMarker />
         </Map>
       </div>
       <div className="layer pointer-events-none z-20">
