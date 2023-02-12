@@ -1,5 +1,7 @@
-import create, { StateCreator } from "zustand";
-import { SearchFeature } from "~/types/search";
+import type { StateCreator } from "zustand";
+import { create } from "zustand";
+
+import type { SearchFeature } from "~/types/search";
 import geocode from "~/lib/geocode";
 
 interface State {

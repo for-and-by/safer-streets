@@ -1,8 +1,9 @@
-import create, { StateCreator } from "zustand";
+import type { StateCreator } from "zustand";
+import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { Report } from "~/types/db";
-import { FormValues } from "~/types/form";
+import type { Report } from "~/types/db";
+import type { FormValues } from "~/types/form";
 
 import fetchReports from "~/lib/fetch-reports";
 import uploadFile from "~/lib/upload-file";

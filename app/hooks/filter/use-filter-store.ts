@@ -1,5 +1,6 @@
-import { Severity, Type } from "~/types/db";
-import create, { StateCreator } from "zustand";
+import type { Severity, Type } from "~/types/db";
+import type { StateCreator } from "zustand";
+import { create } from "zustand";
 import fetchSeverities from "~/lib/fetch-severities";
 import fetchTypes from "~/lib/fetch-types";
 import { persist } from "zustand/middleware";
