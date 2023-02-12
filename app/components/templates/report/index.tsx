@@ -6,10 +6,10 @@ import Header from "~/components/regions/header";
 import Footer from "~/components/regions/footer";
 import useActiveReport from "~/hooks/reports/use-active-report";
 import useViewReset from "~/hooks/view/use-view-reset";
-import DeleteReportModal from "~/components/views/report/delete";
+import DeleteReportModal from "~/components/templates/report/delete";
 import useAsync from "~/hooks/use-async";
 import fetchReportContent from "~/lib/fetch-report-content";
-import ReportInfo from "~/components/views/report/info";
+import ReportInfo from "~/components/templates/report/info";
 import ReportMarker from "~/components/layout/map/markers/report";
 import useMapLock from "~/hooks/map/use-map-lock";
 

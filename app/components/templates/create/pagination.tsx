@@ -1,10 +1,10 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
-import { EXIT, useCreateContext } from "~/components/views/create/context";
-import CancelModal from "~/components/views/create/cancel";
+import { EXIT, useCreateContext } from "~/components/templates/create/context";
 import useReportUpload from "~/hooks/reports/use-report-upload";
 import useViewReset from "~/hooks/view/use-view-reset";
-import { FormValues } from "~/types/form";
+import type { FormValues } from "~/types/form";
+import { WarningTrigger } from "~/components/composites/warning";
 
 export default function CreatePagination() {
   const { stage, nextStage, prevStage, stages } = useCreateContext();
@@ -23,9 +23,9 @@ export default function CreatePagination() {
   return (
     <>
       {stage.prev === EXIT.CANCEL ? (
-        <CancelModal className="btn btn-light">
+        <WarningTrigger className="btn btn-light">
           <p className="btn-text">Cancel</p>
-        </CancelModal>
+        </WarningTrigger>
       ) : (
         <button className="btn btn-light" onClick={prevStage}>
           <p className="btn-text">

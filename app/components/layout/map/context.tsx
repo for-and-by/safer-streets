@@ -1,14 +1,9 @@
-import React, {
-  ComponentProps,
-  createContext,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import type { ComponentProps } from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 
 import { Map } from "maplibre-gl";
 
-import config from "~/config";
+import { config } from "~/config";
 import createContextHook from "~/hooks/factories/create-context-hook";
 
 interface ContextValue {

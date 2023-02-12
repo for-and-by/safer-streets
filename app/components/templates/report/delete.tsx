@@ -1,11 +1,16 @@
-import React, { ReactNode } from "react";
+import type { ReactNode } from "react";
+import React from "react";
 
 import deleteReport from "~/lib/delete-report";
 
 import useAsync from "~/hooks/use-async";
 import useActiveReport from "~/hooks/reports/use-active-report";
 
-import WarningModal from "~/components/modals/warning";
+import {
+  WarningPanel,
+  WarningRoot,
+  WarningTrigger,
+} from "~/components/composites/warning";
 import Toast from "~/components/regions/toast";
 import useReportSync from "~/hooks/reports/use-report-sync";
 
@@ -33,16 +38,14 @@ export default function DeleteReportModal({ children }: Props) {
   };
 
   return (
-    <>
+    <WarningRoot>
       <Toast content="Deleting Report..." show={isLoading} />
-      <WarningModal
+      <WarningTrigger className="btn btn-light">{children}</WarningTrigger>
+      <WarningPanel
         heading="Delete Report"
         body="Are you sure you want to delete this report? You won't be able to recover it without "
-        className="btn btn-light"
         onConfirm={handleConfirm}
-      >
-        {children}
-      </WarningModal>
-    </>
+      />
+    </WarningRoot>
   );
 }

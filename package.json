@@ -2,7 +2,10 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "remix build",
+    "build:css": "tailwindcss -c tailwind.config.cjs -m -i ./app/styles/index.css -o ./app/styles/build.css",
+    "build:remix": "remix build",
+    "build": "run-s build:*",
+    "dev:css": "tailwindcss -c tailwind.config.cjs -w -i ./app/styles/index.css -o ./app/styles/build.css",
     "dev:remix": "remix watch",
     "dev:wrangler": "cross-env NODE_ENV=development npm run wrangler",
     "dev": "remix build && run-p \"dev:*\"",

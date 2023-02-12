@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-import { STAGE, useCreateContext } from "~/components/views/create/context";
+import { STAGE, useCreateContext } from "~/components/templates/create/context";
 
 import useMapLock from "~/hooks/map/use-map-lock";
 
@@ -25,17 +25,6 @@ export default function CreateForm() {
       setLock();
     }
   }, [stage]);
-
-  // // const reports = useReportsDispatch();
-  //
-  // const handleSubmit = () => {
-  //     // reports.upload(form.inputs.values).then(() => {
-  //     //   resetView();
-  //     //   setUnlock();
-  //     //   form.reset();
-  //     //   reports.sync();
-  //     // });
-  // };
 
   return (
     <>

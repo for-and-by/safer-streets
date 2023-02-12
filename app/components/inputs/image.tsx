@@ -5,9 +5,14 @@ import parseFileAsBase64 from "~/lib/parse-file-as-base64";
 import useAsync from "~/hooks/use-async";
 
 import Wrapper from "~/components/inputs/wrapper";
-import WarningModal from "~/components/modals/warning";
+
+import {
+  WarningPanel,
+  WarningRoot,
+  WarningTrigger,
+} from "~/components/composites/warning";
 import Toast from "~/components/regions/toast";
-import { FieldError } from "react-hook-form";
+import type { FieldError } from "react-hook-form";
 
 interface Props {
   onUpload?: (image: string, file: File) => void;
@@ -61,49 +66,51 @@ export default function ImageInput({
   };
 
   return (
-    <Wrapper error={error}>
-      <Toast content="Processing Image..." show={isLoading} />
-      {!image ? (
-        <div
-          className="flex h-40 flex-grow flex-col items-center justify-center space-y-4 hover:cursor-pointer"
-          onClick={handleUpload}
-        >
-          <i className="icon icon-image-location before:text-5xl before:text-gray-400" />
-          <p className="text-gray-400">{placeholder}</p>
-        </div>
-      ) : (
-        <div className="relative h-40 w-full">
-          <div className="absolute -inset-3 overflow-hidden rounded-sm">
-            <img
-              className="h-full w-full object-cover"
-              alt={file?.name ?? ""}
-              src={image ?? ""}
-            />
+    <WarningRoot>
+      <Wrapper error={error}>
+        <Toast content="Processing Image..." show={isLoading} />
+        {!image ? (
+          <div
+            className="flex h-40 flex-grow flex-col items-center justify-center space-y-4 hover:cursor-pointer"
+            onClick={handleUpload}
+          >
+            <i className="icon icon-image-location before:text-5xl before:text-gray-400" />
+            <p className="text-gray-400">{placeholder}</p>
           </div>
-          <div className="absolute -inset-1">
-            <div className="absolute right-0 top-0 flex space-x-2">
-              <button className="btn btn-light" onClick={handleUpload}>
-                <i className="btn-icon icon icon-upload" />
-              </button>
-              <WarningModal
-                className="btn btn-light"
-                heading="Remove Image"
-                body="Are you sure you want to remove this image?"
-                onConfirm={handleRemove}
-              >
-                <i className="btn-icon icon icon-remove before:text-red-600" />
-              </WarningModal>
+        ) : (
+          <div className="relative h-40 w-full">
+            <div className="absolute -inset-3 overflow-hidden rounded-sm">
+              <img
+                className="h-full w-full object-cover"
+                alt={file?.name ?? ""}
+                src={image ?? ""}
+              />
+            </div>
+            <div className="absolute -inset-1">
+              <div className="absolute right-0 top-0 flex space-x-2">
+                <button className="btn btn-light" onClick={handleUpload}>
+                  <i className="btn-icon icon icon-upload" />
+                </button>
+                <WarningTrigger className="btn btn-light">
+                  <i className="btn-icon icon icon-remove before:text-red-600" />
+                </WarningTrigger>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-      <input
-        ref={inputRef}
-        type="file"
-        accept="image/png,image/jpeg"
-        className="hidden"
-        onChange={handleChange}
+        )}
+        <input
+          ref={inputRef}
+          type="file"
+          accept="image/png,image/jpeg"
+          className="hidden"
+          onChange={handleChange}
+        />
+      </Wrapper>
+      <WarningPanel
+        heading="Remove Image"
+        body="Are you sure you want to remove this image?"
+        onConfirm={handleRemove}
       />
-    </Wrapper>
+    </WarningRoot>
   );
 }
