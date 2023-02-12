@@ -3,10 +3,11 @@ import {
   Links,
   LiveReload,
   Meta,
-  Outlet,
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+
+import Index from "~/components/layout";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -22,7 +23,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Outlet />
+        <Index />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
