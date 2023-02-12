@@ -5,9 +5,7 @@ import { persist } from "zustand/middleware";
 import type { Report } from "~/types/db";
 import type { FormValues } from "~/types/form";
 
-import fetchReports from "~/lib/fetch-reports";
-import uploadFile from "~/lib/upload-file";
-import uploadReport from "~/lib/upload-report";
+import { fetchReports, uploadFile, uploadReport } from "~/lib/supabase";
 
 interface State {
   reports: Report[];

@@ -1,8 +1,6 @@
 import type { ReactNode } from "react";
 import React from "react";
 
-import deleteReport from "~/lib/delete-report";
-
 import useAsync from "~/hooks/use-async";
 import useActiveReport from "~/hooks/reports/use-active-report";
 
@@ -13,6 +11,7 @@ import {
 } from "~/components/composites/warning";
 import Toast from "~/components/regions/toast";
 import useReportSync from "~/hooks/reports/use-report-sync";
+import { deleteReport } from "~/lib/supabase";
 
 interface Props {
   children: ReactNode;

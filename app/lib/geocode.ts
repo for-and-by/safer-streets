@@ -27,7 +27,7 @@ export default async function geocode(
   }).toString();
 
   const response = await fetch(url.toString());
-  const json = await response.json();
+  const json = (await response.json()) as any;
   return (
     json?.features?.map((feature: SearchResult) => {
       return {

@@ -8,10 +8,10 @@ import useActiveReport from "~/hooks/reports/use-active-report";
 import useViewReset from "~/hooks/view/use-view-reset";
 import DeleteReportModal from "~/components/templates/report/delete";
 import useAsync from "~/hooks/use-async";
-import fetchReportContent from "~/lib/fetch-report-content";
 import ReportInfo from "~/components/templates/report/info";
 import ReportMarker from "~/components/layout/map/markers/report";
 import useMapLock from "~/hooks/map/use-map-lock";
+import { fetchReportContent } from "~/lib/supabase";
 
 export default function Report() {
   const resetView = useViewReset();

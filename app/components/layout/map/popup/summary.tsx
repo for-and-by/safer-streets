@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import fetchReportSummary from "~/lib/fetch-report-summary";
-
 import useAsync from "~/hooks/use-async";
 import Toast from "~/components/regions/toast";
 import useActiveReport from "~/hooks/reports/use-active-report";
@@ -9,6 +7,7 @@ import useView from "~/hooks/view/use-view";
 import { VIEWS } from "~/hooks/view/use-view-store";
 import BaseMarker from "~/components/layout/map/markers/base";
 import useViewIsActive from "~/hooks/view/use-view-is-active";
+import { fetchReportSummary } from "~/lib/supabase";
 
 export default function SummaryMarker() {
   const [show, setShow] = useState(false);
