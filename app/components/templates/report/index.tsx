@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import useViewIsActive from "~/hooks/view/use-view-is-active";
 import { VIEWS } from "~/hooks/view/use-view-store";
-import Bumper from "~/components/elements/bumper";
+import Bumper from "~/components/atoms/bumper";
 import Header from "~/components/regions/header";
 import Footer from "~/components/regions/footer";
 import useActiveReport from "~/hooks/reports/use-active-report";
@@ -9,7 +9,7 @@ import useViewReset from "~/hooks/view/use-view-reset";
 import DeleteReportModal from "~/components/templates/report/delete";
 import useAsync from "~/hooks/use-async";
 import ReportInfo from "~/components/templates/report/info";
-import ReportMarker from "~/components/layout/map/markers/report";
+import ReportMarker from "~/components/organisms/map/markers/report";
 import useMapLock from "~/hooks/map/use-map-lock";
 import { fetchReportContent } from "~/lib/supabase";
 

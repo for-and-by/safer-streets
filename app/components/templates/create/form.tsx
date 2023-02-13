@@ -4,15 +4,15 @@ import { STAGE, useCreateContext } from "~/components/templates/create/context";
 
 import useMapLock from "~/hooks/map/use-map-lock";
 
-import SeverityField from "~/components/fields/severity-field";
-import TypeField from "~/components/fields/type-field";
-import DetailsField from "~/components/fields/details-field";
-import ImageField from "~/components/fields/image-field";
-import LocationField from "~/components/fields/location-field";
-import SummaryField from "~/components/fields/summary-field";
+import SeverityField from "~/components/molecules/fields/severity-field";
+import TypeField from "~/components/molecules/fields/type-field";
+import DetailsField from "~/components/molecules/fields/details-field";
+import ImageField from "~/components/molecules/fields/image-field";
+import LocationField from "~/components/molecules/fields/location-field";
+import SummaryField from "~/components/molecules/fields/summary-field";
 
-import Show from "~/components/elements/show";
-import CustomField from "~/components/fields/custom-field";
+import Show from "~/components/atoms/show";
+import CustomField from "~/components/molecules/fields/custom-field";
 
 export default function CreateForm() {
   const { stage } = useCreateContext();

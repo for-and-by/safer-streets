@@ -1,4 +1,4 @@
-import { useMapContext } from "~/components/layout/map/context";
+import { useMapContext } from "~/components/organisms/map/context";
 
 export default function useMapRef() {
   const { ref } = useMapContext();

@@ -10,7 +10,7 @@ import useMapImages from "~/hooks/map/use-map-images";
 import Toast from "~/components/regions/toast";
 import ReportClustersLayer from "~/components/layout/reports/clusters";
 import ReportIconsLayer from "~/components/layout/reports/icons";
-import SummaryMarker from "~/components/layout/map/popup/summary";
+import SummaryMarker from "~/components/organisms/map/popup/summary";
 
 export default function Reports() {
   const reports = useReports();

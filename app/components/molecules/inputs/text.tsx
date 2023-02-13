@@ -1,20 +1,23 @@
 import React from "react";
 import clsx from "clsx";
-import Wrapper from "~/components/inputs/wrapper";
-import { FieldError } from "react-hook-form";
 
-interface Props extends React.ComponentPropsWithRef<"textarea"> {
+import type { FieldError } from "react-hook-form";
+
+import Wrapper from "~/components/molecules/inputs/wrapper";
+
+interface Props extends React.ComponentPropsWithRef<"input"> {
   icon?: string;
   label?: string;
   error?: FieldError;
 }
 
 // eslint-disable-next-line react/display-name
-const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
+const Text = React.forwardRef<HTMLInputElement, Props>(
   ({ icon = undefined, label, name, error, ...props }, ref) => (
-    <Wrapper label={label} name={name ?? ""} align="top" error={error}>
+    <Wrapper label={label} name={name} error={error}>
       {icon && <i className={clsx("icon", icon)} />}
-      <textarea
+      <input
+        type="text"
         className="flex-grow bg-transparent focus:outline-none"
         ref={ref}
         name={name}
@@ -24,4 +27,4 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, Props>(
   )
 );
 
-export default Textarea;
+export default Text;

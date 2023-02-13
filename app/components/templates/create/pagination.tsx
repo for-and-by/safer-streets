@@ -2,21 +2,28 @@ import React from "react";
 import { useFormContext } from "react-hook-form";
 import { EXIT, useCreateContext } from "~/components/templates/create/context";
 import useReportUpload from "~/hooks/reports/use-report-upload";
-import useViewReset from "~/hooks/view/use-view-reset";
-import type { FormValues } from "~/types/form";
 import { Warning } from "~/components/composites/warning";
+import { useSubmit } from "@remix-run/react";
 
 export default function CreatePagination() {
   const { stage, nextStage, prevStage, stages } = useCreateContext();
   const { trigger, handleSubmit } = useFormContext();
+  const submit = useSubmit();
+
   const { uploadReport, isUploading } = useReportUpload();
-  const resetView = useViewReset();
 
   const handleNext = () => {
     trigger().then((result) => {
       if (result) {
         nextStage();
       }
+    });
+  };
+
+  const handleComplete = () => {
+    handleSubmit(async (values) => {
+      const data = new FormData();
+      console.log(values);
     });
   };
 
@@ -34,21 +41,11 @@ export default function CreatePagination() {
         </button>
       )}
       {stage.next === EXIT.SUBMIT ? (
-        <button
-          className="btn btn-primary"
-          onClick={handleSubmit(async (values) => {
-            await uploadReport(values as FormValues);
-            resetView();
-          })}
-        >
+        <button className="btn btn-primary" onClick={handleComplete}>
           <p className="btn-text">Submit Report</p>
         </button>
       ) : (
-        <button
-          className="btn btn-primary"
-          onClick={handleNext}
-          disabled={isUploading}
-        >
+        <button className="btn btn-primary" onClick={handleNext}>
           <p className="btn-text">
             {stages?.[stage.next as keyof typeof stages]?.heading}
           </p>

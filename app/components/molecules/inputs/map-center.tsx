@@ -1,9 +1,9 @@
-import FindSelfButton from "~/components/elements/find-self-button";
+import FindSelfButton from "~/components/atoms/find-self-button";
 import useMapCenter from "~/hooks/map/use-map-center";
 import React, { useEffect } from "react";
 import useGeocoderInline from "~/hooks/geocoder/use-geocoder-inline";
-import Show from "~/components/elements/show";
-import { LngLatLike } from "maplibre-gl";
+import Show from "~/components/atoms/show";
+import type { LngLatLike } from "maplibre-gl";
 import parseLngLat from "~/lib/parse-lng-lat";
 
 interface Props {

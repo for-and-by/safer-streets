@@ -12,10 +12,10 @@ import useMapLock from "~/hooks/map/use-map-lock";
 
 import Header from "~/components/regions/header";
 import Footer from "~/components/regions/footer";
-import ProgressBar from "~/components/elements/progress-bar";
-import Bumper from "~/components/elements/bumper";
+import ProgressBar from "~/components/atoms/progress-bar";
+import Bumper from "~/components/atoms/bumper";
 import Toast from "~/components/regions/toast";
-import CenterMarker from "~/components/layout/map/markers/center";
+import CenterMarker from "~/components/organisms/map/markers/center";
 import { useNavigate, useTransition } from "@remix-run/react";
 import { Warning } from "~/components/composites/warning";
 

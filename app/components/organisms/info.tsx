@@ -1,7 +1,7 @@
 import React from "react";
 import { nanoid } from "nanoid";
 
-import Logo from "~/components/elements/logo";
+import Logo from "~/components/atoms/logo";
 
 import { Modal } from "~/components/composites/modal";
 import Tabs from "~/components/composites/tabs";

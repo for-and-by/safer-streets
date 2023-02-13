@@ -4,7 +4,7 @@ import parseFileAsBase64 from "~/lib/parse-file-as-base64";
 
 import useAsync from "~/hooks/use-async";
 
-import Wrapper from "~/components/inputs/wrapper";
+import Wrapper from "~/components/molecules/inputs/wrapper";
 
 import { Warning } from "~/components/composites/warning";
 import Toast from "~/components/regions/toast";

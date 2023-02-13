@@ -5,7 +5,7 @@ import Toast from "~/components/regions/toast";
 import useActiveReport from "~/hooks/reports/use-active-report";
 import useView from "~/hooks/view/use-view";
 import { VIEWS } from "~/hooks/view/use-view-store";
-import BaseMarker from "~/components/layout/map/markers/base";
+import BaseMarker from "~/components/organisms/map/markers/base";
 import useViewIsActive from "~/hooks/view/use-view-is-active";
 import { fetchReportSummary } from "~/lib/supabase";
 

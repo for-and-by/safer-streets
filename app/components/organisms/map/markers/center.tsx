@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import clsx from "clsx";
 
 import useMapCenter from "~/hooks/map/use-map-center";
-import BaseMarker from "~/components/layout/map/markers/base";
+import BaseMarker from "~/components/organisms/map/markers/base";
 import useViewIsActive from "~/hooks/view/use-view-is-active";
 import { VIEWS } from "~/hooks/view/use-view-store";
 

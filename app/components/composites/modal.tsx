@@ -3,7 +3,7 @@ import React, { createContext, useState } from "react";
 import clsx from "clsx";
 
 import createContextHook from "~/hooks/factories/create-context-hook";
-import Portal from "~/components/elements/portal";
+import Portal from "~/components/atoms/portal";
 
 interface ContextValue {
   isShow: boolean;

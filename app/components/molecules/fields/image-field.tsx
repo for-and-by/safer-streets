@@ -3,7 +3,7 @@ import { useController, useFormContext } from "react-hook-form";
 
 import { useFilterTypes } from "~/hooks/filter/use-filter-types";
 
-import ImageInput from "~/components/inputs/image";
+import ImageInput from "~/components/molecules/inputs/image";
 
 export default function ImageField() {
   const { control, resetField, getValues } = useFormContext();
