@@ -8,7 +8,7 @@ interface Props {
   results?: SearchFeature[];
 }
 
-export function SearchResults({ results = [] }: Props) {
+export default function SearchResults({ results = [] }: Props) {
   const [, setCenter] = useMapCenter();
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ export function SearchResults({ results = [] }: Props) {
   };
 
   return (
-    <>
+    <div className="flex max-h-48 flex-col items-center divide-y divide-base-100 overflow-y-scroll bg-white">
       {results.map((feature) =>
         feature.center ? (
           <button
@@ -31,6 +31,6 @@ export function SearchResults({ results = [] }: Props) {
           </button>
         ) : null
       )}
-    </>
+    </div>
   );
 }

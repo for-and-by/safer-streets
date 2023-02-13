@@ -3,17 +3,15 @@ import React, { useEffect, useState } from "react";
 import useAsync from "~/hooks/use-async";
 import Toast from "~/components/regions/toast";
 import useActiveReport from "~/hooks/reports/use-active-report";
-import { VIEWS } from "~/hooks/view/use-view-store";
 import BaseMarker from "~/components/organisms/map/markers/base";
-import useViewIsActive from "~/hooks/view/use-view-is-active";
 import { fetchReportSummary } from "~/lib/supabase";
 import { Link } from "@remix-run/react";
+import { parseImageUrl } from "~/lib/parse-image-url";
 
 export default function SummaryMarker() {
   const [show, setShow] = useState(false);
 
   const [activeReportId, setActiveReportId] = useActiveReport();
-  const isReportActive = useViewIsActive(VIEWS.REPORT);
 
   const { isLoading, data, trigger, reset } = useAsync(async () =>
     activeReportId ? await fetchReportSummary(activeReportId) : null
@@ -35,10 +33,6 @@ export default function SummaryMarker() {
     else handleClose();
   }, [activeReportId]);
 
-  useEffect(() => {
-    if (isReportActive) setShow(false);
-  }, [isReportActive]);
-
   if (!data || !data.content || !show) return null;
 
   return (
@@ -56,10 +50,7 @@ export default function SummaryMarker() {
             <div className="h-16 w-48 overflow-hidden rounded-t bg-gray-100">
               {data?.content?.image_url ? (
                 <img
-                  src={data.content.image_url?.replace(
-                    "/users/users",
-                    "/users"
-                  )}
+                  src={parseImageUrl(data.content.image_url)}
                   alt={`Report ${data.id} Thumbnail`}
                   className="h-full w-full object-cover"
                 />

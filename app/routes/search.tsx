@@ -3,7 +3,8 @@ import type { ActionFunction } from "@remix-run/router";
 
 import type { SearchFeature } from "~/types/search";
 import geocode from "~/lib/geocode";
-import { SearchIndexTemplate } from "~/components/templates/search";
+
+import SearchIndexTemplate from "~/components/templates/search";
 
 export interface SearchResponse {
   results: SearchFeature[];

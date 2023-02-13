@@ -1,26 +1,18 @@
 import React from "react";
-import { CreateTemplate } from "~/components/templates/create";
-import CreateProvider from "~/components/templates/create/context";
 import type { ActionFunction } from "@remix-run/router";
-import { uploadFile, uploadReport } from "~/lib/supabase";
-import type { FormValues } from "~/types/form";
 import { redirect } from "@remix-run/cloudflare";
 
-interface CreateResponse {
-  success: boolean;
-}
+import { uploadFile, uploadReport } from "~/lib/supabase";
+import type { FormValues } from "~/types/form";
 
-export function generateCreateResponse(success?: boolean): CreateResponse {
-  return {
-    success: success ?? false,
-  };
-}
+import CreateTemplate from "~/components/templates/create";
+import CreateProvider from "~/components/templates/create/context";
 
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
   const create = data.get("create");
 
-  if (typeof create !== "string") return generateCreateResponse();
+  if (typeof create !== "string") return null;
 
   const values = JSON.parse(create) as FormValues;
 

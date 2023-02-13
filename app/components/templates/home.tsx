@@ -7,7 +7,7 @@ import Footer from "~/components/regions/footer";
 import Logo from "~/components/atoms/logo";
 import useMapLock from "~/hooks/map/use-map-lock";
 
-export function HomeIndexTemplate() {
+export default function HomeIndexTemplate() {
   const { state } = useTransition();
   const [isLocked, { setUnlock }] = useMapLock();
 
@@ -18,25 +18,23 @@ export function HomeIndexTemplate() {
 
   return (
     <>
-      <Header
-        show={state === "idle"}
-        className="flex flex-row items-center bg-white p-2"
-      >
-        <div className="ml-3 flex-grow">
-          <Logo />
+      <Header show={state === "idle"}>
+        <div className="flex flex-row items-center bg-white p-2">
+          <div className="ml-3 flex-grow">
+            <Logo />
+          </div>
+          <Link to="/search" className="btn btn-light">
+            <i className="btn-icon icon icon-search" />
+          </Link>
         </div>
-        <Link to="/search" className="btn btn-light">
-          <i className="btn-icon icon icon-search" />
-        </Link>
       </Header>
-      <Footer
-        show={state === "idle"}
-        className="flex flex-row items-center bg-white p-2"
-      >
-        <Link to="/create" className="btn btn-primary w-full">
-          <i className="btn-icon icon icon-pin-add" />
-          <p className="btn-text">Create a Report</p>
-        </Link>
+      <Footer show={state === "idle"}>
+        <div className="flex flex-row items-center bg-white p-2">
+          <Link to="/create" className="btn btn-primary w-full">
+            <i className="btn-icon icon icon-pin-add" />
+            <p className="btn-text">Create a Report</p>
+          </Link>
+        </div>
       </Footer>
     </>
   );
