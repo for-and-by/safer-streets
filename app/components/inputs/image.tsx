@@ -6,11 +6,7 @@ import useAsync from "~/hooks/use-async";
 
 import Wrapper from "~/components/inputs/wrapper";
 
-import {
-  WarningPanel,
-  WarningRoot,
-  WarningTrigger,
-} from "~/components/composites/warning";
+import { Warning } from "~/components/composites/warning";
 import Toast from "~/components/regions/toast";
 import type { FieldError } from "react-hook-form";
 
@@ -66,7 +62,7 @@ export default function ImageInput({
   };
 
   return (
-    <WarningRoot>
+    <Warning>
       <Wrapper error={error}>
         <Toast content="Processing Image..." show={isLoading} />
         {!image ? (
@@ -91,9 +87,9 @@ export default function ImageInput({
                 <button className="btn btn-light" onClick={handleUpload}>
                   <i className="btn-icon icon icon-upload" />
                 </button>
-                <WarningTrigger className="btn btn-light">
+                <Warning.Trigger className="btn btn-light">
                   <i className="btn-icon icon icon-remove before:text-red-600" />
-                </WarningTrigger>
+                </Warning.Trigger>
               </div>
             </div>
           </div>
@@ -106,11 +102,11 @@ export default function ImageInput({
           onChange={handleChange}
         />
       </Wrapper>
-      <WarningPanel
+      <Warning.Panel
         heading="Remove Image"
         body="Are you sure you want to remove this image?"
         onConfirm={handleRemove}
       />
-    </WarningRoot>
+    </Warning>
   );
 }

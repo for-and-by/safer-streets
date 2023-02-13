@@ -17,11 +17,7 @@ import Bumper from "~/components/elements/bumper";
 import Toast from "~/components/regions/toast";
 import CenterMarker from "~/components/layout/map/markers/center";
 import { useNavigate, useTransition } from "@remix-run/react";
-import {
-  WarningPanel,
-  WarningRoot,
-  WarningTrigger,
-} from "~/components/composites/warning";
+import { Warning } from "~/components/composites/warning";
 
 export function CreateTemplate() {
   const { state } = useTransition();
@@ -50,14 +46,14 @@ export function CreateTemplate() {
 
   return (
     <FormProvider {...methods}>
-      <WarningRoot>
+      <Warning>
         <CenterMarker />
         <Header>
           <Bumper show={state === "idle"} className="flex flex-col bg-white">
             <div className="flex flex-row p-2">
-              <WarningTrigger className="btn btn-light">
+              <Warning.Trigger className="btn btn-light">
                 <i className="btn-icon icon icon-left" />
-              </WarningTrigger>
+              </Warning.Trigger>
               <div className="flex flex-col px-3">
                 <h3 className="font-medium">{stage.heading}</h3>
                 <p className="text-sm text-base-400">Step {stage.step} of 4</p>
@@ -83,12 +79,12 @@ export function CreateTemplate() {
           </Bumper>
         </Footer>
         <Toast show={isUploading} content="Uploading report..." />
-        <WarningPanel
+        <Warning.Panel
           heading="Cancel Report Submission"
           body="Are you sure you want to cancel this submission? All data submitted up to this point will be lost."
           onConfirm={() => navigate("/")}
         />
-      </WarningRoot>
+      </Warning>
     </FormProvider>
   );
 }

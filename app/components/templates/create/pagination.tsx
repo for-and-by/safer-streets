@@ -4,7 +4,7 @@ import { EXIT, useCreateContext } from "~/components/templates/create/context";
 import useReportUpload from "~/hooks/reports/use-report-upload";
 import useViewReset from "~/hooks/view/use-view-reset";
 import type { FormValues } from "~/types/form";
-import { WarningTrigger } from "~/components/composites/warning";
+import { Warning } from "~/components/composites/warning";
 
 export default function CreatePagination() {
   const { stage, nextStage, prevStage, stages } = useCreateContext();
@@ -23,9 +23,9 @@ export default function CreatePagination() {
   return (
     <>
       {stage.prev === EXIT.CANCEL ? (
-        <WarningTrigger className="btn btn-light">
+        <Warning.Trigger className="btn btn-light">
           <p className="btn-text">Cancel</p>
-        </WarningTrigger>
+        </Warning.Trigger>
       ) : (
         <button className="btn btn-light" onClick={prevStage}>
           <p className="btn-text">

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 
 import { useFilterTypes } from "~/hooks/filter/use-filter-types";
+import { capitaliseString } from "~/lib/string";
+
 import Text from "~/components/inputs/text";
-import capitaliseString from "~/lib/capitalise-string";
 
 export default function CustomField() {
   const { types } = useFilterTypes();

@@ -4,11 +4,7 @@ import React from "react";
 import useAsync from "~/hooks/use-async";
 import useActiveReport from "~/hooks/reports/use-active-report";
 
-import {
-  WarningPanel,
-  WarningRoot,
-  WarningTrigger,
-} from "~/components/composites/warning";
+import { Warning } from "~/components/composites/warning";
 import Toast from "~/components/regions/toast";
 import useReportSync from "~/hooks/reports/use-report-sync";
 import { deleteReport } from "~/lib/supabase";
@@ -37,14 +33,14 @@ export default function DeleteReportModal({ children }: Props) {
   };
 
   return (
-    <WarningRoot>
+    <Warning>
       <Toast content="Deleting Report..." show={isLoading} />
-      <WarningTrigger className="btn btn-light">{children}</WarningTrigger>
-      <WarningPanel
+      <Warning.Trigger className="btn btn-light">{children}</Warning.Trigger>
+      <Warning.Panel
         heading="Delete Report"
         body="Are you sure you want to delete this report? You won't be able to recover it without "
         onConfirm={handleConfirm}
       />
-    </WarningRoot>
+    </Warning>
   );
 }

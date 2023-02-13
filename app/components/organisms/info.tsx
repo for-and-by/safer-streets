@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 
 import Logo from "~/components/elements/logo";
 
-import Modal from "~/components/composites/modal";
+import { Modal } from "~/components/composites/modal";
 import Tabs from "~/components/composites/tabs";
 
 import content from "~/content";
