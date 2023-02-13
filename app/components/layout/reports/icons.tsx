@@ -1,10 +1,10 @@
 import useMapLayer from "~/hooks/map/use-map-layer";
-import colors from "~/lib/colors";
+import colors from "~/lib/colors.client";
 import useMapEvents from "~/hooks/map/use-map-events";
 import useMap from "~/hooks/map/use-map";
 import useMapCenter from "~/hooks/map/use-map-center";
 import useActiveReport from "~/hooks/reports/use-active-report";
-import { FilterSpecification } from "maplibre-gl";
+import type { FilterSpecification } from "maplibre-gl";
 
 const FILTERS = ["!", ["has", "point_count"]] as FilterSpecification;
 
@@ -20,7 +20,7 @@ export default function ReportIconsLayer() {
     source: "reports",
     filter: FILTERS,
     paint: {
-      "circle-color": colors?.brand[600],
+      "circle-color": colors?.brand?.[600],
       "circle-radius": 20,
     },
   });

@@ -3,16 +3,13 @@ import clsx from "clsx";
 
 import useMapCenter from "~/hooks/map/use-map-center";
 import BaseMarker from "~/components/organisms/map/markers/base";
-import useViewIsActive from "~/hooks/view/use-view-is-active";
-import { VIEWS } from "~/hooks/view/use-view-store";
 
 export default function CenterMarker() {
   const [dragging, setDragging] = useState(false);
 
   const [center, setCenter] = useMapCenter();
-  const isCreateActive = useViewIsActive(VIEWS.CREATE);
 
-  if (!center || !isCreateActive) return null;
+  if (!center) return null;
 
   return (
     <BaseMarker

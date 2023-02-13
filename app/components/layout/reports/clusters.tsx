@@ -1,10 +1,10 @@
 import useMapLayer from "~/hooks/map/use-map-layer";
-import colors from "~/lib/colors";
 import useMapCenter from "~/hooks/map/use-map-center";
 import useMapEvents from "~/hooks/map/use-map-events";
 import useMap from "~/hooks/map/use-map";
 import useMapZoom from "~/hooks/map/use-map-zoom";
-import { GeoJSONSource } from "maplibre-gl";
+import type { GeoJSONSource } from "maplibre-gl";
+import colors from "~/lib/colors.client";
 
 interface Props {
   source: string;
@@ -15,13 +15,15 @@ export default function ReportClustersLayer({ source }: Props) {
   const [, setCenter] = useMapCenter();
   const [, { setZoom }] = useMapZoom();
 
+  console.log();
+
   useMapLayer({
     id: "clusters-bg",
     type: "circle",
     source,
     filter: ["has", "point_count"],
     paint: {
-      "circle-color": colors.brand["800"],
+      "circle-color": colors?.brand?.["800"],
       "circle-radius": 20,
     },
   });
@@ -37,7 +39,7 @@ export default function ReportClustersLayer({ source }: Props) {
       "text-size": 12,
     },
     paint: {
-      "text-color": colors.gray["100"],
+      "text-color": colors?.white,
     },
   });
 

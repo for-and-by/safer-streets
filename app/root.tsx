@@ -1,5 +1,6 @@
 import React from "react";
 import type { LinksFunction, MetaFunction } from "@remix-run/cloudflare";
+import { json } from "@remix-run/cloudflare";
 import {
   Links,
   LiveReload,
@@ -12,6 +13,8 @@ import {
 import styles from "~/styles/build.css";
 import icons from "~/icons/css/icons.css";
 import { Layout } from "~/components/templates/layout";
+import type { LoaderFunction } from "@remix-run/router";
+import { fetchReports } from "~/lib/supabase";
 
 const maplibre = "https://unpkg.com/maplibre-gl@2.1.9/dist/maplibre-gl.css";
 const fonts =
@@ -30,6 +33,13 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: maplibre },
   { rel: "stylesheet", href: fonts },
 ];
+
+export const loader: LoaderFunction = async () => {
+  const reports = await fetchReports();
+  return json({
+    reports,
+  });
+};
 
 export default function App() {
   return (

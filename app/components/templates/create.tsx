@@ -7,20 +7,18 @@ import CreatePagination from "~/components/templates/create/pagination";
 
 import { VIEWS } from "~/hooks/view/use-view-store";
 import useViewIsActive from "~/hooks/view/use-view-is-active";
-import useReportUpload from "~/hooks/reports/use-report-upload";
 import useMapLock from "~/hooks/map/use-map-lock";
 
 import Header from "~/components/regions/header";
 import Footer from "~/components/regions/footer";
 import ProgressBar from "~/components/atoms/progress-bar";
-import Bumper from "~/components/atoms/bumper";
 import Toast from "~/components/regions/toast";
 import CenterMarker from "~/components/organisms/map/markers/center";
 import { useNavigate, useTransition } from "@remix-run/react";
 import { Warning } from "~/components/composites/warning";
 
 export function CreateTemplate() {
-  const { state } = useTransition();
+  const { type, state } = useTransition();
   const navigate = useNavigate();
 
   const isCreateShow = useViewIsActive(VIEWS.CREATE);
@@ -34,7 +32,6 @@ export function CreateTemplate() {
 
   const { resetStage, stage } = useCreateContext();
   const [, { setUnlock }] = useMapLock();
-  const { isUploading } = useReportUpload();
 
   useEffect(() => {
     if (!isCreateShow) {
@@ -45,11 +42,15 @@ export function CreateTemplate() {
   }, [isCreateShow]);
 
   return (
-    <FormProvider {...methods}>
-      <Warning>
-        <CenterMarker />
-        <Header>
-          <Bumper show={state === "idle"} className="flex flex-col bg-white">
+    <>
+      <CenterMarker />
+      <Toast show={state === "submitting"} content="Uploading report..." />
+      <FormProvider {...methods}>
+        <Warning>
+          <Header
+            show={type !== "normalRedirect"}
+            className="flex flex-col bg-white"
+          >
             <div className="flex flex-row p-2">
               <Warning.Trigger className="btn btn-light">
                 <i className="btn-icon icon icon-left" />
@@ -60,11 +61,9 @@ export function CreateTemplate() {
               </div>
             </div>
             <ProgressBar value={stage.progress} />
-          </Bumper>
-        </Header>
-        <Footer>
-          <Bumper
-            show={state === "idle"}
+          </Header>
+          <Footer
+            show={type !== "normalRedirect"}
             className="divider-gray-200 flex flex-col divide-y bg-white"
           >
             <div className="p-3">
@@ -76,15 +75,14 @@ export function CreateTemplate() {
             <div className="flex flex-row justify-between p-2">
               <CreatePagination />
             </div>
-          </Bumper>
-        </Footer>
-        <Toast show={isUploading} content="Uploading report..." />
-        <Warning.Panel
-          heading="Cancel Report Submission"
-          body="Are you sure you want to cancel this submission? All data submitted up to this point will be lost."
-          onConfirm={() => navigate("/")}
-        />
-      </Warning>
-    </FormProvider>
+          </Footer>
+          <Warning.Panel
+            heading="Cancel Report Submission"
+            body="Are you sure you want to cancel this submission? All data submitted up to this point will be lost."
+            onConfirm={() => navigate("/")}
+          />
+        </Warning>
+      </FormProvider>
+    </>
   );
 }

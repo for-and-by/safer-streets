@@ -3,20 +3,17 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 import type { Report } from "~/types/db";
-import type { FormValues } from "~/types/form";
 
-import { fetchReports, uploadFile, uploadReport } from "~/lib/supabase";
+import { fetchReports } from "~/lib/supabase";
 
 interface State {
   reports: Report[];
   activeReportId: Report["id"];
   lastSynced: string;
   isSyncing: boolean;
-  isUploading: boolean;
 }
 
 interface Actions {
-  uploadReport: (values: FormValues) => Promise<void>;
   syncReports: () => Promise<void>;
   setActiveReportId: (id: Report["id"]) => void;
 }
@@ -28,7 +25,6 @@ const initialState: State = {
   activeReportId: undefined,
   lastSynced: new Date(0).toISOString(),
   isSyncing: false,
-  isUploading: false,
 };
 
 const store: StateCreator<Store, [["zustand/persist", unknown]]> = (
@@ -36,14 +32,6 @@ const store: StateCreator<Store, [["zustand/persist", unknown]]> = (
   get
 ) => ({
   ...initialState,
-  uploadReport: async (values: FormValues) => {
-    set({ isUploading: true });
-    const { syncReports } = get();
-    const imageUrl = await uploadFile(values.image);
-    await uploadReport(values, imageUrl);
-    set({ isUploading: false });
-    await syncReports();
-  },
   syncReports: async () => {
     const { reports: currentReports, lastSynced } = get();
     set({ isSyncing: true });

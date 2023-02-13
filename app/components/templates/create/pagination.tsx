@@ -1,16 +1,16 @@
 import React from "react";
-import { useFormContext } from "react-hook-form";
-import { EXIT, useCreateContext } from "~/components/templates/create/context";
-import useReportUpload from "~/hooks/reports/use-report-upload";
-import { Warning } from "~/components/composites/warning";
 import { useSubmit } from "@remix-run/react";
+import type { SubmitErrorHandler, SubmitHandler } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
+
+import { EXIT, useCreateContext } from "~/components/templates/create/context";
+import { Warning } from "~/components/composites/warning";
 
 export default function CreatePagination() {
-  const { stage, nextStage, prevStage, stages } = useCreateContext();
-  const { trigger, handleSubmit } = useFormContext();
   const submit = useSubmit();
+  const { trigger, handleSubmit } = useFormContext();
 
-  const { uploadReport, isUploading } = useReportUpload();
+  const { stage, nextStage, prevStage, stages } = useCreateContext();
 
   const handleNext = () => {
     trigger().then((result) => {
@@ -20,11 +20,14 @@ export default function CreatePagination() {
     });
   };
 
-  const handleComplete = () => {
-    handleSubmit(async (values) => {
-      const data = new FormData();
-      console.log(values);
-    });
+  const handleSuccess: SubmitHandler<any> = (values) => {
+    const data = new FormData();
+    data.append("create", JSON.stringify(values));
+    submit(data, { method: "post", action: "/create" });
+  };
+
+  const handleError: SubmitErrorHandler<any> = (errors) => {
+    throw errors;
   };
 
   return (
@@ -41,7 +44,10 @@ export default function CreatePagination() {
         </button>
       )}
       {stage.next === EXIT.SUBMIT ? (
-        <button className="btn btn-primary" onClick={handleComplete}>
+        <button
+          className="btn btn-primary"
+          onClick={handleSubmit(handleSuccess, handleError)}
+        >
           <p className="btn-text">Submit Report</p>
         </button>
       ) : (

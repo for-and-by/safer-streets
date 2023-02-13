@@ -10,6 +10,7 @@ import Controls from "~/components/layout/controls";
 import Body from "~/components/regions/body";
 import Footer from "~/components/regions/footer";
 import BottomBar from "~/components/layout/bottom-bar";
+import Reports from "~/components/layout/reports";
 
 interface Props {
   children: ReactNode;
@@ -18,16 +19,10 @@ interface Props {
 export function Layout({ children }: Props) {
   return (
     <MapProvider>
-      {/*<Home />*/}
-      {/*<Search />*/}
-      {/*<Report />*/}
-      {/*<CreateProvider>*/}
-      {/*  <Create />*/}
-      {/*</CreateProvider>*/}
       {children}
       <div className="layer z-10">
         <Map className="absolute inset-0 h-screen w-screen">
-          {/*<Reports />*/}
+          <Reports />
         </Map>
       </div>
       <div className="layer pointer-events-none z-20">

@@ -1,20 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import parseReportsAsGeoJSON from "~/lib/parse-reports-as-geojson";
-
-import useReports from "~/hooks/reports/use-reports";
-import useReportSync from "~/hooks/reports/use-report-sync";
 import useMapSource from "~/hooks/map/use-map-source";
 import useMapImages from "~/hooks/map/use-map-images";
-
-import Toast from "~/components/regions/toast";
+import SummaryMarker from "~/components/organisms/map/popup/summary";
 import ReportClustersLayer from "~/components/layout/reports/clusters";
 import ReportIconsLayer from "~/components/layout/reports/icons";
-import SummaryMarker from "~/components/organisms/map/popup/summary";
+import { useLoaderData } from "@remix-run/react";
 
 export default function Reports() {
-  const reports = useReports();
-  const { syncReports, isSyncing } = useReportSync();
+  const { reports } = useLoaderData();
 
   useMapImages([
     {
@@ -51,13 +46,9 @@ export default function Reports() {
     filter: ["!", ["get", "is_deleted"]],
   });
 
-  useEffect(() => {
-    syncReports().finally();
-  }, []);
-
   return (
     <>
-      <Toast content={"Syncing Reports..."} show={isSyncing} />
+      {/*<Toast content={"Syncing Reports..."} show={isSyncing} />*/}
       <SummaryMarker />
       <ReportClustersLayer source="reports" />
       <ReportIconsLayer />
