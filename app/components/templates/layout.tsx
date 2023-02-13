@@ -26,7 +26,9 @@ export function Layout({ children }: Props) {
       {/*</CreateProvider>*/}
       {children}
       <div className="layer z-10">
-        <Map className="absolute inset-0">{/*<Reports />*/}</Map>
+        <Map className="absolute inset-0 h-screen w-screen">
+          {/*<Reports />*/}
+        </Map>
       </div>
       <div className="layer pointer-events-none z-20">
         <div className="clamp mx-auto flex h-full flex-col drop-shadow-lg">
