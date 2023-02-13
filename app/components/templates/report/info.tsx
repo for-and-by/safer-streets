@@ -1,12 +1,11 @@
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
-import { ReportFull } from "~/types/db";
+import { useLoaderData } from "@remix-run/react";
 
-interface Props {
-  data: ReportFull | null | undefined;
-}
+export default function ReportInfo() {
+  const loader = useLoaderData();
+  const data = loader?.report;
 
-export default function ReportInfo({ data }: Props) {
   const [fullImage, setFullImage] = useState(false);
   const [content, setContent] = useState<{ [key: string]: string | undefined }>(
     {}

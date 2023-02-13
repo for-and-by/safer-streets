@@ -22,7 +22,7 @@ import Show from "~/components/atoms/show";
 import Bumper from "~/components/atoms/bumper";
 import FindSelfButton from "~/components/atoms/find-self-button";
 
-export function SearchTemplate() {
+export function SearchIndexTemplate() {
   const { state, type } = useTransition();
   const search = useActionData<SearchResponse>();
 

@@ -3,16 +3,14 @@ import React, { useEffect, useState } from "react";
 import useAsync from "~/hooks/use-async";
 import Toast from "~/components/regions/toast";
 import useActiveReport from "~/hooks/reports/use-active-report";
-import useView from "~/hooks/view/use-view";
 import { VIEWS } from "~/hooks/view/use-view-store";
 import BaseMarker from "~/components/organisms/map/markers/base";
 import useViewIsActive from "~/hooks/view/use-view-is-active";
 import { fetchReportSummary } from "~/lib/supabase";
+import { Link } from "@remix-run/react";
 
 export default function SummaryMarker() {
   const [show, setShow] = useState(false);
-
-  const [, setView] = useView();
 
   const [activeReportId, setActiveReportId] = useActiveReport();
   const isReportActive = useViewIsActive(VIEWS.REPORT);
@@ -30,10 +28,6 @@ export default function SummaryMarker() {
     reset();
     setShow(false);
     setActiveReportId(undefined);
-  };
-
-  const handleMoreDetails = () => {
-    setView(VIEWS.REPORT);
   };
 
   useEffect(() => {
@@ -74,9 +68,9 @@ export default function SummaryMarker() {
             <div className="flex flex-col p-2">
               <p className="text-bold">{data.type.title}</p>
               <p className="text-gray-400">{data.content.severity.title}</p>
-              <button className="text-brand-600" onClick={handleMoreDetails}>
+              <Link to={`/report/${data.id}`} className="text-brand-600">
                 <p className="btn-text">See details</p>
-              </button>
+              </Link>
             </div>
           </div>
         </div>

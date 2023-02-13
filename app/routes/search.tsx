@@ -3,7 +3,7 @@ import type { ActionFunction } from "@remix-run/router";
 
 import type { SearchFeature } from "~/types/search";
 import geocode from "~/lib/geocode";
-import { SearchTemplate } from "~/components/templates/search";
+import { SearchIndexTemplate } from "~/components/templates/search";
 
 export interface SearchResponse {
   results: SearchFeature[];
@@ -32,5 +32,5 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Search() {
-  return <SearchTemplate />;
+  return <SearchIndexTemplate />;
 }

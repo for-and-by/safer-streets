@@ -7,7 +7,7 @@ import Footer from "~/components/regions/footer";
 import Logo from "~/components/atoms/logo";
 import useMapLock from "~/hooks/map/use-map-lock";
 
-export function HomeTemplate() {
+export function HomeIndexTemplate() {
   const { state } = useTransition();
   const [isLocked, { setUnlock }] = useMapLock();
 
