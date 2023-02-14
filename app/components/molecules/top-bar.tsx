@@ -1,5 +1,5 @@
 import React from "react";
-import InfoModal from "~/components/organisms/info";
+import { Link } from "@remix-run/react";
 
 export default function TopBar() {
   return (
@@ -9,9 +9,9 @@ export default function TopBar() {
           Endorsed By Jonathan Sriranganathan
         </p>
       </div>
-      <InfoModal className="flex h-full items-center px-2">
+      <Link to="/about" className="flex h-full items-center px-2">
         <i className="icon icon-info icon-sm before:text-brand-700" />
-      </InfoModal>
+      </Link>
     </div>
   );
 }
