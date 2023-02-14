@@ -1,5 +1,5 @@
 import React from "react";
-import BaseMarker from "~/components/organisms/map/markers/base";
+import BaseMarker from "~/components/molecules/markers/base";
 import useViewIsActive from "~/hooks/view/use-view-is-active";
 import { VIEWS } from "~/hooks/view/use-view-store";
 import type { LngLatLike } from "maplibre-gl";

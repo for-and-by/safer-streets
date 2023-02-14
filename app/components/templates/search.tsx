@@ -15,7 +15,7 @@ import Header from "~/components/regions/header";
 import Body from "~/components/regions/body";
 import Footer from "~/components/regions/footer";
 
-import Text from "~/components/molecules/inputs/text";
+import Text from "~/components/inputs/text";
 import SearchResults from "~/components/molecules/search-results";
 
 import Show from "~/components/atoms/show";
@@ -23,7 +23,7 @@ import Bumper from "~/components/atoms/bumper";
 import FindSelfButton from "~/components/atoms/find-self-button";
 
 export default function SearchIndexTemplate() {
-  const { state, type } = useTransition();
+  const { state } = useTransition();
   const search = useActionData<SearchResponse>();
 
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ export default function SearchIndexTemplate() {
   return (
     <>
       <Toast content="Finding results..." show={state === "submitting"} />
-      <Header show={type !== "normalRedirect"}>
+      <Header>
         <div className="flex flex-row items-center bg-white p-2">
           <Link to="/" className="btn btn-light">
             <i className="btn-icon icon icon-left" />
@@ -70,7 +70,7 @@ export default function SearchIndexTemplate() {
           <SearchResults results={search?.results} />
         </Bumper>
       </Body>
-      <Footer show={type !== "normalRedirect"}>
+      <Footer>
         <div className="flex flex-row items-center space-x-2 bg-white p-2">
           <Text
             value={value}

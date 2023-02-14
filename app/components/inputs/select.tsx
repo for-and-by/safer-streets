@@ -1,7 +1,7 @@
-import type { ComponentProps} from "react";
+import type { ComponentProps } from "react";
 import React, { forwardRef } from "react";
 
-import Wrapper from "~/components/molecules/inputs/wrapper";
+import Wrapper from "~/components/inputs/wrapper";
 import type { FieldError } from "react-hook-form";
 
 interface Props extends ComponentProps<"select"> {

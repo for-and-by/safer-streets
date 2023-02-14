@@ -3,14 +3,14 @@ import React from "react";
 
 import MapProvider from "~/components/organisms/map/context";
 import Map from "~/components/organisms/map";
-import TopBar from "~/components/layout/top-bar";
+import TopBar from "~/components/molecules/top-bar";
 import Header from "~/components/regions/header";
 import Toast from "~/components/regions/toast";
-import Controls from "~/components/layout/controls";
+import Controls from "~/components/molecules/controls";
 import Body from "~/components/regions/body";
 import Footer from "~/components/regions/footer";
-import BottomBar from "~/components/layout/bottom-bar";
-import Reports from "~/components/layout/reports";
+import BottomBar from "~/components/molecules/bottom-bar";
+import Reports from "~/components/molecules/reports";
 
 interface Props {
   children: ReactNode;

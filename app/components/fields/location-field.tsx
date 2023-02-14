@@ -1,7 +1,7 @@
 import React from "react";
 import { useController, useFormContext } from "react-hook-form";
 
-import MapCenterInput from "~/components/molecules/inputs/map-center";
+import MapCenterInput from "~/components/inputs/map-center";
 
 export default function LocationField() {
   const { control } = useFormContext();

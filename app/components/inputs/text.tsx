@@ -3,7 +3,7 @@ import clsx from "clsx";
 
 import type { FieldError } from "react-hook-form";
 
-import Wrapper from "~/components/molecules/inputs/wrapper";
+import Wrapper from "~/components/inputs/wrapper";
 
 interface Props extends React.ComponentPropsWithRef<"input"> {
   icon?: string;

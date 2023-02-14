@@ -3,9 +3,9 @@ import React from "react";
 import parseReportsAsGeoJSON from "~/lib/parse-reports-as-geojson";
 import useMapSource from "~/hooks/map/use-map-source";
 import useMapImages from "~/hooks/map/use-map-images";
-import SummaryMarker from "~/components/organisms/map/popup/summary";
-import ReportClustersLayer from "~/components/layout/reports/clusters";
-import ReportIconsLayer from "~/components/layout/reports/icons";
+import SummaryMarker from "~/components/molecules/popup/summary";
+import ReportClustersLayer from "~/components/molecules/reports/clusters";
+import ReportIconsLayer from "~/components/molecules/reports/icons";
 import { useLoaderData } from "@remix-run/react";
 
 export default function Reports() {

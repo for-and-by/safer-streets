@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import clsx from "clsx";
 
 import useMapCenter from "~/hooks/map/use-map-center";
-import BaseMarker from "~/components/organisms/map/markers/base";
+import BaseMarker from "~/components/molecules/markers/base";
 
 export default function CenterMarker() {
   const [dragging, setDragging] = useState(false);

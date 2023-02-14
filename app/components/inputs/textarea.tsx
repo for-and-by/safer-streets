@@ -1,6 +1,6 @@
 import React from "react";
 import clsx from "clsx";
-import Wrapper from "~/components/molecules/inputs/wrapper";
+import Wrapper from "~/components/inputs/wrapper";
 import type { FieldError } from "react-hook-form";
 
 interface Props extends React.ComponentPropsWithRef<"textarea"> {

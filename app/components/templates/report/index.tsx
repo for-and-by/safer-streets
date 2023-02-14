@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import React, { useEffect } from "react";
-import { Link, useLoaderData, useTransition } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 
 import type { ReportFull } from "~/types/db";
 
@@ -8,15 +8,13 @@ import useMapLock from "~/hooks/map/use-map-lock";
 
 import Header from "~/components/regions/header";
 
-import ReportMarker from "~/components/organisms/map/markers/report";
+import ReportMarker from "~/components/molecules/markers/report";
 
 interface Props {
   children: ReactNode;
 }
 
 export default function ReportIndexTemplate({ children }: Props) {
-  const { type } = useTransition();
-
   const loader = useLoaderData();
   const data = loader.report as ReportFull;
 
@@ -30,7 +28,7 @@ export default function ReportIndexTemplate({ children }: Props) {
   return (
     <>
       <ReportMarker coordinates={data} />
-      <Header show={type !== "normalRedirect"}>
+      <Header>
         <div className="flex flex-row items-center bg-white p-2">
           <Link to="/" className="btn btn-light">
             <i className="btn-icon icon icon-left" />

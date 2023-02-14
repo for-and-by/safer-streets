@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link, useTransition } from "@remix-run/react";
+import { Link } from "@remix-run/react";
 
 import Header from "~/components/regions/header";
 import Footer from "~/components/regions/footer";
@@ -8,7 +8,6 @@ import Logo from "~/components/atoms/logo";
 import useMapLock from "~/hooks/map/use-map-lock";
 
 export default function HomeIndexTemplate() {
-  const { state } = useTransition();
   const [isLocked, { setUnlock }] = useMapLock();
 
   useEffect(() => {
@@ -18,7 +17,7 @@ export default function HomeIndexTemplate() {
 
   return (
     <>
-      <Header show={state === "idle"}>
+      <Header>
         <div className="flex flex-row items-center bg-white p-2">
           <div className="ml-3 flex-grow">
             <Logo />
@@ -28,7 +27,7 @@ export default function HomeIndexTemplate() {
           </Link>
         </div>
       </Header>
-      <Footer show={state === "idle"}>
+      <Footer>
         <div className="flex flex-row items-center bg-white p-2">
           <Link to="/create" className="btn btn-primary w-full">
             <i className="btn-icon icon icon-pin-add" />

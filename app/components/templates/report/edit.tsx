@@ -1,18 +1,21 @@
+import React from "react";
 import { Link, useRouteLoaderData, useTransition } from "@remix-run/react";
 import { FormProvider, useForm } from "react-hook-form";
-import SeverityField from "~/components/molecules/fields/severity-field";
-import TypeField from "~/components/molecules/fields/type-field";
-import CustomField from "~/components/molecules/fields/custom-field";
-import DetailsField from "~/components/molecules/fields/details-field";
-import ImageField from "~/components/molecules/fields/image-field";
-import React from "react";
-import Footer from "~/components/regions/footer";
+
 import type { ReportFull } from "~/types/db";
 import { parseImageUrl } from "~/lib/parse-image-url";
+
 import Toast from "~/components/regions/toast";
+import Footer from "~/components/regions/footer";
+
+import SeverityField from "~/components/fields/severity-field";
+import TypeField from "~/components/fields/type-field";
+import CustomField from "~/components/fields/custom-field";
+import DetailsField from "~/components/fields/details-field";
+import ImageField from "~/components/fields/image-field";
 
 export default function ReportEditTemplate() {
-  const { type, state } = useTransition();
+  const { state } = useTransition();
 
   const loader = useRouteLoaderData("routes/report") as { report: ReportFull };
   const data = loader.report;
@@ -30,7 +33,7 @@ export default function ReportEditTemplate() {
   return (
     <>
       <Toast content="Saving new details..." show={state === "submitting"} />
-      <Footer show={type !== "normalRedirect"}>
+      <Footer>
         <div className="max-h-[50vh] divide-y divide-gray-200 overflow-y-scroll">
           <div className="p-3">
             <p>Update the details of this report</p>

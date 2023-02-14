@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import useAsync from "~/hooks/use-async";
 import Toast from "~/components/regions/toast";
 import useActiveReport from "~/hooks/reports/use-active-report";
-import BaseMarker from "~/components/organisms/map/markers/base";
+import BaseMarker from "~/components/molecules/markers/base";
 import { fetchReportSummary } from "~/lib/supabase";
 import { Link } from "@remix-run/react";
 import { parseImageUrl } from "~/lib/parse-image-url";

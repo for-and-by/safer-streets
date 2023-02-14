@@ -9,12 +9,12 @@ import Header from "~/components/regions/header";
 import Footer from "~/components/regions/footer";
 import ProgressBar from "~/components/atoms/progress-bar";
 import Toast from "~/components/regions/toast";
-import CenterMarker from "~/components/organisms/map/markers/center";
+import CenterMarker from "~/components/molecules/markers/center";
 import { useNavigate, useTransition } from "@remix-run/react";
 import { Warning } from "~/components/composites/warning";
 
 export default function CreateIndexTemplate() {
-  const { type, state } = useTransition();
+  const { state } = useTransition();
   const navigate = useNavigate();
 
   const { stage } = useCreateContext();
@@ -33,7 +33,7 @@ export default function CreateIndexTemplate() {
       <Toast show={state === "submitting"} content="Uploading report..." />
       <FormProvider {...methods}>
         <Warning>
-          <Header show={type !== "normalRedirect"}>
+          <Header>
             <div className="flex flex-col bg-white">
               <div className="flex flex-row p-2">
                 <Warning.Trigger className="btn btn-light">
@@ -49,7 +49,7 @@ export default function CreateIndexTemplate() {
               <ProgressBar value={stage.progress} />
             </div>
           </Header>
-          <Footer show={type !== "normalRedirect"}>
+          <Footer>
             <div className="divider-gray-200 flex flex-col divide-y bg-white">
               <div className="p-3">
                 <p className="text-base">{stage.description}</p>

@@ -4,7 +4,7 @@ import { Controller, useFormContext, useWatch } from "react-hook-form";
 import { useFilterTypes } from "~/hooks/filter/use-filter-types";
 import { capitaliseString } from "~/lib/string";
 
-import Text from "~/components/molecules/inputs/text";
+import Text from "~/components/inputs/text";
 
 export default function CustomField() {
   const { types } = useFilterTypes();

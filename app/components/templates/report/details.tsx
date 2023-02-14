@@ -1,18 +1,27 @@
-import clsx from "clsx";
 import React, { useEffect, useState } from "react";
-import { Link, useRouteLoaderData, useTransition } from "@remix-run/react";
-import { parseDateAsString } from "~/lib/parse-date-as-string";
-import DeleteReportModal from "~/components/templates/report/delete";
-import Footer from "~/components/regions/footer";
+import {
+  Link,
+  useRouteLoaderData,
+  useSubmit,
+  useTransition,
+} from "@remix-run/react";
+
 import type { ReportFull } from "~/types/db";
+import { parseDateAsString } from "~/lib/parse-date-as-string";
+
+import Footer from "~/components/regions/footer";
+import Toast from "~/components/regions/toast";
+
+import { Warning } from "~/components/composites/warning";
+import { ImageCollapse } from "~/components/molecules/image-collapse";
 
 export default function ReportDetailsTemplate() {
-  const { type } = useTransition();
+  const { state } = useTransition();
+  const submit = useSubmit();
 
   const loader = useRouteLoaderData("routes/report") as { report: ReportFull };
   const data = loader.report;
 
-  const [fullImage, setFullImage] = useState(false);
   const [content, setContent] = useState<{ [key: string]: string | undefined }>(
     {}
   );
@@ -29,53 +38,47 @@ export default function ReportDetailsTemplate() {
     }
   }, [data]);
 
+  const handleDelete = () => {
+    submit(null, { action: `/report/${data.id}/delete`, method: "delete" });
+  };
+
   if (!data) return null;
 
   return (
-    <Footer show={type !== "normalRedirect"}>
-      <div className="max-h-[50vh] divide-y divide-gray-200 overflow-y-scroll">
-        {data.content.image_url ? (
-          <div
-            className={clsx(
-              "relative overflow-hidden transition-all",
-              !fullImage ? "h-36" : "h-96"
-            )}
-          >
-            <button
-              className="btn btn-white absolute bottom-2 right-2 z-20"
-              onClick={() => setFullImage((state) => !state)}
-            >
-              <i
-                className={clsx(
-                  "btn-icon icon",
-                  !fullImage ? "icon-plus" : "icon-minus"
-                )}
-              />
-            </button>
-            <img
-              src={data.content.image_url?.replace("/users/users", "/users")}
-              alt={`Report ${data.id} Thumbnail`}
-              className="h-full w-full object-cover"
-            />
-          </div>
-        ) : null}
-        <div className="flex flex-col space-y-2 p-2">
-          {Object.keys(content).map((key) => (
-            <div key={key} className="flex bg-gray-100 p-3">
-              <p className="min-w-[112px] capitalize text-gray-400">{key}</p>
-              <p>{content[key]}</p>
+    <>
+      <Toast content="Deleting report..." show={state === "submitting"} />
+      <Warning>
+        <Footer>
+          <div className="max-h-[50vh] divide-y divide-gray-200 overflow-y-scroll">
+            {data.content.image_url ? (
+              <ImageCollapse src={data.content.image_url} />
+            ) : null}
+            <div className="flex flex-col space-y-2 p-2">
+              {Object.keys(content).map((key) => (
+                <div key={key} className="flex bg-gray-100 p-3">
+                  <p className="min-w-[112px] capitalize text-gray-400">
+                    {key}
+                  </p>
+                  <p>{content[key]}</p>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <div className="sticky bottom-0 flex justify-between bg-white p-2 shadow-md">
-          <Link to={`/report/${data.id}/edit`} className="btn btn-primary">
-            <p className="btn-text">Edit Report</p>
-          </Link>
-          <DeleteReportModal>
-            <p className="btn-text">Delete</p>
-          </DeleteReportModal>
-        </div>
-      </div>
-    </Footer>
+            <div className="sticky bottom-0 flex justify-between bg-white p-2 shadow-md">
+              <Link to={`/report/${data.id}/edit`} className="btn btn-primary">
+                <p className="btn-text">Edit Report</p>
+              </Link>
+              <Warning.Trigger className="btn btn-light">
+                <p className="btn-text">Delete</p>
+              </Warning.Trigger>
+            </div>
+          </div>
+        </Footer>
+        <Warning.Panel
+          heading="Delete Report"
+          body="Are you sure you want to delete this report? You won't be able to recover it without "
+          onConfirm={handleDelete}
+        />
+      </Warning>
+    </>
   );
 }
