@@ -1,10 +1,10 @@
 import FindSelfButton from "~/components/atoms/find-self-button";
 import useMapCenter from "~/hooks/map/use-map-center";
 import React, { useEffect } from "react";
-import useGeocoderInline from "~/hooks/geocoder/use-geocoder-inline";
 import Show from "~/components/atoms/show";
 import type { LngLatLike } from "maplibre-gl";
 import parseLngLat from "~/lib/parse-lng-lat";
+import useSearch from "~/hooks/use-search";
 
 interface Props {
   onCenterChange?: (center: LngLatLike) => void;
@@ -16,28 +16,30 @@ export default function MapCenterInput({
   onAddressChange,
 }: Props) {
   const [center] = useMapCenter();
-  const { isLoading, results } = useGeocoderInline(center);
+  const { state, data } = useSearch(center);
 
   useEffect(() => {
     if (onCenterChange) onCenterChange(parseLngLat(center));
   }, [center]);
 
   useEffect(() => {
-    if (onAddressChange && results?.[0]?.heading)
-      onAddressChange(results[0].heading);
-  }, [results]);
+    if (onAddressChange && data?.results?.[0]?.heading)
+      onAddressChange(data?.results[0].heading);
+  }, [data]);
 
   return (
     <div className="flex w-full flex-row items-center space-x-4 rounded bg-gray-100 p-3">
       <div className="space-y flex flex-grow flex-col">
         <p className="text-gray-400">Approximate Address</p>
         <p className="text-gray-900">
-          {!isLoading && !!results && results.length > 0
-            ? results?.[0].heading
+          {!(state === "submitting") &&
+          !!data?.results &&
+          data.results?.length > 0
+            ? data?.results?.[0].heading
             : "Searching for address..."}
         </p>
       </div>
-      <Show on={isLoading}>
+      <Show on={state === "submitting"}>
         <i className="icon icon-circle-anim icon-is-spinning before:text-black" />
       </Show>
       <FindSelfButton />

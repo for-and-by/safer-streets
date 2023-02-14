@@ -15,8 +15,6 @@ export default function ReportClustersLayer({ source }: Props) {
   const [, setCenter] = useMapCenter();
   const [, { setZoom }] = useMapZoom();
 
-  console.log();
-
   useMapLayer({
     id: "clusters-bg",
     type: "circle",
