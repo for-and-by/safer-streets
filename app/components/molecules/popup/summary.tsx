@@ -54,7 +54,10 @@ export default function SummaryMarker({ onClose, id }: Props) {
             <div className="h-16 w-48 overflow-hidden rounded-t bg-gray-100">
               {summary?.content?.image_url ? (
                 <img
-                  src={parseImageUrl(summary.content.image_url)}
+                  src={parseImageUrl(summary.content.image_url, {
+                    height: 270,
+                    width: 480,
+                  })}
                   alt={`Report ${summary.id} Thumbnail`}
                   className="h-full w-full object-cover"
                 />

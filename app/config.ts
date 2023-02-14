@@ -2,7 +2,8 @@ export const config = {
   seo: {
     default: {
       title: "Safer Streets",
-      icon: "/favicon.png",
+      description:
+        "Safer Streets is a community managed hazard reporting platform that helps individuals to share safety issues with their local area.",
     },
   },
 

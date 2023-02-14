@@ -1,11 +1,13 @@
 import React from "react";
-import type { ActionFunction } from "@remix-run/router";
+import type { ActionFunction, MetaFunction } from "@remix-run/cloudflare";
+import { json } from "@remix-run/cloudflare";
+
+import { config } from "~/config";
 
 import type { SearchFeature } from "~/types/search";
 import geocode from "~/lib/geocode";
 
 import SearchIndexTemplate from "~/components/templates/search";
-import { json } from "@remix-run/cloudflare";
 
 export interface SearchResponse {
   results: SearchFeature[];
@@ -20,6 +22,11 @@ function generateSearchResponse(features: SearchFeature[]): SearchResponse {
     isEmpty: features.length === 0,
   };
 }
+
+export const meta: MetaFunction = () => ({
+  title: "Search | " + config.seo.default.title,
+  description: config.seo.default.description,
+});
 
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();

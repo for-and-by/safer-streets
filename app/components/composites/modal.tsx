@@ -82,7 +82,7 @@ function Panel({ children, className }: PropsPanel) {
   return (
     <div
       className={clsx(
-        "clamp absolute left-1/2 bottom-0 -translate-x-1/2 rounded-t bg-white transition-all",
+        "clamp absolute left-1/2 bottom-8 -translate-x-1/2 rounded bg-white transition-all",
         isShow ? "translate-y-0" : "translate-y-8",
         className
       )}
