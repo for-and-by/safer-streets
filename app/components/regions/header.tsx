@@ -1,26 +1,26 @@
-import type { ComponentProps } from "react";
+import type { ReactNode } from "react";
 import React from "react";
 import Portal from "~/components/atoms/portal";
 import Bumper from "~/components/atoms/bumper";
 
 const REGION_ID = "header";
 
-type PropsRoot = ComponentProps<typeof Bumper>;
+interface PropsRoot {
+  children: ReactNode;
+}
 
-function Root(props: PropsRoot) {
-  return (
-    <Portal selector={`#${REGION_ID}`}>
-      <Bumper {...props} />
-    </Portal>
-  );
+function Root({ children }: PropsRoot) {
+  return <Portal selector={`#${REGION_ID}`}>{children}</Portal>;
 }
 
 function Container() {
   return (
-    <div
-      className="pointer-events-auto flex flex-col overflow-hidden rounded-b"
-      id={REGION_ID}
-    />
+    <Bumper>
+      <div
+        className="pointer-events-auto flex flex-col overflow-hidden rounded-b"
+        id={REGION_ID}
+      />
+    </Bumper>
   );
 }
 

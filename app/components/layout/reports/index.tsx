@@ -48,7 +48,6 @@ export default function Reports() {
 
   return (
     <>
-      {/*<Toast content={"Syncing Reports..."} show={isSyncing} />*/}
       <SummaryMarker />
       <ReportClustersLayer source="reports" />
       <ReportIconsLayer />
