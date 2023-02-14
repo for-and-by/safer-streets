@@ -13,7 +13,7 @@ import { createClient } from "@supabase/supabase-js";
 import { config } from "~/config";
 
 import { decode } from "base64-arraybuffer";
-import type { FormValues } from "~/types/form";
+import type { FormCreateValues, FormUpdateValues } from "~/types/form";
 import parseLngLat from "~/lib/parse-lng-lat";
 
 export const supabase = createClient(config.supabase.url, config.supabase.key);
@@ -62,6 +62,70 @@ export async function deleteReport(id: number) {
   return { report, content, clone, update };
 }
 
+export async function updateReport(
+  values: FormUpdateValues,
+  imageUrl?: string
+) {
+  const report = await supabase
+    .from<Report>("reports")
+    .select("content_id")
+    .eq("id", values.id)
+    .limit(1)
+    .single();
+
+  if (report.error) throw report.error;
+  if (!report.data) throw `No report with id ${values.id} found.`;
+
+  const content = await supabase
+    .from<ReportContent>("reports_content")
+    .select("*")
+    .eq("id", report.data.content_id)
+    .limit(1)
+    .single();
+
+  if (content.error) throw content.error;
+  if (!content.data)
+    throw `No content with id ${report.data.content_id} found.`;
+
+  const { id: _, ...clonedData } = content.data;
+
+  const mappedContentValues: Partial<ReportContent> = {
+    image_url: imageUrl,
+    severity_handle: values.severity as SEVERITIES,
+    details: values.details,
+  };
+
+  const newContentData = Object.keys(mappedContentValues).reduce(
+    (data, key) => {
+      const value =
+        mappedContentValues[key as keyof typeof mappedContentValues];
+      if (!value) return data;
+      return { ...data, [key]: value };
+    },
+    {}
+  );
+
+  const clone = await supabase
+    .from<ReportContent>("reports_content")
+    .insert({ ...clonedData, ...newContentData });
+
+  if (clone.error) throw clone.error;
+  if (!clone.data) throw "No data was returned from content creation";
+
+  const update = await supabase
+    .from<Report>("reports")
+    .update({
+      content_id: clone.data[0].id,
+      updated_at: new Date(Date.now()).toISOString(),
+      ...(values.type ? { type_handle: values.type as TYPES } : {}),
+    })
+    .eq("id", values.id);
+
+  if (update.error) throw update.error;
+
+  return { report, content, clone, update };
+}
+
 export async function uploadFile(image?: string) {
   if (!image) return;
 
@@ -85,7 +149,7 @@ export async function uploadFile(image?: string) {
   return url.data.publicURL;
 }
 
-export async function uploadReport(data: FormValues, imageUrl?: string) {
+export async function uploadReport(data: FormCreateValues, imageUrl?: string) {
   const [lng, lat] = parseLngLat(data.location.coordinates);
 
   const report = await supabase.from<Report>("reports").insert({

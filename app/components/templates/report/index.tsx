@@ -39,7 +39,7 @@ export default function ReportIndexTemplate({ children }: Props) {
           <div className="flex flex-col px-3">
             <h3 className="font-medium">{data.type.title} Report</h3>
             <p className="text-sm text-base-400">
-              Details for Report #${data.id}
+              Details for Report #{data.id}
             </p>
           </div>
         </div>

@@ -3,7 +3,7 @@ import type { ActionFunction } from "@remix-run/router";
 import { redirect } from "@remix-run/cloudflare";
 
 import { uploadFile, uploadReport } from "~/lib/supabase";
-import type { FormValues } from "~/types/form";
+import type { FormCreateValues } from "~/types/form";
 
 import CreateTemplate from "~/components/templates/create";
 import CreateProvider from "~/components/templates/create/context";
@@ -14,7 +14,7 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (typeof create !== "string") return null;
 
-  const values = JSON.parse(create) as FormValues;
+  const values = JSON.parse(create) as FormCreateValues;
 
   try {
     const imageUrl = await uploadFile(values.image);
