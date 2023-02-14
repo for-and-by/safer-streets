@@ -9,6 +9,7 @@ import useMapLock from "~/hooks/map/use-map-lock";
 import Header from "~/components/regions/header";
 
 import ReportMarker from "~/components/molecules/markers/report";
+import useMapCenter from "~/hooks/map/use-map-center";
 
 interface Props {
   children: ReactNode;
@@ -19,9 +20,11 @@ export default function ReportIndexTemplate({ children }: Props) {
   const data = loader.report as ReportFull;
 
   const [isLocked, { setLock }] = useMapLock();
+  const [, setCenter] = useMapCenter();
 
   useEffect(() => {
     if (!isLocked) setLock();
+    setCenter(data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -34,7 +37,10 @@ export default function ReportIndexTemplate({ children }: Props) {
             <i className="btn-icon icon icon-left" />
           </Link>
           <div className="flex flex-col px-3">
-            <h3 className="font-medium">Report</h3>
+            <h3 className="font-medium">{data.type.title} Report</h3>
+            <p className="text-sm text-base-400">
+              Details for Report #${data.id}
+            </p>
           </div>
         </div>
       </Header>
