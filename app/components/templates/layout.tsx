@@ -1,16 +1,18 @@
 import type { ReactNode } from "react";
 import React from "react";
 
-import MapProvider from "~/components/organisms/map/context";
-import Map from "~/components/organisms/map";
-import TopBar from "~/components/molecules/top-bar";
-import Header from "~/components/regions/header";
 import Toast from "~/components/regions/toast";
-import Controls from "~/components/molecules/controls";
+import Header from "~/components/regions/header";
 import Body from "~/components/regions/body";
 import Footer from "~/components/regions/footer";
+import Reports from "~/components/regions/reports";
+
+import TopBar from "~/components/molecules/top-bar";
 import BottomBar from "~/components/molecules/bottom-bar";
-import Reports from "~/components/molecules/reports";
+import Controls from "~/components/molecules/controls";
+
+import MapProvider from "~/components/organisms/map/context";
+import Map from "~/components/organisms/map";
 
 interface Props {
   children: ReactNode;

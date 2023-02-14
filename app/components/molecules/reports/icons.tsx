@@ -3,8 +3,9 @@ import colors from "~/lib/colors.client";
 import useMapEvents from "~/hooks/map/use-map-events";
 import useMap from "~/hooks/map/use-map";
 import useMapCenter from "~/hooks/map/use-map-center";
-import useActiveReport from "~/hooks/reports/use-active-report";
 import type { FilterSpecification } from "maplibre-gl";
+import SummaryMarker from "~/components/molecules/popup/summary";
+import React, { useState } from "react";
 
 const FILTERS = ["!", ["has", "point_count"]] as FilterSpecification;
 
@@ -12,7 +13,7 @@ export default function ReportIconsLayer() {
   const map = useMap();
   const [, setCenter] = useMapCenter();
 
-  const [, setActiveReportId] = useActiveReport();
+  const [activeReport, setActiveReport] = useState<string | undefined>();
 
   useMapLayer({
     id: "reports-bg",
@@ -46,10 +47,15 @@ export default function ReportIconsLayer() {
       });
 
       if (feature?.properties?.id) {
-        setActiveReportId(feature.properties.id);
+        setActiveReport(feature.properties.id);
       }
     },
   });
 
-  return null;
+  return (
+    <SummaryMarker
+      id={activeReport}
+      onClose={() => setActiveReport(undefined)}
+    />
+  );
 }
