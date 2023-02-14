@@ -1,7 +1,5 @@
 import React from "react";
 import BaseMarker from "~/components/molecules/markers/base";
-import useViewIsActive from "~/hooks/view/use-view-is-active";
-import { VIEWS } from "~/hooks/view/use-view-store";
 import type { LngLatLike } from "maplibre-gl";
 
 interface Props {
@@ -9,9 +7,7 @@ interface Props {
 }
 
 export default function ReportMarker({ coordinates }: Props) {
-  const isReportActive = useViewIsActive(VIEWS.REPORT);
-
-  if (!coordinates || !isReportActive) return null;
+  if (!coordinates) return null;
 
   return (
     <BaseMarker
