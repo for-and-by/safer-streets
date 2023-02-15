@@ -55,6 +55,11 @@ export default function App() {
         </Layout>
         <ScrollRestoration />
         <Scripts />
+        <script
+          defer
+          data-domain="app.saferstreets.info"
+          src="https://plausible.io/js/script.js"
+        />
         <LiveReload />
       </body>
     </html>
