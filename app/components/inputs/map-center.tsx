@@ -3,8 +3,8 @@ import useMapCenter from "~/hooks/map/use-map-center";
 import React, { useEffect } from "react";
 import Show from "~/components/atoms/show";
 import type { LngLatLike } from "maplibre-gl";
-import parseLngLat from "~/lib/parse-lng-lat";
 import useSearch from "~/hooks/use-search";
+import { parseLngLat } from "~/lib/maplibre";
 
 interface Props {
   onCenterChange?: (center: LngLatLike) => void;
@@ -20,11 +20,13 @@ export default function MapCenterInput({
 
   useEffect(() => {
     if (onCenterChange) onCenterChange(parseLngLat(center));
+    //   eslint-disable-next-line react-hooks/exhaustive-deps
   }, [center]);
 
   useEffect(() => {
     if (onAddressChange && data?.results?.[0]?.heading)
       onAddressChange(data?.results[0].heading);
+    //   eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (

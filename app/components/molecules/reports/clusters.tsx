@@ -4,7 +4,7 @@ import useMapEvents from "~/hooks/map/use-map-events";
 import useMap from "~/hooks/map/use-map";
 import useMapZoom from "~/hooks/map/use-map-zoom";
 import type { GeoJSONSource } from "maplibre-gl";
-import colors from "~/lib/colors.client";
+import colors from "~/utils/colors.client";
 
 interface Props {
   source: string;

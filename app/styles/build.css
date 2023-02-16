@@ -1273,10 +1273,6 @@ html,
   height: 24rem;
 }
 
-.h-\[50vh\] {
-  height: 50vh;
-}
-
 .h-full {
   height: 100%;
 }
@@ -1477,6 +1473,11 @@ html,
   border-color: rgb(231 229 228 / var(--tw-divide-opacity));
 }
 
+.divide-gray-100 > :not([hidden]) ~ :not([hidden]) {
+  --tw-divide-opacity: 1;
+  border-color: rgb(245 245 244 / var(--tw-divide-opacity));
+}
+
 .divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-opacity: 1;
   border-color: rgb(231 229 228 / var(--tw-divide-opacity));
@@ -1485,11 +1486,6 @@ html,
 .divide-white > :not([hidden]) ~ :not([hidden]) {
   --tw-divide-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-divide-opacity));
-}
-
-.divide-gray-100 > :not([hidden]) ~ :not([hidden]) {
-  --tw-divide-opacity: 1;
-  border-color: rgb(245 245 244 / var(--tw-divide-opacity));
 }
 
 .self-end {
@@ -1534,18 +1530,8 @@ html,
   border-bottom-right-radius: 0px;
 }
 
-.border-y {
-  border-top-width: 1px;
-  border-bottom-width: 1px;
-}
-
 .border-b {
   border-bottom-width: 1px;
-}
-
-.border-gray-200 {
-  --tw-border-opacity: 1;
-  border-color: rgb(231 229 228 / var(--tw-border-opacity));
 }
 
 .border-white {
@@ -1783,7 +1769,7 @@ html,
 }
 
 .clamp {
-  width: 100%;
+  width: 95vw;
   max-width: 24rem;
 }
 

@@ -1,8 +1,9 @@
+import { useEffect } from "react";
 import type { SubmitOptions } from "@remix-run/react";
 import { useFetcher } from "@remix-run/react";
-import type geocode from "~/lib/geocode";
-import { useEffect } from "react";
-import parseLngLat from "~/lib/parse-lng-lat";
+
+import type { geocode } from "~/lib/maplibre";
+import { parseLngLat } from "~/lib/maplibre";
 
 export default function useSearch(query: Parameters<typeof geocode>[0]) {
   const fetcher = useFetcher();

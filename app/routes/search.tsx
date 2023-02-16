@@ -5,7 +5,7 @@ import { json } from "@remix-run/cloudflare";
 import { config } from "~/config";
 
 import type { SearchFeature } from "~/types/search";
-import geocode from "~/lib/geocode";
+import { geocode } from "~/lib/maplibre";
 
 import SearchIndexTemplate from "~/components/templates/search";
 

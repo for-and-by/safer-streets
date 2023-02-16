@@ -14,7 +14,7 @@ import { config } from "~/config";
 
 import { decode } from "base64-arraybuffer";
 import type { FormCreateValues, FormUpdateValues } from "~/types/form";
-import parseLngLat from "~/lib/parse-lng-lat";
+import { parseLngLat } from "~/lib/maplibre";
 
 export const supabase = createClient(config.supabase.url, config.supabase.key);
 

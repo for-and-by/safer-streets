@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 
-import parseFileAsBase64 from "~/lib/parse-file-as-base64";
-
 import useAsync from "~/hooks/use-async";
 
 import Wrapper from "~/components/inputs/wrapper";
@@ -9,6 +7,7 @@ import Wrapper from "~/components/inputs/wrapper";
 import { Warning } from "~/components/composites/warning";
 import Toast from "~/components/regions/toast";
 import type { FieldError } from "react-hook-form";
+import { parseFileAsBase64 } from "~/lib/image";
 
 interface Props {
   onUpload?: (image: string, file: File) => void;
@@ -43,6 +42,7 @@ export default function ImageInput({
 
   useEffect(() => {
     if (file) trigger();
+    //   eslint-disable-next-line react-hooks/exhaustive-deps
   }, [file]);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

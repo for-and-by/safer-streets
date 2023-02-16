@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React, { useState } from "react";
-import { parseImageUrl } from "~/lib/parse-image-url";
+import { parseImageUrl } from "~/lib/image";
 
 interface Props {
   src: string;

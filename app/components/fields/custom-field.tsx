@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Controller, useFormContext, useWatch } from "react-hook-form";
 
 import { useFilterTypes } from "~/hooks/filter/use-filter-types";
-import { capitaliseString } from "~/lib/string";
+import { capitaliseString } from "~/utils/string";
 
 import Text from "~/components/inputs/text";
 
@@ -17,6 +17,7 @@ export default function CustomField() {
 
   useEffect(() => {
     setFields(types.find(({ handle }) => handle === type)?.custom_fields ?? {});
+    //   eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type]);
 
   return (

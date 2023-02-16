@@ -1,14 +1,13 @@
 import React from "react";
-
-import parseReportsAsGeoJSON from "~/lib/parse-reports-as-geojson";
 import useMapSource from "~/hooks/map/use-map-source";
 import useMapImages from "~/hooks/map/use-map-images";
 import ReportClustersLayer from "~/components/molecules/reports/clusters";
 import ReportIconsLayer from "~/components/molecules/reports/icons";
 import { useLoaderData } from "@remix-run/react";
+import type { ReportFull } from "~/types/db";
 
 export default function Reports() {
-  const { reports } = useLoaderData();
+  const { reports } = useLoaderData<{ reports: ReportFull[] }>();
 
   useMapImages([
     {
@@ -40,7 +39,34 @@ export default function Reports() {
   useMapSource({
     id: "reports",
     type: "geojson",
-    data: parseReportsAsGeoJSON(reports),
+    data: {
+      type: "FeatureCollection",
+      features: reports.map((report) => ({
+        type: "Feature",
+        properties: { ...report, ...report.content },
+        geometry: {
+          type: "Point",
+          coordinates: [report.lng, report.lat],
+        },
+      })),
+    },
+    cluster: true,
+    filter: ["!", ["get", "is_deleted"]],
+  });
+
+  useMapSource({
+    id: "reports-new",
+    type: "geojson",
+    data: {
+      type: "FeatureCollection",
+      features: reports.map((report) => ({
+        type: "Feature",
+        geometry: {
+          type: "Point",
+          coordinates: [report.lng, report.lat],
+        },
+      })),
+    },
     cluster: true,
     filter: ["!", ["get", "is_deleted"]],
   });

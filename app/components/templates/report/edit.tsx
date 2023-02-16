@@ -9,7 +9,6 @@ import type { SubmitHandler } from "react-hook-form";
 import { FormProvider, useForm } from "react-hook-form";
 
 import type { ReportFull } from "~/types/db";
-import { parseImageUrl } from "~/lib/parse-image-url";
 
 import Toast from "~/components/regions/toast";
 import Footer from "~/components/regions/footer";
@@ -20,6 +19,7 @@ import CustomField from "~/components/fields/custom-field";
 import DetailsField from "~/components/fields/details-field";
 import ImageField from "~/components/fields/image-field";
 import type { FormUpdateValues } from "~/types/form";
+import { parseImageUrl } from "~/lib/image";
 
 export default function ReportEditTemplate() {
   const { state } = useTransition();

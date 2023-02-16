@@ -7,13 +7,13 @@ import {
 } from "@remix-run/react";
 
 import type { ReportFull } from "~/types/db";
-import { parseDateAsString } from "~/lib/parse-date-as-string";
 
 import Footer from "~/components/regions/footer";
 import Toast from "~/components/regions/toast";
 
 import { Warning } from "~/components/composites/warning";
 import { ImageCollapse } from "~/components/molecules/image-collapse";
+import { parseDateAsString } from "~/utils/date";
 
 export default function ReportDetailsTemplate() {
   const { state } = useTransition();
