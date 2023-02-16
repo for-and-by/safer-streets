@@ -1,86 +1,80 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from 'react';
 
-import {
-  Link,
-  useActionData,
-  useNavigate,
-  useSubmit,
-  useTransition,
-} from "@remix-run/react";
+import {Link, useActionData, useNavigate, useSubmit, useTransition,} from '@remix-run/react';
 
-import type { SearchResponse } from "~/routes/search";
+import type {SearchResponse} from '~/routes/search';
 
-import Toast from "~/components/regions/toast";
-import Header from "~/components/regions/header";
-import Body from "~/components/regions/body";
-import Footer from "~/components/regions/footer";
+import Toast from '~/components/regions/toast';
+import Header from '~/components/regions/header';
+import Body from '~/components/regions/body';
+import Footer from '~/components/regions/footer';
 
-import Text from "~/components/inputs/text";
-import SearchResults from "~/components/molecules/search-results";
+import Text from '~/components/inputs/text';
+import SearchResults from '~/components/molecules/search-results';
 
-import Show from "~/components/atoms/show";
-import Bumper from "~/components/atoms/bumper";
-import FindSelfButton from "~/components/atoms/find-self-button";
+import Show from '~/components/atoms/show';
+import Bumper from '~/components/atoms/bumper';
+import FindSelfButton from '~/components/atoms/find-self-button';
 
 export default function SearchIndexTemplate() {
-  const { state } = useTransition();
-  const search = useActionData<SearchResponse>();
+	const {state} = useTransition();
+	const search = useActionData<SearchResponse>();
 
-  const navigate = useNavigate();
-  const submit = useSubmit();
+	const navigate = useNavigate();
+	const submit = useSubmit();
 
-  const [value, setValue] = useState<string>("");
+	const [value, setValue] = useState<string>('');
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      const data = new FormData();
-      data.append("query", value);
-      submit(data, { method: "post", action: "/search" });
-    }, 400);
+	useEffect(() => {
+		const timeout = setTimeout(() => {
+			const data = new FormData();
+			data.append('query', value);
+			submit(data, {method: 'post', action: '/search'});
+		}, 400);
 
-    return () => {
-      clearTimeout(timeout);
-    };
-    //  eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value]);
+		return () => {
+			clearTimeout(timeout);
+		};
+		//  eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [value]);
 
-  const hasNoResults = !search || search.isEmpty;
+	const hasNoResults = !search || search.isEmpty;
 
-  return (
-    <>
-      <Toast content="Finding results..." show={state === "submitting"} />
-      <Header>
-        <div className="flex flex-row items-center bg-white p-2">
-          <Link to="/" className="btn btn-light">
-            <i className="btn-icon icon icon-left" />
-          </Link>
-          <div className="flex flex-col px-3">
-            <h3 className="text-base text-base-700">
-              {hasNoResults ? "No" : search.resultsCount} results found
-            </h3>
-            <p className="text-sm text-base-400">
-              <Show on={hasNoResults}>Start by typing in an address.</Show>
-              <Show on={!hasNoResults}>Select a location to jump to.</Show>
-            </p>
-          </div>
-        </div>
-      </Header>
-      <Body>
-        <Bumper show={!search?.isEmpty}>
-          <SearchResults results={search?.results} />
-        </Bumper>
-      </Body>
-      <Footer>
-        <div className="flex flex-row items-center space-x-2 bg-white p-2">
-          <Text
-            value={value}
-            onChange={(event) => setValue(event.target.value)}
-            icon="icon-search"
-            placeholder="Search for an address..."
-          />
-          <FindSelfButton onFound={() => navigate("/")} />
-        </div>
-      </Footer>
-    </>
-  );
+	return (
+		<>
+			<Toast content="Finding results..." show={state === 'submitting'}/>
+			<Header>
+				<div className="flex flex-row items-center bg-white p-2">
+					<Link to="/" className="btn btn-light">
+						<i className="btn-icon icon icon-arrow-left"/>
+					</Link>
+					<div className="flex flex-col px-3">
+						<h3 className="text-base text-base-700">
+							{hasNoResults ? 'No' : search.resultsCount} results found
+						</h3>
+						<p className="text-sm text-base-400">
+							<Show on={hasNoResults}>Start by typing in an address.</Show>
+							<Show on={!hasNoResults}>Select a location to jump to.</Show>
+						</p>
+					</div>
+				</div>
+			</Header>
+			<Body>
+				<Bumper show={!search?.isEmpty}>
+					<SearchResults results={search?.results}/>
+				</Bumper>
+			</Body>
+			<Footer>
+				<div className="flex flex-row items-center space-x-2 bg-white p-2">
+					<Text
+						value={value}
+						onChange={(event) => setValue(event.target.value)}
+						icon="icon-search"
+						placeholder="Search for an address..."
+					/>
+					<FindSelfButton onFound={() => navigate('/')}/>
+				</div>
+			</Footer>
+		</>
+	);
 }
