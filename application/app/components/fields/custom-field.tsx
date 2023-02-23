@@ -1,38 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { Controller, useFormContext, useWatch } from "react-hook-form";
+import React from 'react';
+import {Controller, useFormContext, useWatch} from 'react-hook-form';
 
-import { useFilterTypes } from "~/hooks/filter/use-filter-types";
-import { capitaliseString } from "~/utils/string";
+import {useFilterTypes} from '~/hooks/filter/use-filter-types';
+import {capitaliseString} from '~/utils/string';
 
-import Text from "~/components/inputs/text";
+import Text from '~/components/inputs/text';
 
 export default function CustomField() {
-  const { types } = useFilterTypes();
-  const { control } = useFormContext();
-  const type = useWatch({ name: "type" });
+	const {control} = useFormContext();
+	const typeValue = useWatch({name: 'type'});
+	const type = useFilterTypes(typeValue);
 
-  const [fields, setFields] = useState(
-    types.find(({ handle }) => handle === type)?.custom_fields ?? {}
-  );
+	if (!type?.custom_fields) return null;
 
-  useEffect(() => {
-    setFields(types.find(({ handle }) => handle === type)?.custom_fields ?? {});
-    //   eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [type]);
-
-  return (
-    <>
-      {Object.keys(fields).map((key) => (
-        <Controller
-          key={key}
-          control={control}
-          name={`custom.${key}`}
-          render={({ field, fieldState: { error } }) => (
-            <Text {...field} label={capitaliseString(key)} error={error} />
-          )}
-          defaultValue=""
-        />
-      ))}
-    </>
-  );
+	return (
+		<>
+			{Object.keys(type?.custom_fields).map((key) => (
+				<Controller
+					key={key}
+					control={control}
+					name={`custom.${key}`}
+					render={({field, fieldState: {error}}) => (
+						<Text {...field} label={capitaliseString(key)} error={error}/>
+					)}
+					defaultValue=""
+				/>
+			))}
+		</>
+	);
 }

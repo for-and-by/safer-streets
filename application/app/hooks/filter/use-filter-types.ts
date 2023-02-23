@@ -1,14 +1,25 @@
-import { useFilterStore } from "~/hooks/filter/use-filter-store";
-import { useEffect } from "react";
+import {useFilterStore} from '~/hooks/filter/use-filter-store';
+import type {Type} from '~/types/db';
+import {useEffect, useState} from 'react';
 
-export function useFilterTypes() {
-  const { types, fetchTypes, isLoading } = useFilterStore();
+export function useFilterTypes(): [Type[], (handle?: string) => Type];
+export function useFilterTypes(handle: string): Type;
 
-  useEffect(() => {
-    if (!types || types.length === 0) {
-      fetchTypes().finally();
-    }
-  }, [types]);
+export function useFilterTypes(handle?: string) {
+	const {types} = useFilterStore();
 
-  return { types, isLoading: isLoading.types };
+	function getType(handle?: string) {
+		return types.find(type => {
+			return type.handle === handle;
+		});
+	}
+
+	const [type, setType] = useState(getType(handle));
+
+	useEffect(() => {
+		if (handle) setType(getType(handle));
+		//	eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [handle]);
+
+	return handle ? type : [types, getType];
 }

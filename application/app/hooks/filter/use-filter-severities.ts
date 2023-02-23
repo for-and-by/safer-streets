@@ -1,14 +1,25 @@
-import { useFilterStore } from "~/hooks/filter/use-filter-store";
-import { useEffect } from "react";
+import {useFilterStore} from '~/hooks/filter/use-filter-store';
+import type {Severity} from '~/types/db';
+import {useEffect, useState} from 'react';
 
-export function useFilterSeverities() {
-  const { severities, fetchSeverities, isLoading } = useFilterStore();
+export function useFilterSeverities(): [Severity[], (handle?: string) => Severity];
+export function useFilterSeverities(handle: string): Severity;
 
-  useEffect(() => {
-    if (!severities || severities.length === 0) {
-      fetchSeverities().finally();
-    }
-  }, [severities]);
+export function useFilterSeverities(handle?: string) {
+	const {severities} = useFilterStore();
 
-  return { severities, isLoading: isLoading.severities };
+	function getSeverity(handle?: string) {
+		return severities.find(severity => {
+			return severity.handle === handle;
+		});
+	}
+
+	const [severity, setSeverity] = useState(getSeverity(handle));
+
+	useEffect(() => {
+		setSeverity(getSeverity(handle));
+		//	eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [handle]);
+
+	return handle ? severity : [severities, getSeverity];
 }

@@ -1,14 +1,20 @@
-import React from 'react';
-import type {LinksFunction, MetaFunction} from '@remix-run/cloudflare';
+import React, {useEffect} from 'react';
+import {Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData,} from '@remix-run/react';
+import type {LinksFunction, LoaderFunction, MetaFunction} from '@remix-run/cloudflare';
 import {json} from '@remix-run/cloudflare';
-import {Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration,} from '@remix-run/react';
 
 import styles from '~/styles/build.css';
-import icons from '~/./icons/css/icons.css';
-import {Layout} from '~/components/templates/layout';
-import type {LoaderFunction} from '@remix-run/router';
-import {fetchReports} from '~/lib/supabase';
+import icons from '~/icons/css/icons.css';
+
 import {config} from '~/config';
+
+import type {Severity, Type} from '~/types/db';
+import {fetchReports, fetchSeverities, fetchTypes} from '~/lib/supabase';
+
+import {useFilterStore} from '~/hooks/filter/use-filter-store';
+
+import {Layout} from '~/components/templates/layout';
+
 
 const maplibre = 'https://unpkg.com/maplibre-gl@2.1.9/dist/maplibre-gl.css';
 const fonts =
@@ -29,13 +35,32 @@ export const links: LinksFunction = () => [
 ];
 
 export const loader: LoaderFunction = async () => {
-	const reports = await fetchReports();
+	const [reports, types, severities] = await Promise.all([
+		await fetchReports(),
+		await fetchTypes(),
+		await fetchSeverities()
+	]);
+
 	return json({
 		reports,
+		types,
+		severities
 	});
 };
 
 export default function App() {
+	const loader = useLoaderData();
+	const types = loader.types as Type[];
+	const severities = loader.severities as Severity[];
+
+	const {setSeverities, setTypes} = useFilterStore();
+
+	useEffect(() => {
+		setSeverities(severities);
+		setTypes(types);
+		//	eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	return (
 		<html lang="en">
 		<head>
