@@ -4,6 +4,7 @@ import BaseMarker from '~/components/molecules/markers/base';
 import {Link, useFetcher, useNavigation} from '@remix-run/react';
 import type {ReportSummary} from '~/types/db';
 import {parseImageUrl} from '~/lib/image';
+import {parseDatesFromReport} from '~/utils/date';
 
 interface Props {
 	id?: string;
@@ -17,6 +18,7 @@ export default function SummaryMarker({onClose, id}: Props) {
 	const [show, setShow] = useState(false);
 
 	let summary = fetcher?.data?.summary as ReportSummary;
+	const {verifyDate} = parseDatesFromReport(summary);
 
 	const handleClose = () => {
 		if (onClose) onClose();
@@ -65,14 +67,24 @@ export default function SummaryMarker({onClose, id}: Props) {
 									/>
 								</div>
 							) : null}
-							<div className="flex flex-col p-2">
-								<p className="text-bold">{summary.type.title}</p>
-								<p className="text-gray-400">
-									{summary.content.severity.title}
-								</p>
-								<Link to={`/report/${summary.id}`} className="text-brand-600">
-									<p className="btn-text">See details</p>
-								</Link>
+							<div className="flex flex-col divide-y divide-gray-200">
+								<div className="flex flex-col items-start p-2">
+									<p className="text-bold">{summary.type.title}</p>
+									<p className="text-gray-500">
+										{summary.content.severity.title}
+									</p>
+									{verifyDate && verifyDate.valueOf() < Date.now() ?
+										<p className="text-white text-sm px-1 rounded bg-gray-800 my-1">
+											Needs Verifying
+										</p>
+										: null
+									}
+								</div>
+								<div className="p-2">
+									<Link to={`/report/${summary.id}`} className="text-brand-600">
+										<p className="btn-text">See details</p>
+									</Link>
+								</div>
 							</div>
 						</div>
 					</div>
