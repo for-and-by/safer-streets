@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Link, useRouteLoaderData, useSubmit, useTransition,} from '@remix-run/react';
+import React from 'react';
+import {Link, useFetcher, useRouteLoaderData,} from '@remix-run/react';
 
 import type {ReportFull} from '~/types/db';
 
@@ -9,42 +9,51 @@ import Toast from '~/components/regions/toast';
 import {Warning} from '~/components/composites/warning';
 import {ImageCollapse} from '~/components/molecules/image-collapse';
 import {parseDateAsString, parseDatesFromReport} from '~/utils/date';
+import Body from '~/components/regions/body';
 
 export default function ReportDetailsTemplate() {
-	const {state} = useTransition();
-	const submit = useSubmit();
+	const verifyReport = useFetcher();
+	const deleteReport = useFetcher();
 
-	const loader = useRouteLoaderData('routes/report') as { report: ReportFull };
-	const data = loader.report;
+	const loader = useRouteLoaderData('routes/report');
+	const data = (loader as any).report as ReportFull;
 	const {verifyDate} = parseDatesFromReport(data);
 
-	const [content, setContent] = useState<{ [key: string]: string | undefined }>(
-		{}
-	);
-
-	useEffect(() => {
-		if (data) {
-			setContent({
-				Details: data.content.details,
-				...data.content.data,
-				'Created On': parseDateAsString(data.created_at),
-				'Last Updated': parseDateAsString(data.updated_at),
-			});
-		}
-	}, [data]);
-
 	const handleDelete = () => {
-		submit(null, {action: `/report/${data.id}/delete`, method: 'delete'});
+		deleteReport.submit(null, {action: `/report/${data.id}/delete`, method: 'delete'});
+	};
+
+	const handleVerify = () => {
+		verifyReport.submit(null, {action: `/report/${data.id}/verify`, method: 'patch'});
 	};
 
 	if (!data) return null;
 
 	return (
 		<>
-			<Toast content="Deleting report..." show={state === 'submitting'}/>
+			<Toast content="Deleting report..." show={deleteReport.state === 'submitting'}/>
+			<Toast content="Verifying report..." show={verifyReport.state === 'submitting'}/>
+			<Body>
+				{verifyDate && verifyDate.valueOf() < Date.now() ? (
+					<Warning>
+						<div className="p-3 flex flex-row justify-between items-center bg-gray-900 rounded">
+							<p className="font-medium text-white">This report is getting old.</p>
+							<Warning.Trigger onClick={handleVerify} className="text-brand-400">
+								<p className="btn-text">Verify</p>
+							</Warning.Trigger>
+						</div>
+						<Warning.Panel
+							heading="Verify Report"
+							body="This report is getting close to it's expiry date. If you know that this report is still relevant, please either verify this report here, or update the information."
+							onConfirm={handleVerify}
+						/>
+					</Warning>
+
+				) : null}
+			</Body>
 			<Warning>
 				<Footer>
-					<div className="max-h-[50vh] divide-y divide-gray-200 overflow-y-scroll">
+					<div className="max-h-[40vh] divide-y divide-gray-200 overflow-y-scroll">
 						{data.content.image_url ? (
 							<ImageCollapse src={data.content.image_url}/>
 						) : null}

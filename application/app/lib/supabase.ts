@@ -53,6 +53,19 @@ export async function deleteReport(id: number) {
 	return {report, content, clone, update};
 }
 
+export async function verifyReport(id: number) {
+	const update = await supabase
+		.from<Report>('reports')
+		.update({
+			updated_at: new Date(Date.now()).toISOString(),
+		})
+		.eq('id', id);
+
+	if (update.error) throw update.error;
+
+	return {update};
+}
+
 export async function updateReport(
 	values: FormUpdateValues,
 	imageUrl?: string
@@ -253,3 +266,5 @@ export async function fetchReportContent(id: string | number) {
 
 	return reports.data as unknown as ReportFull;
 }
+
+
