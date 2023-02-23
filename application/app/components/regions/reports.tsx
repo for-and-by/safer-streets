@@ -25,7 +25,7 @@ export default function Reports() {
 				const {verifyDate, expiryDate} = parseDatesFromReport(report);
 				const isAging = verifyDate && verifyDate.valueOf() < Date.now();
 				const isHidden = report.content.is_deleted || (expiryDate && expiryDate.valueOf() < Date.now());
-				const isUnopened = !opened?.has(report.id);
+				const isUnopened = !opened?.has(report.content_id);
 
 				return {
 					type: 'Feature',

@@ -26,7 +26,7 @@ export default function ReportIndexTemplate({children}: Props) {
 
 	useEffect(() => {
 		if (!isLocked) setLock();
-		open(data.id);
+		open(data.content_id);
 		setCenter(data);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

@@ -5,12 +5,12 @@ import {persist} from 'zustand/middleware';
 import {createSerializableStorage} from '~/lib/zustand';
 
 interface State {
-	opened: Set<Report['id']>;
+	opened: Set<Report['content_id']>;
 	voted: Map<Report['id'], 1 | 0 | -1>;
 }
 
 interface Actions {
-	open: (id: Report['id']) => void;
+	open: (id: Report['content_id']) => void;
 	voteUp: (id: Report['id']) => void;
 	voteDown: (id: Report['id']) => void;
 	voteClear: (id: Report['id']) => void;
