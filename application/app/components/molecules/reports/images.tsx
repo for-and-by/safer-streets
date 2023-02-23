@@ -17,7 +17,7 @@ export function MapImages() {
 			url: cyclist,
 		},
 		{
-			id: 'fire',
+			id: 'bushfire',
 			url: fire,
 		},
 		{
