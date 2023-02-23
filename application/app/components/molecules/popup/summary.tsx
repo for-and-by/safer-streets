@@ -43,7 +43,7 @@ export default function SummaryMarker({onClose, id}: Props) {
 		<>
 			<Toast content="Fetching summary..." show={fetcher.state === 'loading'}/>
 			{summary?.content && id && show ? (
-				<BaseMarker coordinates={summary} anchor="bottom" offset={[0, -4]}>
+				<BaseMarker coordinates={summary} anchor="bottom" offset={[0, -25]}>
 					<div
 						className="relative shadow-lg before:absolute before:bottom-0 before:left-1/2 before:h-3 before:w-3 before:-translate-x-1/2 before:translate-y-1 before:rotate-45 before:bg-white">
 						<div className="flex w-48 flex-col overflow-hidden rounded bg-white">
