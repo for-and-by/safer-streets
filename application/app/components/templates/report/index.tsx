@@ -10,6 +10,7 @@ import Header from '~/components/regions/header';
 
 import ReportMarker from '~/components/molecules/markers/report';
 import useMapCenter from '~/hooks/map/use-map-center';
+import {useReportOpen} from '~/hooks/reports/use-report-open';
 
 interface Props {
 	children: ReactNode;
@@ -19,12 +20,13 @@ export default function ReportIndexTemplate({children}: Props) {
 	const loader = useLoaderData();
 	const data = loader.report as ReportFull;
 
-
+	const [, open] = useReportOpen();
 	const [isLocked, {setLock}] = useMapLock();
 	const [, setCenter] = useMapCenter();
 
 	useEffect(() => {
 		if (!isLocked) setLock();
+		open(data.id);
 		setCenter(data);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);

@@ -47,7 +47,8 @@ export default function ReportIconsLayer() {
 		filter: [
 			'all',
 			['!', ['has', 'point_count']],
-			['==', ['get', 'is_aging'], true]
+			['==', ['get', 'is_aging'], true],
+			['==', ['get', 'is_unopened'], false]
 		],
 		layout: {
 			'icon-image': 'badge-verify',
@@ -55,8 +56,22 @@ export default function ReportIconsLayer() {
 			'icon-offset': [-50, -50],
 			'icon-size': 0.25
 		},
-		paint: {
-			'text-color': colors?.white,
+	});
+
+	useMapLayer({
+		id: 'report-new',
+		type: 'symbol',
+		source: 'reports',
+		filter: [
+			'all',
+			['!', ['has', 'point_count']],
+			['==', ['get', 'is_unopened'], true]
+		],
+		layout: {
+			'icon-image': 'badge-new',
+			'icon-allow-overlap': true,
+			'icon-offset': [-70, -70],
+			'icon-size': 0.2
 		},
 	});
 
