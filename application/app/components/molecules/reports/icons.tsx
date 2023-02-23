@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {useLocation} from '@remix-run/react';
-import type {FilterSpecification} from 'maplibre-gl';
 
 import colors from '~/utils/colors.client';
 
@@ -10,8 +9,6 @@ import useMapLayer from '~/hooks/map/use-map-layer';
 import useMapCenter from '~/hooks/map/use-map-center';
 
 import SummaryMarker from '~/components/molecules/popup/summary';
-
-const FILTERS = ['!', ['has', 'point_count']] as FilterSpecification;
 
 export default function ReportIconsLayer() {
 	const location = useLocation();
@@ -24,7 +21,7 @@ export default function ReportIconsLayer() {
 		id: 'reports-bg',
 		type: 'circle',
 		source: 'reports',
-		filter: FILTERS,
+		filter: ['!', ['has', 'point_count']],
 		paint: {
 			'circle-color': colors?.brand?.[600],
 			'circle-radius': 20,
@@ -35,7 +32,7 @@ export default function ReportIconsLayer() {
 		id: 'reports-icon',
 		type: 'symbol',
 		source: 'reports',
-		filter: FILTERS,
+		filter: ['!', ['has', 'point_count']],
 		layout: {
 			'icon-image': '{type_handle}',
 			'icon-allow-overlap': true,
@@ -44,33 +41,19 @@ export default function ReportIconsLayer() {
 	});
 
 	useMapLayer({
-		id: 'verify-bg',
+		id: 'report-verify',
 		type: 'symbol',
 		source: 'reports',
-		filter: FILTERS,
+		filter: [
+			'all',
+			['!', ['has', 'point_count']],
+			['==', ['get', 'is_aging'], true]
+		],
 		layout: {
+			'icon-image': 'badge-verify',
 			'icon-allow-overlap': true,
-			'text-field': '●',
-			'text-font': ['Inter Bold', 'Arial Unicode MS Bold'],
-			'text-size': 12,
-			'text-offset': [-1.2, -1.2],
-		},
-		paint: {
-			'text-color': colors?.brand?.[900],
-		},
-	});
-
-	useMapLayer({
-		id: 'verify-bg-text',
-		type: 'symbol',
-		source: 'reports',
-		filter: FILTERS,
-		layout: {
-			'icon-allow-overlap': true,
-			'text-field': '?',
-			'text-font': ['Inter Bold', 'Arial Unicode MS Bold'],
-			'text-size': 8,
-			'text-offset': [-1.2, -1.2]
+			'icon-offset': [-50, -50],
+			'icon-size': 0.25
 		},
 		paint: {
 			'text-color': colors?.white,

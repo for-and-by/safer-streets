@@ -7,6 +7,9 @@ import motorist from '~/icons/png/motorist.png';
 import pedestrian from '~/icons/png/pedestrian.png';
 import wildlife from '~/icons/png/wildlife.png';
 
+import verifyBadge from '~/icons/png/badge-verify.png';
+import newBadge from '~/icons/png/badge-new.png';
+
 export function MapImages() {
 	useMapImages([
 		{
@@ -33,6 +36,14 @@ export function MapImages() {
 			id: 'wildlife',
 			url: wildlife
 		},
+		{
+			id: 'badge-new',
+			url: newBadge
+		},
+		{
+			id: 'badge-verify',
+			url: verifyBadge
+		}
 	]);
 
 	return null;
