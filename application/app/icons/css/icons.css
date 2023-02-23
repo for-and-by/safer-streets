@@ -167,3 +167,15 @@ Generated using nucleoapp.com
   content: "\ea18";
 }
 
+.icon-image::before {
+  content: "\ea20";
+}
+
+.icon-trash::before {
+  content: "\ea21";
+}
+
+.icon-save-over::before {
+  content: "\ea22";
+}
+
