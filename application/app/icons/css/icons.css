@@ -167,6 +167,14 @@ Generated using nucleoapp.com
   content: "\ea18";
 }
 
+.icon-badge-new::before {
+  content: "\ea1e";
+}
+
+.icon-badge-verify::before {
+  content: "\ea1f";
+}
+
 .icon-image::before {
   content: "\ea20";
 }
@@ -177,5 +185,9 @@ Generated using nucleoapp.com
 
 .icon-save-over::before {
   content: "\ea22";
+}
+
+.icon-filters::before {
+  content: "\ea23";
 }
 
