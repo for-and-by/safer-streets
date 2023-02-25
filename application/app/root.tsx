@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration, useLoaderData,} from '@remix-run/react';
-import type {LinksFunction, MetaFunction} from '@remix-run/cloudflare';
 import {json} from '@remix-run/cloudflare';
 
 import styles from '~/styles/build.css';
@@ -25,19 +24,23 @@ import TopBar from '~/components/molecules/top-bar';
 import BottomBar from '~/components/molecules/bottom-bar';
 import Controls from '~/components/molecules/controls';
 
-export const meta: MetaFunction = () => ({
-	charset: 'utf-8',
-	title: config.seo.default.title,
-	description: config.seo.default.description,
-	viewport: 'width=device-width,initial-scale=1',
-});
+export function meta() {
+	return {
+		charset: 'utf-8',
+		title: config.seo.default.title,
+		description: config.seo.default.description,
+		viewport: 'width=device-width,initial-scale=1',
+	};
+}
 
-export const links: LinksFunction = () => [
-	{rel: 'stylesheet', href: styles},
-	{rel: 'stylesheet', href: icons},
-	{rel: 'stylesheet', href: config.css.maplibre},
-	{rel: 'stylesheet', href: config.css.fonts},
-];
+export function links() {
+	return [
+		{rel: 'stylesheet', href: styles},
+		{rel: 'stylesheet', href: icons},
+		{rel: 'stylesheet', href: config.css.maplibre},
+		{rel: 'stylesheet', href: config.css.fonts},
+	];
+}
 
 export async function loader() {
 	const [reports, types, severities] = await Promise.all([
