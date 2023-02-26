@@ -1,32 +1,32 @@
-import React, { useEffect } from 'react';
-import useFindSelf from '~/hooks/use-find-self';
+import React, {useState} from 'react';
 import Toast from '~/components/regions/toast';
 import useMapCenter from '~/hooks/map/use-map-center';
 
 interface Props {
-  onFound?: () => void;
+	onFound?: () => void;
 }
 
-export default function FindSelfButton({ onFound }: Props) {
-	const { isLoading, run, coords } = useFindSelf();
+export default function FindSelfButton({onFound}: Props) {
+	const [loading, setLoading] = useState(false);
 	const [, setCenter] = useMapCenter();
 
-	useEffect(() => {
-		if (coords) {
-			setCenter(coords);
-			if (onFound) onFound();
+	function handleFindSelf() {
+		if (navigator && 'geolocation' in navigator) {
+			setLoading(true);
+			navigator.geolocation.getCurrentPosition((success) => {
+				const {longitude, latitude} = success.coords;
+				setCenter([longitude, latitude]);
+				setLoading(false);
+				if (onFound) onFound();
+			});
 		}
-	}, [isLoading]);
-
-	const handleFindSelf = () => {
-		run();
-	};
+	}
 
 	return (
 		<>
-			<Toast show={isLoading} content="Finding your location..." />
+			<Toast show={loading} content="Finding your location..."/>
 			<button className="btn btn-primary" onClick={handleFindSelf}>
-				<i className="btn-icon icon icon-find-self" />
+				<i className="btn-icon icon icon-find-self"/>
 			</button>
 		</>
 	);
