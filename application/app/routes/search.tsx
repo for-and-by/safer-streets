@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import type {LoaderArgs} from '@remix-run/cloudflare';
 import {json} from '@remix-run/cloudflare';
 import {Link, useActionData, useNavigate, useSubmit, useTransition} from '@remix-run/react';
 
 import {config} from '~/config';
 import {geocode} from '~/lib/maplibre';
+
+import {useTimeout} from '~/hooks/use-timeout';
 
 import Toast from '~/components/regions/toast';
 import Header from '~/components/regions/header';
@@ -56,18 +58,9 @@ export default function Search() {
 
 	const [value, setValue] = useState<string>('');
 
-	useEffect(() => {
-		const timeout = setTimeout(() => {
-			const data = new FormData();
-			data.append('query', value);
-			submit(data, {method: 'post', action: '/search'});
-		}, 400);
-
-		return () => {
-			clearTimeout(timeout);
-		};
-		//  eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [value]);
+	useTimeout(() => {
+		submit({query: value}, {method: 'post', action: '/search'});
+	}, 400, [value]);
 
 	const hasNoResults = !search || search.isEmpty;
 

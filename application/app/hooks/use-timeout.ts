@@ -1,34 +1,11 @@
-import React from 'react';
+import {useEffect} from 'react';
 
-interface Options {
-  onStart?: () => void;
-  onEnd?: () => void;
-  duration?: number;
-}
-
-export default function useTimeout(options: Options, deps: any[]) {
-	const { onStart = () => {}, onEnd = () => {}, duration = 500 } = options;
-
-	const onStartRef = React.useRef(onStart);
-	const onEndRef = React.useRef(onEnd);
-
-	React.useEffect(() => {
-		onStartRef.current = onStart;
-	}, [onStart]);
-
-	React.useEffect(() => {
-		onEndRef.current = onEnd;
-	}, [onStart]);
-
-	React.useEffect(() => {
-		if (!duration && duration !== 0) return;
-		onStartRef.current();
-		const timeout = setTimeout(() => {
-			onEndRef.current();
-		}, duration);
-
+export function useTimeout(callback: () => void, duration: number, deps: any[]) {
+	useEffect(() => {
+		const timeout = setTimeout(callback, duration);
 		return () => {
 			clearTimeout(timeout);
 		};
-	}, [duration, ...deps]);
+		//	eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [callback, duration, ...deps]);
 }
