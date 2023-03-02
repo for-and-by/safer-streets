@@ -18,7 +18,11 @@ export default function FindSelfButton({onFound}: Props) {
 				setCenter([longitude, latitude]);
 				setLoading(false);
 				if (onFound) onFound();
+			}, (error) => {
+				throw new Error(error.message);
 			});
+		} else {
+			throw new Error('Geolocation not available on this browser.');
 		}
 	}
 
