@@ -1,5 +1,4 @@
 import React, {useEffect} from 'react';
-import type {MetaFunction} from '@remix-run/cloudflare';
 import {Link} from '@remix-run/react';
 
 import {config} from '~/config';
@@ -11,11 +10,12 @@ import Footer from '~/components/regions/footer';
 
 import Logo from '~/components/atoms/logo';
 
-
-export const meta: MetaFunction = () => ({
-	title: 'Home | ' + config.seo.default.title,
-	description: config.seo.default.description,
-});
+export function meta() {
+	return {
+		title: 'Home | ' + config.seo.default.title,
+		description: config.seo.default.description,
+	};
+}
 
 export default function Home() {
 	const [isLocked, {setUnlock}] = useMapLock();
