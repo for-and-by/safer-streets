@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import type {LoaderArgs} from '@remix-run/cloudflare';
+import type {ActionArgs} from '@remix-run/cloudflare';
 import {json} from '@remix-run/cloudflare';
 import {Link, useActionData, useNavigate, useSubmit, useTransition} from '@remix-run/react';
 
@@ -26,7 +26,7 @@ export function meta() {
 	};
 }
 
-export async function action({request}: LoaderArgs) {
+export async function action({request}: ActionArgs) {
 	const data = await request.formData();
 
 	const query = data.get('query');

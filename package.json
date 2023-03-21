@@ -1,0 +1,20 @@
+{
+  "name": "safer-streets",
+  "version": "1.0.0",
+  "repository": "https://github.com/jtaccinelli/portfolio.git",
+  "author": "Jordan <jtaccinelli@gmail.com>",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*",
+      "apps/*"
+    ]
+  },
+  "scripts": {
+    "build": "lerna run build",
+    "dev": "lerna run dev"
+  },
+  "devDependencies": {
+    "lerna": "^6.5.1"
+  }
+}
