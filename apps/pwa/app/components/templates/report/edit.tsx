@@ -8,7 +8,7 @@ import {
 import type { SubmitHandler } from "react-hook-form";
 import { FormProvider, useForm } from "react-hook-form";
 
-import type { ReportFull } from "~/types/db";
+import type { FormUpdateValues, ReportFull } from "@safer-streets/db";
 
 import Toast from "~/components/regions/toast";
 import Footer from "~/components/regions/footer";
@@ -18,7 +18,6 @@ import TypeField from "~/components/fields/type-field";
 import CustomField from "~/components/fields/custom-field";
 import DetailsField from "~/components/fields/details-field";
 import ImageField from "~/components/fields/image-field";
-import type { FormUpdateValues } from "~/types/form";
 import { parseImageUrl } from "~/lib/image";
 
 export default function ReportEditTemplate() {

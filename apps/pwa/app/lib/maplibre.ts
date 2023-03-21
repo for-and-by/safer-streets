@@ -10,7 +10,7 @@ import type {
   SearchResult,
 } from "~/types/search";
 
-import type { Report, ReportResult } from "~/types/db";
+import type { Report, ReportResult } from "@safer-streets/db";
 
 export function parseContextAsString(context: ContextItem[]) {
   const contextObj = context.reduce((obj, feature) => {

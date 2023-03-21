@@ -6,7 +6,7 @@ import useMapSource from "~/hooks/map/use-map-source";
 import ReportClustersLayer from "~/components/molecules/reports/clusters";
 import ReportIconsLayer from "~/components/molecules/reports/icons";
 
-import type { ReportFull } from "~/types/db";
+import type { ReportFull } from "@safer-streets/db";
 import { MapImages } from "~/components/molecules/reports/images";
 import { parseDatesFromReport } from "~/utils/date";
 import { useReportOpen } from "~/hooks/reports/use-report-open";
