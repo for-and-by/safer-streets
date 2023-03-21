@@ -1,15 +1,15 @@
 import React from "react";
-import type { MetaFunction } from "@remix-run/cloudflare";
+import type { MetaFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 
-import { config } from "~/config";
-
 import AboutIndexTemplate from "~/components/templates/about";
+import { formatMetadata } from "~/utils/seo";
 
-export const meta: MetaFunction = () => ({
-  title: "About | " + config.seo.default.title,
-  description: config.seo.default.description,
-});
+export const meta: MetaFunction = () => {
+  return formatMetadata({
+    title: "About",
+  });
+};
 
 export default function About() {
   return (

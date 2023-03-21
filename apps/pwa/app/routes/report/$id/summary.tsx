@@ -1,7 +1,7 @@
-import type { LoaderFunction } from "@remix-run/router";
-import { json } from "@remix-run/cloudflare";
+import type { LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
 
-import { fetchReportSummary } from "~/lib/supabase";
+import { fetchReportSummary } from "@safer-streets/db";
 
 export const loader: LoaderFunction = async ({ params }) => {
   if (!params.id) return null;

@@ -1,20 +1,20 @@
 import React from "react";
 
-import type { ActionFunction, MetaFunction } from "@remix-run/cloudflare";
-import { redirect } from "@remix-run/cloudflare";
+import type { ActionFunction, MetaFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 
-import { config } from "~/config";
-
-import { uploadFile, uploadReport } from "~/lib/supabase";
-import type { FormCreateValues } from "~/types/form";
+import type { FormCreateValues } from "@safer-streets/db";
+import { uploadFile, uploadReport } from "@safer-streets/db";
 
 import CreateTemplate from "~/components/templates/create";
 import CreateProvider from "~/components/templates/create/context";
+import { formatMetadata } from "~/utils/seo";
 
-export const meta: MetaFunction = () => ({
-  title: "Create New Report | " + config.seo.default.title,
-  description: config.seo.default.description,
-});
+export const meta: MetaFunction = () => {
+  return formatMetadata({
+    title: "Create New Report",
+  });
+};
 
 export const action: ActionFunction = async ({ request }) => {
   const data = await request.formData();
@@ -34,7 +34,7 @@ export const action: ActionFunction = async ({ request }) => {
   return redirect("/");
 };
 
-export default function Home() {
+export default function Create() {
   return (
     <CreateProvider>
       <CreateTemplate />

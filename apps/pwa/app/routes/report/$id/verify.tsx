@@ -1,9 +1,9 @@
-import type {ActionFunction} from '@remix-run/router';
-import {verifyReport} from '~/lib/supabase';
-import {redirect} from '@remix-run/cloudflare';
+import type { ActionFunction } from "@remix-run/router";
+import { verifyReport } from "@safer-streets/db";
+import { redirect } from "@remix-run/node";
 
-export const action: ActionFunction = async ({params}) => {
-	if (!params.id) return null;
-	await verifyReport(parseInt(params.id));
-	return redirect('/');
+export const action: ActionFunction = async ({ params }) => {
+  if (!params.id) return null;
+  await verifyReport(parseInt(params.id));
+  return redirect("/");
 };

@@ -1,6 +1,6 @@
-import type { ActionFunction } from "@remix-run/router";
-import { deleteReport } from "~/lib/supabase";
-import { redirect } from "@remix-run/cloudflare";
+import type { ActionFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
+import { deleteReport } from "@safer-streets/db";
 
 export const action: ActionFunction = async ({ params }) => {
   if (!params.id) return null;

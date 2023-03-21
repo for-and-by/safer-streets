@@ -1,9 +1,9 @@
 import React from "react";
 import {
   Link,
+  useNavigation,
   useRouteLoaderData,
   useSubmit,
-  useTransition,
 } from "@remix-run/react";
 import type { SubmitHandler } from "react-hook-form";
 import { FormProvider, useForm } from "react-hook-form";
@@ -22,7 +22,7 @@ import type { FormUpdateValues } from "~/types/form";
 import { parseImageUrl } from "~/lib/image";
 
 export default function ReportEditTemplate() {
-  const { state } = useTransition();
+  const { state } = useNavigation();
   const submit = useSubmit();
 
   const loader = useRouteLoaderData("routes/report") as { report: ReportFull };
