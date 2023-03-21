@@ -34,7 +34,7 @@ export const action: ActionFunction = async ({ request }) => {
   return redirect("/");
 };
 
-export default function Create() {
+export default function Home() {
   return (
     <CreateProvider>
       <CreateTemplate />
