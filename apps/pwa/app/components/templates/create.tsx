@@ -10,7 +10,7 @@ import Footer from "~/components/regions/footer";
 import ProgressBar from "~/components/atoms/progress-bar";
 import Toast from "~/components/regions/toast";
 import CenterMarker from "~/components/molecules/markers/center";
-import { useNavigate } from "@remix-run/react";
+import { useNavigate, useNavigation } from "@remix-run/react";
 import { Warning } from "~/components/composites/warning";
 
 export default function CreateIndexTemplate() {
