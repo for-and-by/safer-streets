@@ -9,7 +9,8 @@
     "build": "run-s build:*",
     "dev:css": "tailwindcss -c tailwind.config.cjs -w -i ./app/styles/index.css -o ./app/styles/build.css",
     "dev:remix": "remix dev",
-    "dev": "run-p dev:*"
+    "dev": "run-p dev:*",
+    "lerna": "lerna run build --scope=@safer-streets/pwa"
   },
   "dependencies": {
     "@safer-streets/db": "*",
