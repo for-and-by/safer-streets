@@ -23,7 +23,7 @@ export const config = {
   },
   map: {
     key: "0wluNT640zwZaj5fBCGp",
-    bbox: [72.24619313, -55.32281756, 168.22612585, -9.08801251], // Australia Bounding Box,
+    bbox: [111.30146, -43.668617, 158.147163, -11.986599], // Australia Bounding Box,
     style:
       "https://api.maptiler.com/maps/7e89c6ff-de99-44b8-a11d-570a695ed2a2/style.json",
     zoom: {

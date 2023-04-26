@@ -38,6 +38,7 @@ export default function CreatePagination() {
         </Warning.Trigger>
       ) : (
         <button className="btn btn-light" onClick={prevStage}>
+          <i className="btn-icon icon icon-arrow-left" />
           <p className="btn-text">
             {stages?.[stage.prev as keyof typeof stages]?.heading}
           </p>
@@ -51,10 +52,11 @@ export default function CreatePagination() {
           <p className="btn-text">Submit Report</p>
         </button>
       ) : (
-        <button className="btn btn-primary" onClick={handleNext}>
+        <button className="btn btn-light" onClick={handleNext}>
           <p className="btn-text">
             {stages?.[stage.next as keyof typeof stages]?.heading}
           </p>
+          <i className="btn-icon icon icon-arrow-right" />
         </button>
       )}
     </>

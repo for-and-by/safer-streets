@@ -32,7 +32,7 @@ export function Panel({ heading, body, onConfirm }: PropsPanel) {
           <p>{body}</p>
         </div>
         <div className="sticky top-0 flex items-center justify-between p-2">
-          <Modal.Close className="btn btn-secondary">
+          <Modal.Close className="btn btn-light">
             <p className="btn-text">Cancel</p>
           </Modal.Close>
           <Modal.Close className="btn btn-primary" onClick={onConfirm}>

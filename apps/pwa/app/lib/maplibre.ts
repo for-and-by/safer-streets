@@ -14,6 +14,7 @@ import type { Report, ReportResult } from "@safer-streets/db";
 
 export function parseContextAsString(context: ContextItem[]) {
   const contextObj = context.reduce((obj, feature) => {
+    console.log(feature);
     if (feature?.id) {
       const [type, id] = feature.id.split(".");
       return Object.assign(obj, {
@@ -30,12 +31,12 @@ export function parseContextAsString(context: ContextItem[]) {
 
   return [
     contextObj?.street?.text ??
-      contextObj?.subcity?.text ??
+      contextObj?.municipality?.text ??
+      contextObj?.joint_municipality?.text ??
       contextObj.place?.text ??
       null,
-    contextObj?.state?.text ?? null,
-    contextObj?.country?.text ?? null,
-    contextObj?.postcode?.text ?? null,
+    contextObj?.region?.text ?? null,
+    contextObj?.postal_code?.text ?? null,
   ]
     .filter((i) => !!i)
     .join(", ");

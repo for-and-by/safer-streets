@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import type { ChangeEventHandler, KeyboardEventHandler } from "react";
+import React, { useRef } from "react";
 
 import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
-
 import {
   Link,
   useActionData,
@@ -11,20 +11,18 @@ import {
   useSubmit,
 } from "@remix-run/react";
 
-import { geocode } from "~/lib/maplibre";
 import { formatMetadata } from "~/utils/seo";
-
-import { useTimeout } from "~/hooks/use-timeout";
+import { geocode } from "~/lib/maplibre";
 
 import Toast from "~/components/regions/toast";
 import Header from "~/components/regions/header";
 import Body from "~/components/regions/body";
 import Footer from "~/components/regions/footer";
 
+import SearchResults from "~/components/molecules/search-results";
+
 import FindSelfButton from "~/components/atoms/find-self-button";
 import Bumper from "~/components/atoms/bumper";
-
-import SearchResults from "~/components/molecules/search-results";
 import Text from "~/components/inputs/text";
 
 export const meta: MetaFunction = () => {
@@ -58,21 +56,28 @@ export const action: ActionFunction = async ({ request }) => {
 };
 
 export default function Search() {
-  const { state } = useNavigation();
-  const search = useActionData<typeof action>();
-
-  const navigate = useNavigate();
   const submit = useSubmit();
+  const search = useActionData();
+  const { state } = useNavigation();
+  const navigate = useNavigate();
 
-  const [value, setValue] = useState<string>("");
-
-  useTimeout(
-    () => {
-      submit({ query: value }, { method: "post", action: "/search" });
-    },
-    400,
-    [value]
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
+    undefined
   );
+
+  const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
+    clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      submit(
+        { query: event.target.value },
+        { method: "post", action: "/search" }
+      );
+    }, 400);
+  };
+
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+    clearTimeout(timeoutRef.current);
+  };
 
   const hasNoResults = !search || search.isEmpty;
 
@@ -90,7 +95,7 @@ export default function Search() {
             </h3>
             <p className="text-sm text-base-400">
               {hasNoResults
-                ? "Start by typing in an address."
+                ? "Type in an address below."
                 : "Select a location to jump to."}
             </p>
           </div>
@@ -104,8 +109,8 @@ export default function Search() {
       <Footer>
         <div className="flex flex-row items-center space-x-2 bg-white p-2">
           <Text
-            value={value}
-            onChange={(event) => setValue(event.target.value)}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
             icon="icon-search"
             placeholder="Search for an address..."
           />

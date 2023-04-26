@@ -20,7 +20,7 @@
 @layer components {
     /* Button Styling */
     .btn {
-        @apply flex h-12 items-center justify-center space-x-3 whitespace-nowrap rounded-sm px-4 transition-all hover:cursor-pointer;
+        @apply flex h-12 items-center justify-center space-x-2 whitespace-nowrap rounded-sm px-4 transition-all hover:cursor-pointer;
     }
 
     .btn-text {

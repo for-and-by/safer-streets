@@ -28,7 +28,7 @@ export interface Stage {
 export const stages: { [key in STAGE]: Stage } = {
   [STAGE.LOCATION]: {
     step: 1,
-    heading: "Confirm Address",
+    heading: "Set Address",
     description:
       "Use the pin or drag the map to where the reports is referring to.",
     progress: 20,
@@ -47,7 +47,7 @@ export const stages: { [key in STAGE]: Stage } = {
   },
   [STAGE.IMAGE]: {
     step: 3,
-    heading: "Upload Photo",
+    heading: "Add Photo",
     description: "Add an image to the reports.",
     progress: 80,
     current: STAGE.IMAGE,
@@ -56,7 +56,7 @@ export const stages: { [key in STAGE]: Stage } = {
   },
   [STAGE.CONFIRM]: {
     step: 4,
-    heading: "Confirm Details",
+    heading: "Confirm",
     description: "Please confirm that the following details were correct",
     progress: 90,
     current: STAGE.CONFIRM,

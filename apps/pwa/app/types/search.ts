@@ -1,4 +1,4 @@
-import type { GeoJSONFeature, LngLatLike } from 'maplibre-gl';
+import type { GeoJSONFeature, LngLatLike } from "maplibre-gl";
 
 export interface ContextItem {
   id?: string;
@@ -13,8 +13,11 @@ export interface ContextObject {
   place?: ContextItem;
   county?: ContextItem;
   state?: ContextItem;
+  municipality?: ContextItem;
+  joint_municipality?: ContextItem;
+  region?: ContextItem;
   country?: ContextItem;
-  postcode?: ContextItem;
+  postal_code?: ContextItem;
 }
 
 export interface SearchResult extends GeoJSONFeature {
