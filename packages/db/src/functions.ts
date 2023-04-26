@@ -53,10 +53,10 @@ export async function deleteReport(id: number) {
 
 export async function verifyReport(id: number) {
   const update = await SupabaseClient.from('reports')
-      .update({
-        updated_at: new Date(Date.now()).toISOString(),
-      })
-      .eq('id', id)
+    .update({
+      updated_at: new Date(Date.now()).toISOString(),
+    })
+    .eq('id', id)
 
   if (update.error) throw update.error
 
@@ -65,19 +65,19 @@ export async function verifyReport(id: number) {
 
 export async function updateReport(values: FormUpdateValues, imageUrl?: string) {
   const report = await SupabaseClient.from('reports')
-      .select('content_id')
-      .eq('id', values.id)
-      .limit(1)
-      .single()
+    .select('content_id')
+    .eq('id', values.id)
+    .limit(1)
+    .single()
 
   if (report.error) throw report.error
   if (!report.data) throw `No report with id ${values.id} found.`
 
   const content = await SupabaseClient.from('reports_content')
-      .select('*')
-      .eq('id', report.data.content_id)
-      .limit(1)
-      .single()
+    .select('*')
+    .eq('id', report.data.content_id)
+    .limit(1)
+    .single()
 
   if (content.error) throw content.error
   if (!content.data) throw `No content with id ${report.data.content_id} found.`
@@ -97,19 +97,19 @@ export async function updateReport(values: FormUpdateValues, imageUrl?: string) 
   }, {})
 
   const clone = await SupabaseClient.from('reports_content')
-      .insert({...clonedData, ...newContentData})
-      .select()
+    .insert({...clonedData, ...newContentData})
+    .select()
 
   if (clone.error) throw clone.error
   if (!clone.data) throw 'No data was returned from content creation'
 
   const update = await SupabaseClient.from('reports')
-      .update({
-        content_id: clone.data[0].id,
-        updated_at: new Date(Date.now()).toISOString(),
-        ...(values.type ? {type_handle: values.type as TYPES} : {}),
-      })
-      .eq('id', values.id)
+    .update({
+      content_id: clone.data[0].id,
+      updated_at: new Date(Date.now()).toISOString(),
+      ...(values.type ? {type_handle: values.type as TYPES} : {}),
+    })
+    .eq('id', values.id)
 
   if (update.error) throw update.error
 
@@ -124,10 +124,10 @@ export async function uploadFile(image?: string) {
   const base64 = image.split(',')[1]
 
   const upload = await SupabaseClient.storage
-      .from('users')
-      .upload(`reports/${filename}`, decode(base64), {
-        contentType: 'image/jpeg',
-      })
+    .from('users')
+    .upload(`reports/${filename}`, decode(base64), {
+      contentType: 'image/jpeg',
+    })
 
   if (upload.error) throw upload.error
   if (!upload.data) throw 'No data returned'
@@ -147,35 +147,35 @@ export async function uploadReport(data: FormCreateValues, imageUrl?: string) {
   const [lng, lat] = parseLngLat(data.location.coordinates)
 
   const report = await SupabaseClient.from('reports')
-      .insert({
-        lng,
-        lat,
-        type_handle: data.type as TYPES,
-      })
-      .select()
+    .insert({
+      lng,
+      lat,
+      type_handle: data.type as TYPES,
+    })
+    .select()
 
   if (report.error) throw report.error
   if (!report.data) throw 'No data was returned from reports upload.'
 
   const content = await SupabaseClient.from('reports_content')
-      .insert({
-        report_id: report.data[0].id,
-        details: data.details,
-        severity_handle: data.severity as SEVERITIES,
-        data: data.custom ?? {},
-        image_url: imageUrl,
-      })
-      .select()
+    .insert({
+      report_id: report.data[0].id,
+      details: data.details,
+      severity_handle: data.severity as SEVERITIES,
+      data: data.custom ?? {},
+      image_url: imageUrl,
+    })
+    .select()
 
   if (content.error) throw content.error
   if (!content.data) throw 'No data was returned from reports content upload'
 
   const update = await SupabaseClient.from('reports')
-      .update({
-        content_id: content.data[0].id,
-      })
-      .eq('id', report.data[0].id)
-      .select('*')
+    .update({
+      content_id: content.data[0].id,
+    })
+    .eq('id', report.data[0].id)
+    .select('*')
 
   if (update.error) throw update.error
 
@@ -212,7 +212,7 @@ interface FetchFilters {
 
 export async function fetchReports(filters?: FetchFilters) {
   const query = SupabaseClient.from('reports').select(
-      '*, type:type_handle (expire_by, verify_by), content:content_id (is_deleted) '
+    '*, type:type_handle (expire_by, verify_by), content:content_id (is_deleted) '
   )
 
   if (filters?.lastSynced) query.gt('updated_at', filters.lastSynced)
@@ -226,12 +226,12 @@ export async function fetchReports(filters?: FetchFilters) {
 
 export async function fetchReportSummary(id: string | number) {
   const query = SupabaseClient.from('reports')
-      .select(
-          'id, lng, lat, updated_at, type:type_handle (title, verify_by), content:content_id(image_url, severity:severity_handle(title))'
-      )
-      .eq('id', id)
-      .limit(1)
-      .single()
+    .select(
+      'id, lng, lat, updated_at, type:type_handle (title, verify_by), content:content_id(image_url, severity:severity_handle(title))'
+    )
+    .eq('id', id)
+    .limit(1)
+    .single()
 
   const reports = await query
   if (reports.error) throw reports.error
@@ -242,10 +242,10 @@ export async function fetchReportSummary(id: string | number) {
 
 export async function fetchReportContent(id: string | number) {
   const query = SupabaseClient.from('reports')
-      .select('*, type:type_handle(*), content:content_id(*, severity:severity_handle (*))')
-      .eq('id', id)
-      .limit(1)
-      .single()
+    .select('*, type:type_handle(*), content:content_id(*, severity:severity_handle (*))')
+    .eq('id', id)
+    .limit(1)
+    .single()
 
   const reports = await query
   if (reports.error) throw reports.error

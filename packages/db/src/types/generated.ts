@@ -1,3 +1,5 @@
+import {CATEGORIES, SEVERITIES, TYPES} from '~/types/form'
+
 export type Json = string | number | boolean | null | {[key: string]: Json} | Json[]
 
 export interface Database {
@@ -103,7 +105,7 @@ export interface Database {
       }
       severities: {
         Row: {
-          handle: string
+          handle: SEVERITIES
           title: string
         }
         Insert: {
@@ -117,16 +119,16 @@ export interface Database {
       }
       types: {
         Row: {
-          category_handle: string
+          category_handle: CATEGORIES
           custom_fields: Json
           expire_by: number
-          handle: string
+          handle: TYPES
           image_required: boolean
           title: string
           verify_by: number
         }
         Insert: {
-          category_handle: string
+          category_handle: CATEGORIES
           custom_fields?: Json
           expire_by?: number
           handle: string
@@ -135,7 +137,7 @@ export interface Database {
           verify_by?: number
         }
         Update: {
-          category_handle?: string
+          category_handle?: CATEGORIES
           custom_fields?: Json
           expire_by?: number
           handle?: string
