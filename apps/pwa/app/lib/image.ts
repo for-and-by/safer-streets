@@ -52,7 +52,7 @@ interface Options {
   quality?: number;
 }
 
-export function parseImageUrl(url?: string, options?: Options) {
+export function parseImageUrl(url?: string | null, options?: Options) {
   if (!url) return undefined;
 
   const image = new URL(url?.replace("/users/users", "/users"));

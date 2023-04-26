@@ -117,11 +117,15 @@ export async function updateReport(values: FormUpdateValues, imageUrl?: string) 
 }
 
 export async function uploadFile(image?: string) {
+  console.log('input: ', {image})
+
   if (!image) return
 
   const timestamp = Date.now()
   const filename = `report-img-${timestamp}.jpeg`
   const base64 = image.split(',')[1]
+
+  console.log('processed input: ', {timestamp, filename, base64})
 
   const upload = await SupabaseClient.storage
     .from('users')
@@ -129,18 +133,15 @@ export async function uploadFile(image?: string) {
       contentType: 'image/jpeg',
     })
 
+  console.log('upload result: ', {upload})
+
   if (upload.error) throw upload.error
   if (!upload.data) throw 'No data returned'
 
-  // TODO: Figure this fuckin thing out
-  //@ts-ignore
-  const url = SupabaseClient.storage.from('users').getPublicUrl(upload.data.Key)
-  //@ts-ignore
-  if (url.error) throw url.error
+  const url = SupabaseClient.storage.from('users').getPublicUrl(upload.data.path)
   if (!url.data) throw 'No url generated'
 
-  //@ts-ignore
-  return url.data.publicURL
+  return url.data.publicUrl
 }
 
 export async function uploadReport(data: FormCreateValues, imageUrl?: string) {

@@ -1,14 +1,9 @@
 import React from "react";
 import type { ActionFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
-import type { FormUpdateValues, ReportFull } from "@safer-streets/db";
+import type { FormUpdateValues } from "@safer-streets/db";
 import { updateReport, uploadFile } from "@safer-streets/db";
-import {
-  Link,
-  useNavigation,
-  useRouteLoaderData,
-  useSubmit,
-} from "@remix-run/react";
+import { Link, useMatches, useNavigation, useSubmit } from "@remix-run/react";
 import type { SubmitHandler } from "react-hook-form";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -39,10 +34,8 @@ export default function ReportEditTemplate() {
   const { state } = useNavigation();
   const submit = useSubmit();
 
-  const loader = useRouteLoaderData("routes/report/$id") as {
-    report: ReportFull;
-  };
-  const data = loader.report;
+  const [_, loader] = useMatches();
+  const data = loader.data.report;
 
   const methods = useForm<FormUpdateValues>({
     defaultValues: {
@@ -54,11 +47,15 @@ export default function ReportEditTemplate() {
     mode: "onChange",
   });
 
+  //  This is required for the value to be correct.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const invoke = methods.formState.dirtyFields;
+
   const onSubmit: SubmitHandler<any> = (values) => {
+    const { dirtyFields } = methods.formState;
     const dirtyValues = Object.keys(values).reduce((obj, key) => {
       const value = values[key as keyof FormUpdateValues];
-      const isDirty =
-        methods.formState.dirtyFields[key as keyof FormUpdateValues];
+      const isDirty = dirtyFields[key as keyof FormUpdateValues];
       return isDirty ? { ...obj, [key]: value } : obj;
     }, {});
 
