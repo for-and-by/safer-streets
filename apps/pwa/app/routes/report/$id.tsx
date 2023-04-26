@@ -28,7 +28,6 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export default function Report() {
   const loader = useLoaderData();
-  console.log(loader);
   const data = loader?.report;
 
   const [, open] = useReportOpen();

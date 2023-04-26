@@ -14,7 +14,6 @@ import type { Report, ReportResult } from "@safer-streets/db";
 
 export function parseContextAsString(context: ContextItem[]) {
   const contextObj = context.reduce((obj, feature) => {
-    console.log(feature);
     if (feature?.id) {
       const [type, id] = feature.id.split(".");
       return Object.assign(obj, {

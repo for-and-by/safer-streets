@@ -68,8 +68,6 @@ export default function ReportEditTemplate() {
     );
   };
 
-  console.log(methods.formState.dirtyFields);
-
   return (
     <>
       <Toast content="Saving new details..." show={state === "submitting"} />
