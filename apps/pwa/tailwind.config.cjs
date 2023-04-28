@@ -1,8 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 
-const baseConfig = require('@safer-streets/tailwind/config');
+const baseConfig = require("@safer-streets/tailwind/config");
 
 module.exports = {
-	content: ['./app/**/*.{js,ts,jsx,tsx}'],
-	...baseConfig
+  content: ["./app/**/*.{js,ts,jsx,tsx}"],
+  ...baseConfig,
 };

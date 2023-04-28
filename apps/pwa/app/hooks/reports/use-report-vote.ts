@@ -1,13 +1,13 @@
-import {useReportStore} from '~/hooks/reports/use-reports-store';
+import { useReportStore } from "~/hooks/reports/use-reports-store";
 
 export function useReportVote() {
-	const voted = useReportStore(state => state.voted);
+  const voted = useReportStore((state) => state.voted);
 
-	const up = useReportStore(state => state.voteUp);
-	const down = useReportStore(state => state.voteDown);
-	const clear = useReportStore(state => state.voteClear);
+  const up = useReportStore((state) => state.voteUp);
+  const down = useReportStore((state) => state.voteDown);
+  const clear = useReportStore((state) => state.voteClear);
 
-	const actions = {up, down, clear};
+  const actions = { up, down, clear };
 
-	return [voted, actions] as [typeof voted, typeof actions];
+  return [voted, actions] as [typeof voted, typeof actions];
 }
