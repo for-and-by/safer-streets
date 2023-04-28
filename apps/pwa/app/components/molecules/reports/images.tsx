@@ -1,50 +1,50 @@
-import useMapImages from '~/hooks/map/use-map-images';
+import useMapImages from "~/hooks/map/use-map-images";
 
-import cyclist from '~/icons/png/cyclist.png';
-import fire from '~/icons/png/fire.png';
-import flood from '~/icons/png/flood.png';
-import motorist from '~/icons/png/motorist.png';
-import pedestrian from '~/icons/png/pedestrian.png';
-import wildlife from '~/icons/png/wildlife.png';
+import cyclist from "~/assets/cyclist.png";
+import fire from "~/assets/fire.png";
+import flood from "~/assets/flood.png";
+import motorist from "~/assets/motorist.png";
+import pedestrian from "~/assets/pedestrian.png";
+import wildlife from "~/assets/wildlife.png";
 
-import verifyBadge from '~/icons/png/badge-verify.png';
-import newBadge from '~/icons/png/badge-new.png';
+import verifyBadge from "~/assets/badge-verify.png";
+import newBadge from "~/assets/badge-new.png";
 
 export function MapImages() {
-	useMapImages([
-		{
-			id: 'cyclist',
-			url: cyclist,
-		},
-		{
-			id: 'bushfire',
-			url: fire,
-		},
-		{
-			id: 'flood',
-			url: flood,
-		},
-		{
-			id: 'motorist',
-			url: motorist,
-		},
-		{
-			id: 'pedestrian',
-			url: pedestrian,
-		},
-		{
-			id: 'wildlife',
-			url: wildlife
-		},
-		{
-			id: 'badge-new',
-			url: newBadge
-		},
-		{
-			id: 'badge-verify',
-			url: verifyBadge
-		}
-	]);
+  useMapImages([
+    {
+      id: "cyclist",
+      url: cyclist,
+    },
+    {
+      id: "bushfire",
+      url: fire,
+    },
+    {
+      id: "flood",
+      url: flood,
+    },
+    {
+      id: "motorist",
+      url: motorist,
+    },
+    {
+      id: "pedestrian",
+      url: pedestrian,
+    },
+    {
+      id: "wildlife",
+      url: wildlife,
+    },
+    {
+      id: "badge-new",
+      url: newBadge,
+    },
+    {
+      id: "badge-verify",
+      url: verifyBadge,
+    },
+  ]);
 
-	return null;
+  return null;
 }

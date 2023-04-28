@@ -11,7 +11,7 @@ import {
 import { json } from "@remix-run/node";
 
 import styles from "@safer-streets/tailwind/index.css";
-import icons from "~/icons/css/icons.css";
+import icons from "@safer-streets/icons/index.css";
 
 import { config } from "~/config";
 import { fetchReports, fetchSeverities, fetchTypes } from "@safer-streets/db";
