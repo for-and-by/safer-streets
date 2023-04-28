@@ -10,7 +10,7 @@ import {
 } from "@remix-run/react";
 import { json } from "@remix-run/node";
 
-import styles from "~/styles/build.css";
+import styles from "@safer-streets/tailwind/index.css";
 import icons from "~/icons/css/icons.css";
 
 import { config } from "~/config";

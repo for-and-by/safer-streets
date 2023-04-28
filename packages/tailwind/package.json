@@ -1,0 +1,19 @@
+{
+  "name": "@safer-streets/tailwind",
+  "private": true,
+  "version": "1.0.0",
+  "exports": {
+    "./index.css": {
+      "import": "./src/index.css",
+      "require": "./src/index.css"
+    },
+    "./config": {
+      "import": "./src/tailwind.config.cjs",
+      "require": "./src/tailwind.config.cjs"
+    }
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.9",
+    "tailwindcss": "^3.3.2"
+  }
+}
