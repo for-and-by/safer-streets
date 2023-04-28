@@ -1,5 +1,8 @@
 /** @type {import('@remix-run/dev').AppConfig} */
 module.exports = {
+  future: {
+    unstable_tailwind: true,
+  },
   ignoredRouteFiles: ["**/.*"],
   server:
     process.env.NETLIFY || process.env.NETLIFY_LOCAL
@@ -9,10 +12,4 @@ module.exports = {
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
   // publicPath: "/build/",
-  future: {
-    v2_errorBoundary: true,
-    v2_meta: true,
-    v2_normalizeFormMethod: true,
-    v2_routeConvention: true,
-  },
 };
