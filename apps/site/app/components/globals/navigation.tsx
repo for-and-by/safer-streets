@@ -9,7 +9,7 @@ export default function Navigation() {
       </Link>
       <div className="flex items-center gap-6">
         <Link to="/content/about">About</Link>
-        <Link to="/">Support</Link>
+        <Link to="/contact">Get in Touch</Link>
         <Link
           to="https://app.saferstreets.info"
           className="btn btn-primary btn-inline"

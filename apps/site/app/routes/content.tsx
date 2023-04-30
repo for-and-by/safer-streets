@@ -72,12 +72,12 @@ export default function Page() {
           </ul>
         </div>
         <div className="col-span-4 flex flex-col items-start gap-8 rounded-md bg-white p-8 pt-16 md:col-span-3">
-          <button onClick={handleShow} className="btn btn-primary md:hidden">
-            <i className="btn-icon icon icon-plus" />
-          </button>
-          <div className="prose">
+          <div className="prose-h prose prose-h1:text-2xl prose-h1:font-medium prose-h2:font-medium prose-h3:font-medium prose-h4:font-medium">
             <Outlet />
           </div>
+          <button onClick={handleShow} className="btn btn-light md:hidden">
+            More Documents
+          </button>
         </div>
       </div>
     </div>

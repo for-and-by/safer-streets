@@ -57,6 +57,17 @@ const content: Content = [
       ],
     },
   },
+  {
+    type: "content",
+    data: {
+      heading: "Looking to get in touch?",
+      body: "Got some feedback, issues or interesting ideas? Or are you looking to help out with the project? Check out your options on our contact us page",
+      cta: {
+        text: "Send an email",
+        url: "/contact",
+      },
+    },
+  },
 ];
 
 export default function Page() {
