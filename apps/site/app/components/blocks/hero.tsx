@@ -2,7 +2,6 @@ import { Link } from "@remix-run/react";
 
 import type { LinkType } from "~/types/content";
 import clsx from "clsx";
-import { SimpleMap } from "~/components/elements/map";
 
 type Props = {
   type: "hero";
@@ -49,7 +48,11 @@ export function HeroBlock({ data }: Props) {
           <div className="h-3 w-3 rounded-full bg-gray-200" />
           <div className="h-3 w-3 rounded-full bg-gray-200" />
         </div>
-        <SimpleMap />
+        <img
+          src="/map.png"
+          alt="Safer Streets Map - Simple"
+          className="h-full w-full object-cover"
+        />
       </div>
     </div>
   );

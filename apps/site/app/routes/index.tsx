@@ -1,7 +1,7 @@
 import type { Content } from "~/components/blocks/builder";
 import { BlockBuilder } from "~/components/blocks/builder";
 
-export const content: Content = [
+const content: Content = [
   {
     type: "hero",
     data: {
@@ -16,7 +16,7 @@ export const content: Content = [
       text: "Endorsed by Jonathan Sriranganathan",
       cta: {
         text: "Learn More",
-        url: "/endorsement",
+        url: "/content/disclaimer",
       },
     },
   },
@@ -28,7 +28,7 @@ export const content: Content = [
       body: "Entirely anonymous and moderated by both the community and the team behind this project, Safer Streets is a project which intends to provide local communities with a space to share their thoughts about community safety.",
       cta: {
         text: "Learn More",
-        url: "/about",
+        url: "/content/about",
       },
     },
   },
@@ -59,6 +59,6 @@ export const content: Content = [
   },
 ];
 
-export default function HomeIndex() {
+export default function Page() {
   return <BlockBuilder content={content} />;
 }

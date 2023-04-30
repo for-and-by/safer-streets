@@ -8,7 +8,7 @@ export default function Navigation() {
         <Logo />
       </Link>
       <div className="flex items-center gap-6">
-        <Link to="/">About</Link>
+        <Link to="/content/about">About</Link>
         <Link to="/">Support</Link>
         <Link
           to="https://app.saferstreets.info"
