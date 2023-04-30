@@ -2,6 +2,7 @@ import { Link } from "@remix-run/react";
 
 import type { LinkType } from "~/types/content";
 import clsx from "clsx";
+import { SimpleMap } from "~/components/elements/map";
 
 export type Props = {
   type: "hero";
@@ -16,11 +17,7 @@ export function HeroBlock({ data }: Props) {
   return (
     <div className="relative flex flex-col items-start gap-8 px-8 py-24">
       <div className="absolute inset-0 -z-10">
-        <img
-          className="h-full w-full object-cover"
-          alt="Hero Block Background"
-          src="/map.png"
-        />
+        <SimpleMap />
       </div>
 
       <div className="flex flex-col gap-2">
