@@ -19,12 +19,10 @@ export function BannerBlock({ data }: Props) {
       <Link
         className="flex items-center gap-2 whitespace-nowrap"
         to={data.cta.url}
+        aria-label={data.cta.text}
       >
         <span className="hidden md:block">{data.cta.text}</span>
-        <i
-          className="icon icon-arrow-right before:text-xs"
-          aria-label={data.cta.text}
-        />
+        <i className="icon icon-arrow-right before:text-xs" />
       </Link>
     </div>
   );
