@@ -191,3 +191,19 @@ Generated using nucleoapp.com
   content: "\ea23";
 }
 
+.icon-community::before {
+  content: "\ea24";
+}
+
+.icon-voting::before {
+  content: "\ea25";
+}
+
+.icon-moderate::before {
+  content: "\ea26";
+}
+
+.icon-report::before {
+  content: "\ea27";
+}
+
