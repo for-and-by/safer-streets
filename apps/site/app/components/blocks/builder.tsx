@@ -28,17 +28,18 @@ export function BlockBuilder({ content }: Props) {
   return (
     <>
       {content.map((item) => {
+        const key = JSON.stringify(item);
         switch (item.type) {
           case "hero":
-            return <HeroBlock {...item} />;
+            return <HeroBlock key={key} {...item} />;
           case "content":
-            return <ContentBlock {...item} />;
+            return <ContentBlock key={key} {...item} />;
           case "cards":
-            return <CardsBlock {...item} />;
+            return <CardsBlock key={key} {...item} />;
           case "banner":
-            return <BannerBlock {...item} />;
+            return <BannerBlock key={key} {...item} />;
           default:
-            return <NotFoundBlock />;
+            return <NotFoundBlock key={key} />;
         }
       })}
     </>
