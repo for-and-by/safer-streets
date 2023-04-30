@@ -10,6 +10,17 @@ export const content: Content = [
     },
   },
   {
+    type: "banner",
+    data: {
+      icon: "icon-info",
+      text: "Endorsed by Jonathan Sriranganathan",
+      cta: {
+        text: "Learn More",
+        url: "/endorsement",
+      },
+    },
+  },
+  {
     type: "content",
     data: {
       heading:

@@ -2,11 +2,8 @@ import { Link } from "@remix-run/react";
 
 export default function Footer() {
   return (
-    <div className="flex items-center justify-between rounded-md bg-gray-900 p-4 text-gray-400">
-      <p className="text-white">
-        Built by{" "}
-        <span className="font-medium text-brand-500">Jordan Accinelli</span>
-      </p>
+    <div className="item-start flex flex-col justify-between gap-2 rounded-md bg-brand-600 p-4 text-brand-200 md:flex-row md:items-center">
+      <p>Built by Jordan Accinelli</p>
       <div className="flex items-center gap-6">
         <Link to="/">Terms & Conditions</Link>
         <Link to="/">Privacy</Link>

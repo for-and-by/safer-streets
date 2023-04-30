@@ -41,7 +41,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="bg-beige">
+      <body className="bg-gray-50">
         <div className="mx-auto flex max-w-6xl flex-col gap-2 p-2">
           <Navigation />
           <Outlet />
