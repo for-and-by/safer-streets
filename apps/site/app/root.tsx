@@ -42,7 +42,7 @@ export default function App() {
         <Links />
       </head>
       <body className="bg-gray-50">
-        <div className="mx-auto flex max-w-4xl flex-col">
+        <div className="mx-auto flex max-w-6xl flex-col p-2">
           <Navigation />
           <Outlet />
           <Footer />

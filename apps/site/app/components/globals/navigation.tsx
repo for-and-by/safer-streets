@@ -3,7 +3,7 @@ import { Link } from "@remix-run/react";
 
 export default function Navigation() {
   return (
-    <nav className="mt-2 flex items-center justify-between bg-white p-2">
+    <nav className="flex items-center justify-between bg-white p-2">
       <Link to="/" className="btn btn-white">
         <Logo />
       </Link>
