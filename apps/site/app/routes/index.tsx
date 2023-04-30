@@ -13,11 +13,18 @@ export const content: Content = [
           url: "https://app.saferstreets.info",
           target: "_blank",
         },
-        {
-          text: "Learn More",
-          url: "/about",
-        },
       ],
+    },
+  },
+  {
+    type: "content",
+    data: {
+      heading: "What is Safer Streets?",
+      body: "Safer Streets is a platform dedicated to sharing and communicating environmental safety issues that affect our local communities. Entirely anonymous and moderated by both the community and the team behind this project, Safer Streets is a project which intends to provide local communities with a space to share their thoughts about community safety.",
+      cta: {
+        text: "Learn More",
+        url: "/about",
+      },
     },
   },
 ];

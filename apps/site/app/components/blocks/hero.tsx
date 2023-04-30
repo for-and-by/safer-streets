@@ -3,7 +3,7 @@ import { Link } from "@remix-run/react";
 import type { LinkType } from "~/types/content";
 import clsx from "clsx";
 
-export type Props = {
+type Props = {
   type: "hero";
   data: {
     heading?: string;
