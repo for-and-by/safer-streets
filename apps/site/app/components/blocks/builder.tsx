@@ -1,8 +1,9 @@
 import type { ComponentProps } from "react";
 import { HeroBlock } from "~/components/blocks/hero";
 import { ContentBlock } from "~/components/blocks/content";
+import { CardsBlock } from "~/components/blocks/cards";
 
-export type Blocks = typeof HeroBlock | typeof ContentBlock;
+export type Blocks = typeof HeroBlock | typeof ContentBlock | typeof CardsBlock;
 export type Content = (Blocks extends any ? ComponentProps<Blocks> : never)[];
 
 type Props = {
@@ -26,6 +27,8 @@ export function BlockBuilder({ content }: Props) {
             return <HeroBlock {...item} />;
           case "content":
             return <ContentBlock {...item} />;
+          case "cards":
+            return <CardsBlock {...item} />;
           default:
             return <NotFoundBlock />;
         }

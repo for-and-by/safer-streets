@@ -27,6 +27,33 @@ export const content: Content = [
       },
     },
   },
+  {
+    type: "cards",
+    data: {
+      heading: "How does Safer Streets work?",
+      subheading: "Here's a brief overview",
+      cards: [
+        {
+          icon: "icon-report",
+          heading: "Low effort reporting",
+          subheading:
+            "Create anonymous reports about saftey issues in your area",
+        },
+        {
+          icon: "icon-community",
+          heading: "Community moderation",
+          subheading:
+            "Anyone from the community can participate in reviewing, updating, and deleting reports",
+        },
+        {
+          icon: "icon-moderate",
+          heading: "Sharing & Voting",
+          subheading:
+            "Safer streets provides a meaingful way for users to support each other in communicating risks",
+        },
+      ],
+    },
+  },
 ];
 
 export default function HomeIndex() {
