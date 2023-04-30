@@ -12,8 +12,8 @@ import icons from "@safer-streets/icons/index.css";
 
 import { config } from "~/config";
 
-import Navigation from "~/components/organisms/navigation";
-import Footer from "~/components/organisms/footer";
+import Navigation from "~/components/globals/navigation";
+import Footer from "~/components/globals/footer";
 
 export function meta() {
   return {
@@ -41,7 +41,7 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="bg-gray-50">
         <div className="mx-auto flex max-w-4xl flex-col">
           <Navigation />
           <Outlet />

@@ -1,10 +1,10 @@
-import Logo from "~/components/atoms/logo";
+import Logo from "~/components/elements/logo";
 import { Link } from "@remix-run/react";
 
 export default function Navigation() {
   return (
-    <nav className="mt-2 flex items-center justify-between bg-gray-100 p-2">
-      <Link to="/" className="btn btn-light">
+    <nav className="mt-2 flex items-center justify-between bg-white p-2">
+      <Link to="/" className="btn btn-white">
         <Logo />
       </Link>
       <div className="flex items-center gap-6">
