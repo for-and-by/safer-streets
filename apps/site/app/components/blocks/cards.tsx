@@ -16,14 +16,16 @@ type Props = {
 export function CardsBlock({ data }: Props) {
   return (
     <>
-      <div className="flex items-center gap-4 rounded-md bg-white p-8">
-        {data?.heading ? (
-          <h3 className="text-lg font-medium">{data.heading}</h3>
-        ) : null}
-        {data?.subheading ? (
-          <p className="text-gray-500">{data.subheading}</p>
-        ) : null}
-      </div>
+      {data?.heading && data?.subheading ? (
+        <div className="flex items-center gap-4 rounded-md bg-white p-8">
+          {data?.heading ? (
+            <h3 className="text-lg font-medium">{data.heading}</h3>
+          ) : null}
+          {data?.subheading ? (
+            <p className="text-gray-500">{data.subheading}</p>
+          ) : null}
+        </div>
+      ) : null}
       <div className="flex flex-col gap-2 md:flex-row">
         {data.cards.map((card) => (
           <div

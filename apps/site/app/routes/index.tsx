@@ -35,8 +35,6 @@ export const content: Content = [
   {
     type: "cards",
     data: {
-      heading: "How does Safer Streets work?",
-      subheading: "Here's a brief overview",
       cards: [
         {
           icon: "icon-report",
