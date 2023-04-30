@@ -23,7 +23,7 @@ export default function ReportClustersLayer({ source }: Props) {
     source,
     filter: ["has", "point_count"],
     paint: {
-      "circle-color": colors?.brand?.["800"],
+      "circle-color": colors?.brand?.["900"],
       "circle-radius": 20,
     },
   });

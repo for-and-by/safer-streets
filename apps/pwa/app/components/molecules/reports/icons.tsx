@@ -23,7 +23,7 @@ export default function ReportIconsLayer() {
     source: "reports",
     filter: ["!", ["has", "point_count"]],
     paint: {
-      "circle-color": colors?.brand?.[600],
+      "circle-color": colors?.brand?.[700],
       "circle-radius": 20,
     },
   });

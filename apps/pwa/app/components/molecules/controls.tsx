@@ -6,11 +6,11 @@ export default function Controls() {
   const [, { zoomIn, zoomOut }] = useMapZoom();
 
   return (
-    <div className="pointer-events-auto inline-flex flex-col self-end space-y-2">
-      <button className="btn btn-white" onClick={zoomIn}>
+    <div className="pointer-events-auto inline-flex flex-col space-y-2 self-end">
+      <button className="btn btn-white" onClick={zoomIn} aria-label="Zoom In">
         <i className="icon icon-plus btn-icon" />
       </button>
-      <button className="btn btn-white" onClick={zoomOut}>
+      <button className="btn btn-white" onClick={zoomOut} aria-label="Zoom Out">
         <i className="icon icon-minus btn-icon" />
       </button>
     </div>

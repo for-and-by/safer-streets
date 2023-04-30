@@ -21,7 +21,7 @@ export function HeroBlock({ data }: Props) {
             <h1 className="text-2xl font-semibold">{data.heading}</h1>
           ) : null}
           {data?.subheading ? (
-            <p className="text-gray-500 opacity-75">{data.subheading}</p>
+            <p className="text-gray-500">{data.subheading}</p>
           ) : null}
         </div>
         {data?.ctas ? (

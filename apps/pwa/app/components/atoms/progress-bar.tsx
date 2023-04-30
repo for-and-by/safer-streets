@@ -11,7 +11,7 @@ export default function ProgressBar({ value = 10 }: Props) {
 
   return (
     <div style={style} className="block h-0.5 w-full bg-base-100">
-      <div className="block h-full w-[var(--progress)] bg-brand-600 transition-all" />
+      <div className="block h-full w-[var(--progress)] bg-brand-700 transition-all" />
     </div>
   );
 }

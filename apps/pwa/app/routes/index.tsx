@@ -31,7 +31,7 @@ export default function Home() {
           <div className="ml-3 flex-grow">
             <Logo />
           </div>
-          <Link to="/search" className="btn btn-light">
+          <Link to="/search" className="btn btn-light" aria-label="Search">
             <i className="btn-icon icon icon-search" />
           </Link>
         </div>

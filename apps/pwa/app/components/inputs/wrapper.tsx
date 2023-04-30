@@ -22,7 +22,7 @@ export default function Wrapper({
     <>
       <div
         className={clsx(
-          "relative flex w-full space-x-2 rounded-sm bg-gray-100 p-3 focus-within:outline focus-within:outline-brand-600/40",
+          "relative flex w-full space-x-2 rounded-sm bg-gray-100 p-3 focus-within:outline focus-within:outline-brand-700/40",
           align === "center" && "items-center",
           align === "top" && "items-start",
           error && "outline outline-error-600/40"

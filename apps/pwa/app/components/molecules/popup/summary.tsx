@@ -79,7 +79,7 @@ export default function SummaryMarker({ onClose, id }: Props) {
                   ) : null}
                 </div>
                 <div className="p-2">
-                  <Link to={`/report/${summary.id}`} className="text-brand-600">
+                  <Link to={`/report/${summary.id}`} className="text-brand-700">
                     <p className="btn-text">See details</p>
                   </Link>
                 </div>

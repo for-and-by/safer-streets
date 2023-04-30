@@ -15,6 +15,7 @@ export default function TopBar() {
       <Link
         to="https://saferstreets.info/content/about"
         className="flex h-full items-center px-2"
+        aria-label="About Safer Streets"
       >
         <i className="icon icon-info icon-sm before:text-brand-700" />
       </Link>
