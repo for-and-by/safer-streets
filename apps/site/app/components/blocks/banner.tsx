@@ -21,7 +21,10 @@ export function BannerBlock({ data }: Props) {
         to={data.cta.url}
       >
         <span className="hidden md:block">{data.cta.text}</span>
-        <i className="icon icon-arrow-right before:text-xs" />
+        <i
+          className="icon icon-arrow-right before:text-xs"
+          aria-label={data.cta.text}
+        />
       </Link>
     </div>
   );
