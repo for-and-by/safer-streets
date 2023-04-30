@@ -12,7 +12,7 @@ module.exports = {
 				base: require('tailwindcss/colors').stone,
 				brand: require('tailwindcss/colors').emerald,
 				beige: {
-					DEFAULT: '#F5F2E6'
+					DEFAULT: '#FFFCF2'
 				}
 			},
 			fontFamily: {
