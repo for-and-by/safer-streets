@@ -207,3 +207,7 @@ Generated using nucleoapp.com
   content: "\ea27";
 }
 
+.icon-account::before {
+  content: "\ea28";
+}
+

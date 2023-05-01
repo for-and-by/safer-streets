@@ -13,6 +13,7 @@ import icons from "@safer-streets/icons/index.css";
 import { config } from "~/config";
 
 import Navigation from "~/components/globals/navigation";
+import NoMobileScreen from "~/components/globals/no-mobile-screen";
 
 export function meta() {
   return {
@@ -50,6 +51,7 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
+        <NoMobileScreen />
       </body>
     </html>
   );
