@@ -12,7 +12,6 @@ import icons from "@safer-streets/icons/index.css";
 
 import { config } from "~/config";
 
-import Navigation from "~/components/globals/navigation";
 import NoMobileScreen from "~/components/globals/no-mobile-screen";
 
 export function meta() {
@@ -41,13 +40,8 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="grid w-full grid-cols-12 bg-gray-50">
-        <div className="col-span-3 w-full bg-white">
-          <Navigation />
-        </div>
-        <div className="col-span-9">
-          <Outlet />
-        </div>
+      <body>
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

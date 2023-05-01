@@ -1,11 +1,5 @@
-import { formatMetadata } from "~/utils/seo";
+import { redirect } from "@remix-run/node";
 
-export const meta = () => {
-  return formatMetadata({
-    title: "Admin Panel",
-  });
-};
-
-export default function Page() {
-  return "Home";
+export function loader() {
+  return redirect("/panel/reports");
 }

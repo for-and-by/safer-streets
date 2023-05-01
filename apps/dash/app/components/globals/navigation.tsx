@@ -1,21 +1,22 @@
 import Logo from "~/components/elements/logo";
-import { Link, useLocation } from "@remix-run/react";
+import { Link, useLocation, useMatches } from "@remix-run/react";
 import type { LinkType } from "~/types/content";
 import clsx from "clsx";
 
 const links: LinkType[] = [
   {
     text: "Reports",
-    url: "/reports",
+    url: "/panel/reports",
   },
   {
     text: "Report Content",
-    url: "/content",
+    url: "/panel/content",
   },
 ];
 
 export default function Navigation() {
   const location = useLocation();
+  const [_, { data }] = useMatches();
 
   return (
     <nav className="flex h-full w-full flex-col divide-y divide-gray-100">
@@ -50,9 +51,11 @@ export default function Navigation() {
         </div>
         <div className="flex flex-grow flex-col">
           <p className="text-gray-500">Logged in as</p>
-          <p className="truncate font-medium">email@example.com</p>
+          <p className="truncate font-medium">
+            {data?.user?.email ?? "Unknown Email"}
+          </p>
         </div>
-        <Link to="" className="btn btn-light">
+        <Link to="/logout" className="btn btn-light">
           Log Out
         </Link>
       </div>
