@@ -16,7 +16,7 @@ export const loader = async () => {
   return json(
     pages.map((page) => ({
       handle: page.filename.replace(/\.mdx?$/, ""),
-      ...page.attributes.meta,
+      ...page.attributes,
     }))
   );
 };
