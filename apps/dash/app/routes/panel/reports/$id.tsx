@@ -12,6 +12,7 @@ import { getPageRange } from "~/utils/data";
 import { Pagination } from "~/components/elements/pagination";
 import { TypeIcon } from "~/components/elements/type-icon";
 import { parseDateAsString } from "~/utils/date";
+import React from "react";
 
 export const meta: MetaFunction = ({ params }) => {
   return formatMetadata({
@@ -61,7 +62,7 @@ export default function Page() {
 
   return (
     <div className="flex h-[100vh] flex-col divide-y divide-gray-100 overflow-y-scroll">
-      <div className="flex justify-between gap-4 p-8">
+      <div className="flex justify-between gap-4 px-12 py-20">
         <div className="flex items-center gap-4">
           <TypeIcon
             type={report.type_handle}
@@ -70,14 +71,19 @@ export default function Page() {
           <h1 className="text-xl font-medium">Report #{report.id}</h1>
           <p>{report.type.title}</p>
         </div>
-        <div className="flex items-center gap-8 rounded bg-white p-4">
-          <div className="flex flex-col items-start gap-1">
-            <p className="font-medium">Created At</p>
-            <p>{parseDateAsString(report.created_at)}</p>
-          </div>
-          <div className="flex flex-col items-start gap-1">
-            <p className="font-medium">Updated At</p>
-            <p>{parseDateAsString(report.updated_at)}</p>
+      </div>
+      <div className="p-8">
+        <div className="flex flex-col divide-y divide-gray-100 bg-white">
+          <div className="flex flex-col gap-4 p-8">
+            <p className="font-medium">Metadata</p>
+            <div className="flex max-w-2xl gap-4">
+              <p className="w-40 font-medium">Created On</p>
+              <p>{parseDateAsString(report.created_at)}</p>
+            </div>
+            <div className="flex max-w-2xl gap-4">
+              <p className="w-40 font-medium">Updated On</p>
+              <p>{parseDateAsString(report.updated_at)}</p>
+            </div>
           </div>
         </div>
       </div>
