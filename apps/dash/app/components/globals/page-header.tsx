@@ -7,9 +7,9 @@ type Props = {
 
 export function PageHeader({ title, children }: Props) {
   return (
-    <div className="flex w-full flex-col">
-      <h1>{title}</h1>
-      <div>{children}</div>
+    <div className="flex w-full flex-col gap-8 py-12">
+      <h1 className="px-8 text-xl font-medium">{title}</h1>
+      <div className="px-8">{children}</div>
     </div>
   );
 }
