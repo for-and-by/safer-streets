@@ -1,3 +1,4 @@
+import React from "react";
 import { Link, useLoaderData } from "@remix-run/react";
 
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
@@ -11,8 +12,7 @@ import { getPageRange } from "~/utils/data";
 
 import { Pagination } from "~/components/elements/pagination";
 import { TypeIcon } from "~/components/elements/type-icon";
-import { parseDateAsString } from "~/utils/date";
-import React from "react";
+import { parseDateAsString, parseDatesFromReport } from "~/utils/date";
 
 export const meta: MetaFunction = ({ params }) => {
   return formatMetadata({
@@ -22,7 +22,7 @@ export const meta: MetaFunction = ({ params }) => {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const report = await SupabaseClient.from("reports")
-    .select("*, type:type_handle(*)")
+    .select("*, type:type_handle(*), content:content_id(is_deleted)")
     .eq("id", params.id)
     .single();
 
@@ -36,7 +36,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     *,
     severity:severity_handle(
       title
-    ), 
+    ),
     details
   `;
 
@@ -60,37 +60,83 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 export default function Page() {
   const { report, content } = useLoaderData<typeof loader>();
 
+  const { verifyDate, expiryDate } = parseDatesFromReport(report);
+  const isAging = verifyDate && verifyDate.valueOf() < Date.now();
+  const isExpired = expiryDate && expiryDate.valueOf() < Date.now();
+  const isHidden = report?.content?.is_deleted || isExpired;
+
   return (
     <div className="flex h-[100vh] flex-col divide-y divide-gray-100 overflow-y-scroll">
-      <div className="flex justify-between gap-4 px-12 py-20">
-        <div className="flex items-center gap-4">
-          <TypeIcon
-            type={report.type_handle}
-            className="before:text-brand-700"
-          />
+      <div className="flex flex-col gap-4 px-12 py-20">
+        <Link to={`/panel/reports`} className="flex items-center gap-4">
+          <i className="icon icon-arrow-left" />
+          <span>Go To Reports</span>
+        </Link>
+        <div className="flex h-10 items-center gap-4">
           <h1 className="text-xl font-medium">Report #{report.id}</h1>
-          <p>{report.type.title}</p>
+        </div>
+        <div className="flex gap-4">
+          <Link
+            to={`https://app.saferstreets.info/report/${report.id}`}
+            target="_blank"
+            className="btn btn-primary"
+          >
+            View In App
+          </Link>
+          <Link
+            to={`https://app.saferstreets.info/report/${report.id}/edit`}
+            target="_blank"
+            className="btn btn-light"
+          >
+            Edit In App
+          </Link>
+          <button className="btn btn-light">Verify Report</button>
+          <button className="btn btn-light text-danger-600">
+            Delete Report
+          </button>
         </div>
       </div>
-      <div className="p-8">
-        <div className="flex flex-col divide-y divide-gray-100 bg-white">
-          <div className="flex flex-col gap-4 p-8">
-            <p className="font-medium">Metadata</p>
-            <div className="flex max-w-2xl gap-4">
-              <p className="w-40 font-medium">Created On</p>
-              <p>{parseDateAsString(report.created_at)}</p>
+      <div className="flex flex-col gap-4 p-8">
+        <p className="mb-2 ml-6 font-medium">Metadata</p>
+        <div className="flex flex-col gap-4 bg-white p-8">
+          <div className="flex max-w-2xl gap-4">
+            <p className="w-40 font-medium">Type</p>
+            <div className="flex items-center gap-2">
+              <p>{report.type.title}</p>
+              <TypeIcon
+                type={report.type_handle}
+                className="before:text-brand-700"
+              />
             </div>
-            <div className="flex max-w-2xl gap-4">
-              <p className="w-40 font-medium">Updated On</p>
-              <p>{parseDateAsString(report.updated_at)}</p>
-            </div>
+          </div>
+          <div className="flex max-w-2xl gap-4">
+            <p className="w-40 font-medium">Created On</p>
+            <p>{parseDateAsString(report.created_at)}</p>
+          </div>
+          <div className="flex max-w-2xl gap-4">
+            <p className="w-40 font-medium">Updated On</p>
+            <p>{parseDateAsString(report.updated_at)}</p>
+          </div>
+          <div className="flex max-w-2xl gap-4">
+            <p className="w-40 font-medium">Is Aging</p>
+            <p>{isAging ? "Yes" : "No"}</p>
+          </div>
+          <div className="flex max-w-2xl gap-4">
+            <p className="w-40 font-medium">Is Expired</p>
+            <p>{isExpired ? "Yes" : "No"}</p>
+          </div>
+          <div className="flex max-w-2xl gap-4">
+            <p className="w-40 font-medium">Is Deleted</p>
+            <p>{report.content.is_deleted ? "Yes" : "No"}</p>
+          </div>
+          <div className="flex max-w-2xl gap-4">
+            <p className="w-40 font-medium">Is Hidden</p>
+            <p>{isHidden ? "Yes" : "No"}</p>
           </div>
         </div>
       </div>
-      <div className="p-8">
-        <h1 className="font-medium">Content History</h1>
-      </div>
-      <div className="flex flex-col gap-2 p-4">
+      <div className="flex flex-col gap-2 p-8">
+        <h1 className="mb-6 ml-6 font-medium">Content History</h1>
         {content?.map((item: ReportContent & { severity: Severity }) => (
           <Link
             to={`/panel/content/${item.id}`}
