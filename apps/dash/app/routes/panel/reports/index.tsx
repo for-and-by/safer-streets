@@ -12,13 +12,14 @@ import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 
 import type { ReportFull } from "@safer-streets/db";
-import { SEVERITIES, SupabaseClient, TYPES } from "@safer-streets/db";
+import { SEVERITIES, TYPES } from "@safer-streets/db";
 
 import { formatMetadata } from "~/utils/seo";
 import { getPageRange } from "~/utils/data";
 
 import { Pagination } from "~/components/elements/pagination";
 import { TypeIcon } from "~/components/elements/type-icon";
+import { getCookieSession } from "~/lib/session.server";
 
 export const meta = () => {
   return formatMetadata({
@@ -26,7 +27,10 @@ export const meta = () => {
   });
 };
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
+  const session = await getCookieSession(request);
+  const supabase = await context.getSupabase(session);
+
   const url = new URL(request.url);
 
   const page = url.searchParams.get("page") ?? "1";
@@ -51,7 +55,8 @@ export const loader: LoaderFunction = async ({ request }) => {
     )
   `;
 
-  const query = SupabaseClient.from("reports")
+  const query = supabase
+    .from("reports")
     .select(select, { count: "exact" })
     .range(from, to);
 

@@ -12,7 +12,6 @@
     "generate-db-types": "supabase gen types typescript --project-id \"ostfogwbvvrspkozoelv\" --schema public > src/generated-types.ts"
   },
   "dependencies": {
-    "@supabase/auth-helpers-remix": "^0.1.9",
     "@supabase/supabase-js": "^2.12.0",
     "base64-arraybuffer": "^1.0.2",
     "maplibre-gl": "^2.4.0"

@@ -4,7 +4,6 @@ node_modules
 
 .idea
 .env
-.idea
 .turbo
 .DS_Store
 *.pem
@@ -14,3 +13,6 @@ node_modules
 
 *.tsbuildinfo
 
+
+# Local Netlify folder
+.netlify

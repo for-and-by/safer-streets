@@ -2,12 +2,10 @@ import type { LoaderFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 
-import { SupabaseClient } from "@safer-streets/db";
-
 import { formatMetadata } from "~/utils/seo";
-import { commitSession, getSession } from "~/lib/session.server";
 
 import Navigation from "~/components/globals/navigation";
+import { getCookieHeaders, getCookieSession } from "~/lib/session.server";
 
 export const meta = () => {
   return formatMetadata({
@@ -15,33 +13,23 @@ export const meta = () => {
   });
 };
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const accessToken = session.get("accessToken");
+export const loader: LoaderFunction = async ({ request, context }) => {
+  const session = await getCookieSession(request);
+  const supabase = await context.getSupabase(session);
 
-  if (!accessToken) {
+  const { data, error } = await supabase.auth.getSession();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  if (!data.session) {
     return redirect("/login", {
-      headers: {
-        "Set-Cookie": await commitSession(session),
-      },
+      headers: await getCookieHeaders(session),
     });
   }
 
-  const { data, error } = await SupabaseClient.auth.getUser(accessToken);
-
-  if (error || !data?.user) {
-    console.log("unsetting access token");
-    session.unset("accessToken");
-    return redirect("/login", {
-      headers: {
-        "Set-Cookie": await commitSession(session),
-      },
-    });
-  }
-
-  return json({
-    user: data.user,
-  });
+  return json({});
 };
 
 export default function Page() {

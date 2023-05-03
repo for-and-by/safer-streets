@@ -30,10 +30,13 @@ export async function deleteReport(id: number) {
   if (content.error) throw content.error
   if (!content.data) throw `No content with id ${report.data.content_id} found.`
 
-  const {id: _, ...clonedData} = content.data
+  const {id: _, created_at: __, ...clonedData} = content.data
 
   const clone = await SupabaseClient.from('reports_content')
-    .insert({...clonedData, is_deleted: true})
+    .insert({
+      ...clonedData,
+      is_deleted: true,
+    })
     .select()
 
   if (clone.error) throw clone.error
@@ -82,7 +85,7 @@ export async function updateReport(values: FormUpdateValues, imageUrl?: string) 
   if (content.error) throw content.error
   if (!content.data) throw `No content with id ${report.data.content_id} found.`
 
-  const {id: _, ...clonedData} = content.data
+  const {id: _, created_at: __, ...clonedData} = content.data
 
   const mappedContentValues: Partial<ReportContent> = {
     image_url: imageUrl,

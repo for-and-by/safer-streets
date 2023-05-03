@@ -1,15 +1,14 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
+import { getCookieHeaders, getCookieSession } from "~/lib/session.server";
 
-import { commitSession, getSession } from "~/lib/session.server";
+export const loader: LoaderFunction = async ({ request, context }) => {
+  const session = await getCookieSession(request);
+  const supabase = await context.getSupabase(session);
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const session = await getSession(request.headers.get("Cookie"));
-  session.unset("accessToken");
+  await supabase.auth.signOut();
 
   return redirect("/login", {
-    headers: {
-      "Set-Cookie": await commitSession(session),
-    },
+    headers: await getCookieHeaders(session),
   });
 };

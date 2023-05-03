@@ -6,7 +6,7 @@
   "scripts": {
     "build:remix": "remix build",
     "build": "run-s build:*",
-    "dev:remix": "remix dev",
+    "dev:remix": "netlify dev",
     "dev": "run-p dev:*",
     "lerna": "lerna run build --scope=@safer-streets/dash"
   },

@@ -4,6 +4,10 @@ export function parseDateAsString(date?: string) {
   return date ? new Date(date).toLocaleDateString() : undefined;
 }
 
+export function getIsoNow() {
+  return new Date(Date.now()).toISOString();
+}
+
 interface ReportDatesFragment {
   updated_at?: Report["updated_at"];
   type: {

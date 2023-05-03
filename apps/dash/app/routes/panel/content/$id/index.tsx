@@ -5,7 +5,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 
-import { SupabaseClient } from "@safer-streets/db";
+import { getCookieSession } from "~/lib/session.server";
 
 import { formatMetadata } from "~/utils/seo";
 import { parseDateAsString } from "~/utils/date";
@@ -17,8 +17,12 @@ export const meta: MetaFunction = ({ params }) => {
   });
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
-  const content = await SupabaseClient.from("reports_content")
+export const loader: LoaderFunction = async ({ request, params, context }) => {
+  const session = await getCookieSession(request);
+  const supabase = await context.getSupabase(session);
+
+  const content = await supabase
+    .from("reports_content")
     .select("*, report:report_id(content_id)")
     .eq("id", params.id)
     .single();
@@ -55,12 +59,14 @@ export default function Page() {
             </div>
           ) : (
             <>
-              <Link to="/" target="_blank" className="btn btn-primary">
+              <Link
+                to={`/panel/content/${content.id}/activate`}
+                className="btn btn-light"
+              >
                 Make Active Content
               </Link>
               <Link
-                to="/"
-                target="_blank"
+                to={`/panel/content/${content.id}/delete`}
                 className="btn btn-light text-danger-700"
               >
                 Delete Content

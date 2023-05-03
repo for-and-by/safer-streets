@@ -2,12 +2,11 @@ import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData, useNavigation } from "@remix-run/react";
 
-import { SupabaseClient } from "@safer-streets/db";
-
 import { formatMetadata } from "~/utils/seo";
-import { commitSession, getSession } from "~/lib/session.server";
 
 import Logo from "~/components/elements/logo";
+
+import { getCookieHeaders, getCookieSession } from "~/lib/session.server";
 
 export const meta = () => {
   return formatMetadata({
@@ -15,55 +14,69 @@ export const meta = () => {
   });
 };
 
-export const loader: LoaderFunction = async ({ request }) => {
-  const session = await getSession(request.headers.get("Cookie"));
-  const accessToken = session.get("accessToken");
-  const { data } = await SupabaseClient.auth.getUser(accessToken);
+export const loader: LoaderFunction = async ({ request, context }) => {
+  const session = await getCookieSession(request);
+  const supabase = await context.getSupabase(session);
 
-  if (data.user) {
-    return redirect("/panel/reports");
+  const { data, error } = await supabase.auth.getSession();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  if (data.session) {
+    return redirect("/panel/reports", {
+      headers: await getCookieHeaders(session),
+    });
   }
 
   return null;
 };
 
-export const action: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request, context }) => {
+  const session = await getCookieSession(request);
+  const supabase = await context.getSupabase(session);
+
   const form = await request.formData();
+
   const email = form.get("email");
   const password = form.get("password");
 
-  if (
-    !email ||
-    !password ||
-    typeof email !== "string" ||
-    typeof password !== "string"
-  ) {
-    return json({
-      error: "Email or password did not get passed, or data type was incorrect",
-    });
+  if (!email || !password) {
+    return json(
+      { error: "Email or password did not get passed." },
+      { headers: await getCookieHeaders(session) }
+    );
   }
 
-  const { data, error } = await SupabaseClient.auth.signInWithPassword({
+  if (typeof email !== "string" || typeof password !== "string") {
+    return json(
+      { error: "Email or password data type invalid." },
+      { headers: await getCookieHeaders(session) }
+    );
+  }
+
+  const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
-  if (error)
-    return json({
-      error: error.message,
-    });
-  if (!data.session)
-    return json({
-      error: "Session was unable to be created or fetched",
-    });
+  if (error) {
+    return json(
+      { error: error.message },
+      { headers: await getCookieHeaders(session) }
+    );
+  }
 
-  const session = await getSession(request.headers.get("Cookie"));
-  session.set("accessToken", data.session.access_token);
+  if (!data.session) {
+    return json(
+      { error: "Session was unable to be created or fetched" },
+      { headers: await getCookieHeaders(session) }
+    );
+  }
 
   return redirect("/panel/reports", {
-    headers: {
-      "Set-Cookie": await commitSession(session),
-    },
+    headers: await getCookieHeaders(session),
   });
 };
 

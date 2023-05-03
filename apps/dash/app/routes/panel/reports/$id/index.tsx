@@ -5,7 +5,6 @@ import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 
 import type { ReportContent, Severity } from "@safer-streets/db";
-import { SupabaseClient } from "@safer-streets/db";
 
 import { formatMetadata } from "~/utils/seo";
 import { getPageRange } from "~/utils/data";
@@ -13,6 +12,7 @@ import { getPageRange } from "~/utils/data";
 import { Pagination } from "~/components/elements/pagination";
 import { TypeIcon } from "~/components/elements/type-icon";
 import { parseDateAsString, parseDatesFromReport } from "~/utils/date";
+import { getCookieSession } from "~/lib/session.server";
 
 export const meta: MetaFunction = ({ params }) => {
   return formatMetadata({
@@ -20,8 +20,12 @@ export const meta: MetaFunction = ({ params }) => {
   });
 };
 
-export const loader: LoaderFunction = async ({ request, params }) => {
-  const report = await SupabaseClient.from("reports")
+export const loader: LoaderFunction = async ({ request, params, context }) => {
+  const session = await getCookieSession(request);
+  const supabase = await context.getSupabase(session);
+
+  const report = await supabase
+    .from("reports")
     .select("*, type:type_handle(*), content:content_id(is_deleted)")
     .eq("id", params.id)
     .single();
@@ -40,7 +44,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     details
   `;
 
-  const content = await SupabaseClient.from("reports_content")
+  const content = await supabase
+    .from("reports_content")
     .select(select, { count: "exact" })
     .eq("report_id", params.id)
     .order("id", { ascending: false })
@@ -90,10 +95,19 @@ export default function Page() {
           >
             Edit In App
           </Link>
-          <button className="btn btn-light">Verify Report</button>
-          <button className="btn btn-light text-danger-600">
+          <Link
+            to={`/panel/reports/${report.id}/verify`}
+            className="btn btn-light"
+          >
+            Verify Report
+          </Link>
+
+          <Link
+            to={`/panel/reports/${report.id}/delete`}
+            className="btn btn-light text-danger-600"
+          >
             Delete Report
-          </button>
+          </Link>
         </div>
       </div>
       <div className="flex flex-col gap-4 p-8">
