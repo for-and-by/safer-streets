@@ -1,10 +1,37 @@
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 
-import { fetchReportSummary } from "@safer-streets/db";
+/*
+ *   This loader takes fetches a summarised report
+ * */
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params, context }) => {
   if (!params.id) return null;
-  const summary = await fetchReportSummary(params.id);
-  return json({ summary });
+  const supabase = context.getSupabase();
+
+  const select = `
+    id,
+    lng,
+    lat,
+    updated_at,
+    type:type_handle(
+      title, 
+      verify_by
+    ),
+    content:content_id(
+      image_url, 
+      severity:severity_handle(
+        title
+      )
+    )
+  `;
+
+  const summary = await supabase
+    .from("reports")
+    .select(select)
+    .eq("id", params.id)
+    .limit(1)
+    .single();
+
+  return json({ summary: summary.data });
 };

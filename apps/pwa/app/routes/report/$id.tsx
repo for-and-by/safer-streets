@@ -1,16 +1,16 @@
+import React, { useEffect } from "react";
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Link, Outlet, useLoaderData } from "@remix-run/react";
 
-import { fetchReportContent } from "@safer-streets/db";
+import { formatMetadata } from "~/utils/seo";
 
 import { useReportOpen } from "~/hooks/reports/use-report-open";
 import useMapLock from "~/hooks/map/use-map-lock";
 import useMapCenter from "~/hooks/map/use-map-center";
-import React, { useEffect } from "react";
+
 import ReportMarker from "~/components/molecules/markers/report";
 import Header from "~/components/regions/header";
-import { formatMetadata } from "~/utils/seo";
 
 export const meta: MetaFunction = ({ data }) => {
   return formatMetadata({
@@ -20,10 +20,34 @@ export const meta: MetaFunction = ({ data }) => {
   });
 };
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params, context }) => {
   if (!params.id) return redirect("/");
-  const report = await fetchReportContent(params.id);
-  return json({ report });
+  const supabase = context.getSupabase();
+
+  const select = `
+    *,
+    type:type_handle(
+      *
+    ),
+    content:content_id(
+      *,
+      severity:severity_handle(
+        *
+      )
+    )
+  `;
+
+  const report = await supabase
+    .from("reports")
+    .select(select)
+    .eq("id", params.id)
+    .limit(1)
+    .single();
+
+  if (report.error) throw report.error;
+  if (!report.data) return redirect("/");
+
+  return json({ report: report.data });
 };
 
 export default function Report() {

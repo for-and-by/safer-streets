@@ -1,3 +1,5 @@
+import { decode } from "base64-arraybuffer";
+
 export function resizeImage(image: HTMLImageElement) {
   const canvas = document.createElement("canvas");
   const maxWidth = 720;
@@ -67,4 +69,18 @@ export function parseImageUrl(url?: string | null, options?: Options) {
   }
 
   return image.toString();
+}
+
+export function prepareImageData(image: string) {
+  const timestamp = Date.now();
+  const filename = `report-img-${timestamp}.jpeg`;
+  const base64 = image.split(",")[1];
+
+  const file = decode(base64);
+  const location = `reports/${filename}`;
+  const options = {
+    contentType: "image/jpeg",
+  };
+
+  return { file, location, options };
 }

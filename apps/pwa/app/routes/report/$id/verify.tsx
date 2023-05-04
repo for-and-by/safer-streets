@@ -1,9 +1,21 @@
-import type { ActionFunction } from "@remix-run/router";
-import { verifyReport } from "@safer-streets/db";
+import type { ActionFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 
-export const action: ActionFunction = async ({ params }) => {
-  if (!params.id) return null;
-  await verifyReport(parseInt(params.id));
-  return redirect("/");
+import getIsoNow from "~/utils/date";
+
+/*
+ *   This loader updates the `updated_at` column on a report to ammend it expiring
+ * */
+
+export const action: ActionFunction = async ({ params, context }) => {
+  const supabase = await context.getSupabase();
+
+  const update = await supabase
+    .from("reports")
+    .update({ updated_at: getIsoNow() })
+    .eq("id", params.id);
+
+  if (update.error) throw update.error.message;
+
+  return redirect(`/`);
 };

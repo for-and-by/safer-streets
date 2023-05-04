@@ -8,13 +8,13 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
+import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 
 import styles from "@safer-streets/tailwind/index.css";
 import icons from "@safer-streets/icons/index.css";
 
 import { config } from "~/config";
-import { fetchReports, fetchSeverities, fetchTypes } from "@safer-streets/db";
 
 import { useFilterStore } from "~/hooks/filter/use-filter-store";
 
@@ -49,19 +49,32 @@ export function links() {
   ];
 }
 
-export async function loader() {
+export const loader: LoaderFunction = async ({ context }) => {
+  const supabase = context.getSupabase();
+
+  const pins = `
+    *,
+    type:type_handle(
+      expire_by, 
+      verify_by
+    ), 
+    content:content_id(
+      is_deleted
+    )
+  `;
+
   const [reports, types, severities] = await Promise.all([
-    await fetchReports(),
-    await fetchTypes(),
-    await fetchSeverities(),
+    await supabase.from("reports").select(pins),
+    await supabase.from("types").select(),
+    await supabase.from("severities").select(),
   ]);
 
   return json({
-    reports,
-    types,
-    severities,
+    reports: reports.data,
+    types: types.data,
+    severities: severities.data,
   });
-}
+};
 
 export default function App() {
   const { types, severities } = useLoaderData<typeof loader>();
