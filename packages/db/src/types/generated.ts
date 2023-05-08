@@ -24,31 +24,28 @@ export interface Database {
           content_id: number | null
           created_at: string
           id: number
-          lat: number | null
+          lat: number
           lng: number
           type_handle: string
           updated_at: string
-          verified_at: string
         }
         Insert: {
           content_id?: number | null
           created_at?: string
           id?: number
-          lat?: number | null
+          lat: number
           lng: number
           type_handle: string
           updated_at?: string
-          verified_at?: string
         }
         Update: {
           content_id?: number | null
           created_at?: string
           id?: number
-          lat?: number | null
+          lat?: number
           lng?: number
           type_handle?: string
           updated_at?: string
-          verified_at?: string
         }
       }
       reports_content: {

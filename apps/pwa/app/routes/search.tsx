@@ -1,5 +1,6 @@
 import type { ChangeEventHandler, KeyboardEventHandler } from "react";
 import React, { useRef } from "react";
+import { nanoid } from "nanoid";
 
 import type { ActionFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
@@ -19,11 +20,12 @@ import Header from "~/components/regions/header";
 import Body from "~/components/regions/body";
 import Footer from "~/components/regions/footer";
 
-import SearchResults from "~/components/molecules/search-results";
-
 import FindSelfButton from "~/components/atoms/find-self-button";
 import Bumper from "~/components/atoms/bumper";
 import Text from "~/components/inputs/text";
+
+import type { SearchFeature } from "~/types/search";
+import useMapCenter from "~/hooks/map/use-map-center";
 
 export const meta: MetaFunction = () => {
   return formatMetadata({
@@ -61,6 +63,8 @@ export default function Search() {
   const { state } = useNavigation();
   const navigate = useNavigate();
 
+  const [, setCenter] = useMapCenter();
+
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined
   );
@@ -75,8 +79,13 @@ export default function Search() {
     }, 400);
   };
 
-  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = () => {
     clearTimeout(timeoutRef.current);
+  };
+
+  const handleClickResult = (feature: SearchFeature) => {
+    if (feature.center) setCenter(feature.center);
+    navigate("/");
   };
 
   const hasNoResults = !search || search.isEmpty;
@@ -103,7 +112,20 @@ export default function Search() {
       </Header>
       <Body>
         <Bumper show={!search?.isEmpty}>
-          <SearchResults results={search?.results} />
+          <div className="flex max-h-48 flex-col items-center divide-y divide-base-100 overflow-y-scroll bg-white">
+            {search?.results.map((feature: SearchFeature) =>
+              feature.center ? (
+                <button
+                  key={nanoid()}
+                  onClick={() => handleClickResult(feature)}
+                  className="flex w-full flex-col bg-white p-3 transition-all hover:cursor-pointer hover:bg-gray-100"
+                >
+                  <p className="text-base text-base-700">{feature.heading}</p>
+                  <p className="text-sm text-base-400">{feature.subheading}</p>
+                </button>
+              ) : null
+            )}
+          </div>
         </Bumper>
       </Body>
       <Footer>

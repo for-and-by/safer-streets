@@ -1,20 +1,8 @@
-import { useState } from "react";
-import { useLocation } from "@remix-run/react";
-
 import colors from "~/utils/colors.client";
 
-import useMap from "~/hooks/map/use-map";
-import useMapEvents from "~/hooks/map/use-map-events";
 import useMapLayer from "~/hooks/map/use-map-layer";
-import useMapCenter from "~/hooks/map/use-map-center";
 
 export default function ReportIconsLayer() {
-  const location = useLocation();
-  const map = useMap();
-  const [, setCenter] = useMapCenter();
-
-  const [activeReport, setActiveReport] = useState<string | undefined>();
-
   useMapLayer({
     id: "reports-bg",
     type: "circle",
@@ -73,19 +61,5 @@ export default function ReportIconsLayer() {
     },
   });
 
-  useMapEvents(map, "reports-bg", {
-    click: (event) => {
-      if (!map) return;
-      setCenter(event.lngLat);
-
-      const [feature] = map.queryRenderedFeatures(event.point, {
-        layers: ["reports-bg"],
-      });
-
-      if (!feature?.properties?.id) return;
-      if (!(location.pathname === "/")) return;
-
-      setActiveReport(feature.properties.id);
-    },
-  });
+  return null;
 }

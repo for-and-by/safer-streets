@@ -9,7 +9,7 @@
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
-    "generate-db-types": "supabase gen types typescript --project-id \"ostfogwbvvrspkozoelv\" --schema public > src/generated-types.ts"
+    "generate-db-types": "supabase gen types typescript --project-id \"ostfogwbvvrspkozoelv\" --schema public > src/types/generated.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.12.0",

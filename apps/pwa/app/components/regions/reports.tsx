@@ -11,6 +11,7 @@ import ReportIconsLayer from "~/components/molecules/reports/icons";
 import { MapImages } from "~/components/molecules/reports/images";
 
 import { useReportOpen } from "~/hooks/reports/use-report-open";
+import { SummaryMarker } from "~/components/molecules/summary-marker";
 
 export default function Reports() {
   const loader = useLoaderData();
@@ -55,6 +56,7 @@ export default function Reports() {
       <MapImages />
       <ReportClustersLayer source="reports" />
       <ReportIconsLayer />
+      <SummaryMarker />
     </>
   );
 }

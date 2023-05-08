@@ -9,7 +9,7 @@ interface Props {
 export function ImageCollapse({ src }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const toggle = () => {
+  const handleToggle = () => {
     setIsExpanded((prev) => !prev);
   };
 
@@ -22,7 +22,7 @@ export function ImageCollapse({ src }: Props) {
     >
       <button
         className="btn btn-white absolute bottom-2 right-2 z-20"
-        onClick={toggle}
+        onClick={handleToggle}
       >
         <i
           className={clsx(
