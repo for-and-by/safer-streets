@@ -13,7 +13,7 @@ import type { SubmitHandler } from "react-hook-form";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { parseImageUrl, prepareImageData } from "~/lib/image";
-import getIsoNow from "~/utils/date";
+import { getIsoNow } from "@safer-streets/utils";
 
 import Toast from "~/components/regions/toast";
 import Footer from "~/components/regions/footer";

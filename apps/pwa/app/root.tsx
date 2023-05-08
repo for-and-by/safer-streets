@@ -59,7 +59,8 @@ export const loader: LoaderFunction = async ({ context }) => {
       verify_by
     ), 
     content:content_id(
-      is_deleted
+      is_deleted,
+      verified_at
     )
   `;
 

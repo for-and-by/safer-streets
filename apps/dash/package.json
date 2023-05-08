@@ -8,7 +8,8 @@
     "build": "run-s build:*",
     "dev:remix": "netlify dev",
     "dev": "run-p dev:*",
-    "lerna": "lerna run build --scope=@safer-streets/dash"
+    "lerna": "lerna run build --scope=@safer-streets/dash",
+    "lerna:dev": "lerna run dev --scope=@safer-streets/dash"
   },
   "dependencies": {
     "@netlify/functions": "^1.4.0",
@@ -18,6 +19,7 @@
     "@safer-streets/db": "*",
     "@safer-streets/icons": "*",
     "@safer-streets/tailwind": "*",
+    "@safer-streets/utils": "*",
     "clsx": "^1.2.1",
     "cross-env": "^7.0.3",
     "react": "^18.2.0",

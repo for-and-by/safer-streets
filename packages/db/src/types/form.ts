@@ -59,9 +59,8 @@ export type ReportContent = DatabaseRow<'reports_content'>
 export type ReportVotes = DatabaseRow<'reports_votes'>
 
 export interface ReportSummary extends Pick<Report, 'id' | 'lng' | 'lat' | 'updated_at'> {
-  type: Pick<Type, 'title' | 'verify_by'>
-  content: {
-    image_url: ReportContent['image_url']
+  type: Pick<Type, 'title' | 'verify_by' | 'expire_by'>
+  content: Pick<ReportContent, 'image_url' | 'is_deleted' | 'verified_at'> & {
     severity: Pick<Severity, 'title'>
   }
 }

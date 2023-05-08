@@ -1,7 +1,7 @@
 import type { ActionFunction } from "@remix-run/node";
 import { redirect } from "@remix-run/node";
 
-import getIsoNow from "~/utils/date";
+import { getIsoNow } from "@safer-streets/utils";
 
 /*
  *   This action takes the most recent content on a report,

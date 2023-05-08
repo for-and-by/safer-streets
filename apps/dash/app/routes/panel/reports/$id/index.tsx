@@ -6,12 +6,16 @@ import { json, redirect } from "@remix-run/node";
 
 import type { ReportContent, Severity } from "@safer-streets/db";
 
+import {
+  getMetadataFromContent,
+  parseDateAsString,
+} from "@safer-streets/utils";
+
 import { formatMetadata } from "~/utils/seo";
 import { getPageRange } from "~/utils/data";
 
 import { Pagination } from "~/components/elements/pagination";
 import { TypeIcon } from "~/components/elements/type-icon";
-import { parseDateAsString, parseDatesFromReport } from "~/utils/date";
 import { getCookieSession } from "~/lib/session.server";
 
 export const meta: MetaFunction = ({ params }) => {
@@ -24,9 +28,18 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
   const session = await getCookieSession(request);
   const supabase = await context.getSupabase(session);
 
+  const reportSelect = `
+    *, 
+    type:type_handle(*), 
+    content:content_id(
+      is_deleted, 
+      verified_at
+    )
+  `;
+
   const report = await supabase
     .from("reports")
-    .select("*, type:type_handle(*), content:content_id(is_deleted)")
+    .select(reportSelect)
     .eq("id", params.id)
     .single();
 
@@ -36,7 +49,7 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
   const page = url.searchParams.get("page") ?? "1";
   const [from, to] = getPageRange(20, parseInt(page));
 
-  const select = `
+  const contentSelect = `
     *,
     severity:severity_handle(
       title
@@ -46,7 +59,7 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
 
   const content = await supabase
     .from("reports_content")
-    .select(select, { count: "exact" })
+    .select(contentSelect, { count: "exact" })
     .eq("report_id", params.id)
     .order("id", { ascending: false })
     .range(from, to);
@@ -65,10 +78,10 @@ export const loader: LoaderFunction = async ({ request, params, context }) => {
 export default function Page() {
   const { report, content } = useLoaderData<typeof loader>();
 
-  const { verifyDate, expiryDate } = parseDatesFromReport(report);
-  const isAging = verifyDate && verifyDate.valueOf() < Date.now();
-  const isExpired = expiryDate && expiryDate.valueOf() < Date.now();
-  const isHidden = report?.content?.is_deleted || isExpired;
+  const { isAging, isExpired, isHidden } = getMetadataFromContent(
+    content,
+    report.type
+  );
 
   return (
     <div className="flex h-[100vh] flex-col divide-y divide-gray-100 overflow-y-scroll">
@@ -99,7 +112,7 @@ export default function Page() {
             to={`/panel/reports/${report.id}/verify`}
             className="btn btn-light"
           >
-            Verify Report
+            Verify Active Content
           </Link>
 
           <Link
@@ -128,8 +141,8 @@ export default function Page() {
             <p>{parseDateAsString(report.created_at)}</p>
           </div>
           <div className="flex max-w-2xl gap-4">
-            <p className="w-40 font-medium">Updated On</p>
-            <p>{parseDateAsString(report.updated_at)}</p>
+            <p className="w-40 font-medium">Verified On</p>
+            <p>{parseDateAsString(report.content.verified_at)}</p>
           </div>
           <div className="flex max-w-2xl gap-4">
             <p className="w-40 font-medium">Is Aging</p>

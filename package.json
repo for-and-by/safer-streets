@@ -12,7 +12,10 @@
   },
   "scripts": {
     "build": "lerna run build",
-    "dev": "lerna run dev"
+    "dev": "lerna run dev",
+    "dev:dash": "lerna run dev --scope=@safer-streets/dash",
+    "dev:pwa": "lerna run dev --scope=@safer-streets/pwa",
+    "dev:site": "lerna run dev --scope=@safer-streets/site"
   },
   "devDependencies": {
     "lerna": "^6.5.1"

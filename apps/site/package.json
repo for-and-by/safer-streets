@@ -8,7 +8,8 @@
     "build": "run-s build:*",
     "dev:remix": "remix dev",
     "dev": "run-p dev:*",
-    "lerna": "lerna run build --scope=@safer-streets/site"
+    "lerna": "lerna run build --scope=@safer-streets/site",
+    "lerna:dev": "lerna run dev --scope=@safer-streets/site"
   },
   "dependencies": {
     "@netlify/functions": "^1.4.0",

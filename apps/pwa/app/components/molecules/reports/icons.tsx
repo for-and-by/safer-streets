@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLocation } from "@remix-run/react";
 
 import colors from "~/utils/colors.client";
@@ -7,8 +7,6 @@ import useMap from "~/hooks/map/use-map";
 import useMapEvents from "~/hooks/map/use-map-events";
 import useMapLayer from "~/hooks/map/use-map-layer";
 import useMapCenter from "~/hooks/map/use-map-center";
-
-import SummaryMarker from "~/components/molecules/popup/summary";
 
 export default function ReportIconsLayer() {
   const location = useLocation();
@@ -90,11 +88,4 @@ export default function ReportIconsLayer() {
       setActiveReport(feature.properties.id);
     },
   });
-
-  return (
-    <SummaryMarker
-      id={activeReport}
-      onClose={() => setActiveReport(undefined)}
-    />
-  );
 }

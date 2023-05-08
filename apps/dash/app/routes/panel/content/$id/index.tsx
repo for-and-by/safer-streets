@@ -1,14 +1,14 @@
 import React from "react";
 
 import { Link, useLoaderData } from "@remix-run/react";
-
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
+
+import { parseDateAsString } from "@safer-streets/utils";
 
 import { getCookieSession } from "~/lib/session.server";
 
 import { formatMetadata } from "~/utils/seo";
-import { parseDateAsString } from "~/utils/date";
 import { parseImageUrl } from "~/utils/data";
 
 export const meta: MetaFunction = ({ params }) => {
@@ -110,6 +110,10 @@ export default function Page() {
           <div className="flex max-w-2xl gap-4">
             <p className="w-40 font-medium">Created On</p>
             <p>{parseDateAsString(content.created_at)}</p>
+          </div>
+          <div className="flex max-w-2xl gap-4">
+            <p className="w-40 font-medium">Verified On</p>
+            <p>{parseDateAsString(content.verified_at)}</p>
           </div>
           <div className="flex max-w-2xl gap-4">
             <p className="w-40 font-medium">Parent Report</p>

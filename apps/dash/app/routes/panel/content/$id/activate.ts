@@ -1,7 +1,7 @@
 import type {LoaderFunction} from '@remix-run/node';
 import {redirect} from '@remix-run/node';
 
-import {getIsoNow} from '~/utils/date';
+import {getIsoNow} from '@safer-streets/utils';
 
 import {getCookieHeaders, getCookieSession} from '~/lib/session.server';
 

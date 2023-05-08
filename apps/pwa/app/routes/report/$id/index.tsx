@@ -2,13 +2,17 @@ import React from "react";
 import { Link, useFetcher, useRouteLoaderData } from "@remix-run/react";
 
 import type { ReportFull } from "@safer-streets/db";
+import {
+  getMetadataFromContent,
+  parseDateAsString,
+} from "@safer-streets/utils";
 
 import Footer from "~/components/regions/footer";
 import Toast from "~/components/regions/toast";
 
 import { Warning } from "~/components/composites/warning";
 import { ImageCollapse } from "~/components/molecules/image-collapse";
-import { parseDateAsString, parseDatesFromReport } from "~/utils/date";
+
 import Body from "~/components/regions/body";
 
 export default function Details() {
@@ -17,7 +21,7 @@ export default function Details() {
 
   const loader = useRouteLoaderData("routes/report/$id");
   const data = (loader as any).report as ReportFull;
-  const { verifyDate } = parseDatesFromReport(data);
+  const { verifyDate } = getMetadataFromContent(data.content, data.type);
 
   const handleDelete = () => {
     deleteReport.submit(null, {

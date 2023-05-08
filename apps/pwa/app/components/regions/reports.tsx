@@ -1,14 +1,15 @@
 import React from "react";
 import { useLoaderData } from "@remix-run/react";
 
+import type { ReportFull } from "@safer-streets/db";
+import { getMetadataFromContent } from "@safer-streets/utils";
+
 import useMapSource from "~/hooks/map/use-map-source";
 
 import ReportClustersLayer from "~/components/molecules/reports/clusters";
 import ReportIconsLayer from "~/components/molecules/reports/icons";
-
-import type { ReportFull } from "@safer-streets/db";
 import { MapImages } from "~/components/molecules/reports/images";
-import { parseDatesFromReport } from "~/utils/date";
+
 import { useReportOpen } from "~/hooks/reports/use-report-open";
 
 export default function Reports() {
@@ -22,11 +23,11 @@ export default function Reports() {
     data: {
       type: "FeatureCollection",
       features: reports?.map((report) => {
-        const { verifyDate, expiryDate } = parseDatesFromReport(report);
-        const isAging = verifyDate && verifyDate.valueOf() < Date.now();
-        const isHidden =
-          report?.content?.is_deleted ||
-          (expiryDate && expiryDate.valueOf() < Date.now());
+        const { isAging, isHidden } = getMetadataFromContent(
+          report.content,
+          report.type
+        );
+
         const isUnopened = !opened?.has(report.content_id);
 
         return {

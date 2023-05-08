@@ -16,10 +16,13 @@ export const loader: LoaderFunction = async ({ params, context }) => {
     updated_at,
     type:type_handle(
       title, 
-      verify_by
+      verify_by,
+      expire_by
     ),
     content:content_id(
       image_url, 
+      is_deleted,
+      verified_at,
       severity:severity_handle(
         title
       )

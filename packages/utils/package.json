@@ -1,0 +1,39 @@
+{
+  "name": "@safer-streets/utils",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch"
+  },
+  "dependencies": {
+    "@remix-run/node": "^1.16.0",
+    "@safer-streets/db": "*"
+  },
+  "devDependencies": {
+    "eslint": "^8.6.0",
+    "prettier": "^2.8.3",
+    "tsup": "^6.6.3",
+    "typescript": "^5.0.2"
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "dts": true,
+    "format": [
+      "esm",
+      "cjs"
+    ]
+  },
+  "prettier": {
+    "semi": false,
+    "printWidth": 100,
+    "bracketSpacing": false,
+    "singleQuote": true
+  }
+}

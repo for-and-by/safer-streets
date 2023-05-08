@@ -61,6 +61,7 @@ export interface Database {
           is_deleted: boolean
           report_id: number | null
           severity_handle: string
+          verified_at: string
         }
         Insert: {
           created_at?: string
@@ -71,6 +72,7 @@ export interface Database {
           is_deleted?: boolean
           report_id?: number | null
           severity_handle: string
+          verified_at?: string
         }
         Update: {
           created_at?: string
@@ -81,6 +83,7 @@ export interface Database {
           is_deleted?: boolean
           report_id?: number | null
           severity_handle?: string
+          verified_at?: string
         }
       }
       reports_votes: {
