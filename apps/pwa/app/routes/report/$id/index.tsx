@@ -100,6 +100,10 @@ export default function Details() {
                 <p className="text-gray-400">Created On</p>
                 <p>{parseDateAsString(data.created_at)}</p>
               </div>
+              <div className="flex flex-row justify-between">
+                <p className="text-gray-400">Verified On</p>
+                <p>{parseDateAsString(data.content.verified_at)}</p>
+              </div>
             </div>
             <div className="flex flex-col p-3">
               <div className="flex flex-row justify-between">
