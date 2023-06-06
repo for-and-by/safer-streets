@@ -3,11 +3,11 @@ import { useEffect, useRef, useState } from "react";
 
 import { useStyleVars } from "~/hooks/use-style-vars";
 
-interface Props {
+type Props = {
   isShow?: boolean;
   children?: ReactNode;
   className?: string;
-}
+};
 
 export function Bumper(props: Props) {
   const { isShow = true, className, children } = props;

@@ -4,9 +4,9 @@ import { useAsyncAction } from "~/hooks/use-async-action";
 
 const CANT_GEOLOCATE = "Geolocation not available on this browser.";
 
-interface Props {
+type Props = {
   onFound?: () => void;
-}
+};
 
 export function FindSelfButton({ onFound }: Props) {
   const [, setCenter] = useMapCenter();

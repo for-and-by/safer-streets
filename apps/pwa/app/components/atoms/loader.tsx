@@ -1,8 +1,8 @@
 import React from "react";
 
-interface Props {
+type Props = {
   className: string;
-}
+};
 
 export default function Loader({ className = "" }: Props) {
   return (
