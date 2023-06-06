@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import useDebounce from "~/hooks/use-debounce";
-import Portal from "~/components/atoms/portal";
+import { Portal } from "~/components/atoms/portal";
 import { useTimeout } from "~/hooks/use-timeout";
 
 const REGION_ID = "toasts";

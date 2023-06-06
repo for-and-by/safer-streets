@@ -2,7 +2,7 @@ import type { ComponentProps, MouseEventHandler } from "react";
 import React, { createContext, useState } from "react";
 
 import createContextHook from "~/hooks/factories/create-context-hook";
-import Portal from "~/components/atoms/portal";
+import { Portal } from "~/components/atoms/portal";
 
 interface ContextValue {
   isShow: boolean;

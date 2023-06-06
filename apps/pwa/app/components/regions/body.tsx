@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import React from "react";
-import Portal from "~/components/atoms/portal";
+import { Portal } from "~/components/atoms/portal";
 
 const REGION_ID = "body";
 
