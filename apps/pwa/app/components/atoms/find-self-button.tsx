@@ -1,40 +1,33 @@
-import React, { useState } from "react";
 import Toast from "~/components/regions/toast";
 import useMapCenter from "~/hooks/map/use-map-center";
+import { useAsyncAction } from "~/hooks/use-async-action";
+
+const CANT_GEOLOCATE = "Geolocation not available on this browser.";
 
 interface Props {
   onFound?: () => void;
 }
 
-export default function FindSelfButton({ onFound }: Props) {
-  const [loading, setLoading] = useState(false);
+export function FindSelfButton({ onFound }: Props) {
   const [, setCenter] = useMapCenter();
-
-  function handleFindSelf() {
-    if (navigator && "geolocation" in navigator) {
-      setLoading(true);
-      navigator.geolocation.getCurrentPosition(
-        (success) => {
-          const { longitude, latitude } = success.coords;
-          setCenter([longitude, latitude]);
-          setLoading(false);
-          if (onFound) onFound();
-        },
-        (error) => {
-          throw new Error(error.message);
-        }
-      );
-    } else {
-      throw new Error("Geolocation not available on this browser.");
-    }
-  }
+  const { isLoading, handleAsyncAction } = useAsyncAction({
+    action: () => {
+      return new Promise<GeolocationPosition>((resolve, reject) => {
+        if (!(navigator && "geolocation" in navigator)) reject(CANT_GEOLOCATE);
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+      });
+    },
+    onSuccess: (data) => {
+      const { longitude, latitude } = data.coords;
+      if (onFound) onFound();
+      setCenter([longitude, latitude]);
+    },
+  });
 
   return (
-    <>
-      <Toast show={loading} content="Finding your location..." />
-      <button className="btn btn-primary" onClick={handleFindSelf}>
-        <i className="btn-icon icon icon-find-self" />
-      </button>
-    </>
+    <button className="btn btn-primary" onClick={handleAsyncAction}>
+      <Toast show={isLoading} content="Finding your location..." />
+      <i className="btn-icon icon icon-find-self" />
+    </button>
   );
 }

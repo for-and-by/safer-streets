@@ -1,4 +1,4 @@
-import FindSelfButton from "~/components/atoms/find-self-button";
+import { FindSelfButton } from "~/components/atoms/find-self-button";
 import useMapCenter from "~/hooks/map/use-map-center";
 import React, { useEffect } from "react";
 import Show from "~/components/atoms/show";

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-import useAsync from "~/hooks/use-async";
+import { useAsyncAction } from "~/hooks/use-async-action";
 
 import Wrapper from "~/components/inputs/wrapper";
 
@@ -25,40 +25,33 @@ export default function ImageInput({
   error,
   placeholder,
 }: Props) {
-  const [image, setImage] = React.useState<string | undefined>(value);
-  const [file, setFile] = React.useState<File | undefined>(undefined);
-  const inputRef = React.useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const { isLoading, trigger } = useAsync(async () => {
-    if (!file) return;
-    const image = await parseFileAsBase64(file);
-    if (onUpload) onUpload(image);
-    setImage(image);
-  });
-
-  React.useEffect(() => {
+  const [image, setImage] = useState(value);
+  useEffect(() => {
     setImage(value);
   }, [value]);
 
-  useEffect(() => {
-    if (file) trigger();
-    //   eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [file]);
+  const { isLoading, handleAsyncAction: handleProcessFile } = useAsyncAction({
+    action: parseFileAsBase64,
+    onSuccess: (data) => {
+      if (onUpload) onUpload(data);
+      setImage(data);
+    },
+  });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (!event?.target?.files?.[0]) return false;
-    setFile(event.target.files[0]);
+    const file = event?.target?.files?.[0];
+    if (file) handleProcessFile(file);
   };
 
   const handleUpload = () => {
-    if (inputRef?.current) {
-      inputRef.current.click();
-    }
+    inputRef?.current?.click();
   };
 
   const handleRemove = () => {
     setImage(undefined);
-    setFile(undefined);
+    if (inputRef.current) inputRef.current.value = "";
     if (onRemove) onRemove();
   };
 
@@ -78,9 +71,9 @@ export default function ImageInput({
           <div className="relative h-40 w-full">
             <div className="absolute -inset-3 overflow-hidden rounded-sm">
               <img
+                src={image}
+                alt="User's Upload"
                 className="h-full w-full object-cover"
-                alt={file?.name ?? ""}
-                src={image ?? ""}
               />
             </div>
             <div className="absolute -inset-1">

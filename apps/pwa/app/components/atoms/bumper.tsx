@@ -39,12 +39,9 @@ export function Bumper(props: Props) {
     };
   }, [isShow]);
 
-  const style = useStyleVars(
-    {
-      height: `${height}px`,
-    },
-    [height]
-  );
+  const style = useStyleVars({
+    height: `${height}px`,
+  });
 
   return (
     <div
