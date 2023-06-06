@@ -2,6 +2,14 @@
 
 module.exports = {
 	theme: {
+		data: {
+			visible: 'visible~="true"',
+			error: 'error~="true"',
+			expanded: 'expanded~=true',
+			dragging: 'dragging~=true',
+			'align-center': 'align="center"',
+			'align-top': 'align="top"',
+		},
 		extend: {
 			colors: {
 				action: require('tailwindcss/colors').blue,
@@ -22,10 +30,6 @@ module.exports = {
 	},
 	plugins: [
 		// Add custom variant classes
-		require('@tailwindcss/typography'),
-		require('tailwindcss/plugin')(({addVariant}) => {
-			addVariant('child', '& > *');
-			addVariant('d-active', '&[data-active]');
-		}),
+		require('@tailwindcss/typography')
 	],
 };
