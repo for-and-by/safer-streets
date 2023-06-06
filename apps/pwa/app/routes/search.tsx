@@ -21,7 +21,7 @@ import Body from "~/components/regions/body";
 import Footer from "~/components/regions/footer";
 
 import FindSelfButton from "~/components/atoms/find-self-button";
-import Bumper from "~/components/atoms/bumper";
+import { Bumper } from "~/components/atoms/bumper";
 import Text from "~/components/inputs/text";
 
 import type { SearchFeature } from "~/types/search";
@@ -111,7 +111,7 @@ export default function Search() {
         </div>
       </Header>
       <Body>
-        <Bumper show={!search?.isEmpty}>
+        <Bumper isShow={!search?.isEmpty}>
           <div className="flex max-h-48 flex-col items-center divide-y divide-base-100 overflow-y-scroll bg-white">
             {search?.results.map((feature: SearchFeature) =>
               feature.center ? (

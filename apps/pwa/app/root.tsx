@@ -117,12 +117,12 @@ export default function App() {
         </MapProvider>
         <ScrollRestoration />
         <Scripts />
+        <LiveReload />
         <script
           defer
           data-domain="app.saferstreets.info"
           src={"https://plausible.io/js/script.js"}
         />
-        <LiveReload />
       </body>
     </html>
   );

@@ -9,7 +9,7 @@ interface Props {
   className?: string;
 }
 
-export default function Bumper(props: Props) {
+export function Bumper(props: Props) {
   const { isShow = true, className, children } = props;
 
   const ref = useRef<HTMLDivElement>(null);
