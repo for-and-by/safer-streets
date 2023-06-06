@@ -6,7 +6,7 @@ import useMapLock from "~/hooks/map/use-map-lock";
 import Header from "~/components/regions/header";
 import Footer from "~/components/regions/footer";
 
-import Logo from "~/components/atoms/logo";
+import { Logo } from "~/components/atoms/logo";
 import { formatMetadata } from "~/utils/seo";
 import type { MetaFunction } from "@remix-run/node";
 
