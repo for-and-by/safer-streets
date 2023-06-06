@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 import React from "react";
-import clsx from "clsx";
 import type { FieldError } from "react-hook-form";
 
 interface Props {
@@ -21,12 +20,15 @@ export default function Wrapper({
   return (
     <>
       <div
-        className={clsx(
-          "relative flex w-full space-x-2 rounded-sm bg-gray-100 p-3 focus-within:outline focus-within:outline-brand-700/40",
-          align === "center" && "items-center",
-          align === "top" && "items-start",
-          error && "outline outline-error-600/40"
-        )}
+        data-align={align}
+        data-error={!!error?.message}
+        className="
+          relative flex
+          w-full gap-2 rounded-sm bg-gray-100 p-3
+          focus-within:outline focus-within:outline-brand-700/40
+          data-error:outline data-error:outline-error-600/40
+          data-align-center:items-center
+          data-align-top:items-start"
       >
         {label ? (
           <label className="w-16 text-gray-400" htmlFor={name ?? ""}>

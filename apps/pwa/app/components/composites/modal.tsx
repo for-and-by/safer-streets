@@ -1,6 +1,5 @@
 import type { ComponentProps, MouseEventHandler } from "react";
 import React, { createContext, useState } from "react";
-import clsx from "clsx";
 
 import createContextHook from "~/hooks/factories/create-context-hook";
 import Portal from "~/components/atoms/portal";
@@ -57,11 +56,13 @@ function Body({ children }: PropsBody) {
   return (
     <Portal>
       <div
-        className={clsx(
-          "fixed inset-0 z-20 transition-all",
-          isShow && "opacity-1 pointer-events-auto",
-          !isShow && "pointer-events-none opacity-0"
-        )}
+        data-visible={isShow}
+        className="
+          group/modal
+          pointer-events-none
+          fixed inset-0 z-20
+          opacity-0 transition-all
+          data-visible:pointer-events-auto data-visible:opacity-100"
       >
         {children}
       </div>
@@ -77,15 +78,15 @@ function Tint() {
 type PropsPanel = ComponentProps<"div">;
 
 function Panel({ children, className }: PropsPanel) {
-  const { isShow } = useModal();
-
   return (
     <div
-      className={clsx(
-        "clamp absolute left-1/2 bottom-8 -translate-x-1/2 rounded bg-white transition-all",
-        isShow ? "translate-y-0" : "translate-y-8",
-        className
-      )}
+      className={`
+        clamp group absolute bottom-8 left-1/2 
+        -translate-x-1/2 translate-y-8 
+        rounded bg-white transition-all 
+        group-data-visible/modal:translate-y-0 
+        ${className}
+      `}
     >
       {children}
     </div>

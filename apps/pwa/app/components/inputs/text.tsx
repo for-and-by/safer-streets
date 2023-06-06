@@ -1,5 +1,4 @@
 import React from "react";
-import clsx from "clsx";
 
 import type { FieldError } from "react-hook-form";
 
@@ -15,7 +14,7 @@ interface Props extends React.ComponentPropsWithRef<"input"> {
 const Text = React.forwardRef<HTMLInputElement, Props>(
   ({ icon = undefined, label, name, error, ...props }, ref) => (
     <Wrapper label={label} name={name} error={error}>
-      {icon && <i className={clsx("icon", icon)} />}
+      {icon && <i className={`icon ${icon}`} />}
       <input
         type="text"
         className="flex-grow bg-transparent focus:outline-none"

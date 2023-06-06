@@ -28,7 +28,7 @@ export function Panel({ heading, body, onConfirm }: PropsPanel) {
             <i className="btn-icon icon icon-close" />
           </Modal.Close>
         </div>
-        <div className="prose p-4">
+        <div className="p-4">
           <p>{body}</p>
         </div>
         <div className="sticky top-0 flex items-center justify-between p-2">

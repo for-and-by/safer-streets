@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import React, { useState } from "react";
 import { parseImageUrl } from "~/lib/image";
 
@@ -15,20 +14,15 @@ export function ImageCollapse({ src }: Props) {
 
   return (
     <div
-      className={clsx(
-        "relative overflow-hidden transition-all",
-        !isExpanded ? "h-36" : "h-96"
-      )}
+      data-expanded={isExpanded}
+      className="group/image-collapse relative h-36 overflow-hidden transition-all data-expanded:h-96"
     >
       <button
         className="btn btn-white absolute bottom-2 right-2 z-20"
         onClick={handleToggle}
       >
         <i
-          className={clsx(
-            "btn-icon icon",
-            !isExpanded ? "icon-plus" : "icon-minus"
-          )}
+          className={`btn-icon icon ${isExpanded ? "icon-minus" : "icon-plus"}`}
         />
       </button>
       <img

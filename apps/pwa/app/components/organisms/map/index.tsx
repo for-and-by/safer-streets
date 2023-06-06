@@ -1,6 +1,5 @@
 import type { ComponentProps } from "react";
 import React, { useEffect } from "react";
-import clsx from "clsx";
 
 import useMap from "~/hooks/map/use-map";
 import useMapRef from "~/hooks/map/use-map-ref";
@@ -38,7 +37,7 @@ export default function Map(props: Props) {
   return (
     <>
       <div
-        className={clsx("absolute inset-0 z-10", isLocked ? "block" : "hidden")}
+        className={`absolute inset-0 z-10 ${isLocked ? "block" : "hidden"}`}
       />
       <div ref={mapRef} {...props} />
     </>

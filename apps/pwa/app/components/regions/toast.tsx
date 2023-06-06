@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import clsx from "clsx";
 
 import useDebounce from "~/hooks/use-debounce";
 import Portal from "~/components/atoms/portal";
@@ -19,12 +18,13 @@ function Default({ show = false, content }: PropsRoot) {
   return (
     <Portal selector={`#${REGION_ID}`}>
       <div
-        className={clsx(
-          "flex items-center space-x-4 rounded bg-base-900 p-4 text-base-50 transition-all",
-          show
-            ? "opacity-1 pointer-events-auto"
-            : "pointer-events-none opacity-0"
-        )}
+        data-visible={show}
+        className="
+          pointer-events-none flex
+          items-center gap-4 rounded
+          bg-base-900 p-4 text-base-50 opacity-0 transition-all
+          data-visible:pointer-events-auto data-visible:opacity-100
+        "
       >
         <i className="icon icon-is-spinning icon-spinner z-20 before:text-white" />
         <p className="text-sm">{content}</p>
@@ -58,14 +58,15 @@ function Error({ content }: PropsError) {
   return (
     <Portal selector={`#${REGION_ID}`}>
       <div
-        className={clsx(
-          "flex items-center space-x-1 rounded bg-danger-600 pl-4 text-base-50 transition-all",
-          show
-            ? "opacity-1 pointer-events-auto"
-            : "pointer-events-none opacity-0"
-        )}
+        data-visible={show}
+        className="
+          pointer-events-none flex
+          items-center gap-4 rounded
+          bg-base-600 p-4 text-base-50 opacity-0 transition-all
+          data-visible:pointer-events-auto data-visible:opacity-100
+        "
       >
-        <p className="font-bold text-sm">Error</p>
+        <p className="text-sm font-bold">Error</p>
         <p className="text-sm">{content}</p>
         <button className="btn btn-icon" onClick={() => setShow(false)}>
           <i className="btn-icon icon icon-close z-20 before:text-white" />
