@@ -1,58 +1,59 @@
 import type { ReactNode } from "react";
-import React, { useEffect, useRef } from "react";
-import { animated, useSpring } from "@react-spring/web";
-import useMutationObserver from "~/hooks/use-mutation-observer";
+import { useEffect, useRef, useState } from "react";
+
+import { useStyleVars } from "~/hooks/use-style-vars";
 
 interface Props {
-  show?: boolean;
+  isShow?: boolean;
   children?: ReactNode;
   className?: string;
 }
 
-export default function Bumper({ show = true, className, children }: Props) {
+export default function Bumper(props: Props) {
+  const { isShow = true, className, children } = props;
+
   const ref = useRef<HTMLDivElement>(null);
-
-  const [{ height }, api] = useSpring(() => ({
-    height: 0,
-  }));
-
-  let timer: NodeJS.Timeout;
-  useMutationObserver(
-    (mutations) => {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        for (const mutation of mutations) {
-          if (mutation.type === "childList") {
-            api.start({
-              height: show ? ref?.current?.offsetHeight : 0,
-            });
-          }
-        }
-      }, 10);
-    },
-    ref,
-    [show]
-  );
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    if (ref.current) {
-      api.start({
-        height: show ? ref.current.offsetHeight : 0,
-      });
-    }
-    //	eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [show]);
+    if (!ref.current) return;
+    if (!isShow) return setHeight(0);
+
+    const { current: node } = ref;
+
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.type === "childList") {
+          setHeight(node.offsetHeight);
+        }
+      }
+    });
+
+    observer.observe(node, {
+      childList: true,
+      subtree: true,
+    });
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [isShow]);
+
+  const style = useStyleVars(
+    {
+      height: `${height}px`,
+    },
+    [height]
+  );
 
   return (
-    <animated.div
-      style={{
-        height: height.to((value) => `${value}px`),
-      }}
-      className="overflow-hidden bg-white"
+    <div
+      style={style}
+      className="h-[--height] overflow-hidden bg-white transition-all duration-300"
     >
       <div ref={ref} className={className}>
         {children}
       </div>
-    </animated.div>
+    </div>
   );
 }
