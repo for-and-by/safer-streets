@@ -3,14 +3,15 @@ import { createPortal } from "react-dom";
 
 import useQuerySelector from "~/hooks/use-query-selector";
 
-interface Props {
+type Props = {
   children?: ReactNode;
   selector?: string;
-}
+};
 
-export default function Portal({ children, selector = "body" }: Props) {
+export function Portal(props: Props) {
+  const { children, selector = "body" } = props;
   const parent = useQuerySelector(selector);
-  if (!parent) return null;
 
+  if (!parent) return null;
   return createPortal(children, parent);
 }

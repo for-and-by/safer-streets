@@ -8,7 +8,9 @@ type Props = {
   onFound?: () => void;
 };
 
-export function FindSelfButton({ onFound }: Props) {
+export function FindSelfButton(props: Props) {
+  const { onFound } = props;
+
   const [, setCenter] = useMapCenter();
   const { isLoading, handleAsyncAction } = useAsyncAction({
     action: () => {
