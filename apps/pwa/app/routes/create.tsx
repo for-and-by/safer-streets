@@ -11,7 +11,7 @@ import Header from "~/components/regions/header";
 
 import CenterMarker from "~/components/molecules/markers/center";
 import { Warning } from "~/components/composites/warning";
-import ProgressBar from "~/components/atoms/progress-bar";
+import { ProgressBar } from "~/components/atoms/progress-bar";
 
 export const meta: MetaFunction = () => {
   return formatMetadata({

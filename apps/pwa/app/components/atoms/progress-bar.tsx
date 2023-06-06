@@ -1,17 +1,19 @@
-import React from "react";
+import { useStyleVars } from "~/hooks/use-style-vars";
 
-interface Props {
+type Props = {
   value: number;
-}
+};
 
-export default function ProgressBar({ value = 10 }: Props) {
-  const style = {
-    "--progress": `${value.toString()}%`,
-  } as React.CSSProperties;
+export function ProgressBar(props: Props) {
+  const { value = 10 } = props;
+
+  const style = useStyleVars({
+    progress: `${value.toString()}%`,
+  });
 
   return (
     <div style={style} className="block h-0.5 w-full bg-base-100">
-      <div className="block h-full w-[var(--progress)] bg-brand-700 transition-all" />
+      <div className="block h-full w-[--progress] bg-brand-700 transition-all" />
     </div>
   );
 }

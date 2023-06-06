@@ -1,7 +1,6 @@
 import { FindSelfButton } from "~/components/atoms/find-self-button";
 import useMapCenter from "~/hooks/map/use-map-center";
 import React, { useEffect } from "react";
-import Show from "~/components/atoms/show";
 import type { LngLatLike } from "maplibre-gl";
 import useSearch from "~/hooks/use-search";
 import { parseLngLat } from "~/lib/maplibre";
@@ -41,9 +40,9 @@ export default function MapCenterInput({
             : "Searching for address..."}
         </p>
       </div>
-      <Show on={state === "submitting"}>
+      {state !== "submitting" ? null : (
         <i className="icon icon-circle-anim icon-is-spinning before:text-black" />
-      </Show>
+      )}
       <FindSelfButton />
     </div>
   );
