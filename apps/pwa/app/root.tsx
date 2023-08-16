@@ -1,13 +1,5 @@
-import React, { useEffect } from "react";
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-  useLoaderData,
-} from "@remix-run/react";
+import { useEffect } from "react";
+import { Links, Meta, Outlet, Scripts, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 
@@ -115,9 +107,7 @@ export default function App() {
             </div>
           </div>
         </MapProvider>
-        <ScrollRestoration />
         <Scripts />
-        <LiveReload />
         <script
           defer
           data-domain="app.saferstreets.info"
