@@ -1,8 +1,9 @@
-import Toast from "~/components/regions/toast";
+import { CANT_GEOLOCATE } from "~/errors";
+
 import useMapCenter from "~/hooks/map/use-map-center";
 import { useAsyncAction } from "~/hooks/use-async-action";
 
-const CANT_GEOLOCATE = "Geolocation not available on this browser.";
+import Toast from "~/components/regions/toast";
 
 type Props = {
   onFound?: () => void;
