@@ -1,21 +1,15 @@
 import type { LayerSpecification } from "maplibre-gl";
 
-import useMap from "~/hooks/map/use-map";
-import useMapEvents from "~/hooks/map/use-map-events";
+import { useMapEvent } from "~/hooks/map/use-map-event";
 
 export default function useMapLayer(options: LayerSpecification) {
-  const map = useMap();
+  useMapEvent("load", (event) => {
+    const layer = event.target.getLayer(options.id);
+    if (!layer) event.target.addLayer(options);
+  });
 
-  const updateLayer = () => {
-    if (!map) return;
-    const layer = map.getLayer(options.id);
-    if (layer) return;
-    map.addLayer(options);
-  };
-
-  useMapEvents(map, {
-    load: updateLayer,
-    data: updateLayer,
-    sourcedata: updateLayer,
+  useMapEvent("sourcedata", (event) => {
+    const layer = event.target.getLayer(options.id);
+    if (!layer) event.target.addLayer(options);
   });
 }

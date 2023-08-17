@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import { Link, useFetcher, useLocation, useNavigation } from "@remix-run/react";
 
 import useMap from "~/hooks/map/use-map";
-import useMapEvents from "~/hooks/map/use-map-events";
 import useMapCenter from "~/hooks/map/use-map-center";
 import BaseMarker from "~/components/molecules/markers/base";
 import Toast from "~/components/regions/toast";
 import { parseImageUrl } from "~/lib/image";
 import type { ReportSummary } from "@safer-streets/db";
 import { getMetadataFromContent } from "@safer-streets/utils";
+import { useLayerEvent } from "~/hooks/map/use-layer-event";
 
 type PropsContent = {
   summary: ReportSummary;
@@ -74,20 +74,17 @@ export function SummaryMarker() {
   const map = useMap();
   const [, setCenter] = useMapCenter();
 
-  useMapEvents(map, "reports-bg", {
-    click: (event) => {
-      if (!map) return;
-      setCenter(event.lngLat);
+  useLayerEvent("click", "reports-bg", (event) => {
+    setCenter(event.lngLat);
 
-      const [feature] = map.queryRenderedFeatures(event.point, {
-        layers: ["reports-bg"],
-      });
+    const [feature] = event.target.queryRenderedFeatures(event.point, {
+      layers: ["reports-bg"],
+    });
 
-      const id = feature?.properties?.id;
-      if (!id) return;
+    const id = feature?.properties?.id;
+    if (!id) return;
 
-      fetcher.load(`/report/${id}/summary`);
-    },
+    fetcher.load(`/report/${id}/summary`);
   });
 
   useEffect(() => {

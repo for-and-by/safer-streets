@@ -1,21 +1,13 @@
-import useMap from "~/hooks/map/use-map";
-import useMapEvents from "~/hooks/map/use-map-events";
+import { useMapEvent } from "~/hooks/map/use-map-event";
 
 export default function useMapImages(images: { id: string; url: string }[]) {
-  const map = useMap();
-
-  const loadImages = () => {
-    if (!map) return;
+  useMapEvent("styledata", (event) => {
     images.forEach((data) => {
-      map.loadImage(data.url, (error, image) => {
+      event.target.loadImage(data.url, (error, image) => {
         if (error) throw error;
-        if (image && !map.hasImage(data.id)) map.addImage(data.id, image);
+        if (image && !event.target.hasImage(data.id))
+          event.target.addImage(data.id, image);
       });
     });
-  };
-
-  useMapEvents(map, {
-    styledata: loadImages,
-    data: loadImages,
   });
 }
