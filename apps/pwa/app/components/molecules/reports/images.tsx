@@ -1,4 +1,4 @@
-import useMapImages from "~/hooks/map/use-map-images";
+import { useMapImages } from "~/hooks/map/use-map-images";
 
 import cyclist from "~/assets/cyclist.png";
 import fire from "~/assets/fire.png";

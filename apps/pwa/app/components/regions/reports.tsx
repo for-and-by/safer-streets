@@ -4,7 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 import type { ReportFull } from "@safer-streets/db";
 import { getMetadataFromContent } from "@safer-streets/utils";
 
-import useMapSource from "~/hooks/map/use-map-source";
+import { useMapSource } from "~/hooks/map/use-map-source";
 
 import ReportClustersLayer from "~/components/molecules/reports/clusters";
 import ReportIconsLayer from "~/components/molecules/reports/icons";

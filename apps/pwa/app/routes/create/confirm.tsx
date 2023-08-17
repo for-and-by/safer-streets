@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link, useFetcher } from "@remix-run/react";
 
 import type { SubmitErrorHandler, SubmitHandler } from "react-hook-form";
 import { useFormContext } from "react-hook-form";
 
 import { useCreateOutlet } from "~/routes/create";
-import useMapLock from "~/hooks/map/use-map-lock";
+import { useMapLock } from "~/hooks/map/use-map-lock";
 
 import Footer from "~/components/regions/footer";
 import SummaryField from "~/components/fields/summary-field";

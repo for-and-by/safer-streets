@@ -1,6 +1,6 @@
 import colors from "~/utils/colors.client";
 
-import useMapLayer from "~/hooks/map/use-map-layer";
+import { useMapLayer } from "~/hooks/map/use-map-layer";
 
 export default function ReportIconsLayer() {
   useMapLayer({

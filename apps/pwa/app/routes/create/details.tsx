@@ -3,7 +3,7 @@ import { Link, useNavigate } from "@remix-run/react";
 
 import { useCreateOutlet } from "~/routes/create";
 
-import useMapLock from "~/hooks/map/use-map-lock";
+import { useMapLock } from "~/hooks/map/use-map-lock";
 
 import Footer from "~/components/regions/footer";
 

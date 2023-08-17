@@ -6,8 +6,8 @@ import { Link, Outlet, useLoaderData } from "@remix-run/react";
 import { formatMetadata } from "~/utils/seo";
 
 import { useReportOpen } from "~/hooks/reports/use-report-open";
-import useMapLock from "~/hooks/map/use-map-lock";
-import useMapCenter from "~/hooks/map/use-map-center";
+import { useMapLock } from "~/hooks/map/use-map-lock";
+import { useMapCenter } from "~/hooks/map/use-map-center";
 
 import ReportMarker from "~/components/molecules/markers/report";
 import Header from "~/components/regions/header";

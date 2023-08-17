@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
 import { useEffect, useRef, useState } from "react";
-import type { Listener, LngLatLike, PopupOptions } from "maplibre-gl";
-import { Popup } from "maplibre-gl";
 import { createPortal } from "react-dom";
 
-import useMap from "~/hooks/map/use-map";
+import type { Listener, LngLatLike, PopupOptions } from "maplibre-gl";
+import { Popup } from "maplibre-gl";
+
+import { useMap } from "~/hooks/map/use-map";
 
 interface Props extends PopupOptions {
   coordinates: LngLatLike;
@@ -20,7 +21,7 @@ export default function BasePopup({
 }: Props) {
   const popupRef = useRef(document.createElement("div"));
   const [popup, setPopup] = useState<Popup | null>(null);
-  const map = useMap();
+  const { map } = useMap();
 
   useEffect(() => {
     if (!popup) {

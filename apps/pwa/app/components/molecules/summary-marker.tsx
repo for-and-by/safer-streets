@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useFetcher, useLocation, useNavigation } from "@remix-run/react";
 
-import useMap from "~/hooks/map/use-map";
-import useMapCenter from "~/hooks/map/use-map-center";
-import BaseMarker from "~/components/molecules/markers/base";
-import Toast from "~/components/regions/toast";
-import { parseImageUrl } from "~/lib/image";
 import type { ReportSummary } from "@safer-streets/db";
 import { getMetadataFromContent } from "@safer-streets/utils";
+
+import { parseImageUrl } from "~/lib/image";
+
+import { useMapCenter } from "~/hooks/map/use-map-center";
 import { useLayerEvent } from "~/hooks/map/use-layer-event";
+
+import BaseMarker from "~/components/molecules/markers/base";
+import Toast from "~/components/regions/toast";
 
 type PropsContent = {
   summary: ReportSummary;
@@ -71,7 +73,6 @@ export function SummaryMarker() {
 
   const location = useLocation();
   const navigation = useNavigation();
-  const map = useMap();
   const [, setCenter] = useMapCenter();
 
   useLayerEvent("click", "reports-bg", (event) => {

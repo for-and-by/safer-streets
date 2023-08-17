@@ -6,7 +6,7 @@ import { Marker } from "maplibre-gl";
 
 import { createPortal } from "react-dom";
 
-import useMap from "~/hooks/map/use-map";
+import { useMap } from "~/hooks/map/use-map";
 
 interface Props extends MarkerOptions {
   coordinates: LngLatLike;
@@ -23,7 +23,7 @@ export default function BaseMarker({
   ...props
 }: Props) {
   const [marker, setMarker] = useState<Marker | null>(null);
-  const map = useMap();
+  const { map } = useMap();
 
   useEffect(() => {
     if (!marker) {

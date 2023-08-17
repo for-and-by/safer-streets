@@ -3,15 +3,15 @@ import { useEffect } from "react";
 import type { GeoJSONSource, GeoJSONSourceSpecification } from "maplibre-gl";
 import type { GeoJSON } from "geojson";
 
-import useMap from "~/hooks/map/use-map";
+import { useMap } from "~/hooks/map/use-map";
 import { useMapEvent } from "./use-map-event";
 
-export default function useMapSource({
+export function useMapSource({
   id,
   data,
   ...options
 }: GeoJSONSourceSpecification & { id: string }) {
-  const map = useMap();
+  const { map } = useMap();
 
   useMapEvent("styledata", (event) => {
     const source = event.target.getSource(id);

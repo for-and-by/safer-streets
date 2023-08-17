@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "@remix-run/react";
 
-import useMapLock from "~/hooks/map/use-map-lock";
+import { useMapLock } from "~/hooks/map/use-map-lock";
 
 import Header from "~/components/regions/header";
 import Footer from "~/components/regions/footer";

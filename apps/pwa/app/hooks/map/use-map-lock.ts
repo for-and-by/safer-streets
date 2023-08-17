@@ -1,8 +1,7 @@
-import { useMapStore } from "~/hooks/map/use-map-store";
+import { useMapContext } from "~/components/organisms/map/context";
 
-export default function useMapLock() {
-  const isLocked = useMapStore((state) => state.isLocked);
-  const setIsLocked = useMapStore((state) => state.setIsLocked);
+export function useMapLock() {
+  const { isLocked, setIsLocked } = useMapContext();
 
   const actions = {
     setIsLocked: setIsLocked,

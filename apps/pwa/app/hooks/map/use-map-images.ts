@@ -1,6 +1,6 @@
 import { useMapEvent } from "~/hooks/map/use-map-event";
 
-export default function useMapImages(images: { id: string; url: string }[]) {
+export function useMapImages(images: { id: string; url: string }[]) {
   useMapEvent("styledata", (event) => {
     images.forEach((data) => {
       event.target.loadImage(data.url, (error, image) => {

@@ -1,4 +1,4 @@
-import type { ComponentProps } from "react";
+import type { ComponentProps, Dispatch, SetStateAction } from "react";
 import React, { createContext, useCallback, useEffect, useState } from "react";
 
 import { Map } from "maplibre-gl";
@@ -9,6 +9,8 @@ import createContextHook from "~/hooks/factories/create-context-hook";
 interface ContextValue {
   map: Map | null;
   ref: (node: HTMLDivElement | null) => void;
+  isLocked: boolean;
+  setIsLocked: Dispatch<SetStateAction<boolean>>;
 }
 
 const initialValue: ContextValue = {
@@ -16,6 +18,8 @@ const initialValue: ContextValue = {
   ref: () => {
     return;
   },
+  isLocked: false,
+  setIsLocked: () => {},
 };
 
 export const MapContext = createContext(initialValue);
@@ -24,8 +28,9 @@ export const useMapContext = createContextHook({ MapContext });
 type Props = ComponentProps<"div">;
 
 export default function MapProvider({ children }: Props) {
-  const { map: _map } = initialValue;
+  const { map: _map, isLocked: _isLocked } = initialValue;
   const [map, setMap] = useState(_map);
+  const [isLocked, setIsLocked] = useState(_isLocked);
 
   const ref = useCallback<ContextValue["ref"]>((node) => {
     if (!!node && !map) {
@@ -56,6 +61,8 @@ export default function MapProvider({ children }: Props) {
   const value: ContextValue = {
     ref: ref,
     map: map,
+    isLocked,
+    setIsLocked,
   };
 
   return <MapContext.Provider value={value}>{children}</MapContext.Provider>;

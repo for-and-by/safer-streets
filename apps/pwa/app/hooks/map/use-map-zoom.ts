@@ -1,12 +1,12 @@
 import { useState } from "react";
 
-import { useMapContext } from "~/components/organisms/map/context";
+import { useMap } from "~/hooks/map/use-map";
+import { useMapEvent } from "~/hooks/map/use-map-event";
 
 import { config } from "~/config";
-import { useMapEvent } from "./use-map-event";
 
-export default function useMapZoom() {
-  const { map } = useMapContext();
+export function useMapZoom() {
+  const { map } = useMap();
   const [zoom, setZoom] = useState<number>(config.map.zoom.default);
 
   useMapEvent("zoomend", (event) => {

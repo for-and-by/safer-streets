@@ -15,6 +15,8 @@ import {
 import { formatMetadata } from "~/utils/seo";
 import { geocode } from "~/lib/maplibre";
 
+import { useMapCenter } from "~/hooks/map/use-map-center";
+
 import Toast from "~/components/regions/toast";
 import Header from "~/components/regions/header";
 import Body from "~/components/regions/body";
@@ -25,7 +27,6 @@ import { Bumper } from "~/components/atoms/bumper";
 import Text from "~/components/inputs/text";
 
 import type { SearchFeature } from "~/types/search";
-import useMapCenter from "~/hooks/map/use-map-center";
 
 export const meta: MetaFunction = () => {
   return formatMetadata({

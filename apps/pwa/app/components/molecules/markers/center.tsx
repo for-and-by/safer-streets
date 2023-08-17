@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-import useMapCenter from "~/hooks/map/use-map-center";
+import { useMapCenter } from "~/hooks/map/use-map-center";
+
 import BaseMarker from "~/components/molecules/markers/base";
 
 export default function CenterMarker() {

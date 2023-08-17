@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "@remix-run/react";
 
 import { useCreateOutlet } from "~/routes/create";
-import useMapLock from "~/hooks/map/use-map-lock";
+import { useMapLock } from "~/hooks/map/use-map-lock";
 
 import { Warning } from "~/components/composites/warning";
 import LocationField from "~/components/fields/location-field";

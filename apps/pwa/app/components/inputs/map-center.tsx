@@ -1,9 +1,12 @@
-import { FindSelfButton } from "~/components/atoms/find-self-button";
-import useMapCenter from "~/hooks/map/use-map-center";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import type { LngLatLike } from "maplibre-gl";
-import useSearch from "~/hooks/use-search";
+
 import { parseLngLat } from "~/lib/maplibre";
+
+import useSearch from "~/hooks/use-search";
+import { useMapCenter } from "~/hooks/map/use-map-center";
+
+import { FindSelfButton } from "~/components/atoms/find-self-button";
 
 interface Props {
   onCenterChange?: (center: LngLatLike) => void;

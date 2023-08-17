@@ -2,14 +2,14 @@ import { useEffect } from "react";
 
 import type { MapLayerEvent, MapLayerEventHandler } from "~/types/map";
 
-import { useMapContext } from "~/components/organisms/map/context";
+import { useMap } from "~/hooks/map/use-map";
 
 export function useLayerEvent<Event extends MapLayerEvent>(
   name: Event,
   layer: string,
   callback: MapLayerEventHandler<Event>
 ) {
-  const { map } = useMapContext();
+  const { map } = useMap();
 
   useEffect(() => {
     if (!map) return () => {};

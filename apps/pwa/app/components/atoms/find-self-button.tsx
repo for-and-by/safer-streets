@@ -1,6 +1,6 @@
 import { CANT_GEOLOCATE } from "~/errors";
 
-import useMapCenter from "~/hooks/map/use-map-center";
+import { useMapCenter } from "~/hooks/map/use-map-center";
 import { useAsyncAction } from "~/hooks/use-async-action";
 
 import Toast from "~/components/regions/toast";

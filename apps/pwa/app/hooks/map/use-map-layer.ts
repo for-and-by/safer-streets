@@ -2,7 +2,7 @@ import type { LayerSpecification } from "maplibre-gl";
 
 import { useMapEvent } from "~/hooks/map/use-map-event";
 
-export default function useMapLayer(options: LayerSpecification) {
+export function useMapLayer(options: LayerSpecification) {
   useMapEvent("load", (event) => {
     const layer = event.target.getLayer(options.id);
     if (!layer) event.target.addLayer(options);

@@ -1,6 +1,4 @@
-import React from "react";
-
-import useMapZoom from "~/hooks/map/use-map-zoom";
+import { useMapZoom } from "~/hooks/map/use-map-zoom";
 
 export default function Controls() {
   const [, { zoomIn, zoomOut }] = useMapZoom();
