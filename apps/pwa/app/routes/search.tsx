@@ -1,5 +1,5 @@
 import type { ChangeEventHandler, KeyboardEventHandler } from "react";
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { nanoid } from "nanoid";
 
 import type { ActionFunction, MetaFunction } from "@remix-run/node";

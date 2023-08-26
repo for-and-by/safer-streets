@@ -3,17 +3,15 @@ import type { GeoJSONSource } from "maplibre-gl";
 import colors from "~/utils/colors.client";
 
 import { useMapLayer } from "~/hooks/map/use-map-layer";
-import { useMapCenter } from "~/hooks/map/use-map-center";
-import { useMapZoom } from "~/hooks/map/use-map-zoom";
 import { useLayerEvent } from "~/hooks/map/use-layer-event";
+import { useMapState } from "~/hooks/map/use-map-state";
 
 interface Props {
   source: string;
 }
 
 export default function ReportClustersLayer({ source }: Props) {
-  const [, setCenter] = useMapCenter();
-  const [, { setZoom }] = useMapZoom();
+  const [, { setMapState }] = useMapState();
 
   useMapLayer({
     id: "clusters-bg",
@@ -49,12 +47,9 @@ export default function ReportClustersLayer({ source }: Props) {
     const clusterId = feature?.properties?.cluster_id;
 
     const geojsonSource = event.target.getSource(source) as GeoJSONSource;
-    console.log("getSource", geojsonSource);
     geojsonSource.getClusterExpansionZoom(clusterId, (error, zoom) => {
-      console.log("expanding");
       if (error) return;
-      if (zoom) setZoom(zoom);
-      setCenter(event.lngLat);
+      if (zoom) setMapState({ zoom, center: event.lngLat });
     });
   });
 
