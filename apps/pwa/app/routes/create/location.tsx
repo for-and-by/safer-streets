@@ -11,7 +11,7 @@ import { useFormContext } from "react-hook-form";
 
 export default function CreateLocation() {
   const [, { setUnlock }] = useMapLock();
-  const { setStage } = useCreateOutlet();
+  const { setStage, showWarning } = useCreateOutlet();
   const navigate = useNavigate();
   const { trigger } = useFormContext();
 
@@ -45,7 +45,7 @@ export default function CreateLocation() {
           <LocationField />
         </div>
         <div className="flex flex-row justify-between p-2">
-          <Warning.Trigger className="btn btn-light">
+          <Warning.Trigger className="btn btn-light" onShow={showWarning}>
             <p className="btn-text">Cancel</p>
           </Warning.Trigger>
           <button onClick={handleNext} className="btn btn-light">

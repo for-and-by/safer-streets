@@ -1,58 +1,38 @@
-import type { ComponentProps, MouseEventHandler } from "react";
-import React, { createContext, useState } from "react";
+import type { ComponentProps } from "react";
+import { useState } from "react";
 
-import createContextHook from "~/hooks/factories/create-context-hook";
 import { Portal } from "~/components/atoms/portal";
 
-interface ContextValue {
-  isShow: boolean;
-  hideModal: () => void;
-  showModal: () => void;
-}
+export function useModal(initial?: { isShow?: boolean }) {
+  const [isShow, setIsShow] = useState(initial?.isShow ?? false);
 
-const initialValue: ContextValue = {
-  isShow: false,
-  hideModal: () => null,
-  showModal: () => null,
-};
-
-const ModalContext = createContext(initialValue);
-const useModal = createContextHook({ ModalContext });
-
-type PropsRoot = ComponentProps<"div">;
-
-function Root({ children }: PropsRoot) {
-  const { isShow: _isShow } = initialValue;
-  const [isShow, setShow] = useState(_isShow);
-
-  const value: ContextValue = {
-    isShow,
-    hideModal: () => setShow(false),
-    showModal: () => setShow(true),
+  const actions = {
+    hideModal: () => setIsShow(false),
+    showModal: () => setIsShow(true),
   };
 
-  return (
-    <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
-  );
+  return [isShow, actions] as const;
 }
 
-type PropsTrigger = ComponentProps<"div">;
+type TriggerProps = ComponentProps<"div"> & {
+  onShow: () => void;
+};
 
-function Trigger({ className = "", children }: PropsTrigger) {
-  const { showModal } = useModal();
-
+function Trigger(props: TriggerProps) {
+  const { className, children, onShow } = props;
   return (
-    <button className={className} onClick={showModal}>
+    <button className={className} onClick={onShow}>
       {children}
     </button>
   );
 }
 
-type PropsBody = ComponentProps<"div">;
+type BodyProps = ComponentProps<"div"> & {
+  isShow: boolean;
+};
 
-function Body({ children }: PropsBody) {
-  const { isShow } = useModal();
-
+function Body(props: BodyProps) {
+  const { children, isShow } = props;
   return (
     <Portal>
       <div
@@ -70,14 +50,19 @@ function Body({ children }: PropsBody) {
   );
 }
 
-function Tint() {
-  const { hideModal } = useModal();
-  return <div onClick={hideModal} className="absolute inset-0 bg-black/50" />;
+type TintProps = {
+  onHide: () => void;
+};
+
+function Tint(props: TintProps) {
+  const { onHide } = props;
+  return <div onClick={onHide} className="absolute inset-0 bg-black/50" />;
 }
 
 type PropsPanel = ComponentProps<"div">;
 
-function Panel({ children, className }: PropsPanel) {
+function Panel(props: PropsPanel) {
+  const { children, className } = props;
   return (
     <div
       className={`
@@ -93,21 +78,17 @@ function Panel({ children, className }: PropsPanel) {
   );
 }
 
-type PropsClose = ComponentProps<"button">;
+type CloseProps = ComponentProps<"button"> & {
+  onHide: () => void;
+};
 
-function Close({ children, className = "", onClick = () => {} }: PropsClose) {
-  const { hideModal } = useModal();
-
-  const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
-    onClick(event);
-    hideModal();
-  };
-
+function Close(props: CloseProps) {
+  const { children, className, onHide } = props;
   return (
-    <button className={className} onClick={handleClick}>
+    <button className={className} onClick={onHide}>
       {children}
     </button>
   );
 }
 
-export const Modal = Object.assign(Root, { Trigger, Body, Panel, Tint, Close });
+export const Modal = { Trigger, Body, Panel, Tint, Close };

@@ -1,30 +1,41 @@
 import type { ComponentProps } from "react";
-import React from "react";
 
-import { Modal } from "~/components/composites/modal";
+import { Modal, useModal } from "~/components/composites/modal";
 
-type PropsRoot = ComponentProps<typeof Modal>;
+export function useWarning(onConfirm: () => void) {
+  const [modalState, modalActions] = useModal();
 
-export function Root(props: PropsRoot) {
-  return <Modal {...props} />;
+  function handleConfirm() {
+    modalActions.hideModal();
+    onConfirm();
+  }
+
+  const actions = {
+    hideWarning: modalActions.hideModal,
+    showWarning: modalActions.showModal,
+    confirmWarning: handleConfirm,
+  };
+
+  return [modalState, actions] as const;
 }
 
-interface PropsPanel {
-  children?: React.ReactNode;
-  className?: string;
+type PanelProps = {
+  isShow: boolean;
+  onHide: () => void;
+  onConfirm: () => void;
   heading?: string;
   body?: string;
-  onConfirm?: () => void;
-}
+};
 
-export function Panel({ heading, body, onConfirm }: PropsPanel) {
+export function Panel(props: PanelProps) {
+  const { isShow, onHide, onConfirm, heading, body } = props;
   return (
-    <Modal.Body>
-      <Modal.Tint />
+    <Modal.Body isShow={isShow}>
+      <Modal.Tint onHide={onHide} />
       <Modal.Panel className="divide-y divide-base-200">
         <div className="sticky top-0 flex items-center justify-between p-2">
           <p className="ml-2 font-medium">{heading}</p>
-          <Modal.Close className="btn btn-light">
+          <Modal.Close className="btn btn-light" onHide={onHide}>
             <i className="btn-icon icon icon-close" />
           </Modal.Close>
         </div>
@@ -32,10 +43,10 @@ export function Panel({ heading, body, onConfirm }: PropsPanel) {
           <p>{body}</p>
         </div>
         <div className="sticky top-0 flex items-center justify-between p-2">
-          <Modal.Close className="btn btn-light">
+          <Modal.Close className="btn btn-light" onHide={onHide}>
             <p className="btn-text">Cancel</p>
           </Modal.Close>
-          <Modal.Close className="btn btn-primary" onClick={onConfirm}>
+          <Modal.Close className="btn btn-primary" onHide={onConfirm}>
             Confirm
           </Modal.Close>
         </div>
@@ -44,10 +55,10 @@ export function Panel({ heading, body, onConfirm }: PropsPanel) {
   );
 }
 
-type PropsTrigger = ComponentProps<typeof Modal.Trigger>;
+type TriggerProps = ComponentProps<typeof Modal.Trigger>;
 
-export function Trigger(props: PropsTrigger) {
+export function Trigger(props: TriggerProps) {
   return <Modal.Trigger {...props} />;
 }
 
-export const Warning = Object.assign(Root, { Panel, Trigger });
+export const Warning = { Panel, Trigger };

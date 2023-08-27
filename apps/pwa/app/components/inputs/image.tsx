@@ -4,7 +4,7 @@ import { useAsyncAction } from "~/hooks/use-async-action";
 
 import Wrapper from "~/components/inputs/wrapper";
 
-import { Warning } from "~/components/composites/warning";
+import { Warning, useWarning } from "~/components/composites/warning";
 import Toast from "~/components/regions/toast";
 import type { FieldError } from "react-hook-form";
 import { parseFileAsBase64 } from "~/lib/image";
@@ -12,7 +12,6 @@ import { parseFileAsBase64 } from "~/lib/image";
 interface Props {
   onUpload?: (image: string) => void;
   onRemove?: () => void;
-
   error?: FieldError;
   value?: string;
   placeholder?: string;
@@ -32,6 +31,14 @@ export default function ImageInput({
     setImage(value);
   }, [value]);
 
+  const [isShow, { showWarning, hideWarning, confirmWarning }] = useWarning(
+    () => {
+      onRemove?.();
+      setImage(undefined);
+      if (inputRef.current) inputRef.current.value = "";
+    }
+  );
+
   const { isLoading, handleAsyncAction: handleProcessFile } = useAsyncAction({
     action: parseFileAsBase64,
     onSuccess: (data) => {
@@ -49,14 +56,8 @@ export default function ImageInput({
     inputRef?.current?.click();
   };
 
-  const handleRemove = () => {
-    setImage(undefined);
-    if (inputRef.current) inputRef.current.value = "";
-    if (onRemove) onRemove();
-  };
-
   return (
-    <Warning>
+    <>
       <Wrapper error={error}>
         <Toast content="Processing Image..." show={isLoading} />
         {!image ? (
@@ -81,7 +82,7 @@ export default function ImageInput({
                 <button className="btn btn-white" onClick={handleUpload}>
                   <i className="btn-icon icon icon-save-over" />
                 </button>
-                <Warning.Trigger className="btn btn-white">
+                <Warning.Trigger className="btn btn-white" onShow={showWarning}>
                   <i className="btn-icon icon icon-trash before:text-red-600" />
                 </Warning.Trigger>
               </div>
@@ -99,8 +100,10 @@ export default function ImageInput({
       <Warning.Panel
         heading="Remove Image"
         body="Are you sure you want to remove this image?"
-        onConfirm={handleRemove}
+        isShow={isShow}
+        onHide={hideWarning}
+        onConfirm={confirmWarning}
       />
-    </Warning>
+    </>
   );
 }
