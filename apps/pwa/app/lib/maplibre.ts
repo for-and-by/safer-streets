@@ -1,4 +1,4 @@
-import type { LngLatLike } from "maplibre-gl";
+import mlgl from "maplibre-gl";
 import type { Feature, FeatureCollection } from "geojson";
 
 import { config } from "~/config";
@@ -11,6 +11,10 @@ import type {
 } from "~/types/search";
 
 import type { Report, ReportResult } from "@safer-streets/db";
+
+export const Map = mlgl.Map;
+export const Marker = mlgl.Marker;
+export type LngLatLike = mlgl.LngLatLike;
 
 export function parseContextAsString(context: ContextItem[]) {
   const contextObj = context.reduce((obj, feature) => {

@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { Links, Meta, Outlet, Scripts, useLoaderData } from "@remix-run/react";
-import type { LoaderFunction } from "@remix-run/cloudflare";
+import type { LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 
-import styles from "@safer-streets/tailwind/index.css";
-import icons from "@safer-streets/icons/index.css";
+import "~/styles/index.css";
+import "@safer-streets/icons/index.css";
 
 import { config } from "~/config";
 
@@ -24,24 +24,33 @@ import BottomBar from "~/components/molecules/bottom-bar";
 import Controls from "~/components/molecules/controls";
 
 export function meta() {
-  return {
-    charset: "utf-8",
-    title: config.seo.default.title,
-    description: config.seo.default.description,
-    viewport: "width=device-width,initial-scale=1",
-  };
+  return [
+    {
+      title: config.seo.default.title,
+    },
+    {
+      name: "description",
+      content: config.seo.default.description,
+    },
+    {
+      name: "charset",
+      content: "utf-8",
+    },
+    {
+      name: "viewport",
+      content: "width=device-width,initial-scale=1",
+    },
+  ];
 }
 
 export function links() {
   return [
-    { rel: "stylesheet", href: styles },
-    { rel: "stylesheet", href: icons },
     { rel: "stylesheet", href: config.css.maplibre },
     { rel: "stylesheet", href: config.css.fonts },
   ];
 }
 
-export const loader: LoaderFunction = async ({ context }) => {
+export async function loader({ context }: LoaderFunctionArgs) {
   const supabase = context.getSupabase();
 
   const pins = `
@@ -67,7 +76,7 @@ export const loader: LoaderFunction = async ({ context }) => {
     types: types.data,
     severities: severities.data,
   });
-};
+}
 
 export default function App() {
   const { types, severities } = useLoaderData<typeof loader>();

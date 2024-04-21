@@ -1,4 +1,6 @@
+import { AppLoadContext } from "@remix-run/cloudflare";
 import { type PlatformProxy } from "wrangler";
+import { createSupabaseClient } from "@safer-streets/db";
 
 // When using `wrangler.toml` to configure bindings,
 // `wrangler types` will generate types for those bindings
@@ -16,3 +18,19 @@ declare module "@remix-run/cloudflare" {
     getSupabase: any;
   }
 }
+
+type GetLoadContext = (args: {
+  request: Request;
+  context: { cloudflare: Cloudflare }; // load context _before_ augmentation
+}) => AppLoadContext;
+
+function getSupabase() {
+  return createSupabaseClient();
+}
+
+export const getLoadContext: GetLoadContext = ({ context }) => {
+  return {
+    ...context,
+    getSupabase,
+  };
+};

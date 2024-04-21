@@ -1,10 +1,9 @@
 import type { ComponentProps, Dispatch, SetStateAction } from "react";
-import React, { createContext, useCallback, useEffect, useState } from "react";
-
-import { Map } from "maplibre-gl";
+import { createContext, useCallback, useEffect, useState } from "react";
 
 import { config } from "~/config";
 import createContextHook from "~/hooks/factories/create-context-hook";
+import { Map } from "~/lib/maplibre";
 
 interface ContextValue {
   map: Map | null;

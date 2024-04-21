@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { useEffect, useState } from "react";
 
 import type { Listener, LngLatLike, MarkerOptions } from "maplibre-gl";
-import { Marker } from "maplibre-gl";
+import { Marker } from "~/lib/maplibre";
 
 import { createPortal } from "react-dom";
 
