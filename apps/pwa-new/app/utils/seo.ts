@@ -1,5 +1,5 @@
 import { config } from "~/config";
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "@remix-run/cloudflare";
 
 interface Metadata {
   title?: string;

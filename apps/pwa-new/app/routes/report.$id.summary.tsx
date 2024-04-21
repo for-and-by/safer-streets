@@ -1,5 +1,5 @@
-import type { LoaderFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/cloudflare";
+import { json } from "@remix-run/cloudflare";
 
 /*
  *   This loader takes fetches a summarised report

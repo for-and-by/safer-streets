@@ -8,7 +8,7 @@ import Footer from "~/components/regions/footer";
 
 import { Logo } from "~/components/atoms/logo";
 import { formatMetadata } from "~/utils/seo";
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "@remix-run/cloudflare";
 
 export const meta: MetaFunction = () => {
   return formatMetadata({

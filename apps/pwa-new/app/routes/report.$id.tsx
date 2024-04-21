@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@remix-run/cloudflare";
+import { json, redirect } from "@remix-run/cloudflare";
 import { Link, Outlet, useLoaderData } from "@remix-run/react";
 
 import { formatMetadata } from "~/utils/seo";

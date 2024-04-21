@@ -2,7 +2,7 @@ import type { Dispatch, SetStateAction } from "react";
 import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "@remix-run/cloudflare";
 import { Outlet, useNavigate, useOutletContext } from "@remix-run/react";
 
 import { formatMetadata } from "~/utils/seo";

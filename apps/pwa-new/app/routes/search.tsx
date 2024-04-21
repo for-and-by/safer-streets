@@ -2,8 +2,8 @@ import type { ChangeEventHandler, KeyboardEventHandler } from "react";
 import { useRef } from "react";
 import { nanoid } from "nanoid";
 
-import type { ActionFunction, MetaFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type { ActionFunction, MetaFunction } from "@remix-run/cloudflare";
+import { json } from "@remix-run/cloudflare";
 import {
   Link,
   useActionData,

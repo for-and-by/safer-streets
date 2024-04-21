@@ -1,6 +1,6 @@
 import React from "react";
-import type { ActionFunction } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
+import type { ActionFunction } from "@remix-run/cloudflare";
+import { redirect } from "@remix-run/cloudflare";
 import { Link, useMatches, useNavigation, useSubmit } from "@remix-run/react";
 
 import type {
