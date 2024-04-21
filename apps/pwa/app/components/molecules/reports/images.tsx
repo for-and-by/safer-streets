@@ -1,48 +1,38 @@
 import { useMapImages } from "~/hooks/map/use-map-images";
 
-import cyclist from "~/assets/cyclist.png";
-import fire from "~/assets/fire.png";
-import flood from "~/assets/flood.png";
-import motorist from "~/assets/motorist.png";
-import pedestrian from "~/assets/pedestrian.png";
-import wildlife from "~/assets/wildlife.png";
-
-import verifyBadge from "~/assets/badge-verify.png";
-import newBadge from "~/assets/badge-new.png";
-
 export function MapImages() {
   useMapImages([
     {
       id: "cyclist",
-      url: cyclist,
+      url: "/pins/cyclist.png",
     },
     {
       id: "bushfire",
-      url: fire,
+      url: "/pins/fire.png",
     },
     {
       id: "flood",
-      url: flood,
+      url: "/pins/flood.png",
     },
     {
       id: "motorist",
-      url: motorist,
+      url: "/pins/motorist.png",
     },
     {
       id: "pedestrian",
-      url: pedestrian,
+      url: "/pins/pedestrian.png",
     },
     {
       id: "wildlife",
-      url: wildlife,
+      url: "/pins/wildlife.png",
     },
     {
       id: "badge-new",
-      url: newBadge,
+      url: "/pins/badge-new.png",
     },
     {
       id: "badge-verify",
-      url: verifyBadge,
+      url: "/pins/badge-verify.png",
     },
   ]);
 

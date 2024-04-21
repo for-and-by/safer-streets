@@ -141,7 +141,7 @@ export default function ReportEditTemplate() {
 
     submit(
       { update: JSON.stringify(dirtyValues) },
-      { method: "post", action: `report/${data.id}/edit` }
+      { method: "post", action: `/report/${data.id}/edit` }
     );
   };
 
