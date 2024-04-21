@@ -15,12 +15,14 @@ export function formatSeoTitle(title?: string) {
 }
 
 export function formatMetadata(metadata: Metadata) {
-  const formattedMetdata: FormattedMetadata = {
-    title: formatSeoTitle(metadata.title),
-    description: metadata?.description ?? config.seo.default.description,
-  };
-
-  if (metadata.image) formattedMetdata["og-image"] = metadata.image;
-
-  return formattedMetdata;
+  return [
+    {
+      title: formatSeoTitle(metadata.title),
+    },
+    {
+      name: "description",
+      content: metadata?.description ?? config.seo.default.description,
+    },
+    {},
+  ];
 }

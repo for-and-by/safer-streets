@@ -1,5 +1,5 @@
 import React from "react";
-import type { ActionFunction } from "@remix-run/cloudflare";
+import type { ActionFunctionArgs } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 import { Link, useMatches, useNavigation, useSubmit } from "@remix-run/react";
 
@@ -29,7 +29,7 @@ import ImageField from "~/components/fields/image-field";
  *   creates a new content row and appends it to the report
  * */
 
-export const action: ActionFunction = async ({ request, params, context }) => {
+export async function action({ request, params, context }: ActionFunctionArgs) {
   if (!params.id) return null;
 
   const form = await request.formData();
@@ -108,14 +108,14 @@ export const action: ActionFunction = async ({ request, params, context }) => {
   if (update.error) throw update.error;
 
   return redirect(`/report/${params.id}`);
-};
+}
 
 export default function ReportEditTemplate() {
   const { state } = useNavigation();
   const submit = useSubmit();
 
   const [, loader] = useMatches();
-  const data = loader.data.report;
+  const data = loader?.data.report;
 
   const methods = useForm<FormUpdateValues>({
     defaultValues: {

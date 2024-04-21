@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import type { LoaderFunction, MetaFunction } from "@remix-run/cloudflare";
+import type {
+  LoaderFunction,
+  LoaderFunctionArgs,
+  MetaArgs,
+  MetaFunction,
+} from "@remix-run/cloudflare";
 import { json, redirect } from "@remix-run/cloudflare";
 import { Link, Outlet, useLoaderData } from "@remix-run/react";
 
@@ -12,15 +17,15 @@ import { useMapCenter } from "~/hooks/map/use-map-center";
 import ReportMarker from "~/components/molecules/markers/report";
 import Header from "~/components/regions/header";
 
-export const meta: MetaFunction = ({ data }) => {
+export function meta({ data }: MetaArgs<typeof loader>) {
   return formatMetadata({
-    title: `${data.report.type.title} Report #${data.report.id}`,
-    description: data.report.content.details,
-    image: data.report.content.image_url,
+    title: `${data?.report.type.title} Report #${data?.report.id}`,
+    description: data?.report.content.details,
+    image: data?.report.content.image_url,
   });
-};
+}
 
-export const loader: LoaderFunction = async ({ params, context }) => {
+export async function loader({ params, context }: LoaderFunctionArgs) {
   if (!params.id) return redirect("/");
   const supabase = context.getSupabase();
 
@@ -48,11 +53,11 @@ export const loader: LoaderFunction = async ({ params, context }) => {
   if (!report.data) return redirect("/");
 
   return json({ report: report.data });
-};
+}
 
 export default function Report() {
-  const loader = useLoaderData();
-  const data = loader?.report;
+  const loaderData = useLoaderData<typeof loader>();
+  const data = loaderData?.report;
 
   const [, open] = useReportOpen();
   const [isLocked, { setLock }] = useMapLock();

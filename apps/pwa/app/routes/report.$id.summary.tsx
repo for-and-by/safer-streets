@@ -1,11 +1,11 @@
-import type { LoaderFunction } from "@remix-run/cloudflare";
+import type { LoaderFunctionArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 
 /*
  *   This loader takes fetches a summarised report
  * */
 
-export const loader: LoaderFunction = async ({ params, context }) => {
+export async function loader({ params, context }: LoaderFunctionArgs) {
   if (!params.id) return null;
   const supabase = context.getSupabase();
 
@@ -37,4 +37,4 @@ export const loader: LoaderFunction = async ({ params, context }) => {
     .single();
 
   return json({ summary: summary.data });
-};
+}

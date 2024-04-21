@@ -1,4 +1,4 @@
-import type { ActionFunction } from "@remix-run/cloudflare";
+import type { ActionFunctionArgs } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 
 import type { FormCreateValues } from "@safer-streets/db";
@@ -6,7 +6,7 @@ import type { FormCreateValues } from "@safer-streets/db";
 import { prepareImageData } from "~/lib/image";
 import { parseLngLat } from "~/lib/maplibre";
 
-export const action: ActionFunction = async ({ request, context }) => {
+export async function action({ request, context }: ActionFunctionArgs) {
   const supabase = context.getSupabase();
 
   // Preparing form data
@@ -84,4 +84,4 @@ export const action: ActionFunction = async ({ request, context }) => {
   if (update.error) throw update.error;
 
   return redirect(`/report/${report.data.id}`);
-};
+}

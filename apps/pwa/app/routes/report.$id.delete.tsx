@@ -1,4 +1,4 @@
-import type { ActionFunction } from "@remix-run/cloudflare";
+import type { ActionFunctionArgs } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 
 import { getIsoNow } from "@safer-streets/utils";
@@ -8,7 +8,7 @@ import { getIsoNow } from "@safer-streets/utils";
  *   copies it and adds the `is_deleted` flag
  * */
 
-export const action: ActionFunction = async ({ params, context }) => {
+export async function action({ params, context }: ActionFunctionArgs) {
   if (!params.id) return null;
   const supabase = context.getSupabase();
 
@@ -59,4 +59,4 @@ export const action: ActionFunction = async ({ params, context }) => {
   if (update.error) throw update.error;
 
   return redirect("/");
-};
+}

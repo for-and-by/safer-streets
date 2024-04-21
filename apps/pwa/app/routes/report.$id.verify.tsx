@@ -1,4 +1,4 @@
-import type { ActionFunction } from "@remix-run/cloudflare";
+import type { ActionFunctionArgs } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 import { getIsoNow } from "@safer-streets/utils";
 
@@ -6,7 +6,7 @@ import { getIsoNow } from "@safer-streets/utils";
  *   This loader updates the `updated_at` column on a report to ammend it expiring
  * */
 
-export const action: ActionFunction = async ({ params, context }) => {
+export async function action({ params, context }: ActionFunctionArgs) {
   const supabase = await context.getSupabase();
 
   const report = await supabase
@@ -27,4 +27,4 @@ export const action: ActionFunction = async ({ params, context }) => {
   if (update.error) throw update.error.message;
 
   return redirect(`/`);
-};
+}

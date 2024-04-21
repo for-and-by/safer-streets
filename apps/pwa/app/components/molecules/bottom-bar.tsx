@@ -9,7 +9,7 @@ export default function BottomBar() {
         target="_blank"
         rel="noreferrer"
       >
-        &copy; Attribution
+        Attribution
       </a>
     </div>
   );

@@ -21,8 +21,8 @@ export default function Details() {
   const deleteReport = useFetcher();
 
   const loader = useRouteLoaderData("routes/report/$id");
-  const data = (loader as any).report as ReportFull;
-  const { verifyDate } = getMetadataFromContent(data.content, data.type);
+  const data = (loader as any)?.report as ReportFull;
+  const { verifyDate } = getMetadataFromContent(data?.content, data?.type);
 
   const handleDelete = () => {
     deleteReport.submit(null, {

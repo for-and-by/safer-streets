@@ -2,7 +2,7 @@ import type { ChangeEventHandler, KeyboardEventHandler } from "react";
 import { useRef } from "react";
 import { nanoid } from "nanoid";
 
-import type { ActionFunction, MetaFunction } from "@remix-run/cloudflare";
+import type { ActionFunctionArgs } from "@remix-run/cloudflare";
 import { json } from "@remix-run/cloudflare";
 import {
   Link,
@@ -28,13 +28,13 @@ import Text from "~/components/inputs/text";
 
 import type { SearchFeature } from "~/types/search";
 
-export const meta: MetaFunction = () => {
+export function meta() {
   return formatMetadata({
     title: "Search",
   });
-};
+}
 
-export const action: ActionFunction = async ({ request }) => {
+export async function action({ request }: ActionFunctionArgs) {
   const data = await request.formData();
 
   const query = data.get("query");
@@ -56,11 +56,11 @@ export const action: ActionFunction = async ({ request }) => {
     resultsCount: features.length,
     isEmpty: features.length === 0,
   });
-};
+}
 
 export default function Search() {
   const submit = useSubmit();
-  const search = useActionData();
+  const search = useActionData<typeof action>();
   const { state } = useNavigation();
   const navigate = useNavigate();
 

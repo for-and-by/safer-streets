@@ -1,6 +1,5 @@
-import type { LoaderFunction } from "@remix-run/cloudflare";
 import { redirect } from "@remix-run/cloudflare";
 
-export const loader: LoaderFunction = () => {
+export async function loader() {
   return redirect("/create/location");
-};
+}

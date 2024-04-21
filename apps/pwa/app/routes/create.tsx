@@ -13,11 +13,11 @@ import CenterMarker from "~/components/molecules/markers/center";
 import { Warning, useWarning } from "~/components/composites/warning";
 import { ProgressBar } from "~/components/atoms/progress-bar";
 
-export const meta: MetaFunction = () => {
+export function meta() {
   return formatMetadata({
     title: "Create New Report",
   });
-};
+}
 
 type Stage = {
   step: number;
