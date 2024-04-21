@@ -34,9 +34,6 @@
     "zustand": "^4.3.6"
   },
   "devDependencies": {
-    "@remix-run/dev": "^1.15.0",
-    "@remix-run/eslint-config": "^1.15.0",
-    "@remix-run/serve": "^1.15.0",
     "@tailwindcss/typography": "^0.5.9",
     "@types/geojson": "^7946.0.10",
     "@types/marked": "^4.0.8",
