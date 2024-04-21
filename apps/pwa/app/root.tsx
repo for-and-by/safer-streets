@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Links, Meta, Outlet, Scripts, useLoaderData } from "@remix-run/react";
-import type { LoaderFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type { LoaderFunction } from "@remix-run/cloudflare";
+import { json } from "@remix-run/cloudflare";
 
 import styles from "@safer-streets/tailwind/index.css";
 import icons from "@safer-streets/icons/index.css";
