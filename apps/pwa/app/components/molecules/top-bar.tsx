@@ -8,11 +8,11 @@ export default function TopBar() {
           to="https://www.abc.net.au/news/2025-03-05/tropical-cyclone-alfred-brisbane-forecast-queensland-nsw-live/105010498"
           className="text-sm text-base-900"
         >
-          Keep updated on Cyclone Alfred
+          Keep updated on <span className="text-sm underline">Cyclone Alfred</span>
         </Link>
       </div>
       <Link
-        to="https://saferstreets.info/content/about"
+        to="/about"
         className="flex h-full items-center px-2"
         aria-label="About Safer Streets"
       >
