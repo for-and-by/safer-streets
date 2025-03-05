@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "@remix-run/react";
 
 export default function TopBar() {
@@ -6,10 +5,10 @@ export default function TopBar() {
     <div className="pointer-events-auto flex w-full flex-row bg-base-100">
       <div className="flex flex-grow flex-row space-x-4 py-1 px-2">
         <Link
-          to="https://saferstreets.info/content/disclaimer"
+          to="https://www.abc.net.au/news/2025-03-05/tropical-cyclone-alfred-brisbane-forecast-queensland-nsw-live/105010498"
           className="text-sm text-base-900"
         >
-          Endorsed By Jonathan Sriranganathan
+          Keep updated on Cyclone Alfred
         </Link>
       </div>
       <Link
