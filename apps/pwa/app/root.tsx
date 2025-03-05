@@ -67,7 +67,7 @@ export async function loader({ context }: LoaderFunctionArgs) {
 
   const [reports, types, severities] = await Promise.all([
     await supabase.from("reports").select(pins),
-    await supabase.from("types").select(),
+    await supabase.from("types").select().eq('is_enabled', true),
     await supabase.from("severities").select(),
   ]);
 

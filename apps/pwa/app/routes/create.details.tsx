@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate } from "@remix-run/react";
+import { useFormContext } from "react-hook-form";
 
 import { useCreateOutlet } from "~/routes/create";
 
@@ -11,7 +12,7 @@ import SeverityField from "~/components/fields/severity-field";
 import TypeField from "~/components/fields/type-field";
 import CustomField from "~/components/fields/custom-field";
 import DetailsField from "~/components/fields/details-field";
-import { useFormContext } from "react-hook-form";
+
 
 export default function CreateDetails() {
   const [, { setLock }] = useMapLock();
