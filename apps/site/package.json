@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "sideEffects": false,
+  "packageManager": "yarn@3.6.3",
   "scripts": {
     "build:remix": "remix build",
     "build": "run-s build:*",
